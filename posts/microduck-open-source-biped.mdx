@@ -1,0 +1,41 @@
+---
+title: "Microduck: A 25 cm Biped You Can Retrain Yourself"
+slug: "microduck-open-source-biped"
+date: "2026-08-27"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+tags:
+  - posts
+excerpt: |
+  Pollen Robotics shipped a $399 open-source biped with seven RL policies in the box, MuJoCo training on your machine, and a sim-to-real path that actually works.
+preview_image: "../images/posts/microduck-open-source-biped.png"
+images:
+  - "../images/posts/microduck-open-source-biped.png"
+state: published
+---
+
+import BlogImage from '../../components/blog-image';
+
+<p class="center-full-image">
+  <BlogImage
+    className="center-small-image"
+    images={props.pageContext.frontmatter.images}
+    name="microduck-open-source-biped.png"
+    alt="Pollen Robotics Microduck open-source biped robot"
+  />
+</p>
+
+[Pollen Robotics' Microduck](https://pollen-robotics.com/microduck/) is a 25 cm, 800 g biped that ships with seven trained behaviors, a game controller, and a full reinforcement-learning stack you can run on your own machine. Pre-orders are open at $399 for the base robot.
+
+## Why it matters
+
+The interesting part is not the duck shape. It is the workflow: train in MuJoCo, deploy with `robotctl`, refine the sim, publish the policy. Pollen put the SDK, simulation, and shipped policies on GitHub under Apache-2.0. Hugging Face Jobs is in the loop for training. That is a credible sim-to-real loop in a product you can actually buy, not a lab demo.
+
+## Key technical notes
+
+- **Hardware:** 15 motors, camera, LiDAR, two IMUs, 50 Hz onboard policy loop.
+- **Out of the box:** walk, sit/stand, kick, grab, roller skating (with skates), and get-back-up from flat on its back.
+- **Retrain path:** simulation on your machine or Hugging Face Jobs, then deploy to the physical robot and share policies with the community.
+- **Ecosystem:** optional dev pack (spare motors, NFC tags, HF credit), accessory pack, and charger pack.
+
+For teams building agentic or embodied systems, Microduck is a useful reference point: open policies, open sim, and a price that makes experimentation feasible without a full lab budget.
