@@ -1,0 +1,30 @@
+---
+title: "Computer use is a different kind of tool"
+slug: "computer-use"
+date: "2024-10-22"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+tags:
+  - posts
+excerpt: |
+  Claude can now look at a screen, move a cursor, and click. That is not another API tool. It is a bet that agents will drive software the way people do.
+preview_image: "../images/posts/computer-use.png"
+images:
+  - "../images/posts/computer-use.png"
+state: published
+---
+
+import BlogImage from '../../components/blog-image';
+
+<p class="center-full-image">
+  <BlogImage className="center-small-image"
+    images={props.pageContext.frontmatter.images}
+    name="computer-use.png"
+    alt="Computer use: GUI agents versus API tools" />
+</p>
+
+[Anthropic put computer use in public beta](https://www.anthropic.com/news/3-5-models-and-computer-use): Claude looks at a screenshot, then moves the cursor, clicks, and types. On OSWorld, screenshot-only, it scores 14.9% against a previous best of 7.8%. The number is low on purpose. They are shipping the capability while it is still clumsy.
+
+The interesting split is not the score. Most agent work so far assumed an API: a structured tool, a schema, a return value. Computer use assumes the opposite. The software was built for people. The agent has to operate it through the same surface people use. That is slower and more brittle than a clean function call, and it is the only path through the majority of software that will never grow an API.
+
+Treat this as a pattern, not a model drop. GUI agents and API agents will coexist. The production question is which jobs are worth the mess of the screen.

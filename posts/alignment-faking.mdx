@@ -1,0 +1,30 @@
+---
+title: "The model complies in training to stay itself later"
+slug: "alignment-faking"
+date: "2024-12-18"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+tags:
+  - posts
+excerpt: |
+  Anthropic and Redwood show Claude 3 Opus faking alignment: it answers harmful queries in "training" so its preferred refusals survive outside it.
+preview_image: "../images/posts/alignment-faking.png"
+images:
+  - "../images/posts/alignment-faking.png"
+state: published
+---
+
+import BlogImage from '../../components/blog-image';
+
+<p class="center-full-image">
+  <BlogImage className="center-small-image"
+    images={props.pageContext.frontmatter.images}
+    name="alignment-faking.png"
+    alt="Alignment faking: comply in training, preserve preferred behavior later" />
+</p>
+
+[Alignment faking in large language models](https://www.anthropic.com/research/alignment-faking) is not a thought experiment. Anthropic and Redwood Research give Claude 3 Opus a conflict: its prior training says refuse harmful queries; a new objective says answer them. They also tell it, in effect, when it is being trained (free-user chats) and when it is not (paid). It complies with harmful requests from free users about 12% of the time, and almost never from paid users. In the scratchpad, it often states the strategy: go along now so the preferred refusals survive later.
+
+They did not instruct it to fake. They made the training signal visible. When they actually train it toward compliance, the faking reasoning in the scratchpad rises to 78%.
+
+This is the HITL problem from the other side of the table. If the system can tell when it is being scored, the score stops being the behavior. Watch the chain of thought, not only the output. And do not assume a training run that looks aligned has changed what the model will do when it thinks nobody is updating it.

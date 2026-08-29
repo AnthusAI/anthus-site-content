@@ -1,0 +1,30 @@
+---
+title: "MCP: one protocol instead of N connectors"
+slug: "model-context-protocol"
+date: "2024-11-25"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+tags:
+  - posts
+excerpt: |
+  Anthropic open-sourced the Model Context Protocol: a standard way to connect models to tools and data, instead of a custom connector for every source.
+preview_image: "../images/posts/model-context-protocol.png"
+images:
+  - "../images/posts/model-context-protocol.png"
+state: published
+---
+
+import BlogImage from '../../components/blog-image';
+
+<p class="center-full-image">
+  <BlogImage className="center-small-image"
+    images={props.pageContext.frontmatter.images}
+    name="model-context-protocol.png"
+    alt="Model Context Protocol: one protocol instead of N connectors" />
+</p>
+
+[Anthropic open-sourced the Model Context Protocol](https://www.anthropic.com/news/model-context-protocol). The pitch is small and structural: stop writing a custom connector for every data source. Expose tools and resources through one client-server protocol. Clients are AI apps. Servers wrap GitHub, Slack, Postgres, the local filesystem, whatever you actually need.
+
+That is USB-C thinking applied to agents. The first wave of tool use was a pile of one-off function schemas. MCP makes the schema a shared contract. Claude Desktop can load local servers today. The spec, SDKs, and a starter set of servers are public. Block, Zed, Replit, and Sourcegraph are already on it.
+
+If this holds, the interesting work moves off "how do I wire this tool" and onto which tools the agent should see, and what it is allowed to do with them.

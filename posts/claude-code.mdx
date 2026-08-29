@@ -1,0 +1,30 @@
+---
+title: "The terminal is the agent runtime"
+slug: "claude-code"
+date: "2025-02-24"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+tags:
+  - posts
+excerpt: |
+  Claude Code is a research-preview CLI that reads the repo, edits files, and runs the shell. The agent is no longer a chat sidebar. It is a process in the project.
+preview_image: "../images/posts/claude-code.png"
+images:
+  - "../images/posts/claude-code.png"
+state: published
+---
+
+import BlogImage from '../../components/blog-image';
+
+<p class="center-full-image">
+  <BlogImage className="center-small-image"
+    images={props.pageContext.frontmatter.images}
+    name="claude-code.png"
+    alt="Claude Code: an agentic coding tool that runs in the terminal" />
+</p>
+
+Alongside a new Sonnet, Anthropic shipped [Claude Code](https://www.anthropic.com/news/claude-3-7-sonnet): a command-line tool that lives in the repository. It reads the tree, edits files, runs commands, and takes a pass at work that used to be a 45-minute human loop. It is a limited research preview. The product shape is the news.
+
+Coding agents have been IDE sidebars and web canvases. This one is a process with a working directory and a shell. That is the same surface senior engineers already use to inspect, test, and commit. The policy file in the repo, the tests, and git become the harness. You are not pasting files into a chat. You are supervising a runtime.
+
+Skip the model card. The durable change is where the agent sits. Once the terminal is the runtime, every other question — what it may run, what it must check, what it writes back into git — is an engineering problem, not a prompting problem.

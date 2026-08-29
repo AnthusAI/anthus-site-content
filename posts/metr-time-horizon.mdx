@@ -1,0 +1,30 @@
+---
+title: "Task horizon is the metric that maps to work"
+slug: "metr-time-horizon"
+date: "2025-03-19"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+tags:
+  - posts
+excerpt: |
+  METR measures agents by the length of task they can finish, in human hours. That horizon has been doubling about every seven months.
+preview_image: "../images/posts/metr-time-horizon.png"
+images:
+  - "../images/posts/metr-time-horizon.png"
+state: published
+---
+
+import BlogImage from '../../components/blog-image';
+
+<p class="center-full-image">
+  <BlogImage className="center-small-image"
+    images={props.pageContext.frontmatter.images}
+    name="metr-time-horizon.png"
+    alt="METR: measuring AI ability to complete long software tasks" />
+</p>
+
+[METR's time-horizon paper](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/) asks a better question than "what is the SWE-bench score." How long a task, measured in expert-human time, can the agent complete with 50% reliability? Today's frontier agents are near-certain on work that takes a person a few minutes, and rare on work that takes several hours. Fit that into one number: a time horizon.
+
+That horizon has been doubling roughly every seven months for six years. The 50% line is not "the agent can do your job." It is the length of task where a coin flip is the success rate. 80% is the more honest bar for anything you would leave unsupervised.
+
+This is the measurement frame that matches production. We do not need another exam. We need to know whether the agent can carry a sequence of actions for as long as the job actually takes, and how often it still holds the thread at the end.

@@ -1,0 +1,30 @@
+---
+title: "Skills are procedures, not tools"
+slug: "agent-skills"
+date: "2025-10-16"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+tags:
+  - posts
+excerpt: |
+  Anthropic's Agent Skills are folders of instructions, scripts, and resources the model loads when the job matches. That is a procedure pack, not another API.
+preview_image: "../images/posts/agent-skills.png"
+images:
+  - "../images/posts/agent-skills.png"
+state: published
+---
+
+import BlogImage from '../../components/blog-image';
+
+<p class="center-full-image">
+  <BlogImage className="center-small-image"
+    images={props.pageContext.frontmatter.images}
+    name="agent-skills.png"
+    alt="Agent Skills: folders of instructions, scripts, and resources for Claude" />
+</p>
+
+[Agent Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) are folders. A `SKILL.md` with a name and description, plus scripts and files the agent may load. Claude skims the metadata, pulls the rest only when the task matches, and can stack more than one. They work in Claude apps, Claude Code, and the API.
+
+MCP already gave agents tools: capabilities on the other side of a protocol. Skills are the missing layer. A tool says *what can be called*. A skill says *how we do this job here* — the checklist, the template, the script that encodes a team's actual procedure. Put standing policy in the repo. Put capabilities on MCP. Put the playbook in a skill.
+
+That split is the part that will still make sense when the folder format changes. General-purpose agents do not get specialized by stuffing more tools into the prompt. They get specialized by loading the right procedure at the right time.

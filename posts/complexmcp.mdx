@@ -1,0 +1,30 @@
+---
+title: "Fine at 15 tools, lost at 300"
+slug: "complexmcp"
+date: "2026-05-16"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+tags:
+  - posts
+excerpt: |
+  ComplexMCP puts agents in stateful MCP sandboxes with hundreds of interdependent tools. Retrieval saturates, checks get skipped, and recoverable errors become surrender.
+preview_image: "../images/posts/complexmcp.png"
+images:
+  - "../images/posts/complexmcp.png"
+state: published
+---
+
+import BlogImage from '../../components/blog-image';
+
+<p class="center-full-image">
+  <BlogImage className="center-small-image"
+    images={props.pageContext.frontmatter.images}
+    name="complexmcp.png"
+    alt="ComplexMCP: agents fail in large, interdependent MCP tool sandboxes" />
+</p>
+
+[ComplexMCP](https://arxiv.org/abs/2605.10787) is an eval for the last mile of tool use. Not ten isolated APIs. More than 300 tools across seven stateful sandboxes, with dependencies and seed-controlled failures, on the same protocol production agents already speak: MCP. Frontier models stay under 60% success. Humans clear 90%+.
+
+The authors name three failure modes worth stealing for your own traces. **Retrieval saturation:** as the action space grows, the agent cannot pick the right tool. **Over-confidence:** it skips checking environment state and acts on a guess. **Strategic defeatism:** it treats a recoverable API error as the end of the job and writes a rationale for giving up.
+
+That is why a demo with a dozen tools does not predict a production mesh. Keep the tool surface small, partition servers by job phase, and put deterministic checks in front of irreversible calls. The model is not the whole agent. The sandbox is.

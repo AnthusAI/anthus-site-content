@@ -1,0 +1,30 @@
+---
+title: "The recipe is the news, not the model"
+slug: "deepseek-r1-recipe"
+date: "2025-01-20"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+tags:
+  - posts
+excerpt: |
+  DeepSeek-R1 is not a secret model. It is an open recipe: RL on verifiable rewards, then distill. Frontier reasoning behavior just got cheap to copy.
+preview_image: "../images/posts/deepseek-r1-recipe.png"
+images:
+  - "../images/posts/deepseek-r1-recipe.png"
+state: published
+---
+
+import BlogImage from '../../components/blog-image';
+
+<p class="center-full-image">
+  <BlogImage className="center-small-image"
+    images={props.pageContext.frontmatter.images}
+    name="deepseek-r1-recipe.png"
+    alt="DeepSeek-R1: reinforcement learning on verifiable rewards, then distillation" />
+</p>
+
+[DeepSeek-R1](https://arxiv.org/abs/2501.12948) matches o1-class reasoning and then gives the method away. The headline people will remember is the leaderboard. The part that changes how you build systems is the recipe.
+
+R1-Zero skips supervised fine-tuning and runs reinforcement learning with a verifier: right answer, not a human-written chain of thought. Group Relative Policy Optimization (GRPO) is the optimizer. Reasoning behaviors show up because they win the reward, not because someone demonstrated them. R1 then adds a cold start so the traces are readable. The distilled 32B Qwen model beats o1-mini on several math and code benches.
+
+o1 showed that extra test-time compute is a product. R1 shows you can induce that behavior with RL on checks you already have, then shrink it. If your domain has a grader — tests, a rubric, a schema, a human vote — you are looking at a training loop, not a prompting trick. The expensive model is no longer the only place that kind of reasoning lives.

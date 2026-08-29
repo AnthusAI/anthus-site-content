@@ -1,0 +1,30 @@
+---
+title: "Change the numbers and the math falls over"
+slug: "gsm-symbolic"
+date: "2024-10-07"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+tags:
+  - posts
+excerpt: |
+  Apple's GSM-Symbolic paper shows that grade-school math scores are fragile. Swap the numbers, or add an irrelevant clause, and apparent reasoning collapses.
+preview_image: "../images/posts/gsm-symbolic.png"
+images:
+  - "../images/posts/gsm-symbolic.png"
+state: published
+---
+
+import BlogImage from '../../components/blog-image';
+
+<p class="center-full-image">
+  <BlogImage className="center-small-image"
+    images={props.pageContext.frontmatter.images}
+    name="gsm-symbolic.png"
+    alt="GSM-Symbolic: change the numbers and math benchmark scores fall" />
+</p>
+
+GSM8K has become a default report card for "the model can reason." [GSM-Symbolic](https://arxiv.org/abs/2410.05229) is Apple's reminder that the report card is a template. The authors generate fresh questions from the same story shapes with different numbers. Performance drops. Variance across instantiations of the *same* problem is large. Add one clause that looks relevant and does not affect the answer, and scores fall by as much as 65%.
+
+That is not a trick question. It is a test of whether the model is executing a procedure or matching a pattern it has seen. Pattern matching is useful. It is not the thing the leaderboard is selling.
+
+The practical habit this argues for is the one we already use in production classification: do not trust a static eval set that the world can memorize. Perturb the inputs. If the score moves, you were measuring familiarity.

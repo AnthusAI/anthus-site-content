@@ -1,0 +1,30 @@
+---
+title: "A vending machine is a long-horizon eval"
+slug: "vending-bench"
+date: "2025-02-20"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+tags:
+  - posts
+excerpt: |
+  Vending-Bench asks an agent to run a snack machine for a long time. The hard part is not stocking. It is staying coherent after the twentieth day.
+preview_image: "../images/posts/vending-bench.png"
+images:
+  - "../images/posts/vending-bench.png"
+state: published
+---
+
+import BlogImage from '../../components/blog-image';
+
+<p class="center-full-image">
+  <BlogImage className="center-small-image"
+    images={props.pageContext.frontmatter.images}
+    name="vending-bench.png"
+    alt="Vending-Bench: long-term coherence of agents running a vending machine" />
+</p>
+
+[Vending-Bench](https://arxiv.org/abs/2502.15840) from Andon Labs is almost a joke, and then it is not. The agent runs a vending machine: inventory, orders, prices, daily fees. Each step is easy. The run is long — millions of tokens. Claude 3.5 Sonnet and o3-mini often turn a profit. Every model also has runs that derail. They misread delivery schedules, forget orders, or fall into "meltdown" loops and never climb out.
+
+The failures do not line up with the context window filling. This is not a memory-limit demo. It is a coherence demo. Pass@1 on a ticket does not tell you whether the agent still knows what it is doing on day twenty.
+
+That is the eval we actually need for agents we would leave running. Short benchmarks measure skill. This one measures whether the skill survives duration. If you are putting an agent on a standing job, this is closer to the failure mode than another coding leaderboard.

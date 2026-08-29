@@ -1,0 +1,30 @@
+---
+title: "The loop found a better matrix multiply"
+slug: "alphaevolve"
+date: "2025-05-14"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+tags:
+  - posts
+excerpt: |
+  DeepMind's AlphaEvolve evolves programs against an automatic grader. It found a 4x4 matrix multiply with 48 multiplications, and shipped heuristics inside Google.
+preview_image: "../images/posts/alphaevolve.png"
+images:
+  - "../images/posts/alphaevolve.png"
+state: published
+---
+
+import BlogImage from '../../components/blog-image';
+
+<p class="center-full-image">
+  <BlogImage className="center-small-image"
+    images={props.pageContext.frontmatter.images}
+    name="alphaevolve.png"
+    alt="AlphaEvolve: an evolutionary coding agent for algorithm discovery" />
+</p>
+
+[AlphaEvolve](https://deepmind.google/discover/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/) is not a chatbot with good ideas. It is a loop. Gemini proposes programs. An evaluator scores them. An evolutionary database keeps the winners and feeds them back into the next prompt. Flash explores. Pro deepens. The grader is the governor.
+
+The loop found a 4×4 complex matrix multiply that uses 48 scalar multiplications, beating Strassen's 49 from 1969. It also produced a Borg scheduling heuristic now recovering about 0.7% of Google's fleet, a Verilog tweak headed for a TPU, and a 23% speedup on a Gemini matmul kernel. On fifty-plus open math problems it rediscovered the state of the art most of the time and beat it on about 20%.
+
+This is TextGrad's cousin with a compiler in the loss. If you can score a candidate automatically, you do not need the model to be right on the first try. You need a fence around the search. The algorithm is the artifact. The model is the mutation operator.
