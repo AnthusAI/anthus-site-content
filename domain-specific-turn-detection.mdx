@@ -135,18 +135,18 @@ In a 20-turn conversation, an 80% accuracy rate implies 4 errors. Those errors c
 
 For customer service, interruptions are deadly. They make the bot feel aggressive and "broken." Missed turns just feel like lag.
 
-We analyzed the **Interruption Rate (IR)** of our new normalized model and found it was interrupting users in **22.4%** of turns. That's way too high.
+We analyzed the model in a word-by-word streaming simulation and found that it prematurely predicted turn completion in **22.4%** of turns—far too often for a customer-service application.
 
-But we realized we could tune the **decision threshold**. By default, the model predicts "Complete" if confidence > 50%. By raising that bar, we can tell the model: "Only interrupt the user if you are *really* sure."
+We then explored whether adjusting the **decision threshold** could shift the balance between false positives and missed turns. In a separate utterance-level threshold analysis, raising the threshold from **0.50** to **0.74** reduced the false-positive rate from **12.4%** to **5.1%**, while increasing the missed-turn rate from **1.9%** to **18.7%**.
 
 <div className="center-full-image">
     <BlogImage className="center-full-image"
         images={props.pageContext.frontmatter.images}
         name="turn-detection-threshold-optimization.png"
-        alt="Threshold optimization chart showing trade-off between interruptions and missed turns" />
+        alt="Utterance-level threshold analysis showing trade-off between false-positive rate and missed-turn rate" />
 </div>
 
-By raising the threshold to **0.74**, we reduced the interruption rate from 12.4% to **5.1%**. The trade-off was a higher Missed Turn Rate (18.7%), meaning the bot would sometimes wait a bit longer to confirm the user was done. For a polite support bot, this is the right trade-off.
+The result illustrates an important operational trade-off: when interruptions are more costly than a brief delay, requiring greater confidence before declaring a turn complete can produce more desirable behavior.
 
 ## A Note on Training Infrastructure
 
