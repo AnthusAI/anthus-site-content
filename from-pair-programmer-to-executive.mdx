@@ -27,7 +27,7 @@ import BlogImage from "../components/blog-image"
 
 The bug report did not come to me.
 
-A Researcher agent found a problem and reported it to a Software Director agent. The director recorded the problem, assigned coding agents to work on separate parts of it in parallel, reviewed what they returned, rejected work that did not meet its requirements, combined the accepted changes, and delivered the result back to the Researcher. The Researcher checked whether the original problem had actually been solved and, when it had not, sent it back around the loop.
+A Researcher agent found a problem and reported it to a Software Director agent. The director recorded the problem, assigned coding agents to work on separate parts of it in parallel, reviewed what they returned, rejected work that did not meet its requirements, combined the accepted changes, and delivered the result back to the Researcher. The Researcher checked whether the original problem had actually been solved and, when the fix fell short, sent it back around the loop.
 
 I had defined those roles. Early on, I sometimes told one agent to consult another. But I was no longer copying every message, tracking every coding session, or personally moving the work through every handoff. The agents had started collaborating through the responsibilities I gave them.
 
@@ -39,7 +39,7 @@ The surprising thing is no longer that an agent can write code. It is that one p
 
 In [Cybernetic Development](/blog/cybernetic-development/), I described the move from pair programming with one coding agent to delegating work to several agents at once. That created an immediate management problem: the agents were fast, but every assignment, clarification, result, and next decision still passed through one human.
 
-Kanbus helped me manage that complexity. It is the project-management system I use for software and editorial work. On the Kanbus board, each task, bug, user story, or other piece of work gets its own card. A person or agent can claim the work, record what happened, update its status, and leave evidence for whoever comes next. Unlike a conversation hidden in one tab, that shared record survives and can be read by everyone involved.
+Kanbus gave that work a shared structure. It is the project-management system I use for software and editorial work. On the Kanbus board, each task, bug, user story, or other piece of work gets its own card. A person or agent can claim the work, record what happened, update its status, and leave evidence for whoever comes next. Unlike a conversation hidden in one tab, that shared record survives and can be read by everyone involved.
 
 But Kanbus organized the work; it did not manage it.
 
@@ -131,7 +131,7 @@ Nothing magical happened to the workers in the second diagram. The change is in 
 
 The human still chooses what matters. The human defines the roles, the boundaries, and the acceptance requirements. The human remains responsible for the consequences. But the human no longer has to notice that a test suite finished, switch back to the correct tab, interpret the result, decide on the next iteration, and restart the work every time.
 
-That attention gap is larger than it sounds. Some agent tasks take hours, but many return in a few minutes and larger ones often take 20 or 30 minutes, depending on the test suite. When I run the loop myself, completed work waits until I have attention available. An agent manager can make the next decision as soon as the evidence appears.
+That attention gap is larger than it sounds. Some agent tasks take hours, but many return in a few minutes and larger ones often take 20 or 30 minutes, depending on the test suite. When I run the loop myself, completed work waits until I have attention available. The Software Director can make the next decision as soon as the evidence appears.
 
 Here is the shape of the loop without any product names:
 
@@ -163,7 +163,7 @@ My current example happens to be [Grok Bot](/blog/a-week-with-grok-bot/), with a
 
 ## Two 2026 trends met here
 
-Agent management became practical because two changes arrived together.
+For me, this operating model became practical because two changes arrived together.
 
 First, coding agents became much better at long-running work. They can continue through tests, review, corrections, and another attempt instead of stopping after one code change and waiting for a human to push the button again. [The Year the Coding Agents Went Remote](/blog/coding-agents-went-remote-2026/) covers the infrastructure shift that helped make this possible.
 
@@ -173,15 +173,13 @@ Either trend by itself is insufficient. Cheap agents that stop at every decision
 
 This is where Jevons Paradox appears. When a useful resource becomes cheaper, we often consume much more of it. One coding session becomes four. A task that was not worth starting becomes worth attempting. A reviewer rereads the workers' output. Total AI usage can rise precisely because each unit of usage became cheaper and useful in more places.
 
-I call the resulting operating style "tokenmaxxing for fun and profit." Tokens are units of paid AI usage; tokenmaxxing means keeping many inexpensive agents productively occupied and optimizing for useful work completed rather than minimizing every individual call. I wrote more about the economics in [The Year Coding Became a Commodity](/blog/ai-coding-cost-collapse-2026/) and [Maximize Value, Not Intelligence](/blog/maximize-value-not-intelligence/), and about the practical operating habit in [Never Use Fast](/blog/never-use-fast/). The same paradox also applies beyond software, as I explored in [The Content Paradox](/blog/jevons-paradox-ai-slop/).
+I call the resulting operating style "tokenmaxxing for fun and profit." By tokenmaxxing, I mean keeping many inexpensive agents productively occupied and optimizing for useful work completed rather than minimizing model usage. I wrote more about the economics in [The Year Coding Became a Commodity](/blog/ai-coding-cost-collapse-2026/) and about the practical operating habit in [Never Use Fast](/blog/never-use-fast/).
 
 The scarce resource is increasingly human attention: deciding what deserves work, defining what good looks like, and examining the outcomes that matter.
 
 ## This category is escaping the lab
 
 The urge to build an always-available personal agent did not begin with Grok Bot. OpenClaw is the most vivid prior example: powerful, flexible, difficult, and willing to operate close to the edge of what many people would consider comfortable. Its [own introduction](https://openclaw.ai/blog/introducing-openclaw) says it runs on the user's machine and acts through chat applications, while acknowledging that prompt injection remains a security problem. That makes it useful prior art and a useful warning.
-
-The project's rapid sequence of names reads like a compressed history of the category: [Warelay](https://github.com/openclaw/openclaw/commit/16dfc1a5b929), [CLAWDIS or Clawdis](https://github.com/openclaw/openclaw/commit/a27ee2366ebfa366ee960e567f72f97fe63085d9), [Clawdbot](https://github.com/openclaw/openclaw/commit/246adaa1191438b9e9e178384a026b4c123782f1), [Moltbot](https://techcrunch.com/2026/01/27/everything-you-need-to-know-about-viral-personal-ai-assistant-clawdbot-now-moltbot/), and finally [OpenClaw](https://openclaw.ai/blog/introducing-openclaw). ["Clawd" was the assistant character](https://docs.openclaw.ai/start/lore), not another name for the runtime.
 
 Now the major platforms are absorbing the idea. Microsoft describes [Scout](https://www.microsoft.com/en-us/microsoft-365/blog/2026/06/02/introducing-microsoft-scout-your-always-on-personal-agent/) as an always-on system powered by OpenClaw, with governed access and human signoff. Google describes the next Gemini app, including [Gemini Spark](https://blog.google/innovation-and-ai/products/gemini-app/next-evolution-gemini-app/), as proactive and available around the clock.
 
@@ -211,6 +209,6 @@ Prompts still matter. Tools still matter. Models still matter. But once several 
 
 The one-person software company has acquired middle management. That sounds ridiculous. A few months ago it would have felt ridiculous to me.
 
-Now I have watched a Researcher report a bug to a Software Director, watched that director send coding agents to fix it, and watched the Researcher send the result back when it was not good enough. I was still responsible for the system. I just was not standing inside every handoff.
+Now I have watched that entire loop operate without me standing inside it—and watched it reject inadequate work before asking for my attention. I was still responsible for the system. I just was not standing inside every handoff.
 
 That is the shift: not from human control to machine control, and not from one magical model to an even more magical model. It is a shift from operating individual agents to designing an organization of agents—and deciding exactly where the human belongs.
