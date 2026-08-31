@@ -55,8 +55,6 @@ Imagine an entire factory of software developers working around the clock. But i
   }}
 />. Whatever the term, the result is the same: because [AI coding costs have collapsed](/blog/ai-coding-cost-collapse-2026), these swarms can build entire products overnight while you sleep.
 
-**Today, we are launching Pudicus to secure the output of these software factories.**
-
 In traditional software development, we rely on a strict rule: a human must read and approve every line of code before it goes live. But when an army of AI bots generates thousands of lines of code an hour, human review becomes an impossible bottleneck. The old habit that "a human must review every diff" is on life support. As we've seen when [giving our coding agents a boss](/blog/grok-bot-gave-my-coding-agents-a-boss), the leftover control is no longer a human manually approving every change. 
 
 If human review is theater, what stops a rogue or hallucinating agent from shipping broken code to your live servers? 
@@ -113,7 +111,7 @@ Treat that the way ITIL treats a change implemented without a ticket:
 
 ## Introducing Pudicus
 
-This is exactly what Pudicus does. It is our new framework for generating cryptographically verifiable receipts for agent-written code.
+**Today, we are launching Pudicus, our open-source framework aimed at solving exactly this problem.** It is a standalone, pluggable inspection gate that generates cryptographically verifiable receipts for agent-written code.
 
 A `commit-msg` hook runs a pinned checker over the staged tree. If the checker is clean, the hook writes an HMAC receipt onto the commit — recording the inspector identity, the specific git tree, the result, the time, and a cryptographic signature. Your deployment pipeline then verifies this receipt against the current validator and will not proceed without it. The scanners behind the hook are completely pluggable. 
 
