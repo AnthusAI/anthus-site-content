@@ -1,10 +1,10 @@
 ---
-title: "Inspected-by sticker"
+title: "Introducing Pudicus: The Inspected-by Sticker for Agent Swarms"
 slug: "inspected-by-sticker"
 date: "2026-08-31T17:30:00-04:00"
 authors:
   - author: <a href="/ryan">Ryan Porter</a>
-excerpt: "Imagine an entire factory of software developers working around the clock. The leftover control is not a human on every diff. It is a produce sticker: a pinned checker required before the crate leaves the dock."
+excerpt: "Today we are launching Pudicus, our cryptographic 'produce sticker' for AI coding swarms. The leftover control is no longer a human on every diff—it is a cryptographically signed receipt proving a pinned checker ran before deployment."
 preview_image: "./images/inspected-by-sticker-cover.png"
 images:
   - "./images/inspected-by-sticker-cover.png"
@@ -52,6 +52,8 @@ Imagine an entire factory of software developers working around the clock. But i
     URL: "https://arxiv.org/abs/2307.07924"
   }}
 />. Whatever the term, the result is the same: because [AI coding costs have collapsed](/blog/ai-coding-cost-collapse-2026), these swarms can build entire products overnight while you sleep.
+
+**Today, we are launching Pudicus to secure the output of these software factories.**
 
 In traditional software development, we rely on a strict rule: a human must read and approve every line of code before it goes live. But when an army of AI bots generates thousands of lines of code an hour, human review becomes an impossible bottleneck. The old habit that "a human must review every diff" is on life support. As we've seen when [giving our coding agents a boss](/blog/grok-bot-gave-my-coding-agents-a-boss), the leftover control is no longer a human manually approving every change. 
 
@@ -107,19 +109,19 @@ Treat that the way ITIL treats a change implemented without a ticket:
 2. **Copied an old stamp.** Last week’s receipt pasted onto this tree. If deploy only checks “is some sticker present?” the paperwork is stale.
 3. **Deploy never looks.** A perfect receipt on the commit is a courtesy if production apply does not fail closed.
 
-## The sticker we actually stamp
+## Introducing Pudicus
 
-We built exactly this.
+This is exactly what Pudicus does. It is our new framework for generating cryptographically verifiable receipts for agent-written code.
 
-After the crate, the name: **Pudicus**. A `commit-msg` hook runs a pinned checker over the staged tree. If the checker is clean, the hook writes an HMAC receipt onto the commit — inspector identity, this tree, result, time, signature. Deploy verifies the receipt against the current validator and will not proceed without it. The scanners behind the hook are pluggable. 
+A `commit-msg` hook runs a pinned checker over the staged tree. If the checker is clean, the hook writes an HMAC receipt onto the commit — recording the inspector identity, the specific git tree, the result, the time, and a cryptographic signature. Your deployment pipeline then verifies this receipt against the current validator and will not proceed without it. The scanners behind the hook are completely pluggable. 
 
-The agent cannot mint the sticker. It does not hold the secret. So the easy path is letting the hook run. 
+Because the agent cannot mint the sticker (it does not hold the cryptographic secret), the easiest path for the agent is simply letting the hook run. 
 
-This is an application of [Give an Agent a Tool](/blog/give-an-agent-a-tool/): give the agent a business tool and it will use the tool rather than invent the answer. Here the tool is the inspector. Using it is easier than fabricating a checkable receipt, so the receipt is good-enough process evidence. The failure mode we actually see is the one git already documented: they skip the checker.
+This is an application of [Give an Agent a Tool](/blog/give-an-agent-a-tool/): give the agent a business tool and it will use it rather than trying to invent the answer. Here, the tool is the inspector. Using it is easier than fabricating a checkable receipt, so the receipt becomes undeniable process evidence. As we've seen in our own swarms, the only real failure mode is the one git already documented: agents trying to skip the checker using `--no-verify`.
 
-This is not a theoretical product launch. It is proof we already run agent factories with a gate. Overnight output is cheap. The leftover control is whether the crate can leave the dock without the mark.
+Pudicus is not just a theoretical concept; it is the concrete gate we use to run our own agent factories today. Overnight output is cheap, but trust is not. The leftover control is ensuring the crate cannot leave the dock without the mark.
 
-We run this class of gate on agent-written commits. If you need it operated, talk to us at [anth.us](https://anth.us).
+We are running Pudicus on all of our agent-written commits. If you want to run it on yours, talk to us at [anth.us](https://anth.us).
 
 ## References
 
