@@ -111,7 +111,7 @@ Treat that the way ITIL treats a change implemented without a ticket:
 
 ## Introducing Pudicus
 
-**Today, we are launching Pudicus, our open-source framework aimed at solving exactly this problem.** It is a standalone, pluggable inspection gate that generates cryptographically verifiable receipts for agent-written code.
+**Today, we are launching [Pudicus](https://github.com/AnthusAI/Pudicus), our open-source framework aimed at solving exactly this problem.** It is a standalone, pluggable inspection gate that generates cryptographically verifiable receipts for agent-written code.
 
 A `commit-msg` hook runs a pinned checker over the staged tree. If the checker is clean, the hook writes an HMAC receipt onto the commit — recording the inspector identity, the specific git tree, the result, the time, and a cryptographic signature. Your deployment pipeline then verifies this receipt against the current validator and will not proceed without it. The scanners behind the hook are completely pluggable. 
 
@@ -133,7 +133,7 @@ If an agent bypasses the hook with `--no-verify`, you don't have to rewrite git 
 
 <BlogImage images={props.pageContext.frontmatter.images} name="pudicus-signature-pooling.png" className="full" alt="Diagram showing how an Approval Commit signs previous trees, allowing the deploy gate to pool valid signatures." />
 
-We are running Pudicus on all of our agent-written commits. If you want to run it on yours, talk to us at [anth.us](https://anth.us).
+We are running Pudicus on all of our agent-written commits. You can [view the source code and install it from GitHub](https://github.com/AnthusAI/Pudicus). If you need help operating agent factories with a gate, talk to us at [anth.us](https://anth.us).
 
 ## References
 
