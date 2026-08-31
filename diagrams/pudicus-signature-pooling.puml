@@ -1,0 +1,23 @@
+@startuml
+skinparam componentStyle rectangle
+skinparam BackgroundColor transparent
+skinparam monochrome true
+
+component "Commit 1\nTree: A\nSigned: Yes" as C1
+component "Commit 2\nTree: B\nSigned: No" as C2
+component "Commit 3\nTree: C\nSigned: No" as C3
+component "Approval Commit\nSigns Trees: B, C" as AC
+
+component "Deploy Gate\n(pudicus verify)" as Gate
+component "Are Trees A, B, and C in the pool?" as Check
+component "Deploy Success" as Deploy
+
+C1 -right-> C2
+C2 -right-> C3
+C3 -right-> AC
+
+AC --> Gate
+Gate --> Check : Pools valid signatures
+Check --> Deploy : Yes
+
+@enduml

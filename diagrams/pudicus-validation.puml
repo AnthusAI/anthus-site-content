@@ -1,0 +1,39 @@
+@startuml
+skinparam componentStyle rectangle
+skinparam BackgroundColor transparent
+skinparam monochrome true
+
+actor "Agent / Developer" as Agent
+
+package "Local Git Repo" {
+  component "Pudicus Git Hook" as Hook
+  
+  package "Pudicus Validation" {
+    component "Scanners\n(Gitleaks, Tactus, etc.)" as Scanners
+    component "Cryptographic Signature\n(HMAC-SHA256)" as Sig
+    component "Commit Blocked" as Block
+  }
+  
+  component "Signed Commit" as Commit
+  component "Unsigned Commit" as Unsigned
+}
+
+component "Deploy Gate\n(CI/CD)" as Gate
+database "(Production)" as Prod
+component "Deploy Rejected" as Reject
+
+Agent --> Hook : Writes Code
+Hook --> Scanners : Runs
+Scanners --> Sig : Clean
+Scanners --> Block : Issues Found
+
+Sig --> Commit
+Agent ..> Unsigned : Bypasses hook
+
+Commit --> Gate
+Unsigned ..> Gate
+
+Gate --> Prod : Valid Signature
+Gate --> Reject : No Signature
+
+@enduml
