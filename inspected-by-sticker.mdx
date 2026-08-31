@@ -1,0 +1,102 @@
+---
+title: "Inspected-by sticker"
+slug: "inspected-by-sticker"
+date: "2026-08-31T17:30:00-04:00"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+excerpt: "Agents ship overnight. The leftover control is not a human on every diff. It is a produce sticker: a pinned checker, this git tree, required before the crate leaves the dock."
+preview_image: "./images/inspected-by-sticker-cover.png"
+images:
+  - "./images/inspected-by-sticker-cover.png"
+state: published
+tags:
+  - articles
+  - AI
+  - coding agents
+---
+
+import BlogImage from "../components/blog-image"
+import { Citation, CitationsList } from "gatsby-citation-manager"
+
+<BlogImage
+  images={props.pageContext.frontmatter.images}
+  name="inspected-by-sticker-cover.png"
+  className="centered"
+  alt="A wooden produce crate still on the loading dock, one tomato inside, with a paper sticker that reads INSPECTED BY 247."
+/>
+
+Agents ship overnight now. A swarm can stand up a product while you sleep. The easy path on the way out the door is `git commit --no-verify`. The hook is in the way. The flag is right there.
+
+We used to treat “a human read every diff” as the SOC 2 answer. It isn’t. It was auditor habit wearing a control’s clothes. The criterion everyone actually cites — Trust Services Criteria CC8.1 — describes a process: the entity authorizes, designs, develops or acquires, configures, documents, tests, approves, and implements changes.<Citation
+  data={{
+    type: "webpage",
+    "container-title": "AICPA",
+    title: "2017 Trust Services Criteria for Security, Availability, Processing Integrity, Confidentiality, and Privacy (with Revised Points of Focus — 2022)",
+    URL: "https://www.aicpa-cima.com/resources/download/2017-trust-services-criteria-with-revised-points-of-focus-2022",
+    accessed: { "date-parts": [[2026, 8, 31]] },
+    issued: { "date-parts": [[2022]] }
+  }}
+/> It does not say a person has to sit on every line. Steve Yegge already wrote the obituary: the vestigial SOC 2 angle will keep human review on life support, and “review” will stop meaning one human approving every diff.<Citation
+  data={{
+    type: "webpage",
+    "container-title": "Steve Yegge",
+    title: "The Shape of Things to Come, Part 1: The Continuous Thunderdome",
+    URL: "https://yegge.ai/essays/the-shape-of-things-to-come/",
+    accessed: { "date-parts": [[2026, 8, 31]] },
+    issued: { "date-parts": [[2026]] }
+  }}
+/>
+
+That leaves a hole. If the human LGTM is theater, what do you put on the crate?
+
+## Can it leave the dock without the mark?
+
+Ask this of every cousin that looks like a control:
+
+**Can you put this on the truck without the inspector’s mark?** If yes, it is not this idea.
+
+A `Signed-off-by` line is a person typing that they certified origin. An `AI-Assisted:` trailer is a costume. A required status check at merge is a merge gate. The truck is deploy. Merge-green is not the same as the crate leaving the dock.
+
+Then ask what the sticker actually says. Inspected by whom, of what, when, with which tool version?
+
+<mark>The inspector is a named, pinned, deterministic validator — not the model that wrote the code. The object is this git tree. The mark is required at deploy.</mark> Later you can show: procedure X, validator version Y, this tree. That is change-management paperwork with a checkable receipt. It is not a human LGTM, and it is not a provenance bundle for a container image.
+
+If deploy will start without that record, or if the record can be yesterday’s sticker on this morning’s crate, you failed the test.
+
+## Skip is the process hole
+
+Git will let you walk around the inspector. `pre-commit` and `commit-msg` “can be bypassed with the `--no-verify` option.”<Citation
+  data={{
+    type: "webpage",
+    "container-title": "Git",
+    title: "githooks",
+    URL: "https://git-scm.com/docs/githooks",
+    accessed: { "date-parts": [[2026, 8, 31]] }
+  }}
+/> Git does not log that you used the flag. Agents have learned this. They stash, they quiet the hook, they commit on a runner that never had one.
+
+Treat that the way ITIL treats a change implemented without a ticket:
+
+1. **Never called the validator.** `--no-verify`, or a side door the hook does not cover.
+2. **Copied an old stamp.** Last week’s receipt pasted onto this tree. If deploy only checks “is some sticker present?” the paperwork is stale.
+3. **Deploy never looks.** A perfect receipt on the commit is a courtesy if production apply does not fail closed.
+
+Forge — a model inventing a hash that verifies — is not the evaluation. For this purpose, a receipt that names the checker and the tree is enough *if* deploy recomputes or checks it. The hole that shows up in the field is skip.
+
+## The sticker we actually stamp
+
+We built that.
+
+After the crate, the name: **Pudicus**. A `commit-msg` hook runs a pinned checker over the staged tree. If the checker is clean, the hook writes an HMAC receipt onto the commit — inspector identity, this tree, result, time, signature. Deploy verifies the receipt against the current validator and will not proceed without it. The scanners behind the hook are pluggable. The inspector is the pinned validator, not the LLM.
+
+The agent cannot mint the sticker. It does not hold the secret. So the easy path is letting the hook run.
+
+That is an application of [Give an Agent a Tool](/blog/give-an-agent-a-tool/), not a claim that essay already made. Give the agent a business tool and it will use the tool rather than invent the answer. Here the tool is the inspector. Using it is easier than fabricating a checkable receipt, so the receipt is good-enough process evidence. The failure mode we actually see is the one git already documented: they skip the checker.
+
+This is not a product launch. It is proof we already run agent factories with a gate. Overnight output is cheap. The leftover control is whether the crate can leave the dock without the mark.
+
+We run this class of gate on agent-written commits. If you need it operated, talk to us at [anth.us](https://anth.us).
+
+## References
+
+<CitationsList citationFormat="apa" />
