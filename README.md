@@ -28,3 +28,7 @@ cd Anth.us && npm start
 ## Editorial process
 
 Story workflow and Kanbus board live in [anthus-semantic-knowledge-base](https://github.com/AnthusAI/anthus-semantic-knowledge-base), checked out separately or via Papyrus at `pods/anthus-blog`.
+
+## Voice
+
+Write like a person talking to a peer. Smoother, more accessible, more engaging, more open than formal essay-speak. Use contractions: It's, don't, we're, that's. Never It is when It's is what you mean. Pithy. No emojis.
