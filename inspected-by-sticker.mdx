@@ -25,7 +25,33 @@ import { Citation, CitationsList } from "gatsby-citation-manager"
   alt="A wooden produce crate still on the loading dock, one tomato inside, with a paper sticker that reads INSPECTED BY 247."
 />
 
-Imagine an entire factory of software developers working around the clock. But instead of human programmers drinking coffee, it's an "agent swarm"—a collection of specialized AI models wired together to write, test, and ship code continuously. Some people call this a software factory, others call it a model zoo or a coder agent swarm. Whatever the term, the result is the same: because [AI coding costs have collapsed](/blog/ai-coding-cost-collapse-2026), these swarms can build entire products overnight while you sleep.
+Imagine an entire factory of software developers working around the clock. But instead of human programmers drinking coffee, it's an "agent swarm"—a collection of specialized AI models wired together to write, test, and ship code continuously. Some people call this a software factory<Citation
+  data={{
+    type: "book",
+    author: [{ family: "Cusumano", given: "Michael A." }],
+    title: "Japan's Software Factories: A Challenge to U.S. Management",
+    publisher: "Oxford University Press",
+    issued: { "date-parts": [[1991]] }
+  }}
+/>, others call it a model zoo or a coder agent swarm<Citation
+  data={{
+    type: "article-journal",
+    author: [
+      { family: "Qian", given: "Chenglin" },
+      { family: "Cong", given: "Xin" },
+      { family: "Yang", given: "Cheng" },
+      { family: "Chen", given: "Weize" },
+      { family: "Su", given: "Yusheng" },
+      { family: "Xu", given: "Juyuan" },
+      { family: "Liu", given: "Zhiyuan" },
+      { family: "Sun", given: "Maosong" }
+    ],
+    title: "Communicative Agents for Software Development",
+    "container-title": "arXiv preprint arXiv:2307.07924",
+    issued: { "date-parts": [[2023]] },
+    URL: "https://arxiv.org/abs/2307.07924"
+  }}
+/>. Whatever the term, the result is the same: because [AI coding costs have collapsed](/blog/ai-coding-cost-collapse-2026), these swarms can build entire products overnight while you sleep.
 
 In traditional software development, we rely on a strict rule: a human must read and approve every line of code before it goes live. But when an army of AI bots generates thousands of lines of code an hour, human review becomes an impossible bottleneck. The old habit that "a human must review every diff" is on life support. As we've seen when [giving our coding agents a boss](/blog/grok-bot-gave-my-coding-agents-a-boss), the leftover control is no longer a human manually approving every change. 
 
@@ -52,11 +78,12 @@ If deploy will start without that record, or if the record can be yesterday’s 
 
 For years, the software industry has preached the concept of "shift-left"—moving security, testing, and quality checks as early in the development lifecycle as possible.<Citation
   data={{
-    type: "webpage",
-    "container-title": "GitLab",
-    title: "What is shift left in DevOps?",
-    URL: "https://about.gitlab.com/topics/devsecops/shift-left/",
-    accessed: { "date-parts": [[2026, 8, 31]] }
+    type: "article-journal",
+    author: [{ family: "Smith", given: "Larry" }],
+    title: "Shift-Left Testing",
+    "container-title": "Dr. Dobb's Journal",
+    issued: { "date-parts": [[2001]] },
+    URL: "https://www.drdobbs.com/shift-left-testing/184404768"
   }}
 /> Finding a bug on a developer's laptop is cheaper than finding it in a CI/CD pipeline, which is cheaper than finding it in production. 
 
