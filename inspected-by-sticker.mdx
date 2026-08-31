@@ -48,6 +48,20 @@ Later you can show: procedure X, validator version Y, checked this tree. That is
 
 If deploy will start without that record, or if the record can be yesterday’s sticker on this morning’s crate, you failed the test.
 
+## The ultimate shift-left
+
+For years, the software industry has preached the concept of "shift-left"—moving security, testing, and quality checks as early in the development lifecycle as possible.<Citation
+  data={{
+    type: "webpage",
+    "container-title": "GitLab",
+    title: "What is shift left in DevOps?",
+    URL: "https://about.gitlab.com/topics/devsecops/shift-left/",
+    accessed: { "date-parts": [[2026, 8, 31]] }
+  }}
+/> Finding a bug on a developer's laptop is cheaper than finding it in a CI/CD pipeline, which is cheaper than finding it in production. 
+
+When you have a coder agent swarm generating thousands of changes an hour, you cannot wait for a central CI server to evaluate every hallucination. The check must be shifted all the way left: to the exact moment the agent attempts to commit the code. By making the deployment system require a cryptographic receipt of that local check, we tightly bind the left-most validation to the right-most delivery. It ensures the automated factory worker is wearing its safety goggles before the code is even allowed onto the conveyor belt.
+
 ## Skip is the process hole
 
 Git will let you walk around the inspector. Native hooks "can be bypassed with the `--no-verify` option."<Citation
