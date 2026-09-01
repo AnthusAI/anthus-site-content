@@ -20,12 +20,14 @@ tags:
 import BlogImage from "../components/blog-image"
 import { Citation, CitationsList } from "gatsby-citation-manager"
 
-<BlogImage
+<p class="center-full-image">
+  <BlogImage
   images={props.pageContext.frontmatter.images}
   name="inspected-by-sticker-cover.png"
   className="centered"
   alt="A computer monitor in a professional office displaying lines of code in a dark-theme editor, with a physical paper sticker reading 'INSPECTED BY 247' stuck directly onto the glass."
-/>
+ className="center-small-image" />
+</p>
 
 Imagine an entire factory of software developers working around the clock. But instead of human programmers drinking coffee, it's an "agent swarm"—a collection of specialized AI models wired together to write, test, and ship code continuously. Some people call this a software factory<Citation data={{ type: "book", author: [{ family: "Cusumano", given: "Michael A." }], title: "Japan's Software Factories: A Challenge to U.S. Management", publisher: "Oxford University Press", issued: { "date-parts": [[1991]] } }} />, others call it a model zoo or a coder agent swarm<Citation data={{ type: "article-journal", author: [{ family: "Qian", given: "Chenglin" }, { family: "Cong", given: "Xin" }, { family: "Yang", given: "Cheng" }, { family: "Chen", given: "Weize" }, { family: "Su", given: "Yusheng" }, { family: "Xu", given: "Juyuan" }, { family: "Liu", given: "Zhiyuan" }, { family: "Sun", given: "Maosong" }], title: "Communicative Agents for Software Development", "container-title": "arXiv preprint arXiv:2307.07924", issued: { "date-parts": [[2023]] }, URL: "https://arxiv.org/abs/2307.07924" }} />. Whatever the term, the result is the same: because [AI coding costs have collapsed](/blog/ai-coding-cost-collapse-2026), these swarms can build entire products overnight while you sleep.
 
@@ -80,7 +82,9 @@ Treat that the way ITIL treats a change implemented without a ticket:
 
 A `commit-msg` hook runs a pinned checker over the staged tree. If the checker is clean, the hook writes an HMAC receipt onto the commit — recording the inspector identity, the specific git tree, the result, the time, and a cryptographic signature. Your deployment pipeline then verifies this receipt against the current validator and will not proceed without it. The scanners behind the hook are completely pluggable. 
 
-<BlogImage images={props.pageContext.frontmatter.images} name="pudicus-validation.png" className="full" alt="Architecture diagram showing the Pudicus Git Hook running scanners, minting a cryptographic signature, and the deploy gate verifying it." />
+<p class="center-full-image">
+  <BlogImage images={props.pageContext.frontmatter.images} name="pudicus-validation.png" className="center-full-image" alt="Architecture diagram showing the Pudicus Git Hook running scanners, minting a cryptographic signature, and the deploy gate verifying it." />
+</p>
 
 Because the agent cannot mint the sticker (it does not hold the cryptographic secret), the easiest path for the agent is simply letting the hook run. 
 
@@ -96,7 +100,9 @@ To solve this, Pudicus ties the signature to the **Tree Hash** (the exact state 
 
 If an agent bypasses the hook with `--no-verify`, you don't have to rewrite git history. You can run `pudicus approve`, which creates an empty "paperwork" commit at the tip of your branch holding the signatures for the older commits. The deploy gate pools these signatures and checks them against the deployed tree.
 
-<BlogImage images={props.pageContext.frontmatter.images} name="pudicus-signature-pooling.png" className="full" alt="Diagram showing how an Approval Commit signs previous trees, allowing the deploy gate to pool valid signatures." />
+<p class="center-full-image">
+  <BlogImage images={props.pageContext.frontmatter.images} name="pudicus-signature-pooling.png" className="center-full-image" alt="Diagram showing how an Approval Commit signs previous trees, allowing the deploy gate to pool valid signatures." />
+</p>
 
 We are running Pudicus on all of our agent-written commits. You can [view the source code and install it from GitHub](https://github.com/AnthusAI/Pudicus). If you need help operating agent factories with a gate, talk to us at [anth.us](https://anth.us).
 
