@@ -38,6 +38,8 @@ jobs:
         rm -rf site/src/site-content
         cp -a content/ site/src/site-content/
         rm -rf site/src/site-content/.git site/src/site-content/.github
+        mkdir -p site/static/blog/inspected-by-sticker
+        cp content/redirects/inspected-by-sticker/index.html site/static/blog/inspected-by-sticker/index.html
 
     - name: Setup Node
       uses: actions/setup-node@v4
