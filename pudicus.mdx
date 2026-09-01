@@ -1,10 +1,10 @@
 ---
-title: "Introducing Pudicus: The Inspected-by Sticker for Agent Swarms"
-slug: "inspected-by-sticker"
+title: "Pudicus: The Inspected-by Sticker for Agent Swarms"
+slug: "pudicus"
 date: "2026-08-31T17:30:00-04:00"
 authors:
   - author: <a href="/ryan">Ryan Porter</a>
-excerpt: "Today we are launching Pudicus, our cryptographic 'produce sticker' for AI coding swarms. The leftover control is no longer a human on every diff—it is a cryptographically signed receipt proving a pinned checker ran before deployment."
+excerpt: "Pudicus is out. It's a cryptographic produce sticker for agent swarms: a signed receipt that a pinned checker ran before deploy, not a human on every diff."
 preview_image: "./images/inspected-by-sticker-cover.png"
 images:
   - "./images/inspected-by-sticker-cover.png"
@@ -47,7 +47,7 @@ A `Signed-off-by` line is just a person typing that they certified origin. An `A
 
 <mark>The inspector is a named, pinned, deterministic validator — not an LLM that wrote the code. The object is this exact git tree. The mark is cryptographically required at deploy.</mark>
 
-Later you can show: procedure X, validator version Y, checked this tree. That is change-management paperwork with a checkable receipt. It is not a human LGTM, and it is not a provenance bundle for a container image.
+Later you can show: procedure X, validator version Y, checked this tree. That's change-management paperwork with a checkable receipt. It's not a human LGTM, and it's not a provenance bundle for a container image.
 
 If deploy will start without that record, or if the record can be yesterday’s sticker on this morning’s crate, you failed the test.
 
@@ -75,21 +75,21 @@ Treat that the way ITIL treats a change implemented without a ticket:
 2. **Copied an old stamp.** Last week’s receipt pasted onto this tree. If deploy only checks “is some sticker present?” the paperwork is stale.
 3. **Deploy never looks.** A perfect receipt on the commit is a courtesy if production apply does not fail closed.
 
-## Introducing Pudicus
+## Pudicus
 
-**Today, we are launching [Pudicus](https://github.com/AnthusAI/Pudicus), our open-source framework aimed at solving exactly this problem.** It is a standalone, pluggable inspection gate that generates cryptographically verifiable receipts for agent-written code.
+**[Pudicus](https://github.com/AnthusAI/Pudicus) is out.** It's an open-source inspection gate that writes checkable receipts for agent-written code.
 
-A `commit-msg` hook runs a pinned checker over the staged tree. If the checker is clean, the hook writes an HMAC receipt onto the commit — recording the inspector identity, the specific git tree, the result, the time, and a cryptographic signature. Your deployment pipeline then verifies this receipt against the current validator and will not proceed without it. The scanners behind the hook are completely pluggable. 
+A commit-msg hook runs a pinned checker over the staged tree. If the checker is clean, the hook writes an HMAC receipt onto the commit: inspector identity, this git tree, the result, the time, a signature. Deploy checks that receipt against the current validator and won't go without it. The scanners behind the hook are pluggable. 
 
 <p class="center-full-image">
   <BlogImage images={props.pageContext.frontmatter.images} name="pudicus-validation.png" className="center-full-image" alt="Architecture diagram showing the Pudicus Git Hook running scanners, minting a cryptographic signature, and the deploy gate verifying it." />
 </p>
 
-Because the agent cannot mint the sticker (it does not hold the cryptographic secret), the easiest path for the agent is simply letting the hook run. 
+The agent can't mint the sticker. It doesn't hold the secret. So the easy path is letting the hook run. 
 
-This is an application of [Give an Agent a Tool](/blog/give-an-agent-a-tool/): give the agent a business tool and it will use it rather than trying to invent the answer. Here, the tool is the inspector. Using it is easier than fabricating a checkable receipt, so the receipt becomes undeniable process evidence. As we've seen in our own swarms, the only real failure mode is the one git already documented: agents trying to skip the checker using `--no-verify`.
+That's [Give an Agent a Tool](/blog/give-an-agent-a-tool/): give it a business tool and it'll use the tool instead of inventing an answer. Here the tool is the inspector. Using it is easier than faking a checkable receipt, so the receipt is process evidence you can actually verify. In our own swarms, the failure mode is the one git already documented: agents skipping the checker with `--no-verify`.
 
-Pudicus is not just a theoretical concept; it is the concrete gate we use to run our own agent factories today. Overnight output is cheap, but trust is not. The leftover control is ensuring the crate cannot leave the dock without the mark.
+Pudicus isn't a whitepaper. It's the gate we run on our own agent factories. Overnight output is cheap. Trust isn't. The leftover control is that the crate can't leave the dock without the mark.
 
 ### Signature pooling without rewriting history
 
@@ -103,7 +103,7 @@ If an agent bypasses the hook with `--no-verify`, you don't have to rewrite git 
   <BlogImage images={props.pageContext.frontmatter.images} name="pudicus-signature-pooling.png" className="center-full-image" alt="Diagram showing how an Approval Commit signs previous trees, allowing the deploy gate to pool valid signatures." />
 </p>
 
-We are running Pudicus on all of our agent-written commits. You can [view the source code and install it from GitHub](https://github.com/AnthusAI/Pudicus). If you need help operating agent factories with a gate, talk to us at [anth.us](https://anth.us).
+We're running Pudicus on all of our agent-written commits. You can [view the source code and install it from GitHub](https://github.com/AnthusAI/Pudicus). If you need help operating agent factories with a gate, talk to us at [anth.us](https://anth.us).
 
 ## References
 
