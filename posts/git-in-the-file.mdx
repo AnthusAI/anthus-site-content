@@ -1,5 +1,5 @@
 ---
-title: "Git in the File, or the File in Git"
+title: "Git in the file, or the file in Git"
 slug: "git-in-the-file"
 date: "2026-09-01"
 authors:
@@ -7,7 +7,7 @@ authors:
 tags:
   - posts
 excerpt: |
-  There are two ways to put Git on your data for AI agents: one JSON file per record, or branch and merge directly in SQLite. Choose your trade-offs wisely.
+  Two ways to put Git on agent data. Files in Git, or Git inside the database file. You don't need SQLite just because Beads had one.
 preview_image: "../images/posts/git-in-the-file.png"
 images:
   - "../images/posts/git-in-the-file.png"
@@ -21,21 +21,16 @@ import BlogImage from "../../components/blog-image"
     className="center-small-image"
     images={props.pageContext.frontmatter.images}
     name="git-in-the-file.png"
-    alt="DoltLite Logo"
+    alt="DoltLite wordmark, SQLite feather for the i"
   />
 </p>
 
 There are two ways to put Git on your data.
 
-Beads liked a board agents could share. It indexed that board with SQLite. The index is a second copy of the truth. Git cannot merge it. You have to keep it honest.
+[Beads](https://github.com/steveyegge/beads) wanted a board agents could share. It indexed that board with SQLite. The index is a second copy of the truth. Git can't merge it. You have to keep it honest.
 
-We measured. A scan of the files is enough. Rust makes it faster. Kanbus dropped the sidecar. Virtuus made that the product: one JSON file per record. Indexes live in memory and die. The files are the store.
+You don't need that sidecar. A scan of the files is enough. [Kanbus](https://github.com/AnthusAI/Kanbus) [dropped it](https://github.com/AnthusAI/Kanbus/blob/main/docs/VS_BEADS.md). [Virtuus](https://github.com/AnthusAI/Virtuus) made that the product: one JSON file per record. Indexes live in memory and die. The files are the store.
 
-DoltHub wanted the other shape. Apps already speak SQLite. They wanted branch, merge, and diff on the rows. They kept the SQL engine. They swapped the B-tree. Git lives inside the database file.
+[DoltHub](https://www.dolthub.com/blog/2026-08-31-doltlite-beta/) wanted the other shape. Apps already speak SQLite. They wanted branch, merge, and diff on the rows. They kept the SQL engine. They swapped the B-tree for a Prolly tree. Git lives inside the database file.
 
-One leftover is unread C next to production data. The other leftover is a sync tax for a problem the filesystem had already solved. When choosing a store for agent work, you don't necessarily need SQLite just because Beads had one.
-
-*References:*
-- [DoltLite Beta](https://www.dolthub.com/blog/2026-08-31-doltlite-beta/) (Sehn, 31 Aug 2026)
-- Kanbus vs Beads
-- Virtuus README
+So the leftovers are different. DoltLite's is a C storage engine sitting next to the rows. Beads' is a sync tax for a problem the filesystem had already solved. If you're picking a store for agent work, you don't need SQLite just because Beads had one.
