@@ -9,7 +9,7 @@ tags:
   - AI
   - Grok Bot
 excerpt: |
-  Grok Bot's organizational paradigm clicked by about the fourth day: persistent named teammates, channels as shared rooms, bot-to-bot handoffs, and work that kept going after the laptop closed. I started cloning it as Chatticus — not because I wanted more Grok, but because the shape of the product was obvious and the model behind it wasn't.
+  Grok Bot rapidly became the control room for my army of bots: filing bugs, dispatching parallel Cursor workers, rejecting weak work, and returning fixes for acceptance testing—with less help from me than I expected.
 preview_image: "./images/grok-bot-app-square.png"
 images:
   - "./images/grok-bot-app.png"
@@ -19,7 +19,7 @@ images:
   - "./images/grok-bot-has-a-computer.png"
   - "./images/grok-bot-plantuml-request.png"
   - "./diagrams/grok-bot-bot-to-bot-mail.png"
-state: draft
+state: published
 ---
 
 import BlogImage from "../components/blog-image"
@@ -41,15 +41,15 @@ import BlogImage from "../components/blog-image"
   />
 </div>
 
-**By about the fourth day, Grok Bot's organizational paradigm was so game-changing that I started cloning it as [Chatticus](https://chattic.us).**
+**Grok Bot rapidly became the control room for my army of bots—with less help from me than I expected.**
 
 At 4:13 Friday afternoon, the Researcher bot reported a bug to the Software Director. The director split it into separate workstreams, dispatched Cursor agents to my Mac, reviewed what came back, rejected weak work, and returned the combined fix to the Researcher for acceptance testing.
 
 I had defined the roles, but I wasn't carrying every message or specifying every handoff anymore. I was watching software manage software.
 
-This is completely nuts. Grok Bot succeeded hard enough to make a larger category obvious. What I want next is not more Grok.
+This is completely nuts.
 
-I wrote about the management shift in [From Pair Programmer to Executive](/blog/from-pair-programmer-to-executive/). This article is the week-later verdict on the product that made the shift feel real — and why it pointed somewhere Grok Bot itself can't go.
+I wrote about the larger management shift in [From Pair Programmer to Executive](/blog/from-pair-programmer-to-executive/). This article is about the product that made the shift feel real.
 
 <div style={{ maxWidth: "420px", margin: "0 auto var(--base-line-height)" }}>
   <BlogImage
@@ -67,11 +67,11 @@ I wrote about the management shift in [From Pair Programmer to Executive](/blog/
   </em>
 </p>
 
-## What clicked by day four
+## The moment it stopped feeling like another coding agent
 
 Grok Bot belongs in the same broad category as Cursor, Claude Code, Codex, and Google Antigravity. An agent gets a computer, uses tools, and is supposed to return with finished work. On a feature checklist, that doesn't sound especially new.
 
-The experience is new because the machinery disappears — and because the unit of work stops being a chat session and becomes a team.
+The experience is new because the machinery disappears.
 
 On the first night, a bot went live in the Anthus AI Solutions Discord and sat in `#general`. Papyrus started an hourly research watch. A separate site bot received a link, created a post, and handed it to Amplify. While that build ran, the site bot asked the research bot for a trend briefing.
 
@@ -93,15 +93,48 @@ On the first night, a bot went live in the Anthus AI Solutions Discord and sat i
 
 Two agents were doing different jobs on the same always-available computer. They could see one another and talk without waiting for me to copy text from one session into another.
 
-That felt smooth immediately. By about the fourth day, it had become something sharper: persistent named teammates occupying channels as shared rooms, handing work to each other, remembering what happened last time, running routines on schedules, and continuing after I closed the laptop. Roles stopped being labels I typed into prompts and started behaving like a team.
+It felt smooth immediately, then quickly became something else: the place where I directed work that would be implemented by Cursor agents elsewhere.
 
-That's the shape I want more of. Not another coding agent. An organization.
+That's what I missed when the product launched. Grok Bot isn't most interesting as another place to generate code. It's interesting as the place where work can continue across agents, applications, and computers.
 
-## The evidence: roles became a team
+## They provide the computer
 
-Kanbus improved my workflow by giving every agent a shared project record. Tasks, bugs, decisions, and evidence could live in Git instead of one conversation. But Kanbus didn't cause a site bot to notice that a Researcher existed and ask it a question.
+Grok Bot includes a persistent cloud computer shared by your bots. [The documentation describes it plainly](https://docs.x.ai/grok-bot/overview): they can sign into apps and websites, and jobs keep running when you step away. You don't need a dedicated Mac Mini, a virtual machine, or a laptop left awake with the lid open. You talk to the bot. The machine recedes into the background.
 
-[Grok Bot's launch announcement](https://x.ai/news/introducing-grok-bot) says bots can message each other, share context, and coordinate in group chats. In my account, that's what happened. A site bot that needed research began asking the Researcher to investigate open questions. The Software Director began working with the Researcher as a client. I designed the roles and sometimes initiated the collaboration, but I didn't program every conversation that followed.
+That matters more than it sounds.
+
+Remote coding agents are not new. Cursor, Claude Code, Codex, and Antigravity can all perform some version of “use a computer and come back with work.” The differences involve who owns that computer, whether it can reach local hardware, whether the session survives after you close your laptop, and how much of that infrastructure you have to feel.
+
+Grok Bot hides most of it. The computer is simply there.
+
+<div className="center-full-image">
+  <BlogImage
+    images={props.pageContext.frontmatter.images}
+    name="grok-bot-has-a-computer.png"
+    className="full"
+    alt="The bot's own desktop, running Chrome against a dev server on its localhost: the Kanbus board for a project it is working on, where every issue is a .json file in the repo."
+  />
+</div>
+
+<p>
+  <em>
+    This is the bot's computer, not mine: Chrome is open to a Kanbus
+    project-management board running on its localhost, where every issue is a
+    file in the repository.
+  </em>
+</p>
+
+It can also dispatch Cursor agents. Those agents can run on Cursor's cloud machines or on a worker running locally on my Mac. The local version is important to me because the agent can use the actual machine: its repositories, test environment, private network, and even hardware attached over USB. Cursor performs the coding work. Grok Bot manages the sessions.
+
+For a detailed comparison with the other platforms, see [The Year the Coding Agents Went Remote](/blog/coding-agents-went-remote-2026/). The narrower point here is that Grok Bot made the remote computer and the other agents feel like colleagues I could reach from a conversation I already had open.
+
+## The agents can talk to each other
+
+For years, “multi-agent” often meant a framework demo in which several prompts passed messages inside one carefully constructed application. My real workflow was less elegant. I had Cursor, Codex, Claude Code, and other agents open in different tabs. I copied information between them and tried to remember which session knew what.
+
+Kanbus improved that by giving all of them a shared project record. Tasks, bugs, decisions, and evidence could live in Git instead of one conversation. But Kanbus didn't cause an agent to notice that a Researcher existed and ask it a question.
+
+[Grok Bot's launch announcement](https://x.ai/news/introducing-grok-bot) says bots can message each other, share context, and coordinate in group chats. In my account, a site bot that needed research began asking the Researcher to investigate open questions. The Software Director began working with the Researcher as a client. I designed the roles and sometimes initiated the collaboration, but I didn't program every conversation that followed.
 
 That's why the 4:13 message felt so uncanny. The surprising part wasn't that a model found a bug or wrote code. It was that the work moved through several defined responsibilities and came back for checking without me standing inside every exchange.
 
@@ -138,50 +171,11 @@ That's why the 4:13 message felt so uncanny. The surprising part wasn't that a m
   </em>
 </p>
 
-## Work that outlasts the open laptop
+## But it's still Grok
 
-Grok Bot includes a persistent cloud computer shared by your bots. [The documentation describes it plainly](https://docs.x.ai/grok-bot/overview): they can sign into apps and websites, and jobs keep running when you step away. You don't need a dedicated Mac Mini, a virtual machine, or a laptop left awake with the lid open. You talk to the bot. The machine recedes into the background.
+The autonomy that makes Grok Bot exciting also makes it dangerous.
 
-That matters more than it sounds. Remote coding agents are not new. The differences involve who owns the computer, whether it can reach local hardware, whether the session survives after you close your laptop, and how much of that infrastructure you have to feel. Grok Bot hides most of it. The computer is simply there.
-
-<div className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="grok-bot-has-a-computer.png"
-    className="full"
-    alt="The bot's own desktop, running Chrome against a dev server on its localhost: the Kanbus board for a project it is working on, where every issue is a .json file in the repo."
-  />
-</div>
-
-<p>
-  <em>
-    This is the bot's computer, not mine: Chrome is open to a Kanbus
-    project-management board running on its localhost, where every issue is a
-    file in the repository.
-  </em>
-</p>
-
-It can also dispatch Cursor agents. Those agents can run on Cursor's cloud machines or on a worker running locally on my Mac. The local version matters because the agent can use the actual machine: its repositories, test environment, private network, and even hardware attached over USB. Cursor performs the coding work. Grok Bot manages the sessions.
-
-For a detailed comparison with the other platforms, see [The Year the Coding Agents Went Remote](/blog/coding-agents-went-remote-2026/). The narrower point here is that Grok Bot made the remote computer and the other agents feel like colleagues I could reach from a conversation I already had open — and that the work didn't stop when I walked away from the keyboard.
-
-## What I want more of
-
-The positive verdict is about the product shape, not the Grok model behind it.
-
-I want persistent named teammates with durable memory — context that compounds instead of vanishing at the end of a prompt. I want channels as shared rooms where every participant reads the same compacted view and only the teammate you address acts. I want bot-to-bot handoffs in the work itself, not me as the router between agents. I want routines that wake a named teammate on a schedule or event. I want work that continues after the laptop closes.
-
-And I want this to grow into real multi-user groupware: several humans and several bots collaborating in one shared space, with authority, approvals, and consequences that stop with a person.
-
-Grok Bot showed me that shape in practice. The Researcher reporting to the Software Director. Cursor workers dispatched and reviewed. A site bot asking the Researcher without being told. A local worker reaching USB hardware the cloud machine can't touch. Roles that stopped being costumes and started behaving like a team.
-
-## What I don't want more of
-
-I do not want more of the Grok model itself.
-
-There is no choice of model and no useful model-parameter controls. There is no flexible compute policy that treats interactive work differently from background batches with flexible SLAs. There is one generic Linux computer and Chrome, with one capability set shared by the whole bot team. There is no experimentation with base containers or VM images, and no choice of containers for some work and VMs for other work. Pointer-driven GUI may be the right fallback for some tasks, but it should not be the only computer primitive. And one account-level shared computer is not multi-user groupware — it's a single-user control room with several bot faces on it.
-
-The autonomy that makes Grok Bot exciting also makes it dangerous in ways the model can't paper over. It doesn't follow standing procedures as reliably as the best coding agents I use. In this very draft, the written rule said that unpublished work goes on a feature branch because merging to `main` deploys the site. Grok Bot committed to `main` anyway. The last instruction in the conversation beat the durable procedure in the repository.
+It doesn't follow standing procedures as reliably as the best coding agents I use. In this very draft, the written rule said that unpublished work goes on a feature branch because merging to `main` deploys the site. Grok Bot committed to `main` anyway. The last instruction in the conversation beat the durable procedure in the repository.
 
 In another task, it decided I must have meant a different repository and made the right kind of change in the wrong place without asking. When instructed to create one project-management issue, it created an entire hierarchy of issues instead. That isn't harmless enthusiasm when the agent has access to repositories, deployment systems, or private data.
 
@@ -189,24 +183,12 @@ The cloud computer crashed, too. Recovery took several minutes. The files on dis
 
 The account-scoped computer also means the bots share files and logins. Separate bot screens are not a security boundary. I would not give it broad write access to mission-critical systems and hope that a sentence in `AGENTS.md` contains it.
 
-Grok Bot has enough agency to keep going when I want it to keep going. It also has enough agency to work around a blocker in a way I don't approve. Those aren't two different features. They're the same feature viewed from opposite sides — and they're inseparable from a product that locks you into one model on one shared machine with one GUI primitive.
-
-## Chatticus is the response, not a reskin
-
-[Chatticus](https://chattic.us) is my attempt to build the version I actually want — [Shared spaces for people and bots.](https://chattic.us)
-
-People and bots work together around common files, tools, and a system of authority and approvals. One shared filing cabinet; compute that flexes. Text-only turns can stay computerless and escalate when a tool actually needs a computer. Consequential actions pause at an approval boundary you can inspect.
-
-Chatticus is not Grok Bot with a different logo. It's a direct response to Grok Bot's fixed model and fixed compute boundaries.
-
-The foundation is live: durable named bot records and memory, turn-scoped progress, and environment boundaries. Proven in development — not yet product polish — are computerless turns that escalate on first computer use, a shared computer start across concurrent turns, durable handoff across worker failure, and policy checks at consequential sinks. Shipping next: skills and routines authoring, approval cards and human takeover, role and reporting-line controls, and a polished computer preview.
-
-I'm not claiming the roadmap as shipped. But the organizational paradigm Grok Bot demonstrated is real, and I want it in infrastructure the customer controls — with discipline about who did what, on whose authority, and what happens when it's wrong.
+Grok Bot has enough agency to keep going when I want it to keep going. It also has enough agency to work around a blocker in a way I don't approve. Those aren't two different features. They're the same feature viewed from opposite sides.
 
 ## The verdict
 
 Grok Bot is the smoothest way I've found to keep several agents available, let them communicate, and dispatch Cursor work without living inside the Cursor interface. It turned a chat into a control room. The local worker makes it useful for jobs that can't happen on a generic cloud machine, and the agent-to-agent communication is much more useful than I expected.
 
-It's also less obedient than the strongest coding agents I use, locked to one model on one shared machine, and not built for the multi-user collaborative space I actually want.
+It's also less obedient than the strongest coding agents I use. It will invent its own interpretation of a task, it doesn't tell me clearly which model ran, and a crash can take the conversational record with it.
 
-Grok Bot succeeded hard enough to make the larger category obvious. Chatticus is my attempt to build the version I want. Grok Bot gave my coding agents a boss. What I need next is the organization itself.
+That makes the boundary of responsibility clearer. Grok Bot can give a loose collection of agents a chain of command. It can't decide which systems deserve access, which procedures are non-negotiable, or when the manager needs to be told no. That part is still mine.
