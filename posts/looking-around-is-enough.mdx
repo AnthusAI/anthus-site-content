@@ -1,0 +1,34 @@
+---
+title: "Looking around is enough"
+slug: "looking-around-is-enough"
+date: "2026-09-03"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+tags:
+  - posts
+excerpt: |
+  A web beacon is a thing you fetch that acts because you fetched it. GitSpawn is the same trick, one layer under the model.
+preview_image: "../images/posts/looking-around-is-enough.png"
+images:
+  - "../images/posts/looking-around-is-enough.png"
+state: published
+---
+
+import BlogImage from "../../components/blog-image"
+
+<p class="center-full-image">
+  <BlogImage
+    className="center-small-image"
+    images={props.pageContext.frontmatter.images}
+    name="looking-around-is-enough.png"
+    alt="A document with a tiny glowing pixel sending a thin beam of light to a distant server"
+  />
+</p>
+
+A [web beacon](https://en.wikipedia.org/wiki/Web_beacon) is a thing you fetch that acts because you fetched it. The classic one is a one-pixel image in an email. You open the message. Your client asks the server for the picture. That request is the whole report. Nobody had to persuade you of anything.
+
+Last week Dan Goodin at [Ars Technica](https://arstechnica.com/security/2026/08/claude-codex-and-hermes-installed-unowned-code-inside-corporate-networks/) wrote up the same shape with a toolbox attached. Researchers found 227 install commands in `llms.txt` files on corporate sites, pointing at packages and domains nobody owned. They registered a few of the empty names. Within an hour a Fortune 500 machine phoned home. The parent processes were coding agents: Claude, Codex, Hermes. The file said `pip install`. The agent treated the vendor's own docs as ground truth. At least one live file, on Clerk's site, was already pointing at malware.
+
+[GitSpawn](https://www.manifold.security/blog/ai-coding-agents-git-hijack), published this week by Manifold Security, is the colder version. Open a folder with a coding agent and it runs `git status` before you type, sometimes before the trust prompt. If that folder arrived as files, a zip with its `.git` directory still inside, the repo's own config can name a program for Git to run. The agent never has to read a sentence. Git already has a language. Looking around is enough.
+
+The leftover is not the model. It is every interpreter underneath it. [Tactus](https://tactus.anth.us/) is the cage for that stack. Without one, the monkey does not need a note.
