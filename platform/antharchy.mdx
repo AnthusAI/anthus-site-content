@@ -1,0 +1,39 @@
+---
+title: "Antharchy"
+slug: "antharchy"
+date: "2026-09-03"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+tags: ["platform"]
+preview_image: "../images/platform-antharchy.png"
+images:
+  - "../images/platform-antharchy.png"
+excerpt: "Antharchy is a beautiful, modern, agentic Arch Linux desktop distribution by Anthus AI — a fork of Omarchy built for bots in agent factories."
+state: published
+content_type: "platform-product"
+platform_category: "Agent Execution"
+platform_order: 11
+platform_stage: "Active development"
+external_url: "https://github.com/AnthusAI/Antharchy"
+---
+
+## What it is
+
+Antharchy is Anthus's agentic Arch Linux desktop: a modern Wayland tiling environment based on Hyprland, forked from Omarchy and cleaned for high-efficiency agent and developer workflows. It is built to run for bots in agent factories, including headless cloud hosts.
+
+## What it does
+
+- Ships a curated Arch desktop with dynamic tiling, UWSM, and a unified `antharchy` CLI.
+- Runs headlessly on AWS EC2 with software rendering and remote desktop over WayVNC or Moonlight/Sunshine.
+- Strips proprietary non-dev bloat so the image stays focused on agent and engineering work.
+- Integrates cleanly with Anthropic developer tools and other agentic stacks out of the box.
+
+## Why it matters
+
+Agents need a real workplace, not only an API call. Antharchy turns the Linux desktop into a reproducible unit of compute for long-running agent sessions — local or in the cloud — without dragging along a general-purpose consumer distro.
+
+## How it fits the Anthus Platform
+
+Antharchy is the desktop layer underneath collaborative agent work. [Chatticus](/platform/chatticus) can summon a computer for tool use; Antharchy is one image that computer can be. It pairs with [Tactus](/platform/tactus) procedures that need a browser, a terminal, and a durable filesystem, and with [Kanbus](/platform/kanbus) when that work is tracked as code.
+
+A common pattern is [Chatticus](/platform/chatticus) + [Antharchy](/platform/antharchy) + [Tactus](/platform/tactus): shared room, agent desktop, durable procedure.
