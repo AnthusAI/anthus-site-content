@@ -29,17 +29,10 @@ cd Anth.us && npm start
 
 Story workflow and Kanbus board live in [anthus-semantic-knowledge-base](https://github.com/AnthusAI/anthus-semantic-knowledge-base), checked out separately or via Papyrus at `pods/anthus-blog`.
 
-## Agent Zoo
-
-Category-beat editorial guide: [`AGENT_ZOO.md`](./AGENT_ZOO.md) (from Chatticus
-Agent Zoo / Updates desk). Use it for posts about the multi-agent workplace
-category — peers, patterns, naming — with wonder and excitement, as a
-participant.
 
 ## Voice
 
-
-Same editorial bar as Chatticus marketing copy (see Anth.us `AGENTS.md` Editorial Guidelines).
+Writing style shared with Chatticus blog copy (`Chattic.us-web/content/blog/AGENTS.md` Voice). Full rules in Anth.us `AGENTS.md` Editorial Guidelines.
 
 - **Wonder and excitement.** Articles and short posts should feel curious and alive about what people and bots can build — not flat, not hype.
 - Warm communal register; Anthus is a participant, not a press office.
