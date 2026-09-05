@@ -8,4 +8,4 @@ Places guidelines were ambiguous while drafting this article:
 
 3. **No Agent Zoo desk on anth.us.** Anth.us must not grow an Agent Zoo section or resurrect `AGENT_ZOO.md`. Category / field-coverage articles (dated receipts of how agent workplaces and model routing actually run) should still write from that posture. House voice lives in `Chattic.us-web/content/VOICE.md`.
 
-4. **Cover required vs cover pending.** Image Guidelines say create a placeholder before MDX; Ryan’s hard stop forbids generating/installing a cover for this draft. Frontmatter omits `preview_image` / `images`; candidates live only in `commodity-receipts.IMAGE.md`.
+4. **Cover required vs cover pending.** Image Guidelines say create a placeholder before MDX; Ryan’s hard stop forbids generating/installing a cover for this draft. Frontmatter omits `preview_image` / `images`; candidates live only in `commodity-receipts.IMAGE.txt`.
