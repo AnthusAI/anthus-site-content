@@ -1,23 +1,16 @@
-# Cover image — pending Ryan pick
+# Cover image — installed
 
-Do **not** generate or install a cover into `commodity-receipts.mdx` until Ryan chooses one. The article omits `preview_image` / `images` and the BlogImage hero for now.
+Installed: `images/commodity-receipts.png` (1200×630 social card).
 
-## Wikimedia candidates
+## Source
 
-None match the bright Anth.us site palette; Ryan may prefer a licensed press photo instead.
+- **File:Kassenbon.jpg** — public domain (threshold of originality)
+- https://commons.wikimedia.org/wiki/File:Kassenbon.jpg
+- Author: **Lkawer**
+- German cash-register receipt (Edeka / E center); literal “receipt” metaphor.
 
-1. **File:Kassenbon.jpg** — PD (threshold of originality)  
-   https://commons.wikimedia.org/wiki/File:Kassenbon.jpg  
-   German cash-register receipt; literal “receipt” metaphor, plain paper look.
+## Processing
 
-2. **File:USPS_Receipt_-_2002-01-31.jpg** — PD  
-   https://commons.wikimedia.org/wiki/File:USPS_Receipt_-_2002-01-31.jpg  
-   USPS receipt dated 2002-01-31; bureaucratic procurement vibe.
+Real Commons scan letterboxed/centered on Anth.us site-palette canvas `#f1f9fe` at 1200×630 (soft ~24px vertical margins; receipt scaled to fill height). No invented AI cover — subject is the real photo.
 
-3. **File:Credit_card_receipt_-_old_style.jpg** — CC BY-SA 4.0  
-   https://commons.wikimedia.org/wiki/File:Credit_card_receipt_-_old_style.jpg  
-   Old-style credit-card receipt; needs attribution if used.
-
-## Stop
-
-Do not download these into `images/` or wire them into frontmatter until Ryan picks (or substitutes a press/licensed asset).
+Wired into `commodity-receipts.mdx` as `preview_image` / `images` + BlogImage hero with PD credit line.

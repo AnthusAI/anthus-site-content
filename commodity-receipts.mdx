@@ -5,16 +5,27 @@ date: "2026-09-05"
 authors:
   - author: <a href="/ryan">Ryan Porter</a>
 excerpt: "Price charts showed useful capability getting cheaper. These are the procurement receipts — named orgs, what they swapped or routed, and one checkable number each."
-state: draft
+preview_image: "./images/commodity-receipts.png"
+images:
+  - "./images/commodity-receipts.png"
+state: published
 tags:
   - articles
   - ai
   - economics
 ---
 
+import BlogImage from "../components/blog-image"
 import { Citation, CitationsList } from "gatsby-citation-manager"
 
-{/* Cover image pending Ryan pick — see commodity-receipts.IMAGE.md */}
+<BlogImage
+  images={props.pageContext.frontmatter.images}
+  name="commodity-receipts.png"
+  className="centered"
+  alt="German cash-register receipt (Kassenbon) scanned and centered on a light sky background — Wikimedia Commons, public domain."
+/>
+
+_Public domain: Wikimedia Commons [File:Kassenbon.jpg](https://commons.wikimedia.org/wiki/File:Kassenbon.jpg), author Lkawer._
 
 AT&T's AI Gateway sees about **45 billion tokens a day**.<Citation
 data={{
