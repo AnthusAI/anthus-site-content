@@ -29,6 +29,20 @@ cd Anth.us && npm start
 
 Story workflow and Kanbus board live in [anthus-semantic-knowledge-base](https://github.com/AnthusAI/anthus-semantic-knowledge-base), checked out separately or via Papyrus at `pods/anthus-blog`.
 
+## Agent Zoo
+
+Category-beat editorial guide: [`AGENT_ZOO.md`](./AGENT_ZOO.md) (from Chatticus
+Agent Zoo / Updates desk). Use it for posts about the multi-agent workplace
+category — peers, patterns, naming — with wonder and excitement, as a
+participant.
+
 ## Voice
 
-Write like a person talking to a peer. Smoother, more accessible, more engaging, more open than formal essay-speak. Use contractions: It's, don't, we're, that's. Never It is when It's is what you mean. Pithy. No emojis.
+
+Same editorial bar as Chatticus marketing copy (see Anth.us `AGENTS.md` Editorial Guidelines).
+
+- **Wonder and excitement.** Articles and short posts should feel curious and alive about what people and bots can build — not flat, not hype.
+- Warm communal register; Anthus is a participant, not a press office.
+- Confident and aspirational: no "coming soon" / "we're early" hedging. Claims must be checkable.
+- At most one "X, not Y" contrast per piece.
+- Write like a person talking to a peer. Contractions: It's, don't, we're, that's. Pithy. No emojis.
