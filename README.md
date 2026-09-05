@@ -32,9 +32,9 @@ Story workflow and Kanbus board live in [anthus-semantic-knowledge-base](https:/
 
 ## Voice
 
-Writing style shared with Chatticus blog copy (`Chattic.us-web/content/blog/AGENTS.md` Voice). Full rules in Anth.us `AGENTS.md` Editorial Guidelines.
+House voice: `Chattic.us-web/content/VOICE.md`. Full Anth.us rules in parent `AGENTS.md` Editorial Guidelines. Field-coverage / receipts articles use the **Agent Zoo** posture there (wonder from specifics) — no Agent Zoo desk on anth.us.
 
-- **Wonder and excitement.** Articles and short posts should feel curious and alive about what people and bots can build — not flat, not hype.
+- **Wonder from specifics.** Curious and alive about what people and bots actually ship — numbers and named moves, not hype.
 - Warm communal register; Anthus is a participant, not a press office.
 - Confident and aspirational: no "coming soon" / "we're early" hedging. Claims must be checkable.
 - At most one "X, not Y" contrast per piece.

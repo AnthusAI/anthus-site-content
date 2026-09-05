@@ -1,0 +1,11 @@
+# Style friction notes — commodity-receipts
+
+Places guidelines were ambiguous while drafting this article:
+
+1. **Short listicle vs full article.** Early idea / voice-guidelines framing treated this as a short `posts/` listicle. Ryan redirected to a full article under `src/site-content/*.mdx` (receipts as spine, essay open/close). The short post and Pillow PNG were removed.
+
+2. **“Wonder” is posture, not a catchphrase.** Chatticus `VOICE.md` **Agent Zoo** means write from *what a time to be alive* — curious, delighted, a little astonished — with energy from specifics. It does **not** mean sprinkling the literal phrase “wonder and excitement.” Anth.us `AGENTS.md` still said “Wonder and excitement” as a bullet; Agent Zoo posture is the clearer instruction for field-coverage pieces.
+
+3. **No Agent Zoo desk on anth.us.** Anth.us must not grow an Agent Zoo section or resurrect `AGENT_ZOO.md`. Category / field-coverage articles (dated receipts of how agent workplaces and model routing actually run) should still write from that posture. House voice lives in `Chattic.us-web/content/VOICE.md`.
+
+4. **Cover required vs cover pending.** Image Guidelines say create a placeholder before MDX; Ryan’s hard stop forbids generating/installing a cover for this draft. Frontmatter omits `preview_image` / `images`; candidates live only in `commodity-receipts.IMAGE.md`.
