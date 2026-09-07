@@ -1,0 +1,40 @@
+---
+title: "Chad Fowler: the regeneration test"
+slug: "regeneration-test"
+date: "2026-09-07"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+tags:
+  - posts
+excerpt: |
+  The marginal value of creating software is dropping toward zero. Solid solutions architecture is what still pays.
+preview_image: "../images/posts/regeneration-test.png"
+images:
+  - "../images/posts/regeneration-test.png"
+state: published
+---
+
+import BlogImage from "../../components/blog-image"
+
+<p class="center-full-image">
+  <BlogImage
+    className="center-small-image"
+    images={props.pageContext.frontmatter.images}
+    name="regeneration-test.png"
+    alt="Simple diagram: regeneratable implementation bricks on the left, durable architectural constraints on the right"
+  />
+</p>
+
+The marginal value of *creating* software is dropping toward zero. [Useful coding capability got dramatically cheaper](/blog/ai-coding-cost-collapse-2026/) while agents learned to stay on a task longer. What still pays is deciding what the system is allowed to mean — and [making those rules real enough that a runtime can reject a bad path](/blog/everything-as-code-integration/).
+
+[Chad Fowler](https://aicoding.leaflet.pub/3mtmk6ot6oc2i) puts a clean test on that:
+
+> If I regenerated the system tomorrow and this changed, would I care?
+
+If no, it may have been an implementation choice wearing architecture's clothes because changing it used to be expensive. If yes, you've usually found a boundary, invariant, authority rule, or safety property that gives the system its shape.
+
+And the closer:
+
+> For decades, software architecture was a mixture of deliberate constraints, expensive inertia, and assumptions we no longer remember making. Cheap code is dissolving the inertia. Some of what remains will be the architecture we intended. Some of it we'll only discover when regeneration breaks something we didn't know mattered.
+>
+> The difference between those two outcomes is the only architecture that was ever real.
