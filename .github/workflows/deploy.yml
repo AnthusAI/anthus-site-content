@@ -53,35 +53,49 @@ jobs:
         cache: npm
         cache-dependency-path: site/package-lock.json
 
+    # Restore the immediately previous deploy's .cache + public so Gatsby can
+    # incrementally rebuild changed pages and reuse processed images in
+    # public/static. Do NOT use prefix restore-keys here — that was the Sol
+    # stale-HTML bug (bed4d65 / PR #1).
     - name: Restore Gatsby cache
       uses: actions/cache@v4
       with:
-        path: site/.cache
-        key: gatsby-content-${{ runner.os }}-${{ hashFiles('site/package-lock.json') }}-${{ github.sha }}
+        path: |
+          site/.cache
+          site/public
+        key: gatsby-${{ runner.os }}-${{ hashFiles('site/package-lock.json') }}-${{ github.sha }}
         restore-keys: |
-          gatsby-content-${{ runner.os }}-${{ hashFiles('site/package-lock.json') }}-
-          gatsby-content-${{ runner.os }}-
+          gatsby-${{ runner.os }}-${{ hashFiles('site/package-lock.json') }}-${{ github.event.before }}
 
     - name: Install dependencies
       run: npm ci
       working-directory: site
 
-    - name: Clean public HTML
-      run: rm -rf public
-      working-directory: site
-
     - name: Build Gatsby site
-      run: npm run build
+      run: npm run build 2>&1 | tee ../gatsby-build.log
       working-directory: site
       env:
         CI: true
 
-    - name: Save Gatsby cache
+    - name: Report incremental build stats
       if: always()
+      run: |
+        echo "### Gatsby incremental build stats" >> "$GITHUB_STEP_SUMMARY"
+        if [ -f gatsby-build.log ]; then
+          rg "Checking for changed pages|IMAGE_PROCESSING jobs|Done building" gatsby-build.log \
+            | tail -5 >> "$GITHUB_STEP_SUMMARY" || true
+        else
+          echo "Build log not found." >> "$GITHUB_STEP_SUMMARY"
+        fi
+
+    - name: Save Gatsby cache
+      if: success()
       uses: actions/cache@v4
       with:
-        path: site/.cache
-        key: gatsby-content-${{ runner.os }}-${{ hashFiles('site/package-lock.json') }}-${{ github.sha }}
+        path: |
+          site/.cache
+          site/public
+        key: gatsby-${{ runner.os }}-${{ hashFiles('site/package-lock.json') }}-${{ github.sha }}
 
     - name: Configure AWS credentials via OIDC
       if: env.AWS_DEPLOY_ROLE_ARN != ''
