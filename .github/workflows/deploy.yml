@@ -56,7 +56,16 @@ jobs:
     - name: Restore Gatsby cache
       uses: actions/cache@v4
       with:
-        path: site/.cache
+        # Gatsby refuses to trust .cache unless public sits next to it -- it treats
+        # .cache-without-public as a corrupt/incomplete state and wipes the cache before
+        # building ("We've detected that the Gatsby cache is incomplete... deleting your
+        # site's cache"). Caching .cache alone therefore did nothing: every run restored
+        # .cache, saw no public/, discarded it, and did a full cold build anyway. Both
+        # paths have to be cached together, matching how Anth.us's own deploy.yml already
+        # does it -- that workflow just isn't the one that runs on a content push.
+        path: |
+          site/.cache
+          site/public
         key: gatsby-content-${{ runner.os }}-${{ hashFiles('site/package-lock.json') }}-${{ github.sha }}
         restore-keys: |
           gatsby-content-${{ runner.os }}-${{ hashFiles('site/package-lock.json') }}-
@@ -64,10 +73,6 @@ jobs:
 
     - name: Install dependencies
       run: npm ci
-      working-directory: site
-
-    - name: Clean public HTML
-      run: rm -rf public
       working-directory: site
 
     - name: Build Gatsby site
@@ -80,7 +85,9 @@ jobs:
       if: always()
       uses: actions/cache@v4
       with:
-        path: site/.cache
+        path: |
+          site/.cache
+          site/public
         key: gatsby-content-${{ runner.os }}-${{ hashFiles('site/package-lock.json') }}-${{ github.sha }}
 
     - name: Configure AWS credentials via OIDC
