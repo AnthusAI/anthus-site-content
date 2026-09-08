@@ -62,13 +62,13 @@ The completion:
 Animal: Shark - Habitat: Water
 ```
 
-If the model "learns" what you want it to do for this new skill that you're teaching it from the few examples in the prompt, then why did such a smart model fail to learn the rules of the game I wanted it to play?
+If the model "learns" the new skill from the few examples in the prompt, why did it fail to learn the rules of the game I wanted it to play?
 
 It's because language models don't learn anything new from you giving it a few examples in a prompt.
 
 ## What's really going on in few-shot learning?
 
-It's really using the pattern of the examples to locate existing concepts in its pre-training.  The effect that you get from few-shot learning is similar to the effect that you get from fine-tuning a model: It affects the format of the completions.
+It's really using the pattern of the examples to locate concepts that already exist in its pre-training.  The effect resembles fine-tuning a model: it changes the format of the completions, not what the model knows.
 
 Quantitative research into prompt engineering has suggested that language models are not actually learning the task during run time from few-shot examples, but are rather locating tasks in the model's existing space of learned tasks.<Citation
   data={{
@@ -96,7 +96,7 @@ In the land shark example here, the model's pre-training is familiar with the ta
 
 ## Who cares?
 
-You do if you're a prompt engineer, since you can get better results from understanding what few-shot learning is doing and leveraging it.  Rather than wasting input tokens on a mistaken concept.
+You do if you're a prompt engineer. Understanding what few-shot learning is actually doing gets you better results, and it stops you from wasting input tokens on a mistaken concept.
 
 A recent study on engineering prompts to achieve different "styles" in the completions introduced a concept that uses examples in the prompt, similar to few-shot learning.  But without the expectation that the model is "learning" a new task from the examples.  Rather, the goal is to show the model the pattern for the completion.<Citation
   data={{
