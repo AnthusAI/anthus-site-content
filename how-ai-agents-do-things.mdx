@@ -19,11 +19,11 @@ state: published
 import BlogImage from '../components/blog-image';
 import { Citation, CitationsList } from 'gatsby-citation-manager';
 
-I needed a picture of a cute kitten to post on the Internet, since we all have to do our part or else there would be a shortage.  I asked ChatGPT to make a picture of a cute kitten.  And it made one.
+I needed a picture of a cute kitten to post on the Internet. I asked ChatGPT to make one. And it made one.
 
 <BlogImage images={props.pageContext.frontmatter.images} name="a-cute-kitten.png" className="centered" alt="A cute kitten." />
 
-How did this AI model somehow learn to make a picture of a cute kitten?  Did the researchers at OpenAI somehow 'upload' the kitten-drawing skill set into GPT-4, like Neo learning Kung Fu in <i>The Matrix</i> by plugging a cable into the back of his head?
+How did this AI model learn to make a picture of a cute kitten?  Did the researchers at OpenAI 'upload' the kitten-drawing skill set into GPT-4, like Neo learning Kung Fu in <i>The Matrix</i> by plugging a cable into the back of his head?
 
 Not really.  The answer is simpler, and it's a preview of <mark>a new type of software solution.</mark>
 
@@ -39,7 +39,7 @@ These tools that the model can use are called "actions" in general for AI agents
 
 ## How does the AI model use the tools?
 
-But how does that work?  How does the AI model execute the action for you?  It must be complicated to somehow teach an AI model how to draw a picture or look up an order in a database?  Do you have to re-train the entire AI model every time you plug in some new action?
+But how does that work?  How does the AI model execute the action for you?  It sounds like it would be complicated to teach an AI model how to draw a picture or look up an order in a database. Do you have to re-train the entire AI model every time you plug in some new action?
 
 The answer to all these questions is simple and elegant: <mark>You perform the actions yourself.</mark>  The AI model doesn't directly run any computer program, it asks you to do it and report back.  That means that your action can access anything you can, using whatever programming language you want, and you can give it whatever resources it needs.
 
@@ -94,7 +94,7 @@ Here's what the simple request from the agent application to the OpenAI API look
 
 </div>
 
-The OpenAI API send a response that includes the next message in the conversation history, from the AI agent.  Those are labeled with the role "agent".
+The OpenAI API sends a response that includes the next message in the conversation history, from the AI agent.  Those are labeled with the role "agent".
 
 <div className="blockDiagram response">
   <div className="title">
@@ -468,7 +468,7 @@ As we discussed above, you don't send an actual function to OpenAI.  You don't s
     ]
 ```
 
-The AI model will see that, and it will keep in mind that it has a function that takes an order ID for checking the order status.  If anyone asks for something like that, then it knows how.  It's like you're making a contract with the AI about how to handle user requests.  <mark>A promise that you will help</mark> whenever it needs.
+The AI model will see that, and it will keep in mind that it has a function that takes an order ID for checking the order status.  If anyone asks for something like that, then it knows how.  It's like a contract you've made with the AI about how to handle user requests: <mark>a standing promise that the tool will be there when it's needed.</mark>
 
 You'll see from the output in the notebook that the first response from the AI will tell your code to run a function.  Your code runs a (dummy) function and then sends the second request to the AI model.  And then, the model responds by generating text you can relay to the user.
 
@@ -490,7 +490,7 @@ You can also see an example of a text classifier built using function calling fo
 
 ## Not just a friendly voice
 
-To wrap it up, think of the AI agent as a super-helpful airline desk assistant, but with some extra tricks up its sleeve. It's not just there for a chat – it can quickly handle tasks like booking travel or finding flight details. And it does all this quicker than even the fastest-typing airline staff. While this method requires an additional step, the payoff is substantial: a live connection to the real world.  AI models that can do things for you, which is the definition of an AI agent.
+To wrap it up, think of the AI agent as a super-helpful airline desk assistant, but with some extra tricks up its sleeve. It's not just there for a chat – it can quickly handle tasks like booking travel or finding flight details, faster than even the fastest-typing airline staff. This method requires an additional step, but the payoff is substantial: a live connection to the real world. That's the definition of an AI agent: an AI model that can do things for you, not just talk about them.
 
 The artificial intelligence industry is increasingly focused on integration since <mark>an AI agent is much more valuable if it can do things you care about</mark> in the systems you already use.  One of the key ways to integrate your existing systems with the latest and greatest AI models is to give them a toolbox for accessing your system.
 
