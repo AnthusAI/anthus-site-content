@@ -61,9 +61,9 @@ AgentCore is a serverless runtime built specifically for AI agents. It looks and
 *   **Built-in Memory**: It has a managed memory service that persists conversation history and "long-term memory" facts across sessions.
 *   **Identity Management**: It handles OAuth flows so your agent can act *as the user* (e.g., accessing their GitHub or Slack) securely.
 
-You *could* handle long-running tasks by building an intricate AWS Step Functions state machine. But that feels like fitting the infrastructure to your hand like a glove—you end up building very specialized infrastructure when you really just want to run code.
+You *could* handle long-running tasks by building an intricate AWS Step Functions state machine. But that means building specialized infrastructure custom-fit to one workflow, when what you actually want is just to run code.
 
-In the beginning, you don't want to do a bunch of AWS architecture work. You just want it to work. AgentCore allows a single instance to execute for **hours**, which is frankly amazing. It lets you bypass the architectural complexity and just let the agent run.
+Early on, you don't want to do a bunch of AWS architecture work. You just want it to work. AgentCore lets a single instance execute for **hours**, which sidesteps the state-machine complexity and just lets the agent run.
 
 ### The "Give an Agent a Tool" Paradigm
 
