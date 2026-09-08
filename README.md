@@ -32,7 +32,7 @@ Story workflow and Kanbus board live in [anthus-semantic-knowledge-base](https:/
 
 ## Voice
 
-House voice: `Chattic.us-web/content/VOICE.md`. Full Anth.us rules in parent `AGENTS.md` Editorial Guidelines. Field-coverage / receipts articles use the **Agent Zoo** posture there (wonder from specifics) — no Agent Zoo desk on anth.us.
+House voice: parent `AGENTS.md` Editorial Guidelines (in the `Anth.us` site repo, one level up from this submodule). Chatticus is a separate site with its own voice — `Chattic.us-web/content/VOICE.md` does not apply here. The automated editorial-diagnose pipeline (Papyrus) also encodes this voice as a checkable profile: `publications/anthus/style-profile.yml`. Field-coverage / receipts articles use the **Agent Zoo** posture there (wonder from specifics) — no Agent Zoo desk on anth.us.
 
 - **Wonder from specifics.** Curious and alive about what people and bots actually ship — numbers and named moves, not hype.
 - Warm communal register; Anthus is a participant, not a press office.
