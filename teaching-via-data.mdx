@@ -16,7 +16,7 @@ state: draft
 import BlogImage from '../components/blog-image';
 import { Citation, CitationsList } from 'gatsby-citation-manager';
 
-In our recent demonstration of machine-learning (ML) text classifiers, we demonstrated how a business can change the game by cutting costs by orders of magnitude through the use of AI solutions that [efficiently solve problems](/blog/maximize-profit-not-intelligence/) using smaller, cheaper models.  We showed how a custom-trained ML model can perform as well or even better than more-powerful large language models (LLMs) for specific business use cases.  But how do you create a small, cheap model that can perform as well as an LLM?
+In our recent look at machine-learning (ML) text classifiers, we showed how a business can cut costs by orders of magnitude by using AI solutions that [efficiently solve problems](/blog/maximize-profit-not-intelligence/) with smaller, cheaper models. A custom-trained ML model can perform as well or even better than more-powerful large language models (LLMs) for specific business use cases. But how do you create a small, cheap model that can perform as well as an LLM?
 
 ## Knowledge distillation
 
@@ -90,7 +90,7 @@ That's an actual sentence that GPT 3.5 generated for our training data set for t
 
 The problem is that we're trying to do prompt engineering to create a training dataset that will work, but we're driving blind.  The LLM can only guess at what kinds of sentences it should include as examples.  It doesn't know anything about the typical length of the sentences that the classifier will process at runtime, or typical topics for the non-matching sentences, or anything.  And we could make subtle mistakes in our prompt engineering that could mis-align our training data with our problem.
 
-It would be better to eliminate any prompt engineering from the process entirely so that we can replace any LLM classifier with an ML classifier using only the output of the LLM classifier.  We can do that by simply using the LLM classifier to process some real-world sentences.  Then we can treat the classifications as labels in a training dataset.
+It would be better to eliminate any prompt engineering from the process entirely so that we can replace an LLM classifier with an ML classifier using only its own output. We can do that by simply using the LLM classifier to process some real-world sentences, then treating those classifications as labels in a training dataset.
 
 ### How much data?
 
