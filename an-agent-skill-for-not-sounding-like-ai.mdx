@@ -29,7 +29,7 @@ _An editor caught a rewrite that dropped a contraction. That's the whole story, 
 
 I asked an agent to tighten a sentence in an article I'd written: "The difference is that I don't have to sit inside every conversation." The rewrite came back as "The difference is that I no longer have to manage every exchange." Grammatically fine. Not how I talk. I said so, and that one correction turned into a real look at why the tool got it wrong — and then into a general-purpose skill for copy-editing AI-generated text so it reads less like AI and more like whoever's publication it's supposed to be.
 
-That skill and the tooling underneath it live in [Papyrus](https://github.com/AnthusAI/Papyrus), the open-source content system Anth.us builds and runs its own newsroom on. This is what building it actually looked like, including the parts where it didn't work the first time.
+That skill and the tooling underneath it live in [Papyrus](https://papyrus.anth.us), the open-source content system Anth.us builds and runs its own newsroom on. This is what building it actually looked like, including the parts where it didn't work the first time.
 
 ## Two different problems wearing one name
 
@@ -91,4 +91,4 @@ None of this makes editorial judgment optional. If anything it makes the opposit
 
 The interesting failures weren't the scanner missing something. They were the scanner being confidently, specifically wrong — a contraction quietly dropped, a rhetorical device it couldn't tell was deliberate, a boilerplate attribute mistaken for repeated prose — in ways that were fixable exactly because the tool was legible enough to be wrong out loud.
 
-Papyrus is open. The diagnose pipeline, the style-profile schema, the masking fixes, the skill file that walks through the whole cycle — [it's all on GitHub](https://github.com/AnthusAI/Papyrus), including the commits where a first attempt at a fix was too broad and had to be tightened after it flagged perfectly ordinary sentences as slop. That's most of what building this actually looks like: not one clean rule, but a lot of specific, checkable corrections, each one traceable to a real sentence that was actually wrong.
+Papyrus is open. The diagnose pipeline, the style-profile schema, the masking fixes, the skill file that walks through the whole cycle — [the source is right there](https://papyrus.anth.us), including the commits where a first attempt at a fix was too broad and had to be tightened after it flagged perfectly ordinary sentences as slop. That's most of what building this actually looks like: not one clean rule, but a lot of specific, checkable corrections, each one traceable to a real sentence that was actually wrong.
