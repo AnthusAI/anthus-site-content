@@ -27,23 +27,23 @@ import BlogImage from '../components/blog-image';
 
 Ask an agent to make a draft "sound less like AI" and it will happily comply — and produce prose that's different, not better. It has no way to check its own work, so it's guessing, and its guess is just a different flavor of generic. The fix isn't a smarter prompt. It's the same fix that works everywhere else in software: give the agent something to check its work against.
 
-That's the whole technique. Give your copy-editing agent a slop detector — not a commercial AI-detection API, which guesses at *how something was written* and is wrong often enough to be useless, but a deterministic tool that checks *what's actually on the page* against rules a publication actually wrote down. [Limatus](https://github.com/AnthusAI/Limatus) is a small, open-source Python package that does exactly this, and building it is what taught us the technique actually works.
+That's the whole technique. Give your copy-editing agent a slop detector — not a commercial AI-detection API, which guesses at *how something was written* and is wrong often enough to be useless, but a deterministic tool that checks *what's on the page* against rules a publication actually wrote down. [Limatus](https://github.com/AnthusAI/Limatus) is a small, open-source Python package that does exactly this, and building it is what taught us the technique works.
 
 ## Two problems, one wearing the other's clothes
 
-"AI slop" is actually two different problems, and conflating them is why generic advice doesn't help.
+"AI slop" is two different problems, and conflating them is why generic advice doesn't help.
 
 The first is genuinely generic: hedging, empty lead-ins, intensifiers that assert excitement without earning it, sentences that could survive having their nouns swapped for a different topic's nouns. That's pattern-matching, and it's the same pattern-matching regardless of who's publishing.
 
-The second problem has no generic answer at all, because it depends entirely on whose voice you're checking against. This site, [Anth.us](https://anth.us), writes in first person, leans on contractions, and uses an "X, not Y" contrast as a deliberate signature move. [Pilobolus](https://pilobol.us), a much stranger publication built on the same underlying tooling, bans that exact construction outright, writes in impersonal third person, and would flag "I" showing up in the prose as a bug. Same tool. Opposite correct answer. A checker that only knows how to fight generic slop is solving half the problem, and the half it's ignoring is the half that actually makes a publication sound like itself instead of like every other publication trying to sound human.
+The second problem has no generic answer at all, because it depends entirely on whose voice you're checking against. This site, [Anth.us](https://anth.us), writes in first person, leans on contractions, and uses an "X, not Y" contrast as a deliberate signature move. [Pilobolus](https://pilobol.us), a much stranger publication built on the same underlying tooling, bans that exact construction outright, writes in impersonal third person, and would flag "I" showing up in the prose as a bug. Same tool. Opposite correct answer. A checker that only knows how to fight generic slop is solving half the problem, and the half it's ignoring is the half that makes a publication sound like itself instead of like every other publication trying to sound human.
 
-## What the tool actually does
+## What the tool does
 
 Limatus draws a hard line between two things that are easy to blur: checking a draft, and rewriting one.
 
 `limatus diagnose` is a read-only scanner. Point it at a draft and a style profile — a YAML file naming a publication's voice, its preferred and banned lexicon, its banned rhetorical patterns, how many "X, not Y" contrasts it tolerates per piece — and it returns structured findings: vague claims, empty lead-ins, uniform sentence cadence, unsupported certainty, redundancy, voice mismatches. Each finding carries a stable id, an exact text span, and a rationale. It never touches the draft. It never has, on purpose: the moment a checker starts silently rewriting prose, there's no way left to see what it thought was wrong or decide whether it was right.
 
-`limatus options` does the opposite job, deliberately kept separate: for findings a human has explicitly marked "rewrite," it generates a small set of constrained candidate replacements — never a single mandated fix, never an invented fact or citation. A `limatus verify` command then compares an original draft against a human-applied revision and reports whether it actually improved, so "this edit feels better" becomes something you can check instead of something you have to trust.
+`limatus options` does the opposite job, deliberately kept separate: for findings a human has explicitly marked "rewrite," it generates a small set of constrained candidate replacements — never a single mandated fix, never an invented fact or citation. A `limatus verify` command then compares an original draft against a human-applied revision and reports whether it improved, so "this edit feels better" becomes something you can check instead of something you have to trust.
 
 The style profile is the part that makes this generalize instead of just being Anth.us's own house rules with extra steps. It's a plain, versioned config file — no code, no forked repo — so a publication with an entirely different voice writes a different profile and gets entirely different, entirely correct findings. That's what makes it a slop *detector* rather than a slop *opinion*: the rules are explicit, checkable, and yours to set.
 
