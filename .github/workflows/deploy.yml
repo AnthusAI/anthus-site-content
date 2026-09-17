@@ -81,8 +81,12 @@ jobs:
       env:
         CI: true
 
+    - name: Verify rendered posts match cached query data
+      run: node scripts/verify-gatsby-posts-cache.cjs
+      working-directory: site
+
     - name: Save Gatsby cache
-      if: always()
+      if: success()
       uses: actions/cache@v4
       with:
         path: |
