@@ -116,7 +116,7 @@ So the meaningful production guarantee is narrower and still valuable: the respo
 
 The successful-call example displays 95% probability on YES and a separate confidence value of 93%. TypeSafe [documents confidence](https://docs.typesafe.ai/confidence) as a statistic derived from the distribution across available choices or score levels. It isn't an observed accuracy rate.
 
-For production use, we would test calibration against a held-out set with expert-adjudicated answers. Among decisions assigned about 90% probability, how often does the selected answer match the adjudicated result? Does that relationship hold for each question, client, transcript source, and language? Plexus's [evaluation workflow](https://plexus.anth.us/documentation/concepts/evaluations) likewise compares scorecard results with known answers and reports performance metrics.
+For production use, we would test calibration against a held-out set with expert-adjudicated answers. Among decisions assigned about 90% probability, how often does the selected answer match the adjudicated result? Does that relationship hold for each question, client, transcript source, and language? Plexus's [evaluation workflow](https://plexus.anth.us/documentation/basics/evaluations) likewise compares scorecard results with known answers and reports performance metrics.
 
 The answer determines the operating policy. A well-tested threshold might allow routine results to pass automatically, send an uncertain middle band to human review, and require review for every high-consequence finding. Different scorecard questions deserve different thresholds. A missed greeting and a serious compliance issue carry different risks.
 
