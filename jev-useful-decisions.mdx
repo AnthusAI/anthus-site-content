@@ -63,7 +63,7 @@ Getting from one shape to the other takes work. A prompt defines the allowed lab
 
 Token log probabilities sometimes gave us a confidence signal, but they were an awkward foundation for routing. In our own production work, some commonly used models returned tightly concentrated log-probability distributions that appeared certain about nearly every answer. Those numbers did little to separate routine cases from the ones a person should inspect. Newer reasoning models we have evaluated often don't expose token log probabilities at all. These are observations from our systems, rather than claims about every model or provider, but they show why a probability-aware classifier interface is materially different from extracting confidence from generated text.
 
-We described an earlier version of that approach in [Fine-Tuned Classification with Confidence](https://github.com/AnthusAI/anthus-site-content/blob/main/fine-tuned-classification-with-confidence.mdx). The details have evolved, but the operational lesson has held: classification quality lives in the whole system. The prompt, model, rubric, parser, threshold, evaluation set, and human review process all matter.
+We described an earlier version of that approach in [Fine-Tuned Classification with Confidence](/blog/fine-tuned-classification-with-confidence/). The details have evolved, but the operational lesson has held: classification quality lives in the whole system. The prompt, model, rubric, parser, threshold, evaluation set, and human review process all matter.
 
 That system can work well. It also contains machinery whose main purpose is translating between a text generator and a classifier.
 
