@@ -1,176 +1,178 @@
 ---
-title: "Fine-Tuned Classification With Confidence"
+title: "How to Make a Text Classifier Using an LLM"
 slug: "fine-tuned-classification-with-confidence"
-date: "2024-09-01"
+date: "2025-09-17"
 authors:
   - author: <a href="/ryan">Ryan Porter</a>
-assistants:
-  - assistant: ChatGPT
-  - assistant: Claude
-excerpt: "Getting the best of both worlds from LLM-based text classifiers: Easy setup, and also a confidence value."
-preview_image: "./images/draft-2.png"
+tags:
+  - articles
+  - AI
+  - explainer
+excerpt: |
+  Classification-with-Confidence follows an LLM classifier from Yes-or-No token probabilities through calibration, routing, and task-specific fine-tuning.
+preview_image: "./images/llm-classifiers/llm-text-classifier-cover.jpg"
 images:
-  - ./images/draft-2.png
-state: draft
+  - ./images/llm-classifiers/llm-text-classifier-cover.jpg
+  - ./images/llm-classifiers/classification-confidence-raw-reliability.png
+  - ./images/llm-classifiers/classification-confidence-thresholds.png
+  - ./images/llm-classifiers/classification-confidence-fine-tuning.png
+state: published
 ---
 
-import BlogImage from '../components/blog-image';
-import { Citation, CitationsList } from 'gatsby-citation-manager';
+import BlogImage from "../components/blog-image"
 
-Automated decision-making shapes our world and powers business. Should this person get a loan? Is this transaction fraudulent? Is this email spam?
+<BlogImage
+  images={props.pageContext.frontmatter.images}
+  name="llm-classifiers/llm-text-classifier-cover.jpg"
+  className="right"
+  alt="A robot sorts customer-service transcripts into classifier categories in a call analytics workspace."
+/>
 
-These yes-or-no questions are the simplest form of what we call "classification" in machine learning.  A "classifier" makes a "prediction" about what "class" you would want for a given input: 'Would the current email user consider this email to be spam?'  It's predicting what you would think if you were to read the email yourself.  You guide it and align it with your idea of "spam" when you use the junk button.
+Software often needs a bounded decision: detecting fraudulent transactions, checking whether a representative followed policy, or deciding whether a case should go to a person.
 
-Classification tasks go beyond simple yes-or-no decisions. For instance, a financial advisor might classify stock recommendations as "buy", "sell", or "hold". These multi-class decisions are everywhere in business: categorizing customer feedback, prioritizing leads, or diagnosing equipment faults.
+Our [Classification-with-Confidence](https://github.com/AnthusAI/Classification-with-Confidence) project works through that problem from end to end. It begins with a basic LLM text classifier, extracts the probability mass behind its possible labels, tests whether those raw scores match observed accuracy, calibrates them, and uses the result to decide which cases software can handle and which cases need review. It then fine-tunes the model for the specific task and measures the new confidence distribution.
 
-Traditionally, building effective classifiers required substantial resources: powerful hardware, extensive research, and large datasets. This high barrier to entry often limited custom machine learning classifiers to well-financed organizations, like large banks assessing credit risk, tech giants filtering content, or healthcare conglomerates diagnosing diseases from medical images.
+The practical stake is bigger than getting a model to say **Yes** or **No**. A production system needs evidence about when that answer deserves action.
 
-## LLMs predict the next word
+## The Freud Detector
 
-The large language models (LLMs) behind generative AI are also predictors: They work by predicting the 'next' word in a sequence.  The sequence starts with your prompt: "Knock, knock..."
+An early experiment gave us the basic shape. A text-generating model could be constrained to make a binary choice, and its first-token log probabilities could be adapted into a score for that choice. The adapter was awkward: labels had to appear among the provider's returned tokens, capitalization and whitespace mattered, and every model or API change could alter the result.
 
-In this case it's easy to figure out what word is likely to come next.  If someone says, "Knock, knock", what's the next thing you're supposed to say?  "Who's there?"
+The prompt supplied the reveal:
 
-We're used to asking questions and getting answers when we use LLMs through apps like ChatGPT, and we don't think about how it's predicting each word.  But look at what happens when we focus on that next-word prediction:
+```text
+Given the following quote, determine if it was said by Sigmund Freud.
+Answer with either 'Yes' or 'No'.
 
-```
-llm = ChatOpenAI(model="gpt-4o-mini").bind(logprobs=True, top_logprobs=10)
-response = llm.invoke([HumanMessage(content="Knock knock.")])
-logprobs = response.response_metadata['logprobs']['content'][0]['top_logprobs']
-```
+Quote: {quote}
 
-We send the prompt, "Knock, knock..." to GPT 4o mini, and its job is to predict the next sub-word token.  Here's how it responds:
-
-```
-Who's      0.9468
-Who        0.1674
-who        0.0004
- who's     0.0003
-Kn         0.0001
- Who       0.0001
- who       0.0000
-What's     0.0000
- quién     0.0000
-谁          0.0000
+Was this quote by Sigmund Freud?
 ```
 
-The model gave us a list of predictions for the next token, each with the probability that it's the next token.  (The model returns logarithmic probabilities and we have to convert them to linear probabilities, which you can see in the accompanying notebook.)
+The [Freud detector notebook](https://github.com/AnthusAI/LLM-text-classifier-with-confidence/blob/main/Freud_Detector.ipynb) was a small historical test of the technique. It also exposed the core limitation: a token probability looks precise before we know whether it corresponds to observed accuracy. That question became the focus of Classification-with-Confidence.
 
-We can see that the model seems to understand that it's dealing with a knock-knock joke, since it puts a 95% probability on the next word being "Who's".  Or maybe it might say, "Who is", so "Who" shows up as about a 2% probability.  Other possibilities, like responding in Spanish or Chinese, are a lot less probable.
+## Count the whole class, not one spelling
 
-## Predicting a word is classification
+The main project uses Meta's Llama 3.1-8B-Instruct model for binary sentiment classification. The prompt asks whether a piece of text is positive and requests **yes** or **no** as the answer. Because the model predicts tokens rather than abstract classes, one class can surface in several forms: `Yes`, `yes`, `YES`, `y`, and other configured equivalents.
 
-In the knock-knock example, the next word could have been anything.  What if we limit that list to just two words?  Then we can use this process to choose between those two words:
+Reading only the most likely token throws away the rest of that evidence. The project's [classifier implementation](https://github.com/AnthusAI/Classification-with-Confidence/blob/main/logprobs_confidence.py) instead adds the probabilities for every configured token that represents the positive class and does the same for the negative class:
 
-```
-llm = ChatOpenAI(model="gpt-4o-mini").bind(logprobs=True, top_logprobs=8)
-response = llm.invoke([
-    HumanMessage(content="""
-You are a text classifier for sentiment analysis.
-Valid answers: "positive", "negative", lowercase, no whitespace or punctuation.
-Classify the following statement as either 'positive' or 'negative':
-"This article about LLM classifiers helped me to understand."
-""")])
-logprobs = response.response_metadata['logprobs']['content'][0]['top_logprobs']
+```text
+positive score = Σ P(token) for every positive-label token
+negative score = Σ P(token) for every negative-label token
+prediction = class with the larger total
 ```
 
-The model returns this ranked list of probabilities:
+This matters when the model divides its probability across equivalent answers. In the repository's “I love this movie!” example, `Yes` and `yes` carry nearly all the mass between them. In its deliberately ambiguous “Best worst thing ever” example, the combined yes variants and no variants land close together. Aggregation recovers that difference much better than looking at the single winning spelling.
 
-```
-positive   1.0000000000
- positive  0.0000000000
--positive  0.0000000000
-Positive   0.0000000000
-posit      0.0000000000
-_positive  0.0000000000
-negative   0.0000000000
-positivo   0.0000000000
-```
+It still produces a raw model score. Probability assigned to unrelated tokens remains outside the two class totals, and a high total doesn't establish how often the classification is right.
 
-There's some noise in that list, but it effectively chooses between the classes "positive" and "negative".  You can use this as a binary classifier for sentiment analysis.  You can start using it right away, even without any training data or anything.  If you have examples of what you want then you can make it better.  You can align it more closely to the decisions you would make.
+## Compare the score with outcomes
 
-## Changing the game
+Classification-with-Confidence includes a labeled [10,000-example sentiment dataset](https://github.com/AnthusAI/Classification-with-Confidence/tree/main/dataset) organized into strong, medium, weak, and neutral positive and negative categories. The range was intentional: the project needed obvious examples and ambiguous examples to exercise different parts of the score distribution.
 
-LLMs lower the barrier to entry for automating decisions. Cloud-based APIs let organizations tap into powerful, pre-trained models without managing complex infrastructure. These models come with broad knowledge that can be applied to specific tasks, even when domain-specific data is scarce. And you can rapidly improve LLM-based classifiers through prompt engineering and fine-tuning, often with far fewer examples than traditional ML models require.
+The repository reports a run of Llama 3.1-8B across 1,000 randomly selected examples. For each example, it recorded the aggregated class score and whether the predicted sentiment matched the label. It then grouped predictions into five-point score bands and compared each band's raw probability with its observed accuracy.
 
-An AI API can serve as a flexible platform for easily and cheaply creating custom classifiers, whatever your situation:
+<figure className="center-full-image">
+  <BlogImage
+    images={props.pageContext.frontmatter.images}
+    name="llm-classifiers/classification-confidence-raw-reliability.png"
+    className="full"
+    alt="Reliability chart from Classification-with-Confidence comparing raw total probability with observed accuracy across 1,000 sentiment predictions."
+  />
+  <figcaption className="image-caption">
+    In the project's 1,000-example run, raw total probability generally sorted
+    stronger from weaker predictions, but it overstated observed accuracy in
+    important score bands. Bubble labels show the number of examples in each
+    band.
+  </figcaption>
+</figure>
 
-#### No training data
-You can get started even if you don't have any training data at all.  You can use the model's generalized pre-training to make decisions.  You can get up and running quickly with basic prompt engineering and then you can align your solution over time by looking at how well it performs.
+The largest band contained 532 predictions with raw totals between 95% and 100%. Their observed accuracy in this run was 83.5%. That gap is the useful finding. The score carried information about difficulty, but its numeric value couldn't yet be read as a success rate.
 
-#### Some examples of what you want
-Fine-tuning an LLM can significantly improve the performance of an LLM on well-defined tasks.  Even just a few dozen examples can generally align a model's decisions with what you want to see.
+These are project results from a constructed sentiment dataset and one model configuration. They don't establish calibration for another dataset, domain, prompt, model revision, or provider.
 
-#### Lots of examples
-If you can create thousands of examples of 'correct' decisions then you can use machine-learning techniques for evaluating the performance of your solutions.  You can gain the additional benefit of accurate confidence values to tell you how much you can trust each individual decision.
+## Calibrate before treating a score as confidence
 
-## Aligning the classifier to your needs
+Calibration learns a mapping from a raw score to observed correctness. Classification-with-Confidence implements [Platt scaling and isotonic regression](https://github.com/AnthusAI/Classification-with-Confidence/blob/main/calibration.py):
 
-### Prompt engineering
+- **Platt scaling** fits a logistic curve, which is compact and smooth.
+- **Isotonic regression** learns a monotonic mapping without assuming a sigmoid shape, which gives it more flexibility and a greater appetite for calibration data.
 
-Your first step should always be the prompt itself.  Does it clearly identify the valid classification classes?  Does the task in the prompt express the elements of the decision for your classifier?
+The repository's charts report that both mappings moved its reliability points closer to the diagonal where predicted confidence equals observed accuracy. Read that as a result of this experiment. It isn't a permanent property of Llama 3.1-8B, and it doesn't make a threshold a guarantee.
 
-### Completion engineering
+For a production evaluation, the calibration fit and the final measurement need separate data. Keep an untouched test partition, preserve meaningful slices, and rerun the check when the model, prompt, label definition, or input population changes. Otherwise the calibrator can describe the examples it already saw while failing on the next batch.
 
-Identifying the list of classification classes is part of your prompt, but it's the first step toward engineering the answers from the model.  The "completions", in LLM terminology.
+## Route different confidence bands differently
 
-Engineering the completions is critical for LLM-based classifiers.  A lot of popular prompt-engineering techniques, like Chain-of-Thought or Thread-of-Thought prompting, won't work when you're creating text classifiers.  That's because with LLM classifiers you're leveraging the model's ability to predict the next token, and you're mapping that prediction to your classification prediction.  If you want one step of the LLM's prediction process to map to your classification, then you need to engineer your prompts so that one token can represent the classification.  "Yes" is just one token, and so is "No".  "Positive" and "Negative" are common, and so the GPT 4o mini tokenization process represents each of those as one token.  Same for "true" and "false".
+Once the score has been tested and calibrated on representative data, it becomes an operating input. High-confidence, low-consequence cases might pass automatically. A middle band might go to a person. High-consequence decisions might always require review, regardless of score.
 
-You can use longer phrases for multi-class classification, but remember that LLM costs are measured in token, and the output tokens are the expensive ones.  If you can express your classes to the model as "1", "2", "3", "4", etc, then you can cut your costs.  And there are other benefits to representing the answer with the fewest-possible tokens that we'll discuss in more detail when we talk about fine tuning.
+The threshold is a business decision because accuracy and coverage move together. Raising it sends fewer cases through automation and usually improves the observed accuracy of the remaining cases. Lowering it covers more volume and accepts more errors.
 
-When we start fine-tuning models to improve our classifiers, the fine-tuning process needs a way to measure how well it's doing. This measurement becomes simpler and more precise when it's only looking at one or a few tokens instead of longer phrases. It's like grading a single-word answer versus a whole essay - it's quicker and clearer to see if it's right or wrong. This simplicity makes the training process faster and uses less computer power. So, using short, single-token outputs for classification not only saves on regular usage costs but can also make the whole training process quicker and cheaper.
+<figure className="center-full-image">
+  <BlogImage
+    images={props.pageContext.frontmatter.images}
+    name="llm-classifiers/classification-confidence-thresholds.png"
+    className="full"
+    alt="Project chart showing the trade-off between score threshold, number of sentiment predictions above the threshold, and their observed accuracy."
+  />
+  <figcaption className="image-caption">
+    The project's raw-score run illustrates the coverage trade-off. The chart is
+    diagnostic evidence from that sample, rather than a production service
+    level: its 95% raw threshold selected 532 examples whose observed accuracy
+    was 83.5%.
+  </figcaption>
+</figure>
 
-### Completion formatting
+That is why the operating metric should be cost per accepted decision at a defined error tolerance. Inference, human review, retries, and the cost of mistakes all belong in the calculation. One global threshold is rarely enough; different questions and consequences deserve different policies.
 
-Did you notice above that the model had a lot of ideas for responses other than the two options that I gave it for "positive" and "negative"?  It was more likely to respond with "-positive" than with "negative".  If we're tying to make a binary classifier then we want it to always answer either "positive" or "negative".  Nothing else.
+## Fine-tune the task, then measure again
 
-That can be a problem if you're making software that's looking for specific answers so that it can record the decision the classifier made.  A good LLM-based classifier needs to use fuzzy parsing and a retry mechanism for improving reliability.  But you don't want to depend on that stuff since it can affect accuracy and costs.
+The project next fine-tunes Llama 3.1-8B with LoRA on task-specific examples from the same sentiment dataset. Its current [training code](https://github.com/AnthusAI/Classification-with-Confidence/blob/main/fine_tune_model.py) creates an 80/20 split before formatting the training data, and its [comparison code](https://github.com/AnthusAI/Classification-with-Confidence/blob/main/compare_base_vs_finetuned.py) prefers the saved held-out set when comparing the base and fine-tuned models.
 
-Fine-tuning is a great way to control the formatting of the answers you get from the model.  It does incur additional costs, for both training and also fine-tuned models often cost more to operate.  But it can be worth the costs to get the answer formatting exactly like you want.
+The dataset intentionally contains a learnable domain pattern: sports contexts occur more often among positive examples, while workplace contexts occur more often among negative examples. That makes the experiment a demonstration of task-specific alignment. It also makes the boundary clear. The fine-tuned classifier is learning this project's labels and distribution; it isn't becoming a universally better sentiment model.
 
-Let's give it just ten manually-created examples:
+The repository reports higher task accuracy, lower calibration error, and more predictions in its high-confidence bands after fine-tuning. Its confidence-distribution chart shows the visible change:
 
-```
-{"messages": [{"role": "user", "content": "You are a text classifier for sentiment analysis.\nValid answers: \"positive\", \"negative\", only, lowercase, no punctuation or whitespace.\nClassify the following statement as either 'positive' or 'negative':\n\"The weather today is absolutely perfect for a picnic.\""}, {"role": "assistant", "content": "positive"}]}
-{"messages": [{"role": "user", "content": "You are a text classifier for sentiment analysis.\nValid answers: \"positive\", \"negative\", only, lowercase, no punctuation or whitespace.\nClassify the following statement as either 'positive' or 'negative':\n\"I'm disappointed with the poor customer service I received.\""}, {"role": "assistant", "content": "negative"}]}
-...
-```
+<figure className="center-full-image">
+  <BlogImage
+    images={props.pageContext.frontmatter.images}
+    name="llm-classifiers/classification-confidence-fine-tuning.png"
+    className="full"
+    alt="Two histograms from the project compare confidence-score distributions for the base and task-specific fine-tuned Llama 3.1-8B models."
+  />
+  <figcaption className="image-caption">
+    In this project run, the fine-tuned model placed more predictions near the
+    top of its score range. That can expand the useful high-confidence band only
+    when held-out accuracy and calibration improve with it.
+  </figcaption>
+</figure>
 
-After fine-tuning GPT 4o mini with only those ten examples for 20 epochs, we re-run the example above.  Now we can see that "positive" and "negative" are now the most-likely outputs, which is what we wanted:
+A pileup near 1.0 isn't automatically good news. A model can become more certain without becoming more correct. The fine-tuned path therefore has to repeat the same sequence: record raw probabilities, compare them with held-out outcomes, recalibrate, and choose thresholds from the resulting evidence.
 
-```
-positive   1.0000000000
-negative   0.0002000000
- positive  0.0001000000
--positive  0.0000000000
-active     0.0000000000
-absolute   0.0000000000
-relative   0.0000000000
-post       0.0000000000
-```
+## The earlier classifier-native baseline
 
-Now, we'll avoid extra costs and reliability problems from unpredictable outputs.  But is it giving us the right answers?
+Before these LLM experiments, our [semantic text classification project](https://github.com/AnthusAI/semantic-text-classification) used Word2Vec, BERT, OpenAI Ada 2, and AWS Titan embeddings as inputs to logistic regression. The BERT path was BERT embeddings plus logistic regression, rather than `BertForSequenceClassification`. That conventional stack returned a task-specific class probability directly and helped frame the question explored here: how much machinery does it take to recover the same operating contract from a text generator?
 
-## Accuracy
+## What carries into production
 
-How do we know if our classifier is making the right classification decisions?  This is the part where we need some data, since the only way to measure the accuracy is if we have some examples that we know are positive and others that we know are negative.  We'll take a collection of texts that have been labeled positive or negative and we'll run our classifier on them.  For each one, we'll compare our prediction with the ground-truth labels in the data.
+Classification-with-Confidence provides a concrete progression:
 
+1. Constrain generation to a bounded classification answer.
+2. Aggregate the probability mass of equivalent label tokens.
+3. Compare raw scores with correctness on labeled examples.
+4. Fit and evaluate a calibration mapping.
+5. Route cases according to calibrated thresholds and consequence.
+6. Fine-tune for the task, then repeat the evaluation.
 
+Every step depends on the data that supports it. A random sample from a deliberately balanced experiment is useful for learning the mechanism. Production evidence has to represent the traffic, edge cases, languages, clients, and failure costs the system will actually encounter. Calibration also drifts when those inputs change.
 
-<div className="center-small-image">
-<BlogImage images={props.pageContext.frontmatter.images} name="llm-classifiers/freud-detector-base.png" className="full" alt="LLM-based Freud detector" />
-</div>
+The technique depends on access to token probabilities. Local transformer models expose them; hosted providers vary by model and can change their APIs. Label tokenization and output behavior can change too. Version the whole path—model, prompt, token mapping, dataset, calibrator, and threshold—and re-evaluate it as a system.
 
-<div className="center-small-image">
-<BlogImage images={props.pageContext.frontmatter.images} name="llm-classifiers/freud-detector-fine-tuned.png" className="full" alt="LLM-based Freud detector" />
-</div>
+That is the durable lesson. An LLM can be made to behave like a classifier, but useful confidence comes from measured outcomes and an operating policy around them.
 
-## Drawbacks
+---
 
-* Higher inference costs
-* Potential privacy concerns
-* Explainability: The "black box" nature of large models
+## Addendum — September 18, 2026
 
-## References
-
-<CitationsList citationFormat="apa" />
+Since this article was first published, TypeSafe has introduced Jev, a model with a classifier-shaped interface for typed decisions and probabilities. Our companion article, [Making Decisions Instead of Generating Text](/blog/making-decisions-instead-of-generating-text/), examines that claim through the production lens developed here. The Freud notebook doesn't predict how Jev will perform in 2026. It explains why a native, probability-aware decision contract is worth testing: we spent years constructing one around models designed to generate text.
