@@ -4,6 +4,10 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # GitHub evicts Actions cache entries after seven days without access by default.
+  # Reuse the cache every five days so the next content deployment stays incremental.
+  schedule:
+    - cron: '17 4 */5 * *'
 
 # Overlapping s3 sync --delete races delete pages that a newer deploy just uploaded.
 concurrency:
@@ -45,6 +49,20 @@ jobs:
         rm -rf site/src/site-content/.git site/src/site-content/.github
         mkdir -p site/static/blog
         cp -a content/redirects/. site/static/blog/
+
+    - name: Validate deployment configuration
+      if: github.event_name != 'schedule'
+      run: |
+        missing=()
+        for name in AWS_REGION S3_BUCKET CLOUDFRONT_DIST_ID AWS_DEPLOY_ROLE_ARN; do
+          if [ -z "${!name}" ]; then
+            missing+=("$name")
+          fi
+        done
+        if [ "${#missing[@]}" -gt 0 ]; then
+          printf 'Missing required GitHub Actions variables: %s\n' "${missing[*]}" >&2
+          exit 1
+        fi
 
     - name: Setup Node
       uses: actions/setup-node@v4
@@ -95,18 +113,18 @@ jobs:
         key: gatsby-content-${{ runner.os }}-${{ hashFiles('site/package-lock.json') }}-${{ github.sha }}
 
     - name: Configure AWS credentials via OIDC
-      if: env.AWS_DEPLOY_ROLE_ARN != ''
+      if: github.event_name != 'schedule'
       uses: aws-actions/configure-aws-credentials@v4
       with:
         role-to-assume: ${{ env.AWS_DEPLOY_ROLE_ARN }}
         aws-region: ${{ env.AWS_REGION }}
 
     - name: Sync to S3
-      if: env.AWS_DEPLOY_ROLE_ARN != ''
+      if: github.event_name != 'schedule'
       run: aws s3 sync site/public/ s3://${S3_BUCKET} --delete --no-progress
 
     - name: Invalidate CloudFront
-      if: env.AWS_DEPLOY_ROLE_ARN != ''
+      if: github.event_name != 'schedule'
       run: |
         aws cloudfront create-invalidation \
           --distribution-id ${CLOUDFRONT_DIST_ID} \
