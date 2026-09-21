@@ -188,7 +188,9 @@ On all 3,521 held-out items arm A scores 0.902.
 
 We predicted arm A would land between 0.74 and 0.80 with a seed spread of at least 3 points. It got 0.896 with a spread of 1.7. We predicted head-only would beat full fine-tuning at this budget, on the theory that 140 labels would overfit a 421M-parameter encoder. It did the opposite, and landed below untuned Laya. We'd written down one risk to those predictions: the planted cue is lexical, and a model with enough capacity might pick up a lexical shortcut from very few examples. That's the outcome we got, though we haven't tested that it's the mechanism.
 
-Arm B needs a caveat, and it's our fault. We pre-registered a head-only learning-rate grid of 1e-4 and 1e-3, and both were probably too aggressive. The cross-validation scores said so before we touched a held-out item: 0.621 and 0.628, both below what Laya gets with no training. Read B as a badly tuned head, and don't read it as evidence that freezing the encoder fails. We're rerunning it at 1e-5 and 2e-5 as an exploratory arm outside the pre-registered tally. *(Result pending: this experiment is still running, and we'll update this section when it finishes.)* ### Which items does each system get right?
+Arm B needs a caveat, and it's our fault. We pre-registered a head-only learning-rate grid of 1e-4 and 1e-3, and both were probably too aggressive. The cross-validation scores said so before we touched a held-out item: 0.621 and 0.628, both below what Laya gets with no training. Read B as a badly tuned head, and don't read it as evidence that freezing the encoder fails. We're rerunning it at 1e-5 and 2e-5 as an exploratory arm outside the pre-registered tally. *(Result pending: this experiment is still running, and we'll update this section when it finishes.)*
+
+### Which items does each system get right?
 
 <figure className="center-full-image">
   <BlogImage
@@ -229,7 +231,9 @@ So the fine-tune's headline accuracy comes from the medium and weak tiers, 383 o
 
 Arm C draws labels at random from the pool where arm A uses the 140 the active selector picked. At 140 random labels it scores 0.884 (0.862 to 0.895), at 300 it scores 0.902, and at 500 it scores 0.926. The first step is inside the seed spread; the second isn't. The neutral tier moves the same way: 0.623, 0.644, then 0.736 at 500, level with Jev with the layer.
 
-We'd predicted the curve would first pass 0.802 at 300 to 500 labels and first pass 0.870 at 800 to 2,000. It passed the first at 140 in every seed, and the second at 140 on average and at 300 in every seed. We predicted about 0.93 at 5,140 labels, and it's nearly there at 500. At 800 labels it scored 0.928 (0.925 to 0.932 across seeds) and at 2,000 labels 0.938 (0.933 to 0.943), and at all 5,140 pool labels 0.942 (0.935 to 0.947), or 0.939 on the full 3,521 held-out items. That last prediction held: the curve flattens right around the 0.938 a plain text classifier reaches with every pool label. We're also running 20, 40 and 80 labels to find where fine-tuning stops beating the layer. *(Result pending: this experiment is still running, and we'll update this section when it finishes.)* ### What the layer keeps
+We'd predicted the curve would first pass 0.802 at 300 to 500 labels and first pass 0.870 at 800 to 2,000. It passed the first at 140 in every seed, and the second at 140 on average and at 300 in every seed. We predicted about 0.93 at 5,140 labels, and it's nearly there at 500. At 800 labels it scored 0.928 (0.925 to 0.932 across seeds) and at 2,000 labels 0.938 (0.933 to 0.943), and at all 5,140 pool labels 0.942 (0.935 to 0.947), or 0.939 on the full 3,521 held-out items. That last prediction held: the curve flattens right around the 0.938 a plain text classifier reaches with every pool label. We're also running 20, 40 and 80 labels to find where fine-tuning stops beating the layer. *(Result pending: this experiment is still running, and we'll update this section when it finishes.)*
+
+### What the layer keeps
 
 **Calibration.** The layer's ECE is 0.015 on Laya and 0.030 on Jev. The fine-tune's is 0.087 after calibration, several times worse, and seeds range from 0.057 to 0.116. We don't trust that calibration step yet. The procedure fits one temperature per arm, and for arm A it came out at 5.07, which flattens confidences hard and made seed 1 worse than its raw output (0.116 against 0.108). *(Result pending: this experiment is still running, and we'll update this section when it finishes.)* On Brier, which pays for accuracy, the fine-tune edges Jev with the layer, 0.089 to 0.093.
 
@@ -268,7 +272,9 @@ There's one more comparison we care about for production: if you auto-accept eve
     until accuracy would drop below 95%. Black lines span three training seeds.
     Exploratory; we didn't pre-register this comparison.
   </figcaption>
-</figure> ### Where we deviated
+</figure>
+
+### Where we deviated
 
 Cross-validation used 3 folds where we'd pre-registered 5, to keep the run affordable on one GPU. Arm C chose its learning rate at 140 and 800 labels and reused it for the sizes in between. We killed the first attempt before it wrote a row, when MLX's buffer cache grew to about 24 GB on a 32 GB machine. It's all in the pre-registration file, beneath predictions we left unedited.
 
