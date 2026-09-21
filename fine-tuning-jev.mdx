@@ -23,6 +23,15 @@ state: published
 
 import BlogImage from "../components/blog-image"
 
+<figure className="center-full-image">
+  <BlogImage
+    images={props.pageContext.frontmatter.images}
+    name="fine-tuning-jev-cover.png"
+    className="full"
+    alt="Cover: the model never changed; we asked it one more question. Two bars show held-out accuracy of 77 percent for Jev alone and 87 percent for Jev plus one new question, after 140 rounds of agree-or-disagree feedback."
+  />
+</figure>
+
 Say you've got an AI model grading text for you: support tickets, call transcripts, product reviews. It's fast, it's cheap, and most of the time it agrees with your team. Then you notice it getting one kind of case wrong, the same way, over and over. Your reviewers are following a rule nobody ever wrote down, and the model has no way to know it.
 
 The usual fix is fine-tuning: collect corrected examples and retrain the model on them. With [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev) you can't fine-tune. It's a hosted model, and TypeSafe's [model page](https://docs.typesafe.ai/models) says "the same weights serve every account." Nobody gets a copy of their own to retrain.

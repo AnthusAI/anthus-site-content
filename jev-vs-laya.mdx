@@ -23,12 +23,6 @@ state: published
 
 import BlogImage from "../components/blog-image"
 
-If you're using an AI model to sort, score or label text, you've had two kinds to choose from. Hosted models like [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev) work the moment you have an API key, and you pay per item forever. This month [Laya](https://huggingface.co/convaiinnovations/laya) arrived as the open alternative: same kind of model, free, small enough to run on a laptop. Its launch coverage says it beats Jev. If you're paying for Jev today, you want to know whether to switch.
-
-We happened to have the right test bench. It gives both models the same texts, the same questions and the same 140 rounds of human feedback, and changes one thing: which model answers. On that test Jev came out ahead, 87% accuracy to Laya's 80%, and our feedback layer helped both without closing the gap.
-
-Then we did the one thing only an open model allows. We retrained Laya's own weights on that feedback, and it jumped to 90%, past both. We'd predicted in writing that it wouldn't. This piece is the full comparison, including what that retraining costs you.
-
 <figure className="center-full-image">
   <BlogImage
     images={props.pageContext.frontmatter.images}
@@ -41,6 +35,12 @@ Then we did the one thing only an open model allows. We retrained Laya's own wei
     its weights on the same 140 labels. Only an open model gives you that last bar.
   </figcaption>
 </figure>
+
+If you're using an AI model to sort, score or label text, you've had two kinds to choose from. Hosted models like [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev) work the moment you have an API key, and you pay per item forever. This month [Laya](https://huggingface.co/convaiinnovations/laya) arrived as the open alternative: same kind of model, free, small enough to run on a laptop. Its launch coverage says it beats Jev. If you're paying for Jev today, you want to know whether to switch.
+
+We happened to have the right test bench. It gives both models the same texts, the same questions and the same 140 rounds of human feedback, and changes one thing: which model answers. On that test Jev came out ahead, 87% accuracy to Laya's 80%, and our feedback layer helped both without closing the gap.
+
+Then we did the one thing only an open model allows. We retrained Laya's own weights on that feedback, and it jumped to 90%, past both. We'd predicted in writing that it wouldn't. This piece is the full comparison, including what that retraining costs you.
 
 ## What Convai claims for Laya
 

@@ -23,14 +23,6 @@ state: published
 
 import BlogImage from "../components/blog-image"
 
-A hosted AI model is the easy way to start scoring text: no training data, no GPUs, an answer in a quarter of a second. It's also a meter that never stops running. Every ticket, transcript or review you score is another request, for as long as you keep scoring.
-
-There's a way off the meter that doesn't throw away what you've built. Once the hosted model has been tuned to agree with your reviewers, let it grade a big pile of your own unlabeled text, then train a small model of your own on those grades. The big model becomes the teacher. The small one becomes the thing you run.
-
-We tried it. The teacher was a [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev)-based scorer aligned to its reviewers with 140 rounds of feedback. The student was a 66M-parameter DistilBERT, small enough to answer in 5 to 15 milliseconds on a laptop, and it never saw a human label. On 3,521 test items it agreed with the human answer 91% of the time. Its teacher managed 89%.
-
-That 91% is the number in this piece you should trust least, and we'll say why. What's worth copying is the machinery around it: what to score a student against, how to calibrate it, and how to decide where it's allowed to answer.
-
 <figure className="center-full-image">
   <BlogImage
     images={props.pageContext.frontmatter.images}
@@ -43,6 +35,14 @@ That 91% is the number in this piece you should trust least, and we'll say why. 
     run yourself, trained only on the teacher's grades.
   </figcaption>
 </figure>
+
+A hosted AI model is the easy way to start scoring text: no training data, no GPUs, an answer in a quarter of a second. It's also a meter that never stops running. Every ticket, transcript or review you score is another request, for as long as you keep scoring.
+
+There's a way off the meter that doesn't throw away what you've built. Once the hosted model has been tuned to agree with your reviewers, let it grade a big pile of your own unlabeled text, then train a small model of your own on those grades. The big model becomes the teacher. The small one becomes the thing you run.
+
+We tried it. The teacher was a [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev)-based scorer aligned to its reviewers with 140 rounds of feedback. The student was a 66M-parameter DistilBERT, small enough to answer in 5 to 15 milliseconds on a laptop, and it never saw a human label. On 3,521 test items it agreed with the human answer 91% of the time. Its teacher managed 89%.
+
+That 91% is the number in this piece you should trust least, and we'll say why. What's worth copying is the machinery around it: what to score a student against, how to calibrate it, and how to decide where it's allowed to answer.
 
 ## Where the alignment lives
 
