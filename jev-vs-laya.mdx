@@ -163,11 +163,12 @@ We fixed the recipe in [the pre-registration](https://github.com/AnthusAI/Jev-Fl
     images={props.pageContext.frontmatter.images}
     name="jev-vs-laya-finetune.png"
     className="full"
-    alt="Bar chart of held-out accuracy with the same 140 labels. Laya alone 0.722, Laya head-only fine-tune 0.659, Laya with the layer 0.802, DistilBERT fine-tune 0.835, Jev with the layer 0.870, Laya full fine-tune 0.896. Black lines show the range over three seeds."
+    alt="Bar chart of held-out accuracy with the same 140 labels. Laya head-only fine-tune 0.659, Laya alone 0.722, Jev alone 0.768, Laya with the layer 0.802, DistilBERT fine-tune 0.835, Jev with the layer 0.870, Laya full fine-tune 0.896. Black lines show the range over three seeds."
   />
   <figcaption className="image-caption">
-    Six systems, the same 140 labels, the same 600 held-out items. Hatched bars
-    are gradient fine-tunes (mean of three seeds, with the seed range as a black
+    Seven bars, the same 600 held-out items. Light bars are the engines with no
+    labels; every other system got the same 140. Solid bars have the flywheel
+    layer. Hatched bars are gradient fine-tunes (mean of three seeds, with the seed range as a black
     line). Magenta is Laya, blue is Jev, gray is DistilBERT.
   </figcaption>
 </figure>
