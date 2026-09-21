@@ -192,12 +192,13 @@ Arm B needs a caveat, and it's our fault. We pre-registered a head-only learning
     images={props.pageContext.frontmatter.images}
     name="jev-vs-laya-tiers.png"
     className="full"
-    alt="Grouped bars of accuracy by difficulty tier. All four systems score 1.00 on strong. On medium: Jev with the layer 0.95, Laya with the layer 0.84, fine-tuned Laya 1.00, DistilBERT 0.71. On weak: 0.88, 0.79, 0.95, 0.87. On neutral: 0.72, 0.70, 0.67, 0.78."
+    alt="Grouped bars of accuracy by difficulty tier for six systems: Jev alone, Jev with the layer, Laya alone, Laya with the layer, fine-tuned Laya and DistilBERT. All six score 1.00 on strong. On medium: 1.00, 0.95, 0.99, 0.84, 1.00, 0.71. On weak: 0.75, 0.88, 0.67, 0.79, 0.95, 0.87. On neutral: 0.52, 0.72, 0.48, 0.70, 0.67, 0.78."
   />
   <figcaption className="image-caption">
     Accuracy by tier on the 600 held-out items (72 strong, 106 medium, 277 weak,
-    145 neutral). Fine-tuned Laya wins the two middle tiers. On neutral items
-    it's last and DistilBERT is first.
+    145 neutral). Light bars are the engines with no labels: both start near a
+    coin flip on neutral items. Fine-tuned Laya wins the two middle tiers. Among
+    the trained systems it's last on neutral items, and DistilBERT is first.
   </figcaption>
 </figure>
 
