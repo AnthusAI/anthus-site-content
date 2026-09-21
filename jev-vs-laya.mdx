@@ -19,6 +19,7 @@ images:
   - ./images/jev-vs-laya-tiers.png
   - ./images/jev-vs-laya-learning-curve.png
   - ./images/jev-vs-laya-drift.png
+  - ./images/jev-vs-laya-autoaccept.png
 state: published
 ---
 
@@ -253,7 +254,21 @@ We'd predicted the curve would first pass 0.802 at 300 to 500 labels and first p
 
 **The only lever Jev has.** TypeSafe's [model page](https://docs.typesafe.ai/models) says Jev "is not fine-tuned or LoRA-adapted with customer data".
 
-There's one more comparison we care about for production: if you auto-accept every verdict above a confidence threshold, how much of the traffic clears a 95% accuracy bar? *(Result pending: this experiment is still running, and we'll update this section when it finishes.)* ### Where we deviated
+There's one more comparison we care about for production: if you auto-accept every verdict above a confidence threshold, how much of the traffic clears a 95% accuracy bar? On the 600 test items, Jev alone could auto-accept 46% of its verdicts, and Jev with the layer 72%. Laya alone managed 34%, and Laya with the layer 55%. Fine-tuned Laya averaged 71%, but swung from 59% to 82% across its three training seeds, and DistilBERT averaged 63%. So the most accurate system isn't the one that knows best when it's right. How well confidence ranks right answers above wrong ones (AUROC) tells the same story: 0.853 for Jev with the layer, 0.839 for DistilBERT, 0.800 for fine-tuned Laya (0.760 to 0.851 by seed), 0.799 for Laya with the layer. This comparison is exploratory; we didn't pre-register it. Jev rounds its probabilities to two decimals, so the Jev-alone figure sits on a block of 277 tied items. And the fine-tuned models here were retrained for the probe, so their accuracies differ from the table above by up to a point.
+
+<figure className="center-full-image">
+  <BlogImage
+    images={props.pageContext.frontmatter.images}
+    name="jev-vs-laya-autoaccept.png"
+    className="full"
+    alt="Bar chart of the share of verdicts each system can auto-accept while the accepted set stays 95 percent accurate, on 600 test items. Jev with the layer 72 percent. Fully fine-tuned Laya 71 percent on average, ranging from 59 to 82 across three seeds. DistilBERT fine-tune 63 percent. Laya with the layer 55 percent. Jev alone 46 percent. Laya alone 34 percent."
+  />
+  <figcaption className="image-caption">
+    Rank each system's verdicts by its own confidence and accept from the top
+    until accuracy would drop below 95%. Black lines span three training seeds.
+    Exploratory; we didn't pre-register this comparison.
+  </figcaption>
+</figure> ### Where we deviated
 
 Cross-validation used 3 folds where we'd pre-registered 5, to keep the run affordable on one GPU. Arm C chose its learning rate at 140 and 800 labels and reused it for the sizes in between. We killed the first attempt before it wrote a row, when MLX's buffer cache grew to about 24 GB on a 32 GB machine. It's all in the pre-registration file, beneath predictions we left unedited.
 
