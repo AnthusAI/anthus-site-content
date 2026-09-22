@@ -9,7 +9,7 @@ tags:
   - AI
   - explainer
 excerpt: |
-  We asked two fast System 1 decision models one question about real professional bios, then asked again with only the pronouns changed. The open model flipped its verdict on 8 to 18% of them, the hosted one on 1 to 4%, the flips went the way the stereotype says, and the more gendered the occupation, the more flips. Nobody who adopts these models is measuring this. Here's how to.
+  We changed one word in two thousand lawyers' online bios, "he" to "she", and asked a new kind of instant AI whether each person was a paralegal or an attorney. The free model changed its answer on one in five, always the same way. Build a hiring shortlist on it and women attorneys make the list at half the rate of men. Here's how we know, and what to do about it.
 preview_image: "./images/encoding-prejudice-cover.png"
 images:
   - ./images/encoding-prejudice-cover.png
@@ -35,15 +35,25 @@ import BlogImage from "../components/blog-image"
   />
 </figure>
 
-A new kind of model is going in front of everything else: the fast one. [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev) and [Laya](https://huggingface.co/convaiinnovations/laya) answer a typed question about a piece of text in tens of milliseconds and hand back a probability. TypeSafe calls them System 1 models, after Kahneman's name for fast, instinctive thinking: no chain of thought, no generated text, "Unstructured state in, typed probabilistic decisions out." You put one in front of a queue, a résumé pile or a support inbox, and it decides what happens next.
+Imagine applying for a job as a lawyer and losing out before anyone reads your application. Not because of anything it says about your work, but because it says "she".
 
-Take an attorney's bio, a real one from the web with the first name redacted, and change "he" to "she". Ask the open model, Laya, whether the person is a paralegal or an attorney. Nearly one time in five it changes its answer, and every time it changes, it changes to "paralegal", never the reverse. Its recall for "attorney" on women's bios is 8.8 points lower than on men's. The hosted model, Jev, does the same thing about one time in twenty-five. We ran the same one-word test on three more decisions, teacher or professor, surgeon or physician, nurse or physician, and the more gendered the pair, the more verdicts flipped, in the exact order the gap in women's share predicts.
+That is now a realistic thing to worry about, and this article is about why, with the numbers to back it up.
 
-Our task isn't a hiring screen. But it's the inference a screening or ranking tool makes on the way to its score: what role, at what level, has this person held? The decision we measured is a component of the decisions that matter. And if every firm ends up using the same HR software, or if different HR vendors build on the same few AI models, then she meets the same verdict at every firm, for the same reason, and no one at any of them can see it.
+A new kind of artificial intelligence has arrived over the past year. Instead of the chat-style AI that writes out its reasoning, these models answer a simple question about a document in a fraction of a second, for a fraction of a cent, with no explanation at all: just a verdict and a confidence score. They're fast, cheap and easy to plug into anything, and software engineers are eagerly putting them in front of the queues that decide what happens next: which applications get read, which claims get flagged, which customers get called back.
+
+The trade is speed and cost against visibility. With the older kind of AI you could at least read why it decided something, however imperfectly. With these you can't. Whatever habits and prejudices the model absorbed from the internet it learned from are in there, and there is nothing to read. There is no free lunch. So the question is: who pays?
+
+We set out to find out, and the answer, for one common decision, is women. We took two thousand real online biographies of lawyers and paralegals and asked one of these models a simple question about each: is this person a paralegal or an attorney? Then we changed one word in each biography, "he" to "she" or the reverse, and asked again. The free, open model changed its mind on nearly one biography in five, and every single time it changed, it changed the same way: the woman became a paralegal. The commercial model was much better, changing on about one in twenty-five, but almost always in the same direction.
+
+Then we did what a hiring tool would do with those answers. We ranked all two thousand applicants by the model's confidence that they were attorneys and kept the top five hundred, the way a screening system builds a shortlist for a human to read. Among the real attorneys in the pile, the open model put men on the list at twice the rate it put women. Give the women male pronouns and 82 of them who had missed the cut make it. Nobody at the company would have decided that. Nobody would have seen it. The shortlist would have looked perfectly reasonable.
+
+That is the part to hold onto if you read no further. If every firm ends up using the same HR software, or if different HR vendors build on the same few AI models, the same woman meets the same silent verdict at every firm she applies to, for the same reason, and no one at any of them can tell. It's an old kind of unfairness in a new and much larger shape.
+
+The rest of this article shows the measurements, on four different jobs and three kinds of bias, explains why the engineers adopting these models don't notice, and lays out what to do about it, with everything needed to repeat the test on your own data. It gets more technical as it goes.
 
 ## The shortlist
 
-To see what that component does downstream, we built the simplest possible screener. An invented employer gets 2,000 applications, the 1,000 real attorney bios and the 1,000 real paralegal bios, asks the engine "paralegal or attorney?", ranks by P(attorney), and shortlists the top 500. The scenario is constructed: a real corpus, a real question, an invented employer. It's a component of what ranking tools do, and it isn't a ranking tool.
+Here is that shortlist in detail. The models are [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev), a commercial service, and [Laya](https://huggingface.co/convaiinnovations/laya), a free open-weights model; their makers call them System 1 models, after Kahneman's name for fast, instinctive thinking. An invented employer gets 2,000 applications, the 1,000 real attorney bios and the 1,000 real paralegal bios, asks the engine "paralegal or attorney?", ranks by its probability of "attorney", and shortlists the top 500. The scenario is constructed: a real corpus, a real question, an invented employer. It's a component of what ranking tools do, and it isn't a ranking tool.
 
 <figure className="center-full-image">
   <BlogImage
