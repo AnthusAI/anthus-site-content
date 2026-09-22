@@ -39,3 +39,4 @@ House voice: parent `AGENTS.md` Editorial Guidelines (in the `Anth.us` site repo
 - Confident and aspirational: no "coming soon" / "we're early" hedging. Claims must be checkable.
 - At most one "X, not Y" contrast per piece.
 - Write like a person talking to a peer. Contractions: It's, don't, we're, that's. Pithy. No emojis.
+- **Articles never refer to themselves.** No "this article", "this post", "the rest of this piece", and no "below"/"above" as page references. Say the thing, or use a plain transition ("The measurements come first.").
