@@ -1,0 +1,51 @@
+---
+title: "Procedural Film: Movies Drawn in Code"
+slug: "procedural-film"
+date: "2026-09-23"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+tags:
+  - posts
+excerpt: |
+  People are making films with Opus 5.5 that contain no image or audio files at all, every frame drawn on a canvas and every sound synthesised in JavaScript, and there's an open-source agent skill that does it for you.
+preview_image: "../images/posts/procedural-film.png"
+images:
+  - "../images/posts/procedural-film.png"
+state: published
+---
+
+import BlogImage from "../../components/blog-image"
+
+<p class="center-full-image">
+  <BlogImage
+    className="center-small-image"
+    images={props.pageContext.frontmatter.images}
+    name="procedural-film.png"
+    alt="Procedural film: a 30-second movie drawn in JavaScript"
+  />
+</p>
+
+[procedural-film](https://github.com/kuhnhomeuk-cell/procedural-film) is an agent skill that turns a topic into a 30-second vertical film. Every pixel is drawn in vanilla JavaScript on a canvas, every sound is synthesised in Web Audio, and the finished film ships with zero media assets. The output is one self-contained HTML player plus MP4 exports.
+
+The reference film is the life cycle of a monarch butterfly: 17 shots, 32 seconds, 120 bpm, 1080x1920 at 24 fps, alternating hand-inked paper shots with navy blueprint ones. It's modelled on Kevin Ngo's ["The life of a fruit fly"](https://x.com/kevin_t_ngo/status/2099858454043349342), and the repo credits it.
+
+## Why it matters
+
+Generative video usually means a model that emits pixels. This goes the other way: the model writes a program, and the program is the film. That makes the result editable, reproducible, and small. Change a color, a timing, or a beat of the score, and you re-render instead of re-rolling.
+
+It's also a good look at what a capable coding model does with an open-ended creative brief when it has real structure to work in.
+
+## Key technical notes
+
+- **One agent per shot.** Each shot's scene file runs 1000+ lines of canvas code, written by its own subagent in parallel.
+- **Critic waves.** Separate agents review every shot against the shot-type index and the reference frames before anything ships.
+- **A hard gate.** A six-check script has to exit green before a render is accepted.
+- **Cost.** The repo is upfront that a film spends a large share of a usage plan.
+- **Requirements.** Node.js 20+, ffmpeg, Chromium for Playwright, and an agent that runs skills and dispatches parallel subagents, such as Claude Code. MIT licensed.
+
+For us, it's a clean example of the same pattern we build in production: decompose the work, fan it out to agents, and put a critic and a machine-checkable gate between the draft and the release.
+
+## Source
+
+- [procedural-film on GitHub](https://github.com/kuhnhomeuk-cell/procedural-film)
+- [The life of a fruit fly, Kevin Ngo](https://x.com/kevin_t_ngo/status/2099858454043349342)
