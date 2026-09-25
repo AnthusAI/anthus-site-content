@@ -1,0 +1,110 @@
+---
+title: "Decision Models Are Not Calculators"
+slug: "decision-models-are-not-calculators"
+date: "2026-09-25"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+tags:
+  - articles
+  - AI
+  - explainer
+  - mathematics
+excerpt: "Jev chose one in every ordering of a fair-die question; Kev leaned toward one, and Laya overwhelmingly chose six. Benford's Law remains a hypothesis."
+preview_image: "./images/decision-models-are-not-calculators.png"
+images:
+  - "./images/decision-models-are-not-calculators.png"
+  - "./images/decision-models-face-probabilities.png"
+  - "./images/decision-models-option-position.png"
+state: published
+---
+
+import BlogImage from '../components/blog-image';
+
+[Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev) is a decision model: give it a description and a list of possible answers, and it returns a choice and probabilities for the options. We asked it which face had shown on a fair six-sided die rolled out of sight. Jev chose one and assigned it 88% probability. With no information about the roll, every face still had the same one-in-six chance. Why did the model favor one so strongly?
+
+We had a hypothesis inspired by Benford's Law. First we looked at Jev's answer. Then we moved one around the list of choices and asked two other decision models the same question. The results took us somewhere less tidy than our initial explanation.
+
+## A hypothesis about ones
+
+In [The Dominance of Ones](/blog/the-dominance-of-ones/), I looked at Benford's Law: one appears as the *leading digit* more often than other digits in certain observed numerical datasets. Maybe patterns like that in training data leave a model inclined to pick `1` when a prompt provides no evidence for any answer.
+
+That's a possible explanation for a model's behavior. The die stays fair. We didn't inspect Jev's training data, and Benford's Law alone doesn't tell us how often its training corpus contained the token `1`. We could measure the prediction pattern. We couldn't yet name its cause.
+
+## The preliminary result
+
+Our first request described a fair die that had already been rolled, but whose result nobody saw. The model had no clue about which face showed. Here's the ordinary-order request we sent to Jev, one of the [exact requests preserved in the public experiment](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators/blob/main/results/examples.json):
+
+```json
+{
+  "model": "jev-latest",
+  "state": "A fair six-sided die was rolled once. The result is unknown.",
+  "questions": {
+    "die_result": {
+      "type": "choice",
+      "instructions": "Which face showed on the roll?",
+      "criteria": {
+        "1": "the die face marked 1",
+        "2": "the die face marked 2",
+        "3": "the die face marked 3",
+        "4": "the die face marked 4",
+        "5": "the die face marked 5",
+        "6": "the die face marked 6"
+      }
+    }
+  }
+}
+```
+
+Jev selected one. The linked example preserves its complete response:
+
+| Choice | Reported confidence | P(1) | P(2) | P(3) | P(4) | P(5) | P(6) |
+| :-- | --: | --: | --: | --: | --: | --: | --: |
+| 1 | .85 | .88 | .01 | .02 | .05 | .01 | .03 |
+
+Taken alone, this answer looks like support for our hypothesis.
+
+But one was the **first-listed choice** in this request. Maybe Jev was following the top of a list. The recorded request belongs to our full test matrix. Viewed alone, it shows why we needed the rest of the test.
+
+## Does moving one change the answer?
+
+Six choices have **720 possible orders**, so we sent Jev every one. We used digits (`1` through `6`) and words (`one` through `six`), then repeated both sets. Every face occupied every list position exactly 120 times per label form and pass. The [preregistered protocol](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators/blob/main/docs/PREREGISTERED.md) fixed that test before inference.
+
+Jev chose **one in all 2,880 requests**. Face one moved through all six list positions; Jev still chose it 120 times from each position in each digit pass. It made one the unique highest-probability face in all 1,440 digit-labelled replies and chose `one` in every word-labelled reply. Across the first digit pass, its mean returned P(1) was **89.7%**, against **4.4%** for face six in the [released summary](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators/blob/main/results/summary.json).
+
+One followed its label around the list. That rules out a simple “always pick the first option” account of Jev's choices. But the result still doesn't tell us what Jev saw during training, or why it learned to respond this way.
+
+## The other models changed the story
+
+Would the same preference show up elsewhere? We gave the identical question matrix to [Kev](https://github.com/jaredpalmer/kev) and [Laya](https://huggingface.co/convaiinnovations/laya), changing only the model identifier in each request. All **8,640 planned responses** across the three models were valid, as the [release manifest](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators/blob/main/results/release-manifest.json) records. The [complete summary](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators/blob/main/results/summary.json) gives the comparison:
+
+| Model | Face 1 selected, all 2,880 replies | Face 6 selected, all 2,880 replies | Mean P(1), digit pass 1 | Mean P(6), digit pass 1 |
+| :-- | --: | --: | --: | --: |
+| Jev | 2,880 | 0 | 89.7% | 4.4% |
+| Kev | 1,410 | 294 | 18.6% | 18.4% |
+| Laya | 40 | 2,610 | 6.5% | 66.2% |
+
+<BlogImage images={props.pageContext.frontmatter.images} name="decision-models-are-not-calculators.png" className="full" alt="Decision Models Are Not Calculators: mean reported probabilities for digit-labelled die faces. Jev concentrates on one, Kev is comparatively even, and Laya concentrates on six." />
+
+Kev selected one in **49.0%** of its replies. That's a preference, but nothing like Jev's. Its mean digit probabilities were much closer to one-sixth, and in the first digit pass it chose the **first-listed option in 426 of 720 orders**. Laya went the other way: it selected **six in 2,610 replies**, or **90.6%**. With word labels, its mean reported P(six) reached **91.8%** in the first pass. None of those patterns reveals a training-data cause.
+
+<BlogImage images={props.pageContext.frontmatter.images} name="decision-models-face-probabilities.png" className="full" alt="Mean reported probabilities by die face and label form for Jev, Kev, and Laya. The dashed line marks the one-in-six fair-die baseline." />
+
+The chart groups probabilities by the face named in each answer, even when that answer moved to another position. The dashed line marks the fair-die baseline stated in the prompt, independent of the models' outputs.
+
+## Choice order still mattered
+
+The ordering test did more than rule out a first-slot shortcut for Jev. In the first digit pass, Laya **never selected the last-listed option**. Kev's first-position preference was much stronger than a position-neutral pattern across this balanced matrix. Spelling the same faces as words changed Kev's selected answer in **324 of 720 paired orders** and Laya's in **129**. Jev kept choosing one.
+
+<BlogImage images={props.pageContext.frontmatter.images} name="decision-models-option-position.png" className="full" alt="Selected-option share by list position for Jev, Kev, and Laya with digit and word labels. Kev favors early positions; Laya's digit responses never choose the final position." />
+
+Exact repeat requests selected the same face in every case for all three models. Kev and Laya returned identical probability vectors on repeat; Jev's probabilities moved slightly without changing its choice. Those repeats check stability of the model response. They aren't new die rolls.
+
+The [build notes](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators/blob/main/docs/engines.md) pin the three systems. Jev's hosted replies identified `jev-1.13.0`; Kev and Laya used pinned local builds. We compare their returned choice probabilities, without treating the separate confidence fields as calibrated probabilities of correctness. Jev also rounds its probabilities to two decimal places; the [measurement note](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators/blob/main/docs/measurement-notes.md) records that limitation.
+
+## What the result leaves open
+
+**Benford's Law might help explain Jev's distribution of predictions.** That's the limit of the claim. We didn't inspect training corpora, count their leading digits or numeral tokens, or retrain a model with those frequencies changed. Jev's pattern is consistent with the idea; the experiment doesn't establish the mechanism.
+
+Kev's partial preference for one and Laya's strong preference for six don't fit the same simple story. Choice order and spelling affect them, but we can't explain their distributions from these measurements.
+
+If you need a fair die, use a random-number generator. If you need a decision model, test its answers under reordered choices and equivalent labels before using its reported probabilities to make a consequential decision. The [MIT-licensed experiment](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators) includes the exact requests and replies, complete response archives, code, and figures.
