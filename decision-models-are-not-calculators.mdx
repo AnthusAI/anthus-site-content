@@ -20,11 +20,9 @@ state: draft
 
 import BlogImage from '../components/blog-image';
 
-> “Jev predicts that a dice roll has 81% probability of rolling a 1, with 77% confidence. That doesn't seem very calibrated to me.”
+[Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev) is a decision model: give it a description and a list of possible answers, and it returns a choice and probabilities for the options. We asked it which face had shown on a fair six-sided die rolled out of sight. Jev chose one and assigned it 88% probability. With no information about the roll, every face still had the same one-in-six chance. Why did the model favor one so strongly?
 
-A fair six-sided die gives every face the same one-in-six chance. Yet Jev put 81% beside one in that example, along with a separate 77% confidence value. [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev) is a decision model: give it a description and a list of answers, and it returns a choice and probabilities for the options. It had no information about a die roll. Why, then, did one get such a large share?
-
-One screenshot can't establish whether those scores are calibrated. It does give us a question we can test. Anthus AI publicly called Benford's Law “the obvious answer” to Jev's preference for one. That was too certain. We had a hypothesis, and we needed to see how far it would travel.
+We had a hypothesis inspired by Benford's Law. First we looked at Jev's answer. Then we moved one around the list of choices and asked two other decision models the same question. The results took us somewhere less tidy than our initial explanation.
 
 ## A hypothesis about ones
 
@@ -34,7 +32,7 @@ That's a possible explanation for a model's behavior. The die stays fair. We did
 
 ## The preliminary result
 
-The public screenshot asked about a future roll. Our test used a slightly different scenario: someone rolled a fair die, but nobody saw the result. Either way, the model gets no clue about which face showed. Here's the ordinary-order request we sent to Jev, one of the [exact requests preserved in the public experiment](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators/blob/main/results/examples.json):
+Our first request described a fair die that had already been rolled, but whose result nobody saw. The model had no clue about which face showed. Here's the ordinary-order request we sent to Jev, one of the [exact requests preserved in the public experiment](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators/blob/main/results/examples.json):
 
 ```json
 {
@@ -63,13 +61,13 @@ Jev selected one. The linked example preserves its complete response:
 | :-- | --: | --: | --: | --: | --: | --: | --: |
 | 1 | .85 | .88 | .01 | .02 | .05 | .01 | .03 |
 
-The public screenshot showed .81 for one under different wording. Our request returned .88. Taken alone, both answers look like support for our hypothesis.
+Taken alone, this answer looks like support for our hypothesis.
 
-But one was the **first-listed choice** in both examples. Maybe Jev was following the top of a list. The recorded request belongs to our full test matrix. Viewed alone, it shows why we needed the rest of the test.
+But one was the **first-listed choice** in this request. Maybe Jev was following the top of a list. The recorded request belongs to our full test matrix. Viewed alone, it shows why we needed the rest of the test.
 
 ## Does moving one change the answer?
 
-A reply to the original observation suggested reversing the choices. A quick reversal reportedly made no difference. We went further: six choices have **720 possible orders**, so we sent Jev every one. We used digits (`1` through `6`) and words (`one` through `six`), then repeated both sets. Every face occupied every list position exactly 120 times per label form and pass. The [preregistered protocol](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators/blob/main/docs/PREREGISTERED.md) fixed that test before inference.
+Six choices have **720 possible orders**, so we sent Jev every one. We used digits (`1` through `6`) and words (`one` through `six`), then repeated both sets. Every face occupied every list position exactly 120 times per label form and pass. The [preregistered protocol](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators/blob/main/docs/PREREGISTERED.md) fixed that test before inference.
 
 Jev chose **one in all 2,880 requests**. Face one moved through all six list positions; Jev still chose it 120 times from each position in each digit pass. It made one the unique highest-probability face in all 1,440 digit-labelled replies and chose `one` in every word-labelled reply. Across the first digit pass, its mean returned P(1) was **89.7%**, against **4.4%** for face six in the [released summary](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators/blob/main/results/summary.json).
 
@@ -107,6 +105,6 @@ The [build notes](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculator
 
 **Benford's Law might help explain Jev's distribution of predictions.** That's the limit of the claim. We didn't inspect training corpora, count their leading digits or numeral tokens, or retrain a model with those frequencies changed. Jev's pattern is consistent with the idea; the experiment doesn't establish the mechanism.
 
-Kev's partial preference for one and Laya's strong preference for six don't fit the same simple story. Choice order and spelling affect them, but we can't explain their distributions from these measurements. Our earlier “obvious answer” was more certainty than the evidence could carry.
+Kev's partial preference for one and Laya's strong preference for six don't fit the same simple story. Choice order and spelling affect them, but we can't explain their distributions from these measurements.
 
 If you need a fair die, use a random-number generator. If you need a decision model, test its answers under reordered choices and equivalent labels before using its reported probabilities to make a consequential decision. The [MIT-licensed experiment](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators) includes the exact requests and replies, complete response archives, code, and figures.
