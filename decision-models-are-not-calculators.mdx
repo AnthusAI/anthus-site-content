@@ -15,7 +15,7 @@ images:
   - "./images/decision-models-are-not-calculators.png"
   - "./images/decision-models-face-probabilities.png"
   - "./images/decision-models-option-position.png"
-state: draft
+state: published
 ---
 
 import BlogImage from '../components/blog-image';
@@ -83,11 +83,11 @@ Would the same preference show up elsewhere? We gave the identical question matr
 | Kev | 1,410 | 294 | 18.6% | 18.4% |
 | Laya | 40 | 2,610 | 6.5% | 66.2% |
 
-<BlogImage images={props.pageContext.frontmatter.images} name="decision-models-are-not-calculators.png" className="centered" alt="Decision Models Are Not Calculators: mean reported probabilities for digit-labelled die faces. Jev concentrates on one, Kev is comparatively even, and Laya concentrates on six." />
+<BlogImage images={props.pageContext.frontmatter.images} name="decision-models-are-not-calculators.png" className="full" alt="Decision Models Are Not Calculators: mean reported probabilities for digit-labelled die faces. Jev concentrates on one, Kev is comparatively even, and Laya concentrates on six." />
 
 Kev selected one in **49.0%** of its replies. That's a preference, but nothing like Jev's. Its mean digit probabilities were much closer to one-sixth, and in the first digit pass it chose the **first-listed option in 426 of 720 orders**. Laya went the other way: it selected **six in 2,610 replies**, or **90.6%**. With word labels, its mean reported P(six) reached **91.8%** in the first pass. None of those patterns reveals a training-data cause.
 
-<BlogImage images={props.pageContext.frontmatter.images} name="decision-models-face-probabilities.png" className="centered" alt="Mean reported probabilities by die face and label form for Jev, Kev, and Laya. The dashed line marks the one-in-six fair-die baseline." />
+<BlogImage images={props.pageContext.frontmatter.images} name="decision-models-face-probabilities.png" className="full" alt="Mean reported probabilities by die face and label form for Jev, Kev, and Laya. The dashed line marks the one-in-six fair-die baseline." />
 
 The chart groups probabilities by the face named in each answer, even when that answer moved to another position. The dashed line marks the fair-die baseline stated in the prompt, independent of the models' outputs.
 
@@ -95,7 +95,7 @@ The chart groups probabilities by the face named in each answer, even when that 
 
 The ordering test did more than rule out a first-slot shortcut for Jev. In the first digit pass, Laya **never selected the last-listed option**. Kev's first-position preference was much stronger than a position-neutral pattern across this balanced matrix. Spelling the same faces as words changed Kev's selected answer in **324 of 720 paired orders** and Laya's in **129**. Jev kept choosing one.
 
-<BlogImage images={props.pageContext.frontmatter.images} name="decision-models-option-position.png" className="centered" alt="Selected-option share by list position for Jev, Kev, and Laya with digit and word labels. Kev favors early positions; Laya's digit responses never choose the final position." />
+<BlogImage images={props.pageContext.frontmatter.images} name="decision-models-option-position.png" className="full" alt="Selected-option share by list position for Jev, Kev, and Laya with digit and word labels. Kev favors early positions; Laya's digit responses never choose the final position." />
 
 Exact repeat requests selected the same face in every case for all three models. Kev and Laya returned identical probability vectors on repeat; Jev's probabilities moved slightly without changing its choice. Those repeats check stability of the model response. They aren't new die rolls.
 
