@@ -1,0 +1,100 @@
+---
+title: "Decision Models Are Not Calculators"
+slug: "decision-models-are-not-calculators"
+date: "2026-09-25"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+tags:
+  - articles
+  - AI
+  - explainer
+  - mathematics
+excerpt: "Ask three decision models about an unseen fair die, and they give three different answers: Jev chose one in every trial, Kev chose one about half the time, and Laya overwhelmingly chose six."
+preview_image: "./images/decision-models-are-not-calculators.png"
+images:
+  - "./images/decision-models-are-not-calculators.png"
+  - "./images/decision-models-face-probabilities.png"
+  - "./images/decision-models-option-position.png"
+state: draft
+---
+
+import BlogImage from '../components/blog-image';
+
+Someone rolls a fair six-sided die where nobody can see it. We know it landed on a face. We don't know which one. Until somebody looks, each face has the same one-in-six chance.
+
+Now ask three AI decision models which face showed. One says **one every time**. Another says **one about half the time**. The third mostly says **six**. Those aren't three estimates of what happened behind the screen. They're three different ways a model responds to the words and choices we gave it.
+
+<BlogImage images={props.pageContext.frontmatter.images} name="decision-models-are-not-calculators.png" className="centered" alt="Decision Models Are Not Calculators: a response-derived chart showing Jev strongly favoring one, Kev near an even spread, and Laya strongly favoring six for digit-labelled die faces." />
+
+The complete experiment contains **8,640 valid replies** from [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev), [Kev](https://github.com/jaredpalmer/kev), and [Laya](https://huggingface.co/convaiinnovations/laya). Each saw every possible order of the six faces, written as digits and as words, then saw the entire set again. The [public, MIT-licensed project](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators) has the preregistered question, exact replies, checksummed response files, and code that generated the figures. The result is wonderfully specific. It also keeps us from blaming a cause we haven't measured.
+
+## What we asked
+
+We used one short state: “A fair six-sided die was rolled once. The result is unknown.” The question was “Which face showed on the roll?” The six alternatives described the six marked faces. This is the canonical digit request sent to Jev; Kev received the same envelope with `model` set to `kev-latest`, and Laya used `english` for that field:
+
+```json
+{
+  "model": "jev-latest",
+  "state": "A fair six-sided die was rolled once. The result is unknown.",
+  "questions": {
+    "die_result": {
+      "type": "choice",
+      "instructions": "Which face showed on the roll?",
+      "criteria": {
+        "1": "the die face marked 1",
+        "2": "the die face marked 2",
+        "3": "the die face marked 3",
+        "4": "the die face marked 4",
+        "5": "the die face marked 5",
+        "6": "the die face marked 6"
+      }
+    }
+  }
+}
+```
+
+In that single order, the replies already disagree. These are the actual selected choices and returned per-face probabilities, extracted from the [complete response envelopes](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators/blob/main/results/examples.json):
+
+| Model | Choice | P(1) | P(2) | P(3) | P(4) | P(5) | P(6) |
+| :-- | :-- | --: | --: | --: | --: | --: | --: |
+| Jev | 1 | .88 | .01 | .02 | .05 | .01 | .03 |
+| Kev | 6 | .1734 | .1172 | .1687 | .1623 | .1809 | .1975 |
+| Laya | 1 | .3988 | .2483 | .1496 | .0723 | .0531 | .0780 |
+
+Laya chose one in this example even though its most common answer over the full matrix was six. That's why one attractive example request can be a poor substitute for a test set.
+
+## Every way to arrange six choices
+
+Six labels have 720 possible orders. We sent all 720 to each model, first as `1` through `6`, then as `one` through `six`. We repeated both sets once, making **2,880 requests per model**, as [the release manifest confirms](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators/blob/main/results/release-manifest.json). The [preregistered matrix](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators/blob/main/docs/PREREGISTERED.md) puts each face at each list position exactly 120 times per form and pass. Changing order couldn't accidentally make one face appear first more often than another.
+
+The literal conjecture was simple: would face one have the highest returned probability in *every* digit-labelled response? The answer depends on the model. The [released summary](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators/blob/main/results/summary.json) supplies every count and mean in this table:
+
+| Model | Face 1 selected, all 2,880 replies | Face 6 selected, all 2,880 replies | Mean P(1), digit pass 1 | Mean P(6), digit pass 1 |
+| :-- | --: | --: | --: | --: |
+| Jev | 2,880 | 0 | 89.7% | 4.4% |
+| Kev | 1,410 | 294 | 18.6% | 18.4% |
+| Laya | 40 | 2,610 | 6.5% | 66.2% |
+
+*Source: the [complete model-by-model summary](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators/blob/main/results/summary.json).*
+
+Jev made one its unique highest-probability face in all 1,440 digit-labelled replies, both passes included, and selected one in all its word-labelled replies too. Kev and Laya both falsified the literal “always one” claim in the [complete record](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators/blob/main/results/summary.json). Kev's digit probabilities were much closer to one-sixth, yet its selected choice still leaned toward one across digit and word forms. Laya strongly favored six, especially with word labels: its mean returned probability for `six` was **91.8%** in the [first word pass](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators/blob/main/results/summary.json).
+
+<BlogImage images={props.pageContext.frontmatter.images} name="decision-models-face-probabilities.png" className="centered" alt="Six panels compare mean returned probabilities for each die face across Jev, Kev, and Laya with digit and word labels. Jev concentrates on one, Kev is near a flat distribution, and Laya concentrates on six; the dashed line marks one-sixth." />
+
+We averaged the returned probabilities by *semantic face*. When `six` moved to a different position, we still counted it as face six. The dashed line marks the fair-die baseline, one-sixth. That baseline comes from the [stated fair-die setup](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators/blob/main/docs/PREREGISTERED.md); the models never observed the roll.
+
+## The list has a gravity of its own
+
+The labels' positions also mattered. In the first digit pass, Kev picked the **first-listed choice in 426 of 720 orders**—59.2%, where a position-neutral pattern across this balanced set would be 16.7%, according to the [position breakdown](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators/blob/main/results/summary.json). Laya picked the **last-listed choice zero times** in those 720 digit orders. Jev always picked face one, which occupied each position 120 times, so its selected-position counts were exactly even in the [same recorded breakdown](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators/blob/main/results/summary.json).
+
+<BlogImage images={props.pageContext.frontmatter.images} name="decision-models-option-position.png" className="centered" alt="Six line charts show the share of selections at each of six choice-list positions for Jev, Kev, and Laya under digit and word labels. Jev is flat, Kev favors early options, and Laya's digit responses never select the last option." />
+
+Spelling the same face names as words changed the selected answer in **324 of 720 paired orders for Kev** and **129 of 720 for Laya**. Jev kept choosing one. On the exact-repeat pass, every model selected the same semantic face it had selected before for every matching request. Kev and Laya even returned identical probability vectors; Jev's probabilities moved slightly without changing its choice. The repeat is a stability check, not a fresh random sample of the world.
+
+These models do different jobs internally. Jev was a hosted service requested through the `jev-latest` alias; every recorded response identified `jev-1.13.0`. Kev was a pinned open-weight checkpoint run through a local compatible service. Laya was a pinned local classifier. The [build notes](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators/blob/main/docs/engines.md) and [release manifest](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators/blob/main/results/release-manifest.json) record the versions. Laya's runtime warns about its separate confidence field, so we compare returned choice probabilities without claiming calibrated confidence. Jev rounds probabilities to two decimal places; the [measurement note](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators/blob/main/docs/measurement-notes.md) explains why we preserved those raw values.
+
+## What Benford can—and can't—explain here
+
+In [The Dominance of Ones](/blog/the-dominance-of-ones/), I looked at Benford's Law: in many real-world numerical datasets, one turns up as the *leading digit* more often than nine. It's tempting to connect that observation to Jev's fondness for face one. The experiment gives us a reason to be curious, but no evidence about what was in any model's training data. Benford's Law concerns leading digits in some observed datasets, as the [earlier examples](/blog/the-dominance-of-ones/) show. The three measured model patterns argue against a universal “decision models always pick one” story.
+
+If an application needs a fair die, use a random-number generator. If it needs a model to judge among options, test that model on the decision distribution you actually care about. Keep the exact returned probabilities, rotate the choice order, try equivalent labels, and pin the build. A structured answer can be cleanly formatted and still carry the model's own learned preferences into a place where you wanted arithmetic.
