@@ -1,0 +1,35 @@
+---
+title: "DataParade"
+slug: "dataparade"
+date: "2026-09-26"
+display_date: "2026 - ongoing"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+tags: ["solutions", "featured"]
+preview_image: "./images/dataparade.png"
+excerpt: "<p>DataParade is a privacy and security product built on a semantic knowledge graph, with a custom ontology and taxonomy that ties into the OCSF standard. Anthus is working with DataParade to develop it. It belongs to the new class of tooling that lets people see what AI agents are doing across a project once they've stepped back from writing the code themselves. <ul><li>Semantic knowledge graph as the system of record for what happened, to what, and by whom</li><li>Custom ontology and taxonomy mapped to the Open Cybersecurity Schema Framework</li><li>Built for the operator who has delegated the work and still has to answer for it</li></ul>Visit <a href='https://dataparade.io'>dataparade.io</a>.</p>"
+images: []
+state: published
+---
+
+## Observability for delegated work
+
+DataParade is a privacy and security product, and Anthus is working with the DataParade team to develop it. At its core is a semantic knowledge graph: a structured record of what happened in a system, to which assets, under whose authority. On top of the graph sits a custom ontology and taxonomy that ties into the [Open Cybersecurity Schema Framework](https://schema.ocsf.io/), so the record speaks the same language as the security tooling an organization already runs.
+
+It belongs to a class of technology that is arriving because of a change in how software gets built. As teams delegate coding to AI agents and step back from the code, the old instruments for knowing what's going on, reading the diff and sitting in the standup, stop scaling. What replaces them is a record you can query: what did the agents touch, what data did it involve, who approved it, and does any of it cross a line. That's the question DataParade is built to answer.
+
+## Why it matters to a software factory
+
+You can't let a thousand agents churn through thousands of tasks without a way to monitor and steer them. Observability of that kind is a prerequisite for operating a software factory at all, and it's the same principle behind [Kanbus](/platform/kanbus), where the project record lives in the repository, and [Plexus](/platform/plexus), where every promoted change carries its evidence. A knowledge graph with a security ontology is the layer that makes the record meaningful for privacy and compliance: not just that something changed, but what kind of thing it was and whether it was allowed.
+
+Human-in-the-loop processes are what turn that record into control. The graph shows the operator what the agents did; the operator decides what's acceptable and says why; the decision becomes policy the system applies from then on. That loop is the one Anthus has run in production for years on classification work, and it's the loop the next level of delegated software work depends on.
+
+## What Anthus is doing
+
+Anthus is a development partner on the product: the knowledge graph, the ontology and taxonomy work against OCSF, and the agent-facing and operator-facing surfaces around them. It's built the way we build everything, as a factory-run project with the work tracked in Kanbus and a human approval on every merge.
+
+## Where to learn more
+
+- Product site: [dataparade.io](https://dataparade.io)
+- The standard it maps to: [OCSF](https://schema.ocsf.io/)
+- How we run projects like this: [How an engagement works](/engage)
