@@ -6,6 +6,7 @@ authors:
   - author: <a href="/ryan">Ryan Porter</a>
 tags:
   - research
+  - client-acquisition
   - articles
   - AI
   - how-to
@@ -39,7 +40,9 @@ Say you've got an AI model grading text for you: support tickets, call transcrip
 
 The usual fix is fine-tuning: collect corrected examples and retrain the model on them. With [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev) you can't fine-tune. It's a hosted model, and TypeSafe's [model page](https://docs.typesafe.ai/models) says "the same weights serve every account." Nobody gets a copy of their own to retrain.
 
-So we left Jev exactly as it is and built a small system around it that learns from agree-or-disagree feedback. It learned in two steps, and the order matters.
+That leaves the two options everyone talks about: build a labelled dataset first and train your own classifier, or take the zero-shot answer as it comes. There's a third way, and it's the one we use. Start classifying immediately with the decision model. Review the decisions as it makes them, and label the ones you disagree with. Those labels are far cheaper than a dataset built up front, and they're what continuously aligns the classifier from then on.
+
+So we left Jev exactly as it is and built a small system around it that learns from exactly that agree-or-disagree feedback. It learned in two steps, and the order matters.
 
 First, its confidence got trustworthy. Out of the box, Jev's stated confidence was off by about 15 points. Within a few dozen rounds of feedback that gap started closing, and by 87 rounds it was down to 3. That part is automatic and quick: the system re-weighs the answers Jev already gives.
 
@@ -141,6 +144,8 @@ So the judgment gets split in two:
 
 One `scorecard.yaml` holds both halves. That's the whole adaptable surface: a list of questions and a handful of numbers.
 
+Scorecards are how we've run production classifiers for years. On Plexus a scorecard is a named, versioned set of questions and a head, evaluated against held-out items and promoted only when the numbers say so, with hundreds of them live at once for one client. The YAML in this repo is the small version of that object.
+
 ```yaml
 elements:
   - key: topic_domain
@@ -171,6 +176,8 @@ incumbent: accuracy 0.762, ECE 0.022, Brier 0.161
 ```
 
 The gate decides promotion on Brier score and doesn't let accuracy regress. Only then does it ask for you, with the diff and those numbers. Say no and nothing is written.
+
+That gate is the same shape as the review workflow we run in production: a proposed change, its numbers on held-out data by slice, a person approving the diff, and a record of who approved what. It's what lets a reviewer team steer a classifier without anyone touching weights, and it's why the audit trail matters as much as the accuracy.
 
 Notice where the judgment ended up. The question we send Jev is neutral and carries no hint that one answer is good. The entire content of "sport reads positive here, workplace reads negative" is two fitted coefficients:
 
@@ -276,6 +283,8 @@ The arms, the learning curve, and Laya's practical limits are in [Jev vs Laya](/
 
 ## What we'd do with this
 
+This is the playbook we run for clients. If you're running it yourself:
+
 1. **Stop looking for the fine-tuning endpoint.** Put your effort into the questions and a head you fit yourself.
 2. **Start with one holistic question and label 100 to 150 items**, picking uncertain ones and recording how you picked them. Refit as you go. Expect calibration to improve and accuracy to stay put.
 3. **When refits stall and disagreements keep coming, change the questions.** Have an analyst model read the disagreements alongside a balanced sample of labeled items, and ask it for questions only, never weights.
@@ -293,4 +302,12 @@ The arms, the learning curve, and Laya's practical limits are in [Jev vs Laya](/
 - **600 held-out items is about ±1.4 points** at one standard error. The headline is one recorded run. The study can show the effect exists; it can't order analyst models or settle small gaps.
 - **No real human comments yet.** The repo demonstrates the machinery and the measurement. Continuous learning from a real review team's feedback is the part still to show.
 
-Clone the [repo](https://github.com/AnthusAI/Jev-Flywheel) and run `make demo`: it rebuilds the recorded run offline in about ten seconds, with no keys, no network and no model. It's deliberately small. [Plexus](https://github.com/AnthusAI/Plexus) is the industrial version of the same loop, with the MLOps around it: scale, audit trails, richer models once you have the labels to justify them, and a full reviewer workflow. The [Anthus AI Solutions](https://anth.us) team builds and runs it. If this was useful and you want to take it further, get in touch.
+Clone the [repo](https://github.com/AnthusAI/Jev-Flywheel) and run `make demo`: it rebuilds the recorded run offline in about ten seconds, with no keys, no network and no model. It's deliberately small.
+
+## We run this loop for clients, at scale
+
+The repo is the small, reproducible version of a loop we've operated in production for years. Reviewers correct the model's verdicts and say why. The explanation becomes a stated policy. The system gets more trustworthy month over month, and every change is recorded so you can see what moved and whether it was better. We've run that for a call-center QA operation across hundreds of scorecards and millions of interactions, and it's the [case study](/blog/call-criteria/) behind every number on this page about what the method does when the labels are real.
+
+[Plexus](/platform/plexus) is where we run it: the questions, the fitted heads, the calibration, the gates, the reviewer workflow, the audit trail, and the distillation step when you're ready to own the classifier. The "what we haven't tested" list above is about this repo, not about the method. The part still to show here, continuous learning from a real review team, is the part we've been doing longest.
+
+If you have a judgment task at volume and a team that can't review more than a sliver of it, we'll run this for you: your data, your reviewers, a fixed first month, and a scorecard you can inspect at the end of it. [Here's how an engagement works](/engage).
