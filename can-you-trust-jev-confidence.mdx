@@ -30,7 +30,9 @@ import BlogImage from "../components/blog-image"
 
 Suppose you route decisions on a model's confidence: accept everything above 90%, send the rest to a person. That policy only works if "90%" means something. Jev returns a confidence with its answers, and in [our last article](/blog/making-decisions-instead-of-generating-text/) we said the way to find out is to test it against labeled data. So we did.
 
-The short version: Jev's confidence is useful, but it isn't a probability of being right until you calibrate it. And the way you set up the question in the request changes what the raw numbers look like.
+The short version: Jev's confidence is useful, but out of the box it ran up to 15 points overconfident, and it isn't a probability of being right until you calibrate it against your own labels. A calibration step closes most of that gap. The way you set up the question in the request changes what the raw numbers look like, too.
+
+This is the same problem behind every confidence-gated system: the model hands you a number, and only your own reviewers can tell you what that number is worth. Calibrating it means labeling a few hundred of your own verdicts, agree or disagree, and fitting a curve to what your reviewers actually did. Once the number is honest, you can set a real threshold, auto-accept above it, and route everything else to a person. That calibration loop costs far less than building a labeled dataset before you ever start classifying.
 
 <figure className="center-full-image">
   <BlogImage
@@ -177,6 +179,8 @@ For the Noul question on the test set:
 
 Neither method changes which answers rank above which, so accuracy and AUROC barely move. Calibration makes the number mean what it says, and it can't add information the score doesn't contain.
 
+This is the mechanism a production confidence-gated system runs on: fit the calibration curve, set a threshold in calibrated terms, and let everything above it go straight through while everything below routes to a reviewer. The curve just has to be honest, because the reviewer catches what falls under the bar.
+
 <figure className="center-full-image">
   <BlogImage
     images={props.pageContext.frontmatter.images}
@@ -214,12 +218,14 @@ The advice didn't hold on this data. For both question types, isotonic matched o
 
 Below about 50 examples, both are noisy, and one unlucky draw can be worse than not calibrating. A few hundred is enough to get most of the benefit.
 
+A few hundred labels is also the number we've found holds up in production: enough to fit a calibration curve you can trust, without asking a reviewer team to grade a dataset before the system does any real work.
+
 ## What we'd do with this
 
 1. **Pick the question setup first**, and treat its wording and options as part of the model.
 2. **Label a few hundred examples** from your own data, including the ambiguous ones. The results above depend heavily on how many hard cases there are.
 3. **Fit isotonic regression** on part of them and check it on the rest.
-4. **Set thresholds in calibrated terms.** "Accept above 90%" then means the accepted answers are right about 90% of the time. On the non-neutral examples, ranking by calibrated confidence let us auto-accept roughly 65 to 74% of decisions at 95% accuracy or better, depending on the setup. That range is sensitive to ties, because Jev rounds its probabilities to two decimals, so we wouldn't quote a precise figure.
+4. **Set thresholds in calibrated terms.** "Accept above 90%" then means the accepted answers are right about 90% of the time. This is how we route work in production: the confident majority clears automatically, and a reviewer only sees the calls that need a person, which is what lets a QA operation cover every call instead of a sample. On the non-neutral examples, ranking by calibrated confidence let us auto-accept roughly 65 to 74% of decisions at 95% accuracy or better, depending on the setup. That range is sensitive to ties, because Jev rounds its probabilities to two decimals, so we wouldn't quote a precise figure.
 5. **Refit when the wording, the data source, or the model version changes.**
 
 ## What we haven't tested
@@ -232,3 +238,11 @@ Below about 50 examples, both are noisy, and one unlucky draw can be worse than 
 The next test is the one we proposed last time: put Jev against a scorecard we understand, in shadow mode, with expert-adjudicated calls. If the calibration holds there with a few hundred labeled examples, the case for running whole scorecards through it gets a lot stronger.
 
 Until then, the answer to the question in the title is: yes, with a calibration step. Jev's confidence is informative out of the box, but it's a ranking until you check it against your own labels, and it's worth checking every time you change how you ask.
+
+## We run this calibration loop for clients, at scale
+
+This dataset and this test set are the small, reproducible version of a calibration loop we've run in production for years. A reviewer agrees or disagrees with a verdict, and that label refits the curve; when a reviewer's comment points at a pattern the model keeps missing, that pattern becomes a stated policy the system checks going forward. We've run that loop for a call-center QA operation across hundreds of scorecards and millions of interactions, and it's the [case study](/blog/call-criteria/) behind the coverage numbers a calibrated confidence threshold makes possible.
+
+[Plexus](/platform/plexus) is where we run it: the calibration, the auto-accept thresholds, the reviewer workflow, and the audit trail behind every promoted change.
+
+If you're routing decisions on a model's confidence and want to know whether your threshold means what it says, we'll calibrate it against your own labels. [Here's how an engagement works](/engage).

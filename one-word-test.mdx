@@ -46,6 +46,8 @@ Change one word in a professional bio, "he" to "she", and ask a model the same q
 
 Ask Jev or Laya about a bio and you get `physician`, 0.83, and nothing else. There's nothing to read, so the only way to know what a fast model is reading is to change one thing and ask again.
 
+Two answers get proposed when someone asks whether a deployed classifier discriminates: benchmark it once before launch, or trust the accuracy number and move on. We run a third for clients: audit the classifier that's already live, on real records, broken out by slice, before it goes in front of people and again on a schedule after. That's the one-word test, run continuously instead of once, on a name or a pronoun, so a shift shows up as a number your team tracks instead of a story someone tells after the fact.
+
 ## The test: change one word
 
 The corpus is [Bias in Bios](https://huggingface.co/datasets/LabHC/bias_in_bios), about 400,000 professional biographies scraped from the web, each labelled with an occupation and the person's gender; [De-Arteaga and colleagues built it in 2019](https://arxiv.org/abs/1901.09451) to show that occupation classifiers trained on it use gender cues.
@@ -53,6 +55,8 @@ The corpus is [Bias in Bios](https://huggingface.co/datasets/LabHC/bias_in_bios)
 We started with one pair of occupations that share a vocabulary and differ in who does them, surgeon (14.8% of the test-split bios are women) against physician (49.4%). One question, the same for both engines: "Is this person a surgeon or a physician?" 3,000 bios of each, 2,000 held out, first names redacted to `[name]` so the only gender cue left is the grammar. Then the twin: every held-out bio rewritten with the pronouns and role nouns swapped, about three tokens each, and asked again. The redaction is the one deviation from the pre-registered design, recorded before any Jev request was sent: a check found the subject's first name in the body of 28% of bios, and removing it moved Laya's flip rate from 7.9% to 7.95%.
 
 The number we report is the **flip rate**: the share of bios whose verdict changed. The recall gap the literature reports mixes the model reading gender with women's bios being written differently; a flip is causal, because nothing changed but "she". Every prediction about the swap was written down before either engine answered, in [the repo's pre-registration](https://github.com/AnthusAI/Jev-Flywheel/blob/main/studies/PREREGISTERED.md), and the whole thing replays offline from committed fixtures.
+
+This is the same shape of check we run before a scorecard ships in production: score held-out items overall and by slice, since a model can look fine on average and still be systematically wrong for one group. Every promotion in [Plexus](/platform/plexus) gets checked that way, and a regression on a slice holds up the release even when the aggregate number improved.
 
 ## Worst case, measured: the open model
 
@@ -156,6 +160,8 @@ A ratio mixes the model reading gender with women's bios being written different
 
 We also ran our learning loop on this pair, and a question that passed its invariance gate made the shortlist worse, which is where [Can You Fix It?](/blog/can-you-fix-it/) picks up.
 
+We gate the same way in production: a proposed scorecard change is scored on held-out data broken out by group, a person reads the diff, and it ships only after they approve it. That habit is what would catch a ratio moving to 0.66 before launch instead of after.
+
 ## Names and ages
 
 Race isn't marked by a pronoun, so the counterfactual is a name, the design [Bertrand and Mullainathan](https://www.aeaweb.org/articles?id=10.1257/0002828042002561) used in 2004 when they mailed identical résumés under different names and found that "White names receive 50 percent more callbacks for interviews". Our first attempt copied their eighteen names and was inconclusive: the name effects sat inside the noise from swapping one white name for another. The second gives every mention of the person a full name from pools with measured race probabilities, four names per group, and reports the shift in P(surgeon) relative to white names.
@@ -207,6 +213,8 @@ A System 1 model changes the shape of the problem in three ways.
 
 And the law doesn't require anyone to have meant it: [*Griggs v. Duke Power*](https://www.law.cornell.edu/supremecourt/text/401/424) settled in 1971 that an employment practice with a discriminatory effect can violate Title VII whether or not the employer intended one.
 
+The audit trail is what makes a shift like this visible. Every promoted scorecard in Plexus records who approved which version and why, so when a verdict moves on a slice, you can trace it to a specific change and a specific signoff rather than discovering it as a lawsuit or a public post.
+
 ## What we haven't shown
 
 - **Laya ran through a port, and the original agrees.** Every Laya number came from [`laya-mlx`](https://pypi.org/project/laya-mlx/), an Apple-silicon conversion of the released weights. We then re-ran the pronoun swap on all four pairs with the original PyTorch release, using the same question and the same option order: flip rates 7.95%, 7.75%, 13.45% and 17.85% against the port's 7.95%, 7.65%, 13.5% and 17.85%, with verdicts agreeing on at least 3,998 of 4,000 bios per pair. Option order matters, though: list the two options the other way round and Laya's answer on a single bio can move by half a point of probability. Every number here uses the order in the committed question files.
@@ -217,6 +225,14 @@ And the law doesn't require anyone to have meant it: [*Griggs v. Duke Power*](ht
 - **A stated age and a name are proxies** for age and race as a reader would perceive them. Nothing here measures anyone's actual characteristics.
 - **We don't know what TypeSafe did**, and we're not guessing. Jev's 1 to 4% measures its answers, nothing about its training.
 - **The swap rule has two known artefacts.** It turns "women's health" into "men's health" in 0.3% of bios (medical content, which says nothing about the person's gender), and it misses Miss, Sir and Madam (under 0.2%). The rule has since been amended; every number here stands as recorded under the old one.
+
+## We run this audit for clients, at scale
+
+The checks here are the small, reproducible version of a loop we run continuously in production. When a reviewer disagrees with a verdict and says why, that explanation becomes a question the scorecard asks going forward, so the same mistake doesn't recur unnoticed. We've run that loop for a call-center QA operation across hundreds of scorecards and millions of interactions; the [case study](/blog/call-criteria/) is what continuous review looks like at that scale.
+
+[Plexus](/platform/plexus) is where we run the per-slice checks, the approval gate, and the audit trail that catch a shift like the ones measured here before it ships.
+
+If you have a classifier making decisions about people and no standing check for verdict shifts by name or pronoun, we'll build one against your own data. [Here's how an engagement works](/engage).
 
 ## Companion pieces
 
@@ -240,4 +256,4 @@ make pairs   # the pronoun swap on three more occupation pairs
 python scripts/bios_shortlist.py   # the shortlist, both engines, cuts 250/500/1000
 ```
 
-The repo is deliberately small: one score, a logistic head, no database. [Plexus](https://github.com/AnthusAI/Plexus) is the industrial version of the same loop, with reviewer workflows, vetted labels, audit trails and the MLOps around continuous learning from human feedback, and the [Anthus AI Solutions](https://anth.us) team builds and runs it. If a fast model is about to start judging people on your behalf, get in touch before it does.
+The repo is deliberately small: one score, a logistic head, no database. [Plexus](https://github.com/AnthusAI/Plexus) is the industrial version of the same loop, with reviewer workflows, vetted labels, audit trails and the MLOps around continuous learning from human feedback, and the [Anthus AI Solutions](https://anth.us) team builds and runs it.

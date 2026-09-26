@@ -43,9 +43,11 @@ import BlogImage from "../components/blog-image"
 
 If you're using an AI model to sort, score or label text, you've had two kinds to choose from. Hosted models like [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev) work the moment you have an API key, and you pay per item forever. This month [Laya](https://huggingface.co/convaiinnovations/laya) arrived as the open alternative: same kind of model, free, small enough to run on a laptop. Its launch coverage says it beats Jev. If you're paying for Jev today, you want to know whether to switch.
 
-We happened to have the right test bench. It gives both models the same texts, the same questions and the same 140 rounds of human feedback, and changes one thing: which model answers. On that test Jev came out ahead, 87% accuracy to Laya's 80%, and our feedback layer helped both without closing the gap.
+We happened to have the right test bench. It gives both models the same texts, the same questions and the same 140 rounds of human feedback, and changes one thing: which model answers. On that test Jev came out ahead, 87% accuracy to Laya's 80%, and our feedback layer helped both without closing the gap. Then we did the one thing only an open model allows: we retrained Laya's own weights on that same feedback, and it jumped to 90%, past both. We'd predicted in writing that it wouldn't.
 
-Then we did the one thing only an open model allows. We retrained Laya's own weights on that feedback, and it jumped to 90%, past both. We'd predicted in writing that it wouldn't. This piece is the full comparison, including what that retraining costs you.
+Either engine gives you the real choice underneath: take the answer as it comes, or build a reviewer loop that continuously aligns it. We run that loop the same way regardless of which engine sits underneath it: score immediately, have a reviewer agree or disagree with the verdicts, and use those labels to refit the weights and, when the disagreements keep coming, add a question. That loop is what closes most of the gap between the two engines here, whichever one you pick, and it costs far less than building a labeled dataset before you start.
+
+This piece is the full comparison, including what retraining Laya costs you.
 
 ## What Convai claims for Laya
 
@@ -63,6 +65,8 @@ So the launch claims mostly describe a Laya you've tuned. We tested the base Eng
 ## The harness: one variable
 
 The harness is the [Jev-Flywheel repo](https://github.com/AnthusAI/Jev-Flywheel). The harness asks an engine a short list of typed questions about each text. A small logistic model on top, the decision head, turns the answers into a verdict and a calibrated confidence. When a person disagrees with a verdict, the engine isn't retrained. Either the head is refit, which changes how much each answer counts, or an AI analyst reads the disagreements and proposes a new question, which we call a steering round. A person approves the change. It's a small data flywheel with a human in the loop, and [Fine-Tuning Jev](/blog/fine-tuning-jev/) walks through it step by step.
+
+Scorecards built this way are how we run production classifiers for clients: a versioned set of questions and a fitted head, evaluated against held-out items and promoted only when the numbers clear a bar. We've run hundreds of them live at once for one client, so the shape here, small as it is, is the same shape we use at scale.
 
 The test corpus is the 8,801-item sentiment set from [our fine-tuning article a year ago](/blog/fine-tuned-classification-with-confidence/), which we built with a planted bias: sports text skews positive and workplace text skews negative. In the recorded run, the analyst read 43 disagreements, named that bias in plain English, and proposed one question, `topic_domain`. Nothing above the engine adapter knows which engine answered, which is what makes a paired test possible.
 
@@ -97,6 +101,8 @@ Laya is free to run, so we also scored it on all 3,521 held-out items: 0.716 alo
 Laya gains 8 points from the layer. But the engines were 4.7 points apart alone and they're 6.8 apart with it. The layer lifts both and leaves the weaker one behind.
 
 Calibration needs care in both directions. We measured Jev's raw over-confidence in [Can You Trust Jev's Confidence?](/blog/can-you-trust-jev-confidence/), and it shows up again here as an ECE of 0.151. Laya's raw ECE on the same items was lower, 0.107. We haven't measured how much ECE moves by chance on 600 items, so we don't read that as a win for Laya. After the layer, both are well calibrated. Brier is the clearer split and it favours Jev, because Brier rewards being confident and right, and Jev is right more often.
+
+That's the same job confidence gating does in production: rank verdicts by calibrated confidence and let the ones above a threshold through automatically, routing the rest to a person. A well-calibrated head is what makes that threshold mean what it says, whichever engine sits underneath it.
 
 <figure className="center-full-image">
   <BlogImage
@@ -261,7 +267,7 @@ We'd predicted the curve would first pass 0.802 at 300 to 500 labels and first p
 
 **The only lever Jev has.** TypeSafe's [model page](https://docs.typesafe.ai/models) says Jev "is not fine-tuned or LoRA-adapted with customer data".
 
-There's one more comparison we care about for production: if you auto-accept every verdict above a confidence threshold, how much of the traffic clears a 95% accuracy bar? On the 600 test items, Jev alone could auto-accept 46% of its verdicts, and Jev with the layer 72%. Laya alone managed 34%, and Laya with the layer 55%. Fine-tuned Laya averaged 71%, but swung from 59% to 82% across its three training seeds, and DistilBERT averaged 63%. So the most accurate system isn't the one that knows best when it's right. How well confidence ranks right answers above wrong ones (AUROC) tells the same story: 0.853 for Jev with the layer, 0.839 for DistilBERT, 0.800 for fine-tuned Laya (0.760 to 0.851 by seed), 0.799 for Laya with the layer. This comparison is exploratory; we didn't pre-register it. Jev rounds its probabilities to two decimals, so the Jev-alone figure sits on a block of 277 tied items. And the fine-tuned models here were retrained for the probe, so their accuracies differ from the table above by up to a point.
+There's one more comparison we care about for production: if you auto-accept every verdict above a confidence threshold, how much of the traffic clears a 95% accuracy bar? On the 600 test items, Jev alone could auto-accept 46% of its verdicts, and Jev with the layer 72%. Laya alone managed 34%, and Laya with the layer 55%. Fine-tuned Laya averaged 71%, but swung from 59% to 82% across its three training seeds, and DistilBERT averaged 63%. So the most accurate system isn't the one that knows best when it's right. We use that same auto-accept threshold in production: route the confident majority straight through and send the rest to a reviewer, then feed the reviewer's calls back into the fit. It's how a QA operation goes from reviewing a sample of calls to reviewing all of them without adding reviewers, and it only works when the confidence number is honest. How well confidence ranks right answers above wrong ones (AUROC) tells the same story: 0.853 for Jev with the layer, 0.839 for DistilBERT, 0.800 for fine-tuned Laya (0.760 to 0.851 by seed), 0.799 for Laya with the layer. This comparison is exploratory; we didn't pre-register it. Jev rounds its probabilities to two decimals, so the Jev-alone figure sits on a block of 277 tied items. And the fine-tuned models here were retrained for the probe, so their accuracies differ from the table above by up to a point.
 
 <figure className="center-full-image">
   <BlogImage
@@ -323,4 +329,12 @@ make laya    # downloads the 843 MB model; about 2 minutes after that
 
 The last `paper-600` row for each engine should read 0.870 for Jev and 0.802 for Laya.
 
-The repo is deliberately small: one score, a logistic head, no database. [Plexus](https://github.com/AnthusAI/Plexus) is the industrial version of the same loop, with reviewer workflows, vetted labels, audit trails and the MLOps around continuous learning from human feedback, and the [Anthus AI Solutions](https://anth.us) team builds and runs it. If you're weighing Jev against Laya for a real scorecard, get in touch.
+The repo is deliberately small: one score, a logistic head, no database.
+
+## We run this comparison for clients, at scale
+
+Choosing an engine and aligning it are two different decisions, and this repo is the small, reproducible version of a loop we've run in production for years to make the second one work regardless of the first. A reviewer corrects a verdict and says why; the explanation becomes a stated policy, one more question or one more weight in the scorecard, and the system gets more trustworthy month over month with an audit trail behind every change. We've run that loop for a call-center QA operation across hundreds of scorecards and millions of interactions, and it's the [case study](/blog/call-criteria/) behind the method, whichever engine sits underneath it.
+
+[Plexus](/platform/plexus) is where we run it: the questions, the fitted heads, the calibration, the promotion gates, and the reviewer workflow that decides whether Jev, Laya, or something else answers for you.
+
+If you're weighing a hosted engine against open weights for a real scorecard, we'll run this comparison and the alignment loop for you, on your data. [Here's how an engagement works](/engage).

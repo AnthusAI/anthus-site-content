@@ -33,9 +33,9 @@ import BlogImage from "../components/blog-image"
   alt="Three confidence bubbles show AI decisions at 76%, 92%, and 98%."
 />
 
-Anthus has spent the last several years building post-call quality analysis at industrial scale. After a customer-service conversation ends, our systems analyze the recording or transcript against a scorecard: did the representative resolve the request, follow policy, or leave something unanswered? We began with conventional ML models, then increasingly used LLMs when the work called for more nuanced language understanding.
+Anthus has spent the last several years building post-call quality analysis at industrial scale. After a customer-service conversation ends, our systems analyze the recording or transcript against a scorecard: did the representative resolve the request, follow policy, or leave something unanswered? We began with conventional ML models, then increasingly used LLMs when the work called for more nuanced language understanding. LLMs brought a mismatch: they produce open-ended text, and a QA scorecard needs a bounded decision with a usable measure of uncertainty.
 
-LLMs brought a mismatch. They produce open-ended text; a QA scorecard needs a bounded decision and a usable measure of uncertainty. Making one behave like the other can feel like fitting a square peg into a round hole. We added constraints, fine-tuning, parsing, retries, confidence signals, orchestration, and human review to bridge the gap.
+Jev points at a different way to close that gap. Instead of fitting a text generator into a classifier's job, TypeSafe designed Jev to return typed decisions and probabilities directly: give it a state and a set of bounded questions, and each one comes back as a choice, a score, or a probability, no parsing or retries required to get there. For post-call QA, that could move the classifier's home from a wrapper we build around a text generator to a model whose native output already is the classifier, with the application still responsible for scorecards, thresholds, and review policy.
 
 <figure className="center-full-image">
   <BlogImage
@@ -51,9 +51,9 @@ LLMs brought a mismatch. They produce open-ended text; a QA scorecard needs a bo
   </figcaption>
 </figure>
 
-Jev points toward a new paradigm for making those classification decisions at industrial scale. Instead of fitting a text generator into that role, TypeSafe designed Jev to return typed decisions and probabilities directly. For post-call QA, that could change where the work sits: inside a model whose native output is a classifier, with the application still responsible for scorecards, thresholds, and review policy.
+That's the bet TypeSafe is making with Jev's design, and it's a bet our own production work is positioned to test: we've been running exactly that shape of decision for years, just without a model built to return it natively.
 
-Our [Plexus MLOps platform](https://plexus.anth.us/) carries that work into production scorecards. Teams define criteria as scores, evaluate them against labeled examples, then feed expert corrections into a [Feedback Alignment Optimizer](https://plexus.anth.us/documentation/procedures/optimizer) that proposes and tests score changes against both recent feedback and a fixed regression set. It is a practical classifier data flywheel: each measured round gives the next one better evidence to work from.
+Our [Plexus MLOps platform](https://plexus.anth.us/) carries that work into production scorecards. Teams define criteria as scores, evaluate them against labeled examples, then feed expert corrections into a [Feedback Alignment Optimizer](https://plexus.anth.us/documentation/procedures/optimizer) that proposes and tests score changes against both recent feedback and a fixed regression set. It is a practical classifier data flywheel: each measured round gives the next one better evidence to work from. Each scorecard is a versioned set of questions and a small fitted head that turns the answers into a verdict, evaluated against held-out labels and promoted only when it beats the version it's replacing. We run hundreds of them live at once for one client, and every promotion is on record: what changed, on what evidence, and who approved it.
 
 That production background is why [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev) is interesting to us. It isn't merely another model we could place inside the same wrapper. It makes the decision itself a first-class model interface and asks how much of that wrapper should exist at all.
 
@@ -76,6 +76,8 @@ Jev's [interface](https://docs.typesafe.ai/introduction) accepts shared state an
 - **Choice** selects from defined options and returns a probability distribution.
 - **Score** evaluates the state against a rubric.
 - **Noul** returns the probability that a yes-or-no statement is true.
+
+That's also how we get a classifier onto a scorecard now, on Jev or off it. The industry usually offers two ways to get there: build a labelled dataset first and train your own classifier, or take the zero-shot answer as it comes. We use a third way. Start classifying immediately with the decision model, review what it decides as it decides it, and label the cases a reviewer disagrees with. Those labels are far cheaper than a dataset built up front, and they're what continuously aligns the classifier from then on, on every scorecard we run in production.
 
 TypeSafe says Jev uses parallel sampling and a training method it calls Reinforcement Learning for Calibrated Decisions. Those are vendor descriptions of the model's architecture and training, rather than findings we have independently verified.
 
@@ -121,6 +123,8 @@ The successful-call example displays 95% probability on YES and a separate confi
 For production use, we would test calibration against a held-out set with expert-adjudicated answers. Among decisions assigned about 90% probability, how often does the selected answer match the adjudicated result? Does that relationship hold for each question, client, transcript source, and language? Plexus's [evaluation workflow](https://plexus.anth.us/documentation/basics/evaluations) likewise compares scorecard results with known answers and reports performance metrics.
 
 The answer determines the operating policy. A well-tested threshold might allow routine results to pass automatically, send an uncertain middle band to human review, and require review for every high-consequence finding. Different scorecard questions deserve different thresholds. A missed greeting and a serious compliance issue carry different risks.
+
+In production we set that threshold per question: routine verdicts above the bar auto-accept, the middle band routes to a reviewer, and a compliance question keeps a stricter bar than a missed greeting. That gate is what makes a probability actionable instead of decorative, and it's the same policy question Jev's confidence field raises here.
 
 This is also where human feedback keeps its central role. Experts define the rubric, adjudicate disputed examples, examine failure modes, and improve the evaluation set. In Plexus, [human-in-the-loop review](https://plexus.anth.us/solutions/optimizer-agents) turns those corrections into feedback for the optimizer. Their decisions create the data flywheel that makes the whole system more useful over time. Jev could simplify the model-facing interface inside that loop; it doesn't replace the loop.
 
@@ -172,3 +176,9 @@ The likely result is mixed, and that would still be valuable. Jev may fit some s
 Even a partial fit could move the operational boundary. If Jev's typed outputs, probabilities, cost, and latency hold up against expert-adjudicated calls, questions that were too expensive or awkward to run broadly could become routine. A complete scorecard could cover more calls, ask finer-grained questions, and reserve human attention for the decisions where it matters most.
 
 That is why we're excited about Jev. We have already learned how to make text-generation models behave like production classifiers. Now we can test what becomes possible when classification is the model's native shape. If the evidence supports TypeSafe's premise, Jev could be a significant advance in the kinds of post-call work worth automating—the same operational boundary shift we have expected as intelligence becomes cheaper and easier to use.
+
+## We run this for clients, at scale
+
+That bounded comparison is the small version of a loop we already operate in production. Reviewers correct a scorecard's verdicts, an optimizer treats their corrections as data, and every promoted change is measured against a fixed regression set before it goes live. We've run that loop for a call-center QA operation across hundreds of scorecards and millions of interactions, documented in the [case study](/blog/call-criteria/).
+
+[Plexus](/platform/plexus) is where we run it: the questions, the fitted heads, the calibration, the promotion gates, and the audit trail. Testing Jev against a scorecard we understand is exactly the kind of engagement we run for clients: your data, your reviewers, a fixed comparison, and a scorecard you can inspect at the end of it. [Here's how an engagement works](/engage).

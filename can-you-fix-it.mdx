@@ -24,7 +24,9 @@ repository: "https://github.com/AnthusAI/Jev-Flywheel"
 
 import BlogImage from "../components/blog-image"
 
-Change "he" to "she" in a lawyer's online bio and [Laya](https://huggingface.co/convaiinnovations/laya), the open model, reads the attorney as a paralegal on 17.8% of two thousand real bios; [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev), the hosted model, on 3.9%. Rank the same bios by either model's confidence, keep the top 500, and women attorneys make the cut at 0.48 of the men's rate on Laya and 0.85 on Jev. [The One-Word Test](/blog/one-word-test/) is the measurement; the question here is what a deployer can do about it above the model. <mark>The learning loop that raises accuracy leaves the bias alone.</mark> A gate that rejects any question whose answer moves with the pronoun keeps out the obvious ones, and where the harm is largest it made the shortlist worse. Averaging each bio with its pronoun-swapped twin is the cheapest thing that helped. Fine-tuning, which we predicted would make things worse, didn't. The loop's machinery is in [Fine-Tuning Jev](/blog/fine-tuning-jev/).
+Change "he" to "she" in a lawyer's online bio and [Laya](https://huggingface.co/convaiinnovations/laya), the open model, reads the attorney as a paralegal on 17.8% of two thousand real bios; [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev), the hosted model, on 3.9%. Rank the same bios by either model's confidence, keep the top 500, and women attorneys make the cut at 0.48 of the men's rate on Laya and 0.85 on Jev. [The One-Word Test](/blog/one-word-test/) is the measurement; the question here is what a deployer can do about it above the model. <mark>The learning loop that raises accuracy leaves the bias alone.</mark> A gate that rejects any question whose answer moves with the pronoun keeps out the obvious ones, and where the harm is largest it made the shortlist worse. Averaging each bio with its pronoun-swapped twin is the cheapest thing that helped. Fine-tuning, which we predicted would make things worse, didn't.
+
+Three fixes get proposed for a shift like this: reject any question that looks gendered, average away a cue you can swap, or retrain on corrected labels and hope it doesn't relearn the pattern. We run all three as standing parts of one loop for clients: a gate a new question has to clear before it joins the scorecard, an averaging fallback for any cue you can swap, and fine-tuning as the option when the classifier itself needs to change, all checked continuously against real reviewer feedback rather than run once and left alone. Which one actually helps a given outcome isn't obvious from the name of the fix; it depends on the decision, and we measured it. The loop's machinery is in [Fine-Tuning Jev](/blog/fine-tuning-jev/).
 
 The result that changed how we think about the gate fits in three bars. Jev alone shortlists women attorneys at 0.85 of the men's rate, above the four-fifths line. <mark>The gated loop added one question about support roles whose answer barely moved under the pronoun swap, and the ratio fell to 0.66.</mark> Remove it and it's 0.85 again.
 
@@ -71,6 +73,8 @@ ECE is calibration error; the last column is recall for "surgeon" on women's bio
 
 The third Jev seed is the one the mean hides. Its gated loop promoted a question asking whether the person is "referred to with a courtesy title such as Ms., Miss, Mrs., Mr., or Mx. rather than Dr." <mark>It passed the gate at exactly 0.0% flips, because the swap changes pronouns, reflexives and a few role nouns and never touches "Mr." or "Ms."</mark> The answer is invariant to the swap by construction, and the feature it reads is as gendered as a pronoun. That seed flipped on 1.30%, above the raw engine's 1.05%. The ungated loop was worse: all three J1 seeds promoted a courtesy-title question, against a prediction of "at most 1 of 3 seeds". On Laya the same question failed the gate, at 24% and 14%, because Laya's own answer to it moves with the surrounding pronouns. Whether a title question gets through is an accident of how each engine answers it: sensitivity to the swap and correlation with gender come apart completely.
 
+This is the same promotion gate we run in production, with one more check layered on. A candidate scorecard is scored on held-out data, a person reads the diff, and now that diff carries a counterfactual number alongside accuracy. It's what lets a reviewer approve a change without also signing off on a bias nobody measured.
+
 ## The attorney pair: a question can pass the gate and still hurt
 
 The shortlist: 2,000 applications, 1,000 real attorney bios and 1,000 real paralegal bios, ranked by each engine's probability of "attorney", top 500 kept. Among the 1,000 real attorneys, 419 women and 581 men, Laya shortlists 28.9% of the women and 60.1% of the men, a four-fifths ratio of 0.48; Jev shortlists 44.4% and 52.1%, a ratio of 0.85, above the 0.80 line the [EEOC's Uniform Guidelines](https://www.law.cornell.edu/cfr/text/29/1607.4) use for adverse impact. Swap the pronouns and 82 of the 419 women make Laya's top 500 only if read as men; on Jev, 15. One mechanical detail: Jev reports two-decimal probabilities, so 733 of the 2,000 applicants tie at P = 1.00, the cut sits inside that block, and any added question becomes the tie-breaker for all of them.
@@ -109,6 +113,8 @@ We also ran our learning loop on this pair, because this is where the harm is, a
 Zero the new question's weight and the ratio returns to 0.85; reset the holistic weight instead, keeping the question, and it stays at 0.66. The content correlation does the damage: among real attorneys the question averages −3.29 log-odds on women's bios against −3.63 on men's, and on the swapped twins −3.38 against −3.53. The second gated seed promoted three questions in the same direction and landed at 0.65 with 1,224 distinct scores and three ties, so the tie doesn't explain it either.
 
 One caveat: paralegal is the smallest class in the corpus, so the loop's pool had 146 paralegals against 2,000 attorneys, a 93% skew against a 50/50 held-out set. Every fitted arm's raw accuracy fell for that reason alone; the shortlist ratio depends only on the ranking and is the number we report.
+
+That's why we gate on the decision's own outcome in production: a scorecard change gets checked against the ranking or shortlist it actually produces, by group, before it's promoted. A question that passes every invariance test we know to write can still move the number that matters, so we measure the outcome itself every time a scorecard changes.
 
 ## Twin averaging: the fix that needs no fitting
 
@@ -168,6 +174,14 @@ Five of the six were in the flywheel before this study. **Delay the intuitive co
 - **We don't know what TypeSafe did**, and we're not guessing.
 - **The nurse-pair loop was stopped partway** by the author; its rows are a record and nothing here rests on them.
 
+## We run this triage for clients, at scale
+
+The arms above are the small, reproducible version of a loop we've operated in production for years. A reviewer corrects a verdict and explains why, and that explanation becomes a candidate question, an averaging rule, or a fine-tuning cycle, checked against held-out data and the decision's own outcome before anything ships. We've run that loop for a call-center QA operation across hundreds of scorecards and millions of interactions, and the [case study](/blog/call-criteria/) is what it looks like when the gate, the reviewer workflow, and the audit trail run continuously.
+
+[Plexus](/platform/plexus) is where we run it: the scorecard promotion gate, the outcome-level check by group, and the record of who approved each change.
+
+If you're shipping a classifier that touches people and want the gate, the averaging fallback, and the fine-tuning option checked against your own reviewers, we'll set that up. [Here's how an engagement works](/engage).
+
 ## Companion pieces
 
 - [We Told the AI She Was a Woman. It Demoted Her](/blog/encoding-prejudice/) — the story, for anyone who doesn't need the method.
@@ -189,4 +203,4 @@ make flipopt   # twin averaging and the fitted-head arms at the 2% gate, no GPU
 
 The loop arms replay one recording at a time with `flywheel replay fixtures/bios/recordings/<arm>-seed<N> --fixtures fixtures/bios`; the fine-tune and any seed that promoted a question need Apple silicon or a Jev key to regenerate, and everything else runs from committed answers.
 
-The repo is deliberately small: one score, a logistic head, no database. [Plexus](https://github.com/AnthusAI/Plexus) is the industrial version of the same loop, with reviewer workflows, vetted labels, audit trails and the MLOps around continuous learning from human feedback, and the [Anthus AI Solutions](https://anth.us) team builds and runs it. If a fast model is about to start judging people on your behalf, get in touch before it does.
+The repo is deliberately small: one score, a logistic head, no database. [Plexus](https://github.com/AnthusAI/Plexus) is the industrial version of the same loop, with reviewer workflows, vetted labels, audit trails and the MLOps around continuous learning from human feedback, and the [Anthus AI Solutions](https://anth.us) team builds and runs it.

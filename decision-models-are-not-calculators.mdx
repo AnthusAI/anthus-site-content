@@ -6,6 +6,7 @@ authors:
   - author: <a href="/ryan">Ryan Porter</a>
 tags:
   - research
+  - client-acquisition
   - articles
   - AI
   - explainer
@@ -25,6 +26,8 @@ import BlogImage from '../components/blog-image';
 [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev) is a decision model: give it a description and a list of possible answers, and it returns a choice and probabilities for the options. We asked it which face had shown on a fair six-sided die rolled out of sight. Jev chose one and assigned it 88% probability. With no information about the roll, every face still had the same one-in-six chance. Why did the model favor one so strongly?
 
 We had a hypothesis inspired by Benford's Law. First we looked at Jev's answer. Then we moved one around the list of choices and asked two other decision models the same question. The results took us somewhere less tidy than our initial explanation.
+
+That's not just a curiosity. A model whose confidence doesn't track reality is exactly the kind of failure a fixed benchmark won't surface, since a benchmark asks the same handful of questions once. Catching it takes watching a model decide again and again on cases where you already know the answer, and correcting course when it's wrong. That's the loop Anthus runs for clients: put a decision model in front of real cases, watch where its confidence and its accuracy pull apart, and fix it.
 
 ## A hypothesis about ones
 
@@ -109,4 +112,8 @@ The [build notes](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculator
 
 Kev's partial preference for one and Laya's strong preference for six don't fit the same simple story. Choice order and spelling affect them, but we can't explain their distributions from these measurements.
 
+It's the same caution we apply to every decision model we put into a client's scorecard: calibrate stated confidence against reviewer labels before it's allowed to drive an auto-accept threshold, and recheck it when the question or the ordering changes.
+
 If you need a fair die, use a random-number generator. If you need a decision model, test its answers under reordered choices and equivalent labels before using its reported probabilities to make a consequential decision. The [MIT-licensed experiment](https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators) includes the exact requests and replies, complete response archives, code, and figures.
+
+None of that makes Jev, Kev, or Laya untrustworthy. It makes them decision models, not calculators: each returns a confident-sounding number that has to earn trust against outcomes you can check, the same way a reviewer's hunch does. That's the habit behind every scorecard Anthus runs for clients, and it's why a stated confidence never ships to production on its own.

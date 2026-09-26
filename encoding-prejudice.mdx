@@ -24,11 +24,9 @@ repository: "https://github.com/AnthusAI/Jev-Flywheel"
 
 import BlogImage from "../components/blog-image"
 
-A new kind of artificial intelligence took the software world by storm in the last week. Unlike the chat-style AI that writes out its reasoning, these models answer a simple question about a document in a fraction of a second, for a fraction of a cent, with no explanation at all. Within days, engineers were putting them in front of the queues that decide which applications get read, which claims get flagged, which customers get called back.
+A new kind of artificial intelligence took the software world by storm in the last week. Unlike the chat-style AI that writes out its reasoning, these models answer a simple question about a document in a fraction of a second, for a fraction of a cent, with no explanation at all. Engineers are already putting them in front of the queues that decide which applications get read, which claims get flagged, which customers get called back, and the trade is speed and cost against visibility: with the older kind of AI you could at least read why it decided something; <mark>with these, there is nothing to read, and there is no free lunch</mark>.
 
-Those advantages are real, for the engineers. The trade is speed and cost against visibility: with the older kind of AI you could at least read why it decided something; <mark>with these, there is nothing to read, and there is no free lunch</mark>. The question nobody is asking is what the models do to the people on the other end.
-
-So we asked. Two thousand real online bios of lawyers and paralegals, two of these models, one free and one a paid service, one question: paralegal or attorney? Then we changed one word in every bio, "he" to "she" or the reverse, and asked again. Nothing about anyone's work had changed. <mark>The free model changed its answer on nearly one bio in five, and every time, the woman became the paralegal.</mark> The paid model changed on about one in twenty-five, almost always the same way. <mark>That is gender bias, in one number: the same bio, judged lower because of one pronoun.</mark>
+So we asked what one of these models does with what it can't explain. Two thousand real online bios of lawyers and paralegals, two of these models, one free and one a paid service, one question: paralegal or attorney? Then we changed one word in every bio, "he" to "she" or the reverse, and asked again. Nothing about anyone's work had changed. <mark>The free model changed its answer on nearly one bio in five, and every time, the woman became the paralegal.</mark> The paid model changed on about one in twenty-five, almost always the same way. <mark>That is gender bias, in one number: the same bio, judged lower because of one pronoun.</mark> The question nobody is asking is what the models do to the people on the other end.
 
 <figure className="center-full-image">
   <BlogImage
@@ -44,6 +42,8 @@ So we asked. Two thousand real online bios of lawyers and paralegals, two of the
 </figure>
 
 The bars name the models: [Laya](https://huggingface.co/convaiinnovations/laya), the free one, and [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev), the paid one. Both are being wired into real products right now, by engineers who have measured their speed and their accuracy and nothing else. That is the risk, plainly: <mark>a prejudice that used to live in one person's head, where it could be argued with, is being written into the machinery that decides who gets read, by people who never checked whether it was there</mark>. Once it's in the software it stops being one reader's mistake and becomes everyone's default, applied to every applicant, silently, at a scale no biased human could manage, until someone measures it. Nobody is measuring it.
+
+Two answers get proposed when this comes up: run a fairness benchmark before launch and call it done, or trust the accuracy number nobody built for this. We run a third for clients: audit the model that's already live, on real applicants or customers, broken out by group, before it goes in front of people and on a standing schedule after. A number like one bio in five doesn't show up in a spot-check of fifty items; it shows up only when someone measures it on purpose and keeps measuring.
 
 Take hiring. A company gets two thousand applications for a job. Nobody reads two thousand applications, so the HR software ranks them and hands a person the top few hundred, the shortlist. Increasingly the ranking comes from one of these models: ask it a yes-or-no question about each application, rank by how sure it is, cut.
 
@@ -94,6 +94,8 @@ Law was the worst of seven. We ran the same one-word test on other pairs of jobs
 
 That sounds small. Put the better model in front of a million decisions a year and <mark>1 in 100 is ten thousand people whose outcome turned on a pronoun; 4 in 100 is forty thousand</mark>. And that's the least they do. We blanked the names and swapped only the words that mark gender. A real application carries the name, the title and the school.
 
+We measure the same way before we ship a scorecard in production: overall accuracy and calibration aren't enough, because a model can look fine in aggregate and still be systematically wrong for one group. Every promoted scorecard gets checked by slice, and a regression for one group holds up the release even when the aggregate number improved.
+
 <figure className="center-full-image">
   <BlogImage
     images={props.pageContext.frontmatter.images}
@@ -118,11 +120,21 @@ None of this would have surprised Daniel Kahneman, the psychologist who won a No
 
 Engineers test these models by taking a labelled sample and counting how often the model is right. Accuracy has a number. What the model is reading to get there doesn't, so nobody asks. And the women who missed the list aren't in the demo or the fifty items someone spot-checked; the mind doesn't register what's missing. The usual answer is a checklist line, "consider the risks." <mark>Considering a bias doesn't remove it; you can know about a visual illusion and still see it.</mark> The control has to be structural.
 
+That's the habit we build into production review: a change to a model doesn't ship on the aggregate number alone. A person reads what moved and for whom, by group, and approves it, and there's a record of who signed off and why, so a shift like this one has a trail back to the change that caused it.
+
 ## What should happen instead
 
 Before a machine judges people on your behalf, <mark>run the one-word test on your own data</mark>: take a few hundred records, swap the pronouns, swap the names, add an age, and count how often the answer changes. Then <mark>never let the snap verdict be the decision</mark>. Instead, ask the model things a person could check, such as whether the bio mentions passing the bar or appearing in court, and combine those answers with a rule a person can read. Then check the shortlist itself the way a regulator would, by group, because a question can ignore the pronoun and still lean on what women's bios tend to say.
 
 Two models today, dozens soon, all taught by the same internet, and everything we measured replays from the public record. So <mark>ask the vendor for the number: how often does the answer change when only the pronoun does?</mark> Ask before the model is in front of the queue; [name] can't ask afterwards, and she'll never know to. <mark>Every bias you don't measure before you ship becomes a rule you shipped.</mark>
+
+## We run this audit for clients, at scale
+
+The measurements here are the small, reproducible version of a loop we've run in production for years. When a reviewer disagrees with a verdict and says why, that explanation becomes a question the scorecard asks from then on, so the same mistake doesn't keep happening unnoticed. We've run that loop for a call-center QA operation across hundreds of scorecards and millions of interactions; the [case study](/blog/call-criteria/) is what continuous review looks like at that scale.
+
+[Plexus](/platform/plexus) is where we run it: the per-slice checks, the approval gate a person reads before a change ships, and the audit trail that shows who approved what.
+
+If a fast model is about to start judging people on your behalf and nobody's checked what it's reading, we'll run that check for you. [Here's how an engagement works](/engage).
 
 ## Companion pieces
 
