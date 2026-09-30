@@ -50,7 +50,8 @@ The most damaging tell in machine-drafted copy is prose that imitates the textur
 
 The patterns, so they can be caught in new copy:
 
-- **Metaphor in place of the fact.** "The calibration became the weather" instead of "the calibration drifted a little each week." A comparison is allowed only after the plain fact is on the page and only if it makes the fact easier to picture.
+- **Metaphor in place of the fact.** "The calibration became the weather" instead of "the calibration drifted a little each week." A comparison is allowed only after the plain fact is on the page and only if it makes the fact easier to picture. A fact in the next sentence does not rescue a metaphor in the opening paragraph, title, or excerpt: a reader who meets the metaphor first leaves before the fact arrives.
+- **Character traits for measurements.** Confidence isn't "honest," a model doesn't "admit" or "know," and a score doesn't "tell the truth." Name the measurement and what it means for the reader: "when it says 90 percent, it's right about 90 percent of the time." After that sentence has appeared, "calibrated" is fine.
 - **Abstract noun doing a person's job.** "The arithmetic had her as a side effect", "the pipeline learned to hesitate." Name who did what.
 - **The aphorism that equates a concrete thing with an abstraction.** "The scorecard is the contract." Say what the scorecard does.
 - **Riddle closers.** A short last line that sounds final and has to be decoded: "That's the whole argument." "What had collapsed was the bill." If the paragraph has a point, state the point.
