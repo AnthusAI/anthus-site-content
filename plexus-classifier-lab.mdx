@@ -32,7 +32,7 @@ Say you've got a hosted decision model grading text for you: support tickets, ca
 
 At 140 rounds the system read the disagreements, wrote the unwritten rule in one plain sentence, and proposed one extra question for the model. A person read the proposal and approved it. Accuracy went from 77 to 87 percent. Nobody trained anything.
 
-That run is the whole argument. There are two usual ways to get a classifier: build a labelled dataset first and train your own, or take the zero-shot answer as it comes. The run above is a third way. Start classifying now with a decision model. Review its decisions as it makes them, and label the ones a reviewer disagrees with. Those labels cost far less than a dataset built up front, and they're what keeps the classifier aligned from then on.
+Everything else in the method follows from that run. There are two usual ways to get a classifier: build a labelled dataset first and train your own, or take the zero-shot answer as it comes. The run above is a third way. Start classifying now with a decision model. Review its decisions as it makes them, and label the ones a reviewer disagrees with. Those labels cost far less than a dataset built up front, and they're what keeps the classifier aligned from then on.
 
 That's the method we run through Plexus, our MLOps platform. Every number here comes from work we've published. Here's the loop, one step at a time.
 
