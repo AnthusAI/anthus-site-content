@@ -62,6 +62,17 @@ Across all depths, Jev scored 83.8% and 89.3%; Luna, 64.1% and 65.0%. The gap at
 
 You might be thinking that reasoning off is what sank Luna. Turning it on might help, but it would also make every decision slower and costlier than the one-shot job a decision API exists to do, and every model here got the same single shot. The open models we tested are stuck at depth 5 too: [every model except Jev](https://hard-decisions.anth.us/breakdowns/proof-depth/) was at coin-flip accuracy by depth 5.
 
+## Wrong when the answer is on the page
+
+Most of Luna's misses come from long chains, but not all of them. At depth 0, where the statement or its opposite is written in the text, Luna got 20 of 300 open-world problems wrong and 6 of 300 closed-world ones. At depth 1, one rule away, it missed 67 of 302 and 70 of 300. Here are the shortest of those misses at each depth, in each version of the task, with the confidence Luna gave when we asked again for log-probabilities and it gave the same answer:
+
+- **Depth 0, open world.** The text says "The lion is not big." Is "The lion is big" true, false or unknown? It's false; the text says so. Luna said **unknown, 100% sure**.
+- **Depth 0, closed world.** The text says "Charlie is nice." Is "Charlie is not nice" true or false? False. Luna said **true, 100% sure**.
+- **Depth 1, open world.** "The tiger is big. All big people are cold." Is "The tiger is cold" true? Yes, one rule away. Luna said **unknown, 100% sure**.
+- **Depth 1, closed world.** "The rabbit is big. If someone is big then they chase the rabbit." Is "The rabbit does not chase the rabbit" true or false? False: the rabbit is big, so it chases the rabbit. Luna said **true, 100% sure**.
+
+They're the clearest of Luna's misses; at depth 0 it's right 93% and 98% of the time. But a decision model that can be 100% sure Charlie is not nice, when the text says Charlie is nice, needs more than a threshold on its confidence.
+
 ## Can Luna tell you how sure it is?
 
 A decision model earns its keep when you can trust its confidence. Jev returns a probability for every option. Luna, through the regular API, returns text. But with reasoning off, OpenAI's API will also return log-probabilities: for each token Luna writes, the log of the probability it gave that token, plus the most likely alternatives. With reasoning on, it refuses: "'logprobs' is not supported with this model," which matches [OpenAI's guide](https://developers.openai.com/api/docs/guides/latest-model).
