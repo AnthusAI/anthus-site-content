@@ -120,18 +120,22 @@ So a pooled answer on a close call is steadier, and no better supported than bef
 
 ## What it costs
 
-Each copy costs about 160 input tokens on these tasks (175 on one, 149 on the other), and latency barely moves: a median of 174 ms with one copy, 181 ms with ten. Your copy cost is the length of your question, so a long question makes every copy dearer, and a long document makes the copies relatively cheaper, since the document is only sent once.
+Jev charges $42 per billion input tokens, and output is free. Each copy adds about 160 input tokens on these tasks (175 on one, 149 on the other), so a million decisions cost about $23 with one copy, $80 to $90 with ten, and $140 to $160 with twenty. Latency barely moves: a median of 174 ms with one copy, 181 ms with ten.
+
+The more useful number is what each avoided change costs. Ten copies add $56 to $66 per million decisions and prevent about 7,000 to 7,500 changed answers per million repeats, so each one costs under a cent: $0.008 to $0.009. Three copies come out cheaper, about $0.003 each, but their improvement isn't clearly bigger than chance. Twenty copies cost $0.02 to $0.03 each, because the extra ten buy almost nothing.
+
+Your copy cost is the length of your question, so a long question makes every copy dearer, and a long document makes the copies relatively cheaper, since the document is only sent once.
 
 <figure className="center-full-image">
   <BlogImage
     images={props.pageContext.frontmatter.images}
     name="jev-pooled-cost.png"
     className="full"
-    alt="Line chart of how often a repeat changes the answer against input tokens per request. Both tasks fall from about 2 to 2.5 percent at around 550 tokens to their lowest at ten copies, around 1,900 to 2,100 tokens, then rise slightly at twenty copies, around 3,400 to 3,900 tokens."
+    alt="Line chart of how often a repeat changes the answer against Jev's cost per million decisions. Both tasks fall from about 2 to 2.5 percent at about 23 dollars with one copy to their lowest at ten copies, 79 to 90 dollars, then rise slightly at twenty copies, 141 to 163 dollars."
   />
   <figcaption className="image-caption">
-    Changed answers against what a request costs. Past ten copies, extra
-    tokens buy nothing.
+    Changed answers against what a million decisions cost on Jev. Past ten
+    copies, extra money buys nothing.
   </figcaption>
 </figure>
 
