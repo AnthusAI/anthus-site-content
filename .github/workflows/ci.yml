@@ -1,0 +1,87 @@
+name: Check content builds
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: content-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout pushed content
+      uses: actions/checkout@v4
+      with:
+        path: content
+        persist-credentials: false
+
+    - name: Checkout the Anth.us integration branch
+      uses: actions/checkout@v4
+      with:
+        repository: AnthusAI/Anth.us
+        ref: develop
+        submodules: recursive
+        path: site
+        persist-credentials: false
+
+    - name: Build against the pushed content
+      run: |
+        rm -rf site/src/site-content
+        cp -a content/ site/src/site-content/
+        rm -rf site/src/site-content/.git site/src/site-content/.github
+        mkdir -p site/static/blog
+        if [ -d content/redirects ]; then cp -a content/redirects/. site/static/blog/; fi
+
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22
+        cache: npm
+        cache-dependency-path: site/package-lock.json
+
+    - name: Restore Gatsby cache
+      uses: actions/cache/restore@v4
+      with:
+        path: |
+          site/.cache
+          site/public
+        key: gatsby-content-${{ runner.os }}-${{ hashFiles('site/package-lock.json') }}-${{ github.sha }}
+        restore-keys: |
+          gatsby-content-${{ runner.os }}-${{ hashFiles('site/package-lock.json') }}-
+          gatsby-content-${{ runner.os }}-
+
+    - name: Install dependencies
+      run: npm ci
+      working-directory: site
+
+    - name: Build Gatsby site
+      run: npm run build
+      working-directory: site
+      env:
+        CI: true
+
+    - name: Normalize and verify embedded global CSS
+      run: node scripts/normalize-gatsby-inline-css.cjs
+      working-directory: site
+
+    - name: Verify rendered posts match cached query data
+      run: node scripts/verify-gatsby-posts-cache.cjs
+      working-directory: site
+
+    - name: Save Gatsby cache
+      if: success()
+      uses: actions/cache/save@v4
+      with:
+        path: |
+          site/.cache
+          site/public
+        key: gatsby-content-${{ runner.os }}-${{ hashFiles('site/package-lock.json') }}-${{ github.sha }}
