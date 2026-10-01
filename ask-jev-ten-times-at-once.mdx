@@ -9,7 +9,7 @@ tags:
   - articles
   - AI
 excerpt: |
-  Ask Jev the same question again and about 2% of its answers change. Putting ten copies of the question in one request and averaging them cut those changes by about a third. It didn't make Jev any more accurate, and that tells you exactly where it's worth paying for.
+  Kahneman, Sibony and Sunstein's Noise shows how often experts give different answers to the same case. AI decision models do it too: ask Jev again and about 2% of its answers change. Averaging ten copies in one request cut those changes by about a third, and didn't make Jev any more accurate.
 preview_image: "./images/jev-pooled-preview.png"
 images:
   - ./images/jev-pooled-preview.png
@@ -22,9 +22,13 @@ state: draft
 
 import BlogImage from "../components/blog-image"
 
-Run the same batch of records through a decision model twice and some of the labels come back different. Nothing about the records changed. Picture a support ticket that was "billing" yesterday and is "account access" today, or a listing that passes a policy check and then fails it when the other side of the marketplace runs the same check. With Jev, on a thousand logic problems, it's about one answer in forty. Small, until it's your record that flipped and someone has to explain why.
+In *Noise* (2021), Daniel Kahneman, Olivier Sibony and Cass Sunstein describe a test they ran at an insurance company. Underwriters were given the same realistic cases and asked to quote a premium. The company's executives expected two underwriters to differ by about 10%. The typical difference was 55%. Same company, same rules, same case, and the price you were quoted depended on whose desk your file landed on.
 
-Jev lets one request carry many questions about the same text, and it only bills for input tokens. So we tried the obvious fix: ask the same question ten times in one request and average the ten answers. That cut the changes by about a third. It did nothing at all for accuracy, and the reason it didn't is the most useful thing we found.
+The book separates two kinds of error in human judgment. **Bias** is a consistent lean in the wrong direction. **Noise** is variation in judgments that should have come out the same. Some of it comes from different people, and some from the same person at different moments, which the authors call occasion noise: the same expert, shown the same case again, reaching a different conclusion.
+
+AI decision models have occasion noise too. Run the same batch of records through one twice and some of the labels come back different, though nothing about the records changed. Picture a support ticket filed as "billing" yesterday and "account access" today, or a listing that passes a policy check, then fails it when the other side of the marketplace runs the same check. With Jev, a decision model from TypeSafe, it happened to about one answer in forty on a thousand logic problems. Small, until it's your record that flipped and someone has to explain why.
+
+The book's main remedy for noise is to average several independent judgments, and Jev makes that unusually cheap: one request can carry the same question many times. So we asked it ten times in one request and averaged the answers. That cut the changes by about a third. It did nothing at all for accuracy, and that split is the one the book draws: averaging removes noise, not bias.
 
 <figure className="center-full-image">
   <BlogImage
@@ -74,9 +78,7 @@ Not with three copies, not with twenty, not with the options shuffled or the que
 
 The copies almost always agree with each other, and they agree on the wrong answers too. On the three-option task, about 16% of answers were wrong, but identical copies in a request disagreed on only 3 to 4% of problems. Even a perfect referee that picked a right copy whenever one existed would have gained less than 2 points. Varying the copies made them disagree more often, up to two and a half times as often on the emotion task, but only on problems Jev was already unsure about, and accuracy still didn't move.
 
-Daniel Kahneman, Olivier Sibony and Cass Sunstein give this a name in *Noise* (2021). Errors in judgment come in two kinds: **bias**, a consistent lean in the wrong direction, and **noise**, variation in judgments that should have come out the same. A judge who rules differently on the same case on a Monday and a Friday is noisy. Their remedy for noise is to average several independent judgments, which is what pooling does.
-
-And pooling did remove noise. It just had nothing to do with Jev's mistakes, because those are bias: every copy makes them. *Noise* argues that cutting noise cuts error, and for a number that's true. For a yes-or-no call near its tipping point, it isn't. The problems that flip are ones where Jev is close to a coin toss, and averaging settles each one on one side, which is right about half the time. Same mistakes, made more consistently.
+In the book's terms, Jev's mistakes are bias: every copy makes them, so averaging copies leaves them in place. Pooling did remove noise, as the next section shows. But *Noise* also argues that cutting noise cuts error, and that's true for a number like a premium or a sentence length. For a yes-or-no call near its tipping point, it isn't. The problems that flip are ones where Jev is close to a coin toss, and averaging settles each one on one side, which is right about half the time. Same mistakes, made more consistently.
 
 ## It does make Jev more repeatable
 
