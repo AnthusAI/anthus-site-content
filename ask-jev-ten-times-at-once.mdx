@@ -1,0 +1,158 @@
+---
+title: "Ask Jev Ten Times at Once"
+slug: "ask-jev-ten-times-at-once"
+date: "2026-10-01"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+tags:
+  - research
+  - articles
+  - AI
+excerpt: |
+  Ask Jev the same question again and about 2% of its answers change. Putting ten copies of the question in one request and averaging them cut those changes by about a third. It didn't make Jev any more accurate, and that tells you exactly where it's worth paying for.
+preview_image: "./images/jev-pooled-preview.png"
+images:
+  - ./images/jev-pooled-preview.png
+  - ./images/jev-pooled-flips.png
+  - ./images/jev-pooled-accuracy.png
+  - ./images/jev-pooled-close-calls.png
+  - ./images/jev-pooled-cost.png
+state: draft
+---
+
+import BlogImage from "../components/blog-image"
+
+Run the same batch of records through a decision model twice and some of the labels come back different. Nothing about the records changed. Picture a support ticket that was "billing" yesterday and is "account access" today, or a listing that passes a policy check and then fails it when the other side of the marketplace runs the same check. With Jev, on a thousand logic problems, it's about one answer in forty. Small, until it's your record that flipped and someone has to explain why.
+
+Jev lets one request carry many questions about the same text, and it only bills for input tokens. So we tried the obvious fix: ask the same question ten times in one request and average the ten answers. That cut the changes by about a third. It did nothing at all for accuracy, and the reason it didn't is the most useful thing we found.
+
+<figure className="center-full-image">
+  <BlogImage
+    images={props.pageContext.frontmatter.images}
+    name="jev-pooled-flips.png"
+    className="full"
+    alt="Line chart of how often a repeated request changes Jev's answer, against the number of copies of the question in one request: 1, 2, 3, 5, 10 and 20. For the three-option logic task the rate goes from 2.5 percent with one copy to 1.8 percent with ten and 2.0 percent with twenty. For the two-option task it goes from 2.0 percent to 1.2 percent with ten and 1.4 percent with twenty. Ten copies gave 29 and 37 percent fewer changed answers than one copy."
+  />
+  <figcaption className="image-caption">
+    How often sending the same request again changes the answer. Each point is
+    1,000 logic problems answered five times. The vertical bars show how
+    uncertain each rate is on its own; the comparison with one copy is tighter,
+    because it's made problem by problem.
+  </figcaption>
+</figure>
+
+## The setup
+
+[Jev](/blog/making-decisions-instead-of-generating-text/) takes a piece of text and a set of typed questions, and returns a probability for every option of every question. Questions in one request share the text, so a second copy of a question costs only the question's own tokens: about 175 extra input tokens on our logic task, against 560 for the whole request with one copy. Ten copies cost 3.8 times as much as one. Jev's output is free.
+
+"Pooling" here means the simplest thing: put k identical copies of the question in one request, average the probabilities the copies return, and take the option with the highest average.
+
+We ran three studies, each written down before any answers came back ([the preregistrations](https://github.com/AnthusAI/Decision-Averaging/tree/main/docs)):
+
+1. **Accuracy with identical copies.** 1, 3, 5 and 10 copies on 1,800 logic problems from [ProofWriter](https://allenai.org/data/proofwriter), in two versions: one where every statement is true or false, and one where it can also be unknown.
+2. **Accuracy with varied copies.** Three copies with the options in a different order, and three with the question reworded, on the logic problems and on 2,000 short posts labelled with one of six emotions.
+3. **Repeatability.** 1, 2, 3, 5, 10 and 20 copies, each sent five separate times, on 1,000 problems from each logic task.
+
+Everything ran on `jev-1.13.0`, about 100,000 requests, $5.50 in total.
+
+## It doesn't make Jev more accurate
+
+Not with three copies, not with twenty, not with the options shuffled or the question reworded. Across every arm and task, pooled accuracy stayed within a point of a single answer.
+
+<figure className="center-full-image">
+  <BlogImage
+    images={props.pageContext.frontmatter.images}
+    name="jev-pooled-accuracy.png"
+    className="full"
+    alt="Line chart of accuracy against the number of copies in one request. The two-option task stays between 89.3 and 89.6 percent; the three-option task stays between 84.6 and 85.2 percent, from one copy to twenty."
+  />
+  <figcaption className="image-caption">
+    Accuracy on the same 1,000 problems per task, averaged over five runs. The
+    lines are flat from one copy to twenty.
+  </figcaption>
+</figure>
+
+The copies almost always agree with each other, and they agree on the wrong answers too. On the three-option task, about 16% of answers were wrong, but identical copies in a request disagreed on only 3 to 4% of problems. Even a perfect referee that picked a right copy whenever one existed would have gained less than 2 points. Varying the copies made them disagree more often, up to two and a half times as often on the emotion task, but only on problems Jev was already unsure about, and accuracy still didn't move.
+
+Daniel Kahneman, Olivier Sibony and Cass Sunstein give this a name in *Noise* (2021). Errors in judgment come in two kinds: **bias**, a consistent lean in the wrong direction, and **noise**, variation in judgments that should have come out the same. A judge who rules differently on the same case on a Monday and a Friday is noisy. Their remedy for noise is to average several independent judgments, which is what pooling does.
+
+And pooling did remove noise. It just had nothing to do with Jev's mistakes, because those are bias: every copy makes them. *Noise* argues that cutting noise cuts error, and for a number that's true. For a yes-or-no call near its tipping point, it isn't. The problems that flip are ones where Jev is close to a coin toss, and averaging settles each one on one side, which is right about half the time. Same mistakes, made more consistently.
+
+## It does make Jev more repeatable
+
+The repeatability study sent every request five separate times and counted how often two runs of the same request disagreed.
+
+| Copies | Cost | Three-option task | Fewer changes | Two-option task | Fewer changes |
+|---|---|---|---|---|---|
+| 1 | 1.0× | 2.5% | | 2.0% | |
+| 3 | 1.6× | 2.0% | 18% | 1.6% | 21% |
+| 10 | 3.8× | 1.8% | 29% | 1.2% | 37% |
+| 20 | 6.9× | 2.0% | 19% | 1.4% | 28% |
+
+Ten copies was the only setting that clearly beat one copy on both tasks. Compared problem by problem, its 95% intervals were 9% to 47% fewer changes on the three-option task and 16% to 57% on the two-option task. Three copies was cheaper and pointed the same way, but its intervals included zero.
+
+## Why ten, and not twenty
+
+If the copies were independent, twenty would have beaten ten easily: the wobble of an average of twenty independent answers is under a quarter of one answer's. It didn't. The wobble in the pooled probability between runs fell only from 0.017 with one copy to 0.013 with ten and 0.012 with twenty.
+
+Splitting that wobble into the part each copy has on its own and the part every copy in a request shares, about half of it is shared. When a request comes back a little different, all of its copies move together, and no amount of averaging inside the request can cancel that. It's the same point Kahneman makes in *Thinking, Fast and Slow* (2011) about combining judgments: they only help as much as they're independent. Jev bills itself as a "System One" model, after the fast, intuitive System 1 of that book, and its ten copies in one request are ten opinions from one sitting.
+
+We also checked whether the copies get noisier in longer requests. They don't: the spread between copies in a request is the same at three copies as at twenty. The dip at twenty is most likely chance around a plateau that starts near ten.
+
+## Close calls stay close calls
+
+The problems that flip are the ones where Jev's top two options are nearly tied. Pooling tightens them, so they flip less often, but it can't move them away from the tie.
+
+<figure className="center-full-image">
+  <BlogImage
+    images={props.pageContext.frontmatter.images}
+    name="jev-pooled-close-calls.png"
+    className="full"
+    alt="Dot plot of the eight least stable problems on the three-option task. With one copy, each problem's five runs spread across about 0.3 to 0.6 probability. With ten copies the five runs sit closer together but still around the middle, mostly between about 0.4 and 0.6."
+  />
+  <figcaption className="image-caption">
+    Each row is one problem, each dot one of its five runs. Ten copies pull the
+    runs together, but they stay where they were: in the middle.
+  </figcaption>
+</figure>
+
+So a pooled answer on a close call is steadier, and no better supported than before. If a close call matters, it still needs a second look.
+
+## What it costs
+
+Each copy costs about 160 input tokens on these tasks (175 on one, 149 on the other), and latency barely moves: a median of 174 ms with one copy, 181 ms with ten. Your copy cost is the length of your question, so a long question makes every copy dearer, and a long document makes the copies relatively cheaper, since the document is only sent once.
+
+<figure className="center-full-image">
+  <BlogImage
+    images={props.pageContext.frontmatter.images}
+    name="jev-pooled-cost.png"
+    className="full"
+    alt="Line chart of how often a repeat changes the answer against input tokens per request. Both tasks fall from about 2 to 2.5 percent at around 550 tokens to their lowest at ten copies, around 1,900 to 2,100 tokens, then rise slightly at twenty copies, around 3,400 to 3,900 tokens."
+  />
+  <figcaption className="image-caption">
+    Changed answers against what a request costs. Past ten copies, extra
+    tokens buy nothing.
+  </figcaption>
+</figure>
+
+## When it's worth paying for
+
+Because accuracy doesn't change, pooling only pays when a changed answer costs you something by itself. That's a narrow set of situations. The clearest ones are where the same input really is decided again and the first answer can't be reused:
+
+- **Reprocessing with a new question added.** You re-run a backlog because the request now asks something extra. Jev's answers depend on what else is in the request, so the old labels can't simply be carried over, and every label that changes for no reason is churn downstream: rewritten records, re-sent notices, a diff somebody has to explain.
+- **Two parties checking the same thing.** A marketplace and a seller both run one policy check on one listing; a router and a compliance service both classify one message. They're separate systems and can't share answers, and every disagreement is a dispute or a manual reconciliation.
+
+A second group looks just as plausible, but our studies only sent byte-identical requests, so it's untested: inputs that are nearly the same.
+
+- **Records re-scored as they change.** A ticket's priority is re-checked every time someone comments. A spurious flip re-routes it or pages someone.
+- **Agents that re-ask each turn.** An agent asks what the user wants at every step, and a flip switches plans for no reason.
+- **Jev as a judge.** Scoring a new prompt or model version on a fixed test set, where run-to-run noise creates false regressions or hides real ones.
+- **One case through two channels.** The same complaint by email and by web form, labelled differently.
+
+Two cautions. Pooling reduces changes; it doesn't end them, and at ten copies about 1.2 to 1.8% of repeats still disagree. And making a wrong answer more repeatable has a cost of its own: with random errors, someone wrongly turned down may get the right answer next time, but with repeatable errors the same people lose every time. Kathleen Creel and Deborah Hellman make that argument in ["The Algorithmic Leviathan"](https://doi.org/10.1017/can.2022.3), and A. Feder Cooper and colleagues show how much individual predictions can swing from run to run in ["Arbitrariness and Social Prediction"](https://arxiv.org/abs/2301.11562).
+
+## Check it yourself
+
+The code, the 100,000 recorded answers and the three preregistrations are in [AnthusAI/Decision-Averaging](https://github.com/AnthusAI/Decision-Averaging). `da replay` recomputes every number from the recorded answers without calling Jev, and every chart comes from a script in the repo. The [write-up](https://github.com/AnthusAI/Decision-Averaging/blob/main/docs/findings.md) scores every prediction we made, including the ones we got wrong: we expected pooling to help most on the hardest problems (it didn't help anywhere), and we expected twenty copies to be at least as steady as five (on the two-option task, they weren't).
+
+The limits are real. One model, one version, all on one day. The logic problems are synthetic, and the emotion labels are noisy. And the repeatability numbers come from identical requests, so how much pooling helps when the input changes a little is still open. That's the next thing to measure.
