@@ -1,5 +1,5 @@
 ---
-title: "Ask Jev Ten Times at Once"
+title: "Can Averaging Reduce Noise in an AI Decision Model?"
 slug: "ask-jev-ten-times-at-once"
 date: "2026-10-01"
 authors:
@@ -9,7 +9,7 @@ tags:
   - articles
   - AI
 excerpt: |
-  Kahneman, Sibony and Sunstein's Noise shows how often experts give different answers to the same case. AI decision models do it too: ask Jev again and about 2% of its answers change. Averaging ten copies in one request cut those changes by about a third, and didn't make Jev any more accurate.
+  We asked Jev the same question ten times in one request and expected ten identical answers. They split, four votes to six. Kahneman, Sibony and Sunstein call that kind of variation noise. Averaging the copies didn't make Jev more accurate, but it cut changed answers on a rerun by about a third.
 preview_image: "./images/jev-pooled-preview.png"
 images:
   - ./images/jev-pooled-preview.png
@@ -22,13 +22,17 @@ state: draft
 
 import BlogImage from "../components/blog-image"
 
-In *Noise* (2021), Daniel Kahneman, Olivier Sibony and Cass Sunstein describe a test they ran at an insurance company. Underwriters were given the same realistic cases and asked to quote a premium. The company's executives expected two underwriters to differ by about 10%. The typical difference was 55%. Same company, same rules, same case, and the price you were quoted depended on whose desk your file landed on.
+It started with a question that seemed to have an obvious answer. Jev, a decision model from TypeSafe, lets one request ask several questions about the same piece of text. So what happens if you put the same question in one request ten times? Same model, same text, same question, sent at the same moment. Ten identical answers, surely.
 
-The book separates two kinds of error in human judgment. **Bias** is a consistent lean in the wrong direction. **Noise** is variation in judgments that should have come out the same. Some of it comes from different people, and some from the same person at different moments, which the authors call occasion noise: the same expert, shown the same case again, reaching a different conclusion.
+We tried it on five logic problems. On one of them, the ten copies came back with ten different sets of probabilities, and they didn't agree on the answer either: four said the statement was false and six said it was unknown. The correct answer was false.
 
-AI decision models have occasion noise too. Run the same batch of records through one twice and some of the labels come back different, though nothing about the records changed. Picture a support ticket filed as "billing" yesterday and "account access" today, or a listing that passes a policy check, then fails it when the other side of the marketplace runs the same check. With Jev, a decision model from TypeSafe, it happened to about one answer in forty on a thousand logic problems. Small, until it's your record that flipped and someone has to explain why.
+People do this too. In *Noise* (2021), Daniel Kahneman, Olivier Sibony and Cass Sunstein describe a test they ran at an insurance company. Underwriters were given the same realistic cases and asked to quote a premium. The company's executives expected two underwriters to differ by about 10%. The typical difference was 55%. Same company, same rules, same case, and the price depended on who got your file.
 
-The book's main remedy for noise is to average several independent judgments, and Jev makes that unusually cheap: one request can carry the same question many times. So we asked it ten times in one request and averaged the answers. That cut the changes by about a third. It did nothing at all for accuracy, and that split is the one the book draws: averaging removes noise, not bias.
+The book separates two kinds of error in judgment. **Bias** is a consistent lean in the wrong direction. **Noise** is variation in judgments that should have come out the same. Some of it comes from different people, and some from the same person at different moments, which the authors call occasion noise: the same expert, shown the same case again, reaching a different conclusion. Our ten copies were occasion noise in a machine.
+
+It matters outside a lab. Run the same batch of records through a decision model twice and some of the labels come back different, though nothing about the records changed. Picture a support ticket filed as "billing" yesterday and "account access" today, or a listing that passes a policy check, then fails it when the other side of the marketplace runs the same check. With Jev, on a thousand logic problems, it happened to about one answer in forty. Small, until it's your record that flipped and someone has to explain why.
+
+The book's main remedy for noise is to average several judgments, and Jev makes that unusually cheap, because a request can carry the same question many times. So we asked two questions in turn. Does averaging the copies make Jev more accurate? It doesn't. Does it at least make Jev give the same answer when you ask again? It does: ten copies cut the changes by about a third. That's the line the book draws: averaging removes noise, not bias.
 
 <figure className="center-full-image">
   <BlogImage
@@ -45,7 +49,7 @@ The book's main remedy for noise is to average several independent judgments, an
   </figcaption>
 </figure>
 
-## The setup
+## How we tested it
 
 [Jev](/blog/making-decisions-instead-of-generating-text/) takes a piece of text and a set of typed questions, and returns a probability for every option of every question. Questions in one request share the text, so a second copy of a question costs only the question's own tokens: about 175 extra input tokens on our logic task, against 560 for the whole request with one copy. Ten copies cost 3.8 times as much as one. Jev's output is free.
 
@@ -61,7 +65,7 @@ Everything ran on `jev-1.13.0`, about 100,000 requests, $5.50 in total.
 
 ## It doesn't make Jev more accurate
 
-Not with three copies, not with twenty, not with the options shuffled or the question reworded. Across every arm and task, pooled accuracy stayed within a point of a single answer.
+Accuracy was the first thing we tested, because a more accurate answer would have been worth paying for. It didn't improve: not with three copies, not with twenty, not with the options shuffled or the question reworded. Across every arm and task, pooled accuracy stayed within a point of a single answer.
 
 <figure className="center-full-image">
   <BlogImage
@@ -76,13 +80,13 @@ Not with three copies, not with twenty, not with the options shuffled or the que
   </figcaption>
 </figure>
 
-The copies almost always agree with each other, and they agree on the wrong answers too. On the three-option task, about 16% of answers were wrong, but identical copies in a request disagreed on only 3 to 4% of problems. Even a perfect referee that picked a right copy whenever one existed would have gained less than 2 points. Varying the copies made them disagree more often, up to two and a half times as often on the emotion task, but only on problems Jev was already unsure about, and accuracy still didn't move.
+The first problem we tried had already shown why: when the copies split, the majority was wrong. Across the full sets, the copies usually agree with each other, and they often agree on the wrong answers too. On the three-option task, about 16% of answers were wrong, but identical copies in a request disagreed on only 3 to 4% of problems. Even a perfect referee that picked a right copy whenever one existed would have gained less than 2 points. Varying the copies made them disagree more often, up to two and a half times as often on the emotion task, but only on problems Jev was already unsure about, and accuracy still didn't move.
 
 In the book's terms, Jev's mistakes are bias: every copy makes them, so averaging copies leaves them in place. Pooling did remove noise, as the next section shows. But *Noise* also argues that cutting noise cuts error, and that's true for a number like a premium or a sentence length. For a yes-or-no call near its tipping point, it isn't. The problems that flip are ones where Jev is close to a coin toss, and averaging settles each one on one side, which is right about half the time. Same mistakes, made more consistently.
 
 ## It does make Jev more repeatable
 
-The repeatability study sent every request five separate times and counted how often two runs of the same request disagreed.
+So we changed the question. If averaging can't make the answer right, can it make the answer the same each time you ask? We sent every request five separate times and counted how often two runs of the same request disagreed.
 
 | Copies | Cost | Three-option task | Fewer changes | Two-option task | Fewer changes |
 |---|---|---|---|---|---|
@@ -97,13 +101,13 @@ Ten copies was the only setting that clearly beat one copy on both tasks. Compar
 
 If the copies were independent, twenty would have beaten ten easily: the wobble of an average of twenty independent answers is under a quarter of one answer's. It didn't. The wobble in the pooled probability between runs fell only from 0.017 with one copy to 0.013 with ten and 0.012 with twenty.
 
-Splitting that wobble into the part each copy has on its own and the part every copy in a request shares, about half of it is shared. When a request comes back a little different, all of its copies move together, and no amount of averaging inside the request can cancel that. It's the same point Kahneman makes in *Thinking, Fast and Slow* (2011) about combining judgments: they only help as much as they're independent. Jev bills itself as a "System One" model, after the fast, intuitive System 1 of that book, and its ten copies in one request are ten opinions from one sitting.
+Split that wobble into the part each copy has on its own and the part every copy in a request shares, and the shared part is about half. When a request comes back a little different, all of its copies move together, and no amount of averaging inside the request can cancel that. It's the same point Kahneman makes in *Thinking, Fast and Slow* (2011) about combining judgments: they only help as much as they're independent. Jev bills itself as a "System One" model, after the fast, intuitive System 1 of that book, and its ten copies in one request are ten opinions from one sitting.
 
 We also checked whether the copies get noisier in longer requests. They don't: the spread between copies in a request is the same at three copies as at twenty. The dip at twenty is most likely chance around a plateau that starts near ten.
 
 ## Close calls stay close calls
 
-The problems that flip are the ones where Jev's top two options are nearly tied. Pooling tightens them, so they flip less often, but it can't move them away from the tie.
+The answers flip when Jev's top two options are nearly tied. Pooling tightens them, so they flip less often, but it can't move them away from the tie.
 
 <figure className="center-full-image">
   <BlogImage
@@ -143,7 +147,7 @@ Your copy cost is the length of your question, so a long question makes every co
 
 ## When it's worth paying for
 
-Because accuracy doesn't change, pooling only pays when a changed answer costs you something by itself. That's a narrow set of situations. The clearest ones are where the same input really is decided again and the first answer can't be reused:
+Because accuracy doesn't change, pooling only pays when a changed answer costs you something by itself. That's a narrow set of situations. The clearest cases are when the same input gets decided again, and you can't reuse the first answer:
 
 - **Reprocessing with a new question added.** You re-run a backlog because the request now asks something extra. Jev's answers depend on what else is in the request, so the old labels can't simply be carried over, and every label that changes for no reason is churn downstream: rewritten records, re-sent notices, a diff somebody has to explain.
 - **Two parties checking the same thing.** A marketplace and a seller both run one policy check on one listing; a router and a compliance service both classify one message. They're separate systems and can't share answers, and every disagreement is a dispute or a manual reconciliation.
