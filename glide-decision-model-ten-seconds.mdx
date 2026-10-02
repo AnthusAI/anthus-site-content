@@ -9,11 +9,12 @@ tags:
   - AI
   - explainer
 excerpt: |
-  Fastino's GLiDE, launched as the first thinking decision model, tied Jev on one of our reasoning tasks and lost by 17 points on the other. Its median answer took more than five times as long, 243 of 3,600 took ten seconds or more, and its confidence barely separates right answers from wrong ones.
+  Fastino's GLiDE, launched as the first thinking decision model, beat every open model on our reasoning benchmark, but it's no competition for Jev. It tied Jev on one task and lost by 17 points on the other, its median answer took more than five times as long, 243 of 3,600 took ten seconds or more, it cost about ten times as much, and its confidence barely separates right answers from wrong ones.
 preview_image: "./images/glide-decision-model-ten-seconds-preview.png"
 images:
   - ./images/glide-decision-model-ten-seconds-preview.png
   - ./images/glide-decision-model-ten-seconds-latency.png
+  - ./images/glide-decision-model-ten-seconds-time-and-cost-by-depth.png
   - ./images/glide-decision-model-ten-seconds-accuracy-by-depth.png
   - ./images/glide-decision-model-ten-seconds-reliability.png
 state: published
@@ -23,7 +24,9 @@ import BlogImage from "../components/blog-image"
 
 An agent is about to act, and it asks a decision model one question: approve, escalate or reject. A decision model is supposed to answer in a fraction of a second, with a probability you can set a threshold on, so the software keeps moving. [Jev](/blog/making-decisions-instead-of-generating-text/), the decision model we use most, answered our benchmark's questions in a median of about 180 milliseconds. On October 1, Fastino Labs released [GLiDE](https://fastino.ai/blog/introducing-glide-the-first-thinking-decision-model), which it calls the first thinking decision model, and reported that it beats Jev. We gave GLiDE the same 3,600 reasoning problems. Its median answer took a second, 243 answers took ten seconds or more, and the slowest took two minutes and fifteen seconds.
 
-In Daniel Kahneman's [Thinking, Fast and Slow](https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow), System 1 is fast, automatic judgment and System 2 is slow, deliberate reasoning. TypeSafe named Jev's API after the first one: its `/v1/systemone` endpoint takes a text and a list of typed questions and returns answers with probabilities, with no generated text. Fastino serves GLiDE on [the same endpoint](https://docs.fastino.ai/inference/systemone), with the same request and response. That made the test simple, because GLiDE got exactly the request Jev gets. It also sets an expectation GLiDE doesn't meet. A model that sometimes stops to reason for a minute is a System 2 model behind a System 1 interface.
+In Daniel Kahneman's [Thinking, Fast and Slow](https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow), System 1 is fast, automatic judgment and System 2 is slow, deliberate reasoning. TypeSafe calls Jev a [System One model](https://typesafe.ai/blog/introducing-system-one-models-and-jev), one "built to make fast, structured decisions that software can use directly." Jev "generates all outputs in a single query," in parallel, with no text generated token by token, and TypeSafe puts its response time at 70 to 500 milliseconds. Its `/v1/systemone` endpoint takes a text and a list of typed questions and returns answers with probabilities.
+
+Fastino is upfront that GLiDE works differently. It calls GLiDE a thinking decision model, and says its API "conforms to the System One model schema": GLiDE answers on [the same endpoint](https://docs.fastino.ai/inference/systemone), with the same request and response, and Fastino publishes a guide to migrating from TypeSafe. That made our test simple, because GLiDE got exactly the request Jev gets. It also makes a critical difference easy to overlook if you don't evaluate your options carefully. The interface is the same, but what happens behind it isn't. A model that sometimes stops to reason for a minute is a System 2 model behind a System 1 interface.
 
 <figure className="center-full-image">
   <BlogImage
@@ -38,9 +41,30 @@ In Daniel Kahneman's [Thinking, Fast and Slow](https://en.wikipedia.org/wiki/Thi
   </figcaption>
 </figure>
 
-GLiDE's times form two humps. About three quarters of its answers come back in half a second to two seconds. The other quarter take three seconds to two minutes, and those are GLiDE thinking. Fastino describes the design: GLiDE first forms a probability over the options, and when the leading option is uncertain, it spends more computation before answering. The extra work shows up on the bill. Fastino charges $0.30 per million input tokens, and the slow requests reported about 2,000 input tokens each against about 290 for the fast ones. The 3,600 problems cost us $0.77 on GLiDE and $0.08 on Jev.
+GLiDE's times form two humps. About three quarters of its answers come back in half a second to two seconds. The other quarter take three seconds to two minutes, and those are GLiDE thinking. Fastino describes the design in [its launch post](https://fastino.ai/blog/introducing-glide-the-first-thinking-decision-model): "Traditional decision models score a set of options in a single fixed pass." GLiDE instead "first produces a fast probability distribution, then allocates additional reasoning when the leading result is uncertain," so it can "spend more computation on difficult decisions while keeping straightforward ones fast." That's the pattern usually called test-time compute: spending more time and money at answer time to get a better answer. Fastino's API documentation recommends a read timeout of at least 300 seconds.
+
+The extra work shows up on the bill. Fastino charges $0.30 per million input tokens, and [its documentation](https://docs.fastino.ai/concepts/decision-models) says the reported input tokens sum the model's internal passes. The slow requests reported about 2,000 input tokens each against about 290 for the fast ones. Across the 3,600 problems, at list prices, GLiDE cost $213 per million decisions and Jev $23: 9.3 times as much, and 10.4 times as much per correct answer, because GLiDE was also less accurate. [The cost breakdown](https://hard-decisions.anth.us/cost-per-decision/) has every model with an API price.
 
 One caveat on the timing. We sent GLiDE eight requests at a time, because sending them one at a time would have taken more than three hours, so some of its fast-path time may be queueing on Fastino's side. That doesn't explain the second hump: those requests carried seven times as many tokens.
+
+## Deeper problems cost GLiDE more time and money
+
+If the extra time is reasoning that gets billed, time and cost should rise together on the problems GLiDE finds hard. They do: across all 3,600 requests, GLiDE's billed tokens and its response time correlate at 0.94.
+
+<figure className="center-full-image">
+  <BlogImage
+    images={props.pageContext.frontmatter.images}
+    name="glide-decision-model-ten-seconds-time-and-cost-by-depth.png"
+    className="full"
+    alt="Four bar charts by proof depth, Jev against GLiDE. Top row, average seconds per decision: Jev is 0.2 seconds at every depth on both tasks. On the open-world task GLiDE rises from 1.1 seconds at depth 0 to 3.4, 5.3, 6.7 and 6.6 seconds, then 4.4 at depth 5; on the closed-world task it is 0.9 seconds at depth 0 and 2.2 to 2.5 seconds at depths 1 to 5. Bottom row, list-price cost per million decisions: Jev is $22 to $24 at every depth. GLiDE's open-world cost rises from $97 at depth 0 to $213, $288, $374 and $391, then $305; its closed-world cost is $84 at depth 0 and $157 to $167 at depths 1 to 5."
+  />
+  <figcaption className="image-caption">
+    Average time and list-price cost per decision by proof depth, about 300
+    problems per bar. Jev's times are from a one-at-a-time rerun.
+  </figcaption>
+</figure>
+
+Jev does the same work on every problem: about a fifth of a second and $23 per million decisions, whether the answer is written in the text or needs five chained rules. On the open-world task GLiDE spends more as problems get deeper, from $97 per million decisions and 1.1 seconds on average at depth zero to $391 and 6.6 seconds at depth four. On the closed-world task it spends about the same, $160 and 2.4 seconds, at every depth past zero, and that's the task where its accuracy fell furthest.
 
 ## A tie on one task, a 17-point loss on the other
 
@@ -117,12 +141,14 @@ We think the fix GLiDE needs is the one Luna needs: a probability that's higher 
 
 ## What we'd tell a team choosing a decision model
 
-GLiDE is a strong reasoner when it reasons. On the open-world task it matched the best decision model we've tested and beat every open model by more than 20 points, and its thinking answers were right more than nine times in ten. As a deliberate model for decisions that can wait a few seconds, it may be worth a look. As a drop-in replacement for Jev inside an agent loop, it isn't there.
+GLiDE is better at multi-step reasoning than any open model we've tested, by more than 20 points on the open-world task, and its thinking answers were right more than nine times in ten. But it isn't real competition for Jev. It's less accurate, by 17.5 points on the closed-world task. It's slower, five times at the median, with a tail that reaches minutes. Its confidence barely separates its right answers from its wrong ones. And it costs about ten times as much per decision.
+
+The reason is the design Fastino chose. A decision model competes with Jev where it can sit inside every step of an agent and answer in a fraction of a second, which is what a System One model is for. A model that sometimes takes a minute to respond isn't a System One model, however its API is shaped. Fastino says plainly that GLiDE thinks; the risk is for teams that see the same endpoint and the same request format and assume they're getting the same kind of model.
 
 - **Plan for the slowest answers.** A one-second median hides a 6.8% chance that a decision takes ten seconds or more, and an agent makes many decisions per task.
 - **Check the probability against labeled answers before you set a threshold.** On our problems, GLiDE's high numbers weren't more likely to be right than its middling ones.
 - **Test the question formats you'll actually use.** The same logic asked as true, false or unknown and as true or false gave GLiDE a tie with Jev on one and a coin flip on the other at depth five.
-- **Price the thinking.** Its slow answers bill about seven times the tokens of its fast ones. Here GLiDE cost nine times what Jev did.
+- **Price the thinking.** Its slow answers bill about seven times the tokens of its fast ones. Here GLiDE cost 9.3 times what Jev did per decision, and more on the harder problems.
 
 ## How we measured
 
