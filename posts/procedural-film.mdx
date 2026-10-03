@@ -14,15 +14,15 @@ images:
 state: published
 ---
 
-import BlogImage from "../../components/blog-image"
-
 <p class="center-full-image">
-  <BlogImage
-    className="center-small-image"
-    images={props.pageContext.frontmatter.images}
-    name="procedural-film.png"
-    alt="Six frames from the procedural-film butterfly film, alternating hand-inked paper shots and navy blueprint shots"
-  />
+
+::image{
+  src="images/posts/procedural-film.png"
+  layout="center-small-image"
+  alt="Six frames from the procedural-film butterfly film, alternating hand-inked paper shots and navy
+  blueprint shots"
+}
+
 </p>
 
 [procedural-film](https://github.com/kuhnhomeuk-cell/procedural-film) is an agent skill that turns a topic into a 30-second vertical film. Every pixel is drawn in vanilla JavaScript on a canvas, every sound is synthesised in Web Audio, and the finished film ships with zero media assets. The output is one self-contained HTML player plus MP4 exports.

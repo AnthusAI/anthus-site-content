@@ -14,15 +14,14 @@ images:
 state: published
 ---
 
-import BlogImage from '../../components/blog-image';
-
 <p class="center-full-image">
-  <BlogImage
-    className="center-small-image"
-    images={props.pageContext.frontmatter.images}
-    name="microduck-open-source-biped.png"
-    alt="Pollen Robotics Microduck open-source biped robot"
-  />
+
+::image{
+  src="images/posts/microduck-open-source-biped.png"
+  layout="center-small-image"
+  alt="Pollen Robotics Microduck open-source biped robot"
+}
+
 </p>
 
 [Pollen Robotics' Microduck](https://pollen-robotics.com/microduck/) is a 25 cm, 800 g biped that ships with seven trained behaviors, a game controller, and a full reinforcement-learning stack you can run on your own machine. Pre-orders are open at $399 for the base robot.

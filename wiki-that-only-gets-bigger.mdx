@@ -15,16 +15,18 @@ tags:
   - ai
   - knowledge-management
   - agents
+citations:
+  mcveety-2026-okf-v0-2-adds-trust-signals:
+    type: webpage
+    title: OKF v0.2 adds trust signals
+    author: Sam McVeety and Amir Hormati
+    container-title: Google Cloud Blog
+    URL: https://cloud.google.com/blog/products/data-analytics/okf-v0-2-adds-trust-signals
+    issued: {date-parts: [[2026, 7, 24]]}
+    accessed: {date-parts: [[2026, 8, 29]]}
 ---
 
-import BlogImage from '../components/blog-image';
-import { Citation, CitationsList } from 'gatsby-citation-manager';
-
-<BlogImage
-  images={props.pageContext.frontmatter.images}
-  name="wiki-that-only-gets-bigger.png"
-  alt="A wiki that only gets bigger"
-/>
+::image{src="images/wiki-that-only-gets-bigger.png" alt="A wiki that only gets bigger"}
 
 Set an agent loose on a research beat and give it somewhere to write. It will write. Every night it reads the feeds, finds a few things worth keeping, and files a few new pages. Four months later you have several hundred pages with tidy headings, consistent formatting, and a search index that returns something plausible for every query you throw at it.
 
@@ -38,17 +40,7 @@ What follows is a position rather than a product tour. We have this written down
 
 ## Somebody already wrote down the format
 
-Google Cloud published version 0.2 of the Open Knowledge Format in July.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "Google Cloud Blog",
-    author: "Sam McVeety and Amir Hormati",
-    title: "OKF v0.2 adds trust signals",
-    URL: "https://cloud.google.com/blog/products/data-analytics/okf-v0-2-adds-trust-signals",
-    accessed: { 'date-parts': [[2026, 8, 29]] },
-    issued: { 'date-parts': [[2026, 7, 24]] }
-  }}
-/> One markdown file per concept, YAML frontmatter, and a small set of fields that exist for one purpose: helping you decide whether to believe the page. Where the content came from. Who or what produced it, and who has independently confirmed it. When it goes stale. Where it sits in its life, from draft to stable to deprecated. And whether a computed number was actually computed the sanctioned way.
+Google Cloud published version 0.2 of the Open Knowledge Format in July.[@mcveety-2026-okf-v0-2-adds-trust-signals] One markdown file per concept, YAML frontmatter, and a small set of fields that exist for one purpose: helping you decide whether to believe the page. Where the content came from. Who or what produced it, and who has independently confirmed it. When it goes stale. Where it sits in its life, from draft to stable to deprecated. And whether a computed number was actually computed the sanctioned way.
 
 The design note that matters most is about absence. As the OKF authors put it, "an unverified concept is distinguishable from a verified one." A missing stamp is information.
 
@@ -179,4 +171,5 @@ Until then, the useful question about your own knowledge base has nothing to do 
 
 ## References
 
-<CitationsList citationFormat="apa" />
+::citations{format="apa"}
+

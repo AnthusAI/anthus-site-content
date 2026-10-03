@@ -15,15 +15,15 @@ images:
 state: published
 ---
 
-import BlogImage from "../../components/blog-image"
-
 <p class="center-full-image">
-  <BlogImage
-    className="center-small-image"
-    images={props.pageContext.frontmatter.images}
-    name="text-as-image-lensvlm.png"
-    alt="Figure 7 from the LensVLM paper: the same text at 5×, 10×, and 15× visual compression, becoming progressively harder to read"
-  />
+
+::image{
+  src="images/posts/text-as-image-lensvlm.png"
+  layout="center-small-image"
+  alt="Figure 7 from the LensVLM paper: the same text at 5×, 10×, and 15× visual compression, becoming
+  progressively harder to read"
+}
+
 </p>
 
 Strange but true: “A growing line of work compresses text by rendering it as images for VLMs.” That's the premise of the [LensVLM paper](https://arxiv.org/abs/2605.07019). Its Figure 7, shown here, packs the same passage into three image sizes. By 15× compression, the text is barely legible.

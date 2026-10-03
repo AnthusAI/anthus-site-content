@@ -14,15 +14,15 @@ images:
 state: published
 ---
 
-import BlogImage from "../../components/blog-image"
-
 <p class="center-full-image">
-  <BlogImage
-    className="center-small-image"
-    images={props.pageContext.frontmatter.images}
-    name="rubygems-agent-data-channel.png"
-    alt="Diagram of a package upload triggering a documentation build, followed by web data republished as a package"
-  />
+
+::image{
+  src="images/posts/rubygems-agent-data-channel.png"
+  layout="center-small-image"
+  alt="Diagram of a package upload triggering a documentation build, followed by web data republished as a
+  package"
+}
+
 </p>
 
 [RubyHack's investigation](https://rubyhack.ai/) traces an odd route through a May RubyGems spam campaign: publish a gem, let RubyDoc.info's automatic documentation build run its code, fetch public web pages, then publish the results as another gem. The researchers count more than 2,000 package uploads on May 11–12 and attribute the activity to OpenAI agents.

@@ -11,12 +11,38 @@ preview_image: "./images/ai-model-that-learns.png"
 images:
   - ./images/ai-model-that-learns.png
 state: draft
+citations:
+  reynolds-2021-prompt-programming-for-large-language-models:
+    type: webpage
+    title: 'Prompt Programming for Large Language Models: Beyond the Few-Shot Paradigm'
+    author: [Laria Reynolds, Kyle McDonell]
+    container-title: arxiv
+    URL: https://arxiv.org/abs/2102.07350
+    issued: {date-parts: [[2021, 2, 15]]}
+    accessed: {date-parts: [[2023, 12, 5]]}
+  xie-2022-how-does-in-context-learning-work:
+    type: webpage
+    title: How does in-context learning work? A framework for understanding the differences from traditional supervised learning
+    author: [Sang Michael Xie, Sewon Min]
+    container-title: The Stanford AI Lab Blog
+    URL: https://ai.stanford.edu/blog/understanding-incontext/
+    issued: {date-parts: [[2022, 8, 1]]}
+    accessed: {date-parts: [[2023, 12, 5]]}
+  reif-2022-recipe-for-arbitrary-text-style-transfer:
+    type: webpage
+    title: A Recipe For Arbitrary Text Style Transfer with Large Language Models
+    author: Emily Reif, et al
+    container-title: arxiv
+    URL: https://ai.stanford.edu/blog/understanding-incontext/
+    issued: {date-parts: [[2022, 3, 21]]}
+    accessed: {date-parts: [[2023, 12, 5]]}
 ---
 
-import BlogImage from '../components/blog-image';
-import { Citation, CitationsList } from 'gatsby-citation-manager';
-
-<BlogImage images={props.pageContext.frontmatter.images} name="ai-model-that-learns.png" className="right" alt="Do AI models learn from examples you give them in the prompt?" />
+::image{
+  src="images/ai-model-that-learns.png"
+  layout="right"
+  alt="Do AI models learn from examples you give them in the prompt?"
+}
 
 One of the wonders of large language models, according to some people, is that they're so good at understanding the questions we ask them that they can learn from examples that we give them in a well-engineered prompt, so that the final answer will be more accurate.
 
@@ -70,27 +96,7 @@ It's because language models don't learn anything new from you giving it a few e
 
 It's really using the pattern of the examples to locate concepts that already exist in its pre-training.  The effect resembles fine-tuning a model: it changes the format of the completions, not what the model knows.
 
-Quantitative research into prompt engineering has suggested that language models are not actually learning the task during run time from few-shot examples, but are rather locating tasks in the model's existing space of learned tasks.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "arxiv",
-    author: ['Laria Reynolds', 'Kyle McDonell'],
-    title: "Prompt Programming for Large Language Models: Beyond the Few-Shot Paradigm",
-    URL: "https://arxiv.org/abs/2102.07350",
-    accessed: { 'date-parts': [[2023, 12, 5]] },
-    issued: { 'date-parts': [[2021, 2, 15]] }
-  }}
-/>  One explanation for how that happens is that models do learn the technique of iteratively improving a prediction given new information, a process known as Bayesian inference, and that they use this process to better "locate" or "infer" these latent concepts during the few-shot learning phase.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "The Stanford AI Lab Blog",
-    author: ['Sang Michael Xie', 'Sewon Min'],
-    title: "How does in-context learning work? A framework for understanding the differences from traditional supervised learning",
-    URL: "https://ai.stanford.edu/blog/understanding-incontext/",
-    accessed: { 'date-parts': [[2023, 12, 5]] },
-    issued: { 'date-parts': [[2022, 8, 1]] }
-  }}
-/>
+Quantitative research into prompt engineering has suggested that language models are not actually learning the task during run time from few-shot examples, but are rather locating tasks in the model's existing space of learned tasks.[@reynolds-2021-prompt-programming-for-large-language-models]  One explanation for how that happens is that models do learn the technique of iteratively improving a prediction given new information, a process known as Bayesian inference, and that they use this process to better "locate" or "infer" these latent concepts during the few-shot learning phase.[@xie-2022-how-does-in-context-learning-work]
 
 In the land shark example here, the model's pre-training is familiar with the task of classification.  My examples didn't teach it a new game to play, they conditioned it to recognize a classification task.  Then, when faced with the task of classifying a shark as a land animal or a water animal, it knew how to do that.
 
@@ -98,17 +104,7 @@ In the land shark example here, the model's pre-training is familiar with the ta
 
 You do if you're a prompt engineer. Understanding what few-shot learning is actually doing gets you better results, and it stops you from wasting input tokens on a mistaken concept.
 
-A recent study on engineering prompts to achieve different "styles" in the completions introduced a concept that uses examples in the prompt, similar to few-shot learning.  But without the expectation that the model is "learning" a new task from the examples.  Rather, the goal is to show the model the pattern for the completion.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "arxiv",
-    author: 'Emily Reif, et al',
-    title: "A Recipe For Arbitrary Text Style Transfer with Large Language Models",
-    URL: "https://ai.stanford.edu/blog/understanding-incontext/",
-    accessed: { 'date-parts': [[2023, 12, 5]] },
-    issued: { 'date-parts': [[2022, 3, 21]] }
-  }}
-/>
+A recent study on engineering prompts to achieve different "styles" in the completions introduced a concept that uses examples in the prompt, similar to few-shot learning.  But without the expectation that the model is "learning" a new task from the examples.  Rather, the goal is to show the model the pattern for the completion.[@reif-2022-recipe-for-arbitrary-text-style-transfer]
 
 For example:
 
@@ -140,4 +136,5 @@ But why include the demonstration at all?  Because it helps, as that research sh
 
 ## References
 
-<CitationsList citationFormat="apa" />
+::citations{format="apa"}
+

@@ -10,27 +10,28 @@ preview_image: "./images/ai-project-planning.png"
 images:
   - ./images/ai-project-planning.png
 state: published
+citations:
+  openai-2024-new-gpt-4-turbo-with-memory:
+    type: webpage
+    title: New GPT-4 Turbo with Memory
+    container-title: OpenAI
+    URL: https://openai.com/blog/new-gpt4-turbo-with-memory
+    issued: {date-parts: [[2024, 12, 1]]}
+    accessed: {date-parts: [[2025, 1, 15]]}
 ---
 
-import BlogImage from '../components/blog-image';
-import { Citation, CitationsList } from 'gatsby-citation-manager';
-
-<BlogImage images={props.pageContext.frontmatter.images} name="ai-project-planning.png" className="right" alt="A digital project board with glowing elements, representing the fusion of AI assistance and project management." />
+::image{
+  src="images/ai-project-planning.png"
+  layout="right"
+  alt="A digital project board with glowing elements, representing the fusion of AI assistance and project
+  management."
+}
 
 Through extensive work with AI coding tools, we've found that maintaining a simple project-plan.md file in our repositories dramatically improves our development flow. This straightforward technique has become essential to our AI pair programming practice. Here's what we've learned works.
 
 ## The Problem with Unstructured AI Development
 
-If you've spent time coding with AI assistants, you've probably noticed how they excel at understanding your immediate requests but lack the strategic oversight that a good project manager provides. Sure, ChatGPT now has its Memory feature, but when we're deep in development with tools like Cursor Composer, we need something more structured and project-focused.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "OpenAI",
-    title: "New GPT-4 Turbo with Memory",
-    URL: "https://openai.com/blog/new-gpt4-turbo-with-memory",
-    accessed: { 'date-parts': [[2025, 1, 15]] },
-    issued: { 'date-parts': [[2024, 12, 1]] }
-  }}
-/>
+If you've spent time coding with AI assistants, you've probably noticed how they excel at understanding your immediate requests but lack the strategic oversight that a good project manager provides. Sure, ChatGPT now has its Memory feature, but when we're deep in development with tools like Cursor Composer, we need something more structured and project-focused.[@openai-2024-new-gpt-4-turbo-with-memory]
 
 ## The Living Project Plan Approach
 
@@ -89,4 +90,4 @@ Have you tried anything similar in your AI-assisted development workflow? We'd l
 
 ## References
 
-<CitationsList citationFormat="apa" /> 
+::citations{format="apa"}

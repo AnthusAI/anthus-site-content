@@ -17,14 +17,11 @@ images:
 state: draft
 ---
 
-import BlogImage from "../components/blog-image"
-
-<BlogImage
-  images={props.pageContext.frontmatter.images}
-  name="kanbus-project-management-as-code.png"
-  className="centered"
+::image{
+  src="images/kanbus-project-management-as-code.png"
+  layout="centered"
   alt="Project management as code."
-/>
+}
 
 Here is a commit from the repository that builds this website:
 

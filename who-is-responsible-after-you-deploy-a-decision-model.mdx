@@ -18,15 +18,15 @@ state: draft
 repository: "https://github.com/AnthusAI/Biased-Decisions"
 ---
 
-import BlogImage from "../components/blog-image"
-
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="who-is-responsible-after-you-deploy-a-decision-model-cover.png"
-    className="full"
-    alt="An engineer's hand at a control console feeds glowing audit-trail lines into a transparent decision engine, which routes anonymous application cards toward two outcomes."
-  />
+
+::image{
+  src="images/who-is-responsible-after-you-deploy-a-decision-model-cover.png"
+  layout="full"
+  alt="An engineer's hand at a control console feeds glowing audit-trail lines into a transparent decision
+  engine, which routes anonymous application cards toward two outcomes."
+}
+
   <figcaption className="image-caption">
     A deployed decision includes the choices people made around the model: what it reads, where its threshold sits, and what it's allowed to do.
   </figcaption>

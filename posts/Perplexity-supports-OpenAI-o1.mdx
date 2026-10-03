@@ -14,14 +14,14 @@ images:
 state: published
 ---
 
-import BlogImage from '../../components/blog-image';
-
 <p class="center-full-image">
-    <BlogImage className="center-small-image"
-        images={props.pageContext.frontmatter.images} 
-        name="Perplexity-o1-preview-reasoning-focus.png"
-        alt="Perplexity supports OpenAI o1 preview model"
-    />
+
+::image{
+  src="images/posts/Perplexity-o1-preview-reasoning-focus.png"
+  layout="center-small-image"
+  alt="Perplexity supports OpenAI o1 preview model"
+}
+
 </p>
 
 Perplexity has [announced](https://x.com/AravSrinivas/status/1835874778768625683) a new "Reasoning" focus feature, powered by OpenAI's o1 preview model. It's a way to put o1's reasoning capabilities directly into Perplexity's search interface.

@@ -14,13 +14,14 @@ images:
 state: published
 ---
 
-import BlogImage from '../../components/blog-image';
-
 <p class="center-full-image">
-  <BlogImage className="center-small-image"
-    images={props.pageContext.frontmatter.images}
-    name="agent-skills.png"
-    alt="Agent Skills: folders of instructions, scripts, and resources for Claude" />
+
+::image{
+  src="images/posts/agent-skills.png"
+  layout="center-small-image"
+  alt="Agent Skills: folders of instructions, scripts, and resources for Claude"
+}
+
 </p>
 
 [Agent Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) are folders. A `SKILL.md` with a name and description, plus scripts and files the agent may load. Claude skims the metadata, pulls the rest only when the task matches, and can stack more than one. They work in Claude apps, Claude Code, and the API.

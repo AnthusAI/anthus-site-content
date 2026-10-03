@@ -14,14 +14,14 @@ images:
 state: published
 ---
 
-import BlogImage from '../../components/blog-image';
-
 <p class="center-full-image">
-    <BlogImage className="center-small-image"
-        images={props.pageContext.frontmatter.images} 
-        name="perplexity-sonar.png"
-        alt="Perplexity Sonar API: Research agents as a service"
-    />
+
+::image{
+  src="images/posts/perplexity-sonar.png"
+  layout="center-small-image"
+  alt="Perplexity Sonar API: Research agents as a service"
+}
+
 </p>
 
 [Perplexity's new Sonar API](https://sonar.perplexity.ai/) exposes their research agent capabilities through a standard model-like interface. The service joins OpenAI's o1 in a growing category of agent-based systems packaged as simple API endpoints.

@@ -14,13 +14,14 @@ images:
 state: published
 ---
 
-import BlogImage from '../../components/blog-image';
-
 <p class="center-full-image">
-    <BlogImage className="center-small-image"
-        images={props.pageContext.frontmatter.images} 
-        name="The-Intelligence-Age.png"
-        alt="The Intelligence Age - A perspective on the future of work and AI" />
+
+::image{
+  src="images/posts/The-Intelligence-Age.png"
+  layout="center-small-image"
+  alt="The Intelligence Age - A perspective on the future of work and AI"
+}
+
 </p>
 
 Sam Altman's new essay "The Intelligence Age" offers a compelling perspective on technological unemployment that aligns with our long-held views. While acknowledging AI's significant impact on labor markets, he maintains an optimistic yet grounded outlook: "most jobs will change more slowly than most people think, and I have no fear that we'll run out of things to do."

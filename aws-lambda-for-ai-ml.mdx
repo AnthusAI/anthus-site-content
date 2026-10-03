@@ -11,16 +11,29 @@ preview_image: "./images/aws-lambda-for-ai-ml.png"
 images:
   - "./images/aws-lambda-for-ai-ml.png"
 state: published
+citations:
+  anthus-ai-2024-aws-agentcore-examples:
+    type: webpage
+    title: AWS AgentCore Examples
+    author: [{literal: Anthus AI}]
+    container-title: GitHub
+    URL: https://github.com/AnthusAI/AWS-AgentCore-examples
+    issued: {date-parts: [[2024]]}
+    accessed: {date-parts: [[2025, 11, 22]]}
+  anthus-ai-2024-sagemaker-serverless-inference-bert-text-classifier:
+    type: webpage
+    title: SageMaker Serverless Inference BERT Text Classifier
+    author: [{literal: Anthus AI}]
+    container-title: GitHub
+    URL: https://github.com/AnthusAI/SageMaker-Serverless-Inference-BERT-text-classifier
+    issued: {date-parts: [[2024]]}
+    accessed: {date-parts: [[2025, 11, 22]]}
 ---
 
-import BlogImage from '../components/blog-image';
-import { Citation, CitationsList } from 'gatsby-citation-manager';
-
 <div className="center-full-image">
-    <BlogImage className="center-full-image"
-        images={props.pageContext.frontmatter.images} 
-        name="aws-lambda-for-ai-ml.png"
-        alt="AWS Lambda for AI/ML" />
+
+::image{src="images/aws-lambda-for-ai-ml.png" layout="center-full-image" alt="AWS Lambda for AI/ML"}
+
 </div>
 
 For years, "serverless AI" felt like a contradiction. AI models needed massive GPUs and long-running processes, while AWS Lambda was built for short, bursty CPU tasks. If you wanted to run a serious AI workload, you spun up an EC2 instance (or twenty) and kept them running.
@@ -79,17 +92,7 @@ Instead of writing explicit logic for every scenario, you provide tools and goal
 4.  **Code Interpreter Agent**: A "Give an Agent a Tool" example where the agent uses a managed Python sandbox to parse messy CSV files without hard-coded parsing logic.
 5.  **Browser Tool Agent**: An agent that browses the web to answer questions, replacing fragile scraping scripts with autonomous navigation.
 
-This is the future of agent deployment: you focus on the prompt and the tools (like the Code Interpreter or Browser), and the platform handles the loop, memory, and security.<Citation
-  data={{
-    type: "webpage",
-    title: "AWS AgentCore Examples",
-    "container-title": "GitHub",
-    URL: "https://github.com/AnthusAI/AWS-AgentCore-examples",
-    author: [{ literal: "Anthus AI" }],
-    issued: { "date-parts": [[2024]] },
-    accessed: { "date-parts": [[2025, 11, 22]] }
-  }}
-/>
+This is the future of agent deployment: you focus on the prompt and the tools (like the Code Interpreter or Browser), and the platform handles the loop, memory, and security.[@anthus-ai-2024-aws-agentcore-examples]
 
 ## 3. SageMaker Serverless Inference: "Lambda for ML"
 
@@ -114,17 +117,7 @@ In our example, we package a **BERT-base-uncased** model with PyTorch inference 
 
 *   **Cold starts**: The first request triggers a "cold start" where AWS provisions the container and loads the 400MB model into memory. This takes about 30-60 seconds.
 *   **Warm requests**: Subsequent requests are fast (less than 1 second) because the container stays warm for a while.
-*   **Cost**: You pay per millisecond of inference time. A 4GB memory instance running for 100ms costs fractions of a cent ($0.000025). This is perfect for variable traffic.<Citation
-  data={{
-    type: "webpage",
-    title: "SageMaker Serverless Inference BERT Text Classifier",
-    "container-title": "GitHub",
-    URL: "https://github.com/AnthusAI/SageMaker-Serverless-Inference-BERT-text-classifier",
-    author: [{ literal: "Anthus AI" }],
-    issued: { "date-parts": [[2024]] },
-    accessed: { "date-parts": [[2025, 11, 22]] }
-  }}
-/>
+*   **Cost**: You pay per millisecond of inference time. A 4GB memory instance running for 100ms costs fractions of a cent ($0.000025). This is perfect for variable traffic.[@anthus-ai-2024-sagemaker-serverless-inference-bert-text-classifier]
 
 ## The Gap: GPU Serverless
 
@@ -136,5 +129,5 @@ But for *agent orchestration* and *smaller ML models loaded from S3 buckets*, th
 
 You don't need a cluster of servers to build an AI company anymore. You just need functions.
 
-<CitationsList citationFormat="apa" />
+::citations{format="apa"}
 

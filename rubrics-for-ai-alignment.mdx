@@ -12,13 +12,14 @@ images: ["images/rubrics-for-ai-alignment.png"]
 state: draft
 ---
 
-import BlogImage from '../components/blog-image';
-
 <p class="center-full-image">
-<BlogImage className="center-small-image"
-images={props.pageContext.frontmatter.images} 
-name="rubrics-for-ai-alignment.png"
-alt="The End of the Black Box Score" />
+
+::image{
+  src="images/rubrics-for-ai-alignment.png"
+  layout="center-small-image"
+  alt="The End of the Black Box Score"
+}
+
 </p>
 
 In the current landscape of Large Language Models (LLMs), a surprising result recently emerged from the Rubric Anchors research: a 30B-parameter model (Qwen-30B-A3B), trained on a mere 5,000 rubric-anchored samples, outperformed the 671B-parameter DeepSeek-V3 on open-ended benchmarks. That's not just a fluke of data efficiency; it points to a real shift in how AI alignment is being approached.

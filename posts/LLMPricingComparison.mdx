@@ -14,14 +14,14 @@ images:
 state: published
 ---
 
-import BlogImage from '../../components/blog-image';
-
 <p class="center-full-image">
-    <BlogImage className="center-small-image"
-        images={props.pageContext.frontmatter.images} 
-        name="LLMPricingComparison.png"
-        alt="Hugging Face LLM Pricing Comparison Tool"
-    />
+
+::image{
+  src="images/posts/LLMPricingComparison.png"
+  layout="center-small-image"
+  alt="Hugging Face LLM Pricing Comparison Tool"
+}
+
 </p>
 
 [Hugging Face's LLM Pricing Tool](https://huggingface.co/spaces/philschmid/llm-pricing) simplifies cost comparison for language models. It's a valuable resource for developers and researchers working with LLMs.

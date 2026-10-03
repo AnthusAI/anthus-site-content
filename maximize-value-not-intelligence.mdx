@@ -16,34 +16,65 @@ tags:
   - ai
   - economics
   - how-to
+citations:
+  porter-2023-maximize-profit-not-intelligence:
+    type: webpage
+    title: Maximize Profit, Not Intelligence
+    author: Ryan Porter
+    container-title: Anth.us
+    URL: https://anth.us/blog/maximize-profit-not-intelligence/
+    issued: {date-parts: [[2023, 12, 22]]}
+  gundlach-2025-price-of-progress:
+    type: article-journal
+    title: 'The Price of Progress: Price Performance and the Future of AI'
+    author: [Hans Gundlach, Jayson Lynch, Matthias Mertens, Neil Thompson]
+    container-title: arXiv
+    DOI: 10.48550/arXiv.2511.23455
+    URL: https://arxiv.org/abs/2511.23455
+    issued: {date-parts: [[2025, 11]]}
+    accessed: {date-parts: [[2026, 8, 17]]}
+  benchlm-2026-best-value-llm-for-coding-cost:
+    type: webpage
+    title: Best Value LLM for Coding — Cost-Adjusted Rankings
+    container-title: BenchLM
+    URL: https://benchlm.ai/best/best-value-coding
+    accessed: {date-parts: [[2026, 8, 30]]}
+  openai-2026-advancing-the-price-performance-frontier:
+    type: webpage
+    title: Advancing the price-performance frontier with GPT-5.6
+    container-title: OpenAI
+    URL: https://openai.com/index/advancing-the-price-performance-frontier-with-gpt-5-6/
+    issued: {date-parts: [[2026, 7, 30]]}
+    accessed: {date-parts: [[2026, 8, 30]]}
+  github-2026-scribe-self-updating-agents-md:
+    type: software
+    title: 'Scribe: self-updating AGENTS.md from the code graph'
+    container-title: GitHub
+    URL: https://github.com/brn-mwai/scribe
+    accessed: {date-parts: [[2026, 8, 17]]}
+  arxiv-2026-towards-demystifying-and-repairing-llm:
+    type: article-journal
+    title: Towards Demystifying and Repairing LLM-in-the-Loop Vulnerabilities
+    container-title: arXiv
+    URL: https://arxiv.org/abs/2605.28893
+    issued: {date-parts: [[2026, 5]]}
+    accessed: {date-parts: [[2026, 8, 17]]}
 ---
-
-import BlogImage from "../components/blog-image"
-import { Citation, CitationsList } from "gatsby-citation-manager"
 
 _Use the cheapest model that can do the job. Then measure whether it actually did._
 
-In December 2023, we wrote about a text classifier that didn't work as a business.<Citation
-data={{
-    type: "webpage",
-    "container-title": "Anth.us",
-    title: "Maximize Profit, Not Intelligence",
-    author: "Ryan Porter",
-    URL: "https://anth.us/blog/maximize-profit-not-intelligence/",
-    issued: { 'date-parts': [[2023, 12, 22]] }
-  }}
-/> The requirement was 95% accuracy at under $200 per million classifications. GPT-4 hit the accuracy easily and cost about $1,700 per million. A great demo and a dead venture.
+In December 2023, we wrote about a text classifier that didn't work as a business.[@porter-2023-maximize-profit-not-intelligence] The requirement was 95% accuracy at under $200 per million classifications. GPT-4 hit the accuracy easily and cost about $1,700 per million. A great demo and a dead venture.
 
 The fix was not a better model. It was a worse one. We went down the ladder—GPT-3.5, then Ada 2 embeddings with logistic regression, then BERT running free in a Colab notebook—and only stopped at Word2Vec, where accuracy fell far enough that the remaining savings stopped being worth it. The thesis was <mark>use the dumbest model that the problem will bear</mark>, and the only way to find that point is to go one step too far and come back.
 
 Here's that 2023 argument in one chart—the same four models, ranked by the only number that mattered:
 
-<BlogImage
-  images={props.pageContext.frontmatter.images}
-  name="profit_per_million_GPT-4_GPT-3.5_Ada_2_BERT.png"
-  className="centered"
-  alt="Bar chart from the 2023 article showing profit per million classifications across GPT-4, GPT-3.5, Ada 2 and BERT, with the cheapest adequate model earning the most."
-/>
+::image{
+  src="images/classifiers/profit_per_million_GPT-4_GPT-3.5_Ada_2_BERT.png"
+  layout="centered"
+  alt="Bar chart from the 2023 article showing profit per million classifications across GPT-4, GPT-3.5, Ada
+  2 and BERT, with the cheapest adequate model earning the most."
+}
 
 GPT-4 is the most capable model on that chart and the only one that loses money—about $1,500 per million classifications. The winner was the least sophisticated model that still cleared the accuracy bar, and it happened to be free.
 
@@ -51,18 +82,7 @@ That discipline still holds in 2026. But two things changed underneath it, and t
 
 ## The other half of the ratio
 
-Our companion piece looked at one side of the equation: [the falling price of a fixed level of AI capability](/blog/ai-coding-cost-collapse-2026/). A 2026 MIT FutureTech and CSAIL paper estimated annual price declines of roughly 5× to 10× on its knowledge and math benchmarks. Its software-engineering estimate pointed in the same direction, but with less data and much wider confidence bands.<Citation
-data={{
-    type: "article-journal",
-    title: "The Price of Progress: Price Performance and the Future of AI",
-    author: ["Hans Gundlach", "Jayson Lynch", "Matthias Mertens", "Neil Thompson"],
-    "container-title": "arXiv",
-    DOI: "10.48550/arXiv.2511.23455",
-    URL: "https://arxiv.org/abs/2511.23455",
-    accessed: { 'date-parts': [[2026, 8, 17]] },
-    issued: { 'date-parts': [[2025, 11]] }
-  }}
-/> That's the denominator.
+Our companion piece looked at one side of the equation: [the falling price of a fixed level of AI capability](/blog/ai-coding-cost-collapse-2026/). A 2026 MIT FutureTech and CSAIL paper estimated annual price declines of roughly 5× to 10× on its knowledge and math benchmarks. Its software-engineering estimate pointed in the same direction, but with less data and much wider confidence bands.[@gundlach-2025-price-of-progress] That's the denominator.
 
 Value is capability divided by cost, and the numerator moved too. The cheap tier didn't just get cheaper—it got _good_. That's the difference between a discount and a windfall. A discount lets you do the same work for less. <mark>A windfall changes which work is worth doing at all.</mark>
 
@@ -70,30 +90,13 @@ The practical question is how to collect that windfall: how to route work withou
 
 ## Now we have a scoreboard
 
-In 2023, you had to build the cost-versus-accuracy chart yourself. Now public leaderboards such as BenchLM rank coding models by capability per dollar.<Citation
-data={{
-    type: "webpage",
-    "container-title": "BenchLM",
-    title: "Best Value LLM for Coding — Cost-Adjusted Rankings",
-    URL: "https://benchlm.ai/best/best-value-coding",
-    accessed: { 'date-parts': [[2026, 8, 30]] }
-  }}
-/>
+In 2023, you had to build the cost-versus-accuracy chart yourself. Now public leaderboards such as BenchLM rank coding models by capability per dollar.[@benchlm-2026-best-value-llm-for-coding-cost]
 
 That's useful, but it comes with two warnings.
 
 First, dividing by a tiny price can make a weak model look like an incredible bargain. BenchLM says this directly: a model can lead on value and still miss the quality bar for your work.
 
-Second, the rankings can age almost immediately. During this review, BenchLM still showed Luna's old $6 output price even though OpenAI cut it to $1.20 on July 30.<Citation
-data={{
-    type: "webpage",
-    "container-title": "OpenAI",
-    title: "Advancing the price-performance frontier with GPT-5.6",
-    URL: "https://openai.com/index/advancing-the-price-performance-frontier-with-gpt-5-6/",
-    accessed: { 'date-parts': [[2026, 8, 30]] },
-    issued: { 'date-parts': [[2026, 7, 30]] }
-  }}
-/> A leaderboard that combines current benchmark scores with yesterday's price can reorder itself before you make a decision.
+Second, the rankings can age almost immediately. During this review, BenchLM still showed Luna's old $6 output price even though OpenAI cut it to $1.20 on July 30.[@openai-2026-advancing-the-price-performance-frontier] A leaderboard that combines current benchmark scores with yesterday's price can reorder itself before you make a decision.
 
 So use public rankings to find models worth testing. Don't treat them as a shopping list.
 
@@ -140,12 +143,12 @@ In 2023, our classifier had a break-even point: $200 per million classifications
 
 For a growing list of jobs, that answer quietly changed from “not worth it” to “obviously worth trying.”
 
-<BlogImage
-  images={props.pageContext.frontmatter.images}
-  name="break-even-crossing.png"
-  className="full"
-  alt="A timeline from 2023 to 2026 showing more engineering and business tasks becoming practical to automate as model costs fall and reliable task horizons grow."
-/>
+::image{
+  src="images/break-even-crossing.png"
+  layout="full"
+  alt="A timeline from 2023 to 2026 showing more engineering and business tasks becoming practical to
+  automate as model costs fall and reliable task horizons grow."
+}
 
 _Nobody announces the crossing. You just notice the backlog stopped growing._
 
@@ -162,15 +165,7 @@ The best candidates aren't glamorous. They're well-scoped jobs that are valuable
 | Mechanical migrations        | as needed   | review the generated diffs |
 | Bug report to reproduction   | on report   | confirm the reproduction   |
 
-Documentation is a good example because the tooling already exists. Scribe reads a codebase's structure, regenerates its AGENTS.md, and opens a merge request when the documentation drifts from the code.<Citation
-data={{
-    type: "software",
-    "container-title": "GitHub",
-    title: "Scribe: self-updating AGENTS.md from the code graph",
-    URL: "https://github.com/brn-mwai/scribe",
-    accessed: { 'date-parts': [[2026, 8, 17]] }
-  }}
-/>
+Documentation is a good example because the tooling already exists. Scribe reads a codebase's structure, regenerates its AGENTS.md, and opens a merge request when the documentation drifts from the code.[@github-2026-scribe-self-updating-agents-md]
 
 The pattern is simple: a trigger, a bounded task sent to the cheapest model that clears the quality bar, and a proposed change for a person to review.
 
@@ -178,12 +173,13 @@ The pattern is simple: a trigger, a bounded task sent to the cheapest model that
 had time” and “somebody reviewed it.” Removing the review doesn't create more value.
 It just moves failures into production.
 
-<BlogImage
-  images={props.pageContext.frontmatter.images}
-  name="the-backlog-worked.png"
-  className="full"
-  alt="A small pink-eyed robot filing paper under a warm desk lamp at night, surrounded by towering stacks of untouched paperwork in a dark office."
-/>
+::image{
+  src="images/the-backlog-worked.png"
+  layout="full"
+  alt="A small pink-eyed robot filing paper under a warm desk lamp at night, surrounded by towering stacks of
+  untouched paperwork in a dark office."
+}
+
 <p
   style={{
     textAlign: "center",
@@ -199,16 +195,7 @@ It just moves failures into production.
 
 Every job in that table creates a non-human identity with access to your repository, cloud, or inbox. That's not a reason to avoid the work. It's part of the cost.
 
-The cheap tier is exactly where the temptation to skip scoping is strongest, because each agent feels too small to matter. Recent work on LLM-in-the-loop vulnerabilities found they are consistently harder to repair with automated agents than conventional flaws, with an average **10.8% lower Pass@1 rate**. Across twenty agent–model configurations, sixteen produced a <mark>0% Pass@1 result</mark> in at least one of three difficult categories: Generated Query Execution, Agent or Tool Action, and Model Output Rendering.<Citation
-data={{
-    type: "article-journal",
-    title: "Towards Demystifying and Repairing LLM-in-the-Loop Vulnerabilities",
-    "container-title": "arXiv",
-    URL: "https://arxiv.org/abs/2605.28893",
-    accessed: { 'date-parts': [[2026, 8, 17]] },
-    issued: { 'date-parts': [[2026, 5]] }
-  }}
-/>
+The cheap tier is exactly where the temptation to skip scoping is strongest, because each agent feels too small to matter. Recent work on LLM-in-the-loop vulnerabilities found they are consistently harder to repair with automated agents than conventional flaws, with an average **10.8% lower Pass@1 rate**. Across twenty agent–model configurations, sixteen produced a <mark>0% Pass@1 result</mark> in at least one of three difficult categories: Generated Query Execution, Agent or Tool Action, and Model Output Rendering.[@arxiv-2026-towards-demystifying-and-repairing-llm]
 
 Scope each agent to the minimum access its job needs, treat everything it ingests—error logs, issues, docs, web pages—as untrusted input to a privileged executor, and keep an inventory. We take this up properly in the companion piece: [Bugonomics: The Flip Side of Cheap Coding](/blog/bugonomics-cheap-exploits-2026/).
 
@@ -236,4 +223,5 @@ Maximize value, not intelligence.
 
 ## References
 
-<CitationsList citationFormat="apa" />
+::citations{format="apa"}
+

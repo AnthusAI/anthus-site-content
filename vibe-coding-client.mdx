@@ -9,24 +9,65 @@ preview_image: "./images/vibe-coding-client.png"
 images:
   - ./images/vibe-coding-client.png
 state: published
+citations:
+  roose-2025-not-a-coder-with-a-i:
+    type: webpage
+    title: Not a Coder? With A.I., Just Having an Idea Can Be Enough
+    author: Kevin Roose
+    container-title: The New York Times
+    URL: https://www.nytimes.com/2025/02/27/technology/personaltech/vibecoding-ai-software-programming.html
+    issued: {date-parts: [[2025, 2, 27]]}
+    accessed: {date-parts: [[2024, 1, 22]]}
+  porter-2024-paradox-of-automation:
+    type: webpage
+    title: The Paradox of Automation
+    author: Ryan Porter
+    container-title: Anthus Blog
+    URL: https://anth.us/blog/paradox-of-automation/
+    issued: {date-parts: [[2024, 9, 24]]}
+    accessed: {date-parts: [[2024, 1, 22]]}
+  porter-2024-project-plan-files:
+    type: webpage
+    title: 'Project Plan Files: A Simple Technique for AI-Assisted Development'
+    author: Ryan Porter
+    container-title: Anthus Blog
+    URL: https://anth.us/blog/ai-project-planning/
+    issued: {date-parts: [[2024, 1, 15]]}
+    accessed: {date-parts: [[2024, 1, 22]]}
+  shadcn-2023-shadcn-ui-the-accessible-component-library:
+    type: webpage
+    title: Shadcn UI - The accessible component library
+    container-title: Shadcn
+    URL: https://ui.shadcn.com
+    issued: {date-parts: [[2023, 6, 1]]}
+    accessed: {date-parts: [[2024, 1, 22]]}
+  typescript-2023-typescript-javascript-with-syntax-for-types:
+    type: webpage
+    title: 'TypeScript: JavaScript with syntax for types'
+    container-title: TypeScript
+    URL: https://www.typescriptlang.org
+    issued: {date-parts: [[2023, 1, 1]]}
+    accessed: {date-parts: [[2024, 1, 22]]}
+  storybook-2023-storybook-frontend-workshop-for-ui-development:
+    type: webpage
+    title: 'Storybook: Frontend workshop for UI development'
+    container-title: Storybook
+    URL: https://storybook.js.org
+    issued: {date-parts: [[2023, 1, 1]]}
+    accessed: {date-parts: [[2024, 1, 22]]}
+  anthus-ai-2024-vibe-coding-workbench:
+    type: webpage
+    title: Vibe Coding Workbench
+    author: Anthus AI
+    container-title: GitHub
+    URL: https://github.com/AnthusAI/Vibe-Coding-Workbench
+    issued: {date-parts: [[2024, 1, 15]]}
+    accessed: {date-parts: [[2024, 1, 22]]}
 ---
 
-import BlogImage from '../components/blog-image';
-import { Citation, CitationsList } from 'gatsby-citation-manager';
+::image{src="images/vibe-coding-client.png" layout="right" alt="How to Handle a Vibe-Coding Client"}
 
-<BlogImage images={props.pageContext.frontmatter.images} name="vibe-coding-client.png" className="right" alt="How to Handle a Vibe-Coding Client" />
-
-It's an increasingly common sight: The person who owns the company excitedly showing off what they built in v0.dev last night.  "Fully working code! We don't need Figma anymore!" as the UX designer frowns while trying to sound enthusiastic. "We can go straight to fully-working apps now!" as the full-stack developers frown while trying to sound enthusiastic. Do they still need developers at all?  Your client has discovered "vibe coding".<Citation
-  data={{
-    type: "webpage",
-    title: "Not a Coder? With A.I., Just Having an Idea Can Be Enough",
-    author: "Kevin Roose",
-    "container-title": "The New York Times",
-    URL: "https://www.nytimes.com/2025/02/27/technology/personaltech/vibecoding-ai-software-programming.html",
-    accessed: { 'date-parts': [[2024, 1, 22]] },
-    issued: { 'date-parts': [[2025, 2, 27]] }
-  }}
-/>
+It's an increasingly common sight: The person who owns the company excitedly showing off what they built in v0.dev last night.  "Fully working code! We don't need Figma anymore!" as the UX designer frowns while trying to sound enthusiastic. "We can go straight to fully-working apps now!" as the full-stack developers frown while trying to sound enthusiastic. Do they still need developers at all?  Your client has discovered "vibe coding".[@roose-2025-not-a-coder-with-a-i]
 
 You know they can't really do it without developers. And they probably know that too, since they're already hitting the limits of vibe coding alone: When they add new things, old things break. Their prototype looks great but they don't know how to connect it to the company's data.
 
@@ -42,17 +83,7 @@ Vibe coding changes how business leaders approach software development. Instead 
 
 ### Why Vibe Coding is Good for Everyone
 
-As developers and designers, our initial concerns about vibe coding are understandable. But looking deeper, this shift creates opportunities that benefit all stakeholders involved. Just as previous waves of automation created new roles and responsibilities rather than simply eliminating jobs<Citation
-  data={{
-    type: "webpage",
-    title: "The Paradox of Automation",
-    author: "Ryan Porter",
-    "container-title": "Anthus Blog",
-    URL: "https://anth.us/blog/paradox-of-automation/",
-    accessed: { 'date-parts': [[2024, 1, 22]] },
-    issued: { 'date-parts': [[2024, 9, 24]] }
-  }}
-/>, vibe coding is an opportunity to evolve our roles and create more value through new ways of working.
+As developers and designers, our initial concerns about vibe coding are understandable. But looking deeper, this shift creates opportunities that benefit all stakeholders involved. Just as previous waves of automation created new roles and responsibilities rather than simply eliminating jobs[@porter-2024-paradox-of-automation], vibe coding is an opportunity to evolve our roles and create more value through new ways of working.
 
 At its core, vibe coding tightens the agile feedback loop. In traditional development, a significant part of our job involves iterating and gathering continuous feedback to align software with client needs and business value. This process typically involves multiple handoffs: business leaders delegate to product managers, who communicate with developers, who implement changes, then wait for feedback - a slow-motion cycle that can become inefficient with too many intermediaries.
 
@@ -69,17 +100,7 @@ Most importantly, this makes development teams more valuable, not less. When pro
 
 ### Leveraging AI as a Development Partner
 
-The real opportunity lies in how we can guide this process. As developers, we're experts at risk mitigation and quality assurance. We can apply principles like test-driven development to vibe coding by maintaining structured project plans that evolve with the development process.<Citation
-  data={{
-    type: "webpage",
-    title: "Project Plan Files: A Simple Technique for AI-Assisted Development",
-    author: "Ryan Porter",
-    "container-title": "Anthus Blog",
-    URL: "https://anth.us/blog/ai-project-planning/",
-    accessed: { 'date-parts': [[2024, 1, 22]] },
-    issued: { 'date-parts': [[2024, 1, 15]] }
-  }}
-/> We can:
+The real opportunity lies in how we can guide this process. As developers, we're experts at risk mitigation and quality assurance. We can apply principles like test-driven development to vibe coding by maintaining structured project plans that evolve with the development process.[@porter-2024-project-plan-files] We can:
 
 1. Providing structured starter kits that guide AI-assisted development
 2. Embedding best practices into the development environment
@@ -111,51 +132,14 @@ The solution isn't to rein in your client's enthusiasm - it's to channel it prod
 
 The key is starting with a solid foundation. Just as you wouldn't build a house without blueprints, you shouldn't start vibe coding without a clear technical structure. Our approach begins with a carefully curated technology stack that balances flexibility with consistency:
 
-* **Modern UI Foundations**: We use Shadcn UI components and Tailwind CSS for styling, giving clients a rich palette of pre-built elements that maintain consistent design patterns<Citation
-  data={{
-    type: "webpage",
-    title: "Shadcn UI - The accessible component library",
-    "container-title": "Shadcn",
-    URL: "https://ui.shadcn.com",
-    accessed: { 'date-parts': [[2024, 1, 22]] },
-    issued: { 'date-parts': [[2023, 6, 1]] }
-  }}
-/>
-* **Type Safety First**: TypeScript provides guardrails that catch errors before they can cascade into bigger problems<Citation
-  data={{
-    type: "webpage",
-    title: "TypeScript: JavaScript with syntax for types",
-    "container-title": "TypeScript",
-    URL: "https://www.typescriptlang.org",
-    accessed: { 'date-parts': [[2024, 1, 22]] },
-    issued: { 'date-parts': [[2023, 1, 1]] }
-  }}
-/>
-* **Built-in Quality Assurance**: Jest and Storybook integration ensures every component is testable and documentable from day one<Citation
-  data={{
-    type: "webpage",
-    title: "Storybook: Frontend workshop for UI development",
-    "container-title": "Storybook",
-    URL: "https://storybook.js.org",
-    accessed: { 'date-parts': [[2024, 1, 22]] },
-    issued: { 'date-parts': [[2023, 1, 1]] }
-  }}
-/>
+* **Modern UI Foundations**: We use Shadcn UI components and Tailwind CSS for styling, giving clients a rich palette of pre-built elements that maintain consistent design patterns[@shadcn-2023-shadcn-ui-the-accessible-component-library]
+* **Type Safety First**: TypeScript provides guardrails that catch errors before they can cascade into bigger problems[@typescript-2023-typescript-javascript-with-syntax-for-types]
+* **Built-in Quality Assurance**: Jest and Storybook integration ensures every component is testable and documentable from day one[@storybook-2023-storybook-frontend-workshop-for-ui-development]
 * **Universal Compatibility**: Like type O-negative blood, our stack is designed to be compatible with any modern web framework, from Next.js to Remix
 
 ### Making It Real: The Vibe Coding Workbench
 
-To put these principles into practice, we've created the [Vibe Coding Workbench](https://github.com/AnthusAI/Vibe-Coding-Workbench) - an open-source starter kit that makes it easy for clients to create production-ready components through vibe coding.<Citation
-  data={{
-    type: "webpage",
-    title: "Vibe Coding Workbench",
-    author: "Anthus AI",
-    "container-title": "GitHub",
-    URL: "https://github.com/AnthusAI/Vibe-Coding-Workbench",
-    accessed: { 'date-parts': [[2024, 1, 22]] },
-    issued: { 'date-parts': [[2024, 1, 15]] }
-  }}
-/> Think of it as a "development environment as code" - it provides all the structure and guardrails needed while staying out of the way of the creative process.
+To put these principles into practice, we've created the [Vibe Coding Workbench](https://github.com/AnthusAI/Vibe-Coding-Workbench) - an open-source starter kit that makes it easy for clients to create production-ready components through vibe coding.[@anthus-ai-2024-vibe-coding-workbench] Think of it as a "development environment as code" - it provides all the structure and guardrails needed while staying out of the way of the creative process.
 
 The Workbench isn't just a collection of tools - it's a complete development environment that guides users toward best practices:
 
@@ -181,4 +165,4 @@ The goal isn't to replace traditional development - it's to enhance it with tool
 
 ## References
 
-<CitationsList citationFormat="apa" /> 
+::citations{format="apa"}

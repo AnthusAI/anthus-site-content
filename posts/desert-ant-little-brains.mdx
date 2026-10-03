@@ -14,15 +14,14 @@ images:
 state: published
 ---
 
-import BlogImage from "../../components/blog-image"
-
 <p class="center-full-image">
-  <BlogImage
-    className="center-small-image"
-    images={props.pageContext.frontmatter.images}
-    name="desert-ant-little-brains.png"
-    alt="Desert Ant Labs launch banner: on-device intelligence for every product"
-  />
+
+::image{
+  src="images/posts/desert-ant-little-brains.png"
+  layout="center-small-image"
+  alt="Desert Ant Labs launch banner: on-device intelligence for every product"
+}
+
 </p>
 
 [Desert Ant Labs](https://desertant.com/blog/introducing-desert-ant-labs/)' bet is that the AI industry doesn't need most of what it's about to spend on data centers this year: more than a billion phones, tablets, and laptops already ship every year with chips capable enough for real work, sitting mostly idle in people's pockets. From their own announcement:

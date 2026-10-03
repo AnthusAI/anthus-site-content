@@ -16,9 +16,11 @@ images:
 state: draft
 ---
 
-import BlogImage from '../components/blog-image';
-
-<BlogImage images={props.pageContext.frontmatter.images} name="coding-agents-went-remote-2026.png" className="centered" alt="The Year the Coding Agents Went Remote." />
+::image{
+  src="images/coding-agents-went-remote-2026.png"
+  layout="centered"
+  alt="The Year the Coding Agents Went Remote."
+}
 
 There was a look you could spot at any tech conference in 2025: an engineer walking through the halls carrying a laptop cracked open at hip level, carefully, like a tray of water glasses. At the airport. At the ice rink during the kid's practice. Binder clips on the hinge to keep the lid from closing all the way. The behavior was so recognizable that Business Insider wrote it up and even OpenAI's social accounts got in on the joke. Closing the lid killed the agent loop and killed whatever the agent was working on, so the lid stayed open.
 

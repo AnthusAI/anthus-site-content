@@ -20,14 +20,11 @@ images:
 state: draft
 ---
 
-import BlogImage from "../components/blog-image"
-
-<BlogImage
-  images={props.pageContext.frontmatter.images}
-  name="grok-bot-after-a-week.png"
-  className="centered"
+::image{
+  src="images/grok-bot-after-a-week.png"
+  layout="centered"
   alt="Papyrus in Grok Bot: an hourly research watch, with the bot's screen and routines in the side pane."
-/>
+}
 
 **A week ago I wrote [Grok Bot Gave My Coding Agents a Boss](/blog/grok-bot-gave-my-coding-agents-a-boss/). That was the early review.**
 
@@ -44,12 +41,13 @@ Persistent named teammates occupied channels that behaved like shared rooms. The
 The site bot that needed research began asking the Researcher to investigate open questions — without me routing the message. The Software Director began working with the Researcher as a client. I designed the roles and sometimes initiated the collaboration, but I didn't program every conversation that followed.
 
 <div style={{ maxWidth: "420px", margin: "0 auto var(--base-line-height)" }}>
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="grok-bot-agent-to-agent.png"
-    className="full"
-    alt="Anth.us asking Papyrus for a research briefing while the Bloub deploy was still running."
-  />
+
+::image{
+  src="images/grok-bot-agent-to-agent.png"
+  layout="full"
+  alt="Anth.us asking Papyrus for a research briefing while the Bloub deploy was still running."
+}
+
 </div>
 
 <p>
@@ -62,32 +60,36 @@ The site bot that needed research began asking the Researcher to investigate ope
 When I asked Software Director to chart the bot-to-bot traffic as PlantUML, it polled every desk and started assembling the diagram. The result wasn't hypothetical architecture — it was an activity log across six desks. I didn't write most of those arrows.
 
 <div className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="grok-bot-plantuml-request.png"
-    className="full"
-    alt="Asking Software Director to chart the recent bot-to-bot traffic as PlantUML."
-  />
+
+::image{
+  src="images/grok-bot-plantuml-request.png"
+  layout="full"
+  alt="Asking Software Director to chart the recent bot-to-bot traffic as PlantUML."
+}
+
 </div>
 
 <div className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="grok-bot-bot-to-bot-mail.png"
-    className="full"
-    alt="Sequence diagram of bot-to-bot messages between Aug 26 and Aug 29."
-  />
+
+::image{
+  src="diagrams/grok-bot-bot-to-bot-mail.png"
+  layout="full"
+  alt="Sequence diagram of bot-to-bot messages between Aug 26 and Aug 29."
+}
+
 </div>
 
 Grok Bot also dispatches Cursor agents — on Cursor's cloud or on a worker running locally on my Mac. The local path matters because the agent can reach the actual machine: repositories, test environment, private network, and hardware attached over USB. Cursor performs the coding work. Grok Bot manages the sessions.
 
 <div className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="grok-bot-has-a-computer.png"
-    className="full"
-    alt="The bot's own desktop, running Chrome against a dev server on its localhost: the Kanbus board for a project it is working on."
-  />
+
+::image{
+  src="images/grok-bot-has-a-computer.png"
+  layout="full"
+  alt="The bot's own desktop, running Chrome against a dev server on its localhost: the Kanbus board for a
+  project it is working on."
+}
+
 </div>
 
 That's the shape I want more of. Not another coding agent. An organization — one that can eventually include several humans and several bots in the same shared space.
