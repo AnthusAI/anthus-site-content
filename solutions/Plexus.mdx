@@ -7,14 +7,14 @@ authors:
   - author: <a href="/ryan">Ryan Porter</a>
 tags: ["solutions"]
 preview_image: "./images/plexus-logo.png"
-excerpt: "<p>Plexus is our MLOps platform. We built it as the core infrastructure for the classifier lab we ran for Call Criteria, and it has managed the full lifecycle of classifiers and AI agents at production scale for years: <ul><li>Hundreds of scorecards, millions of interactions scored</li><li>Reviewers correct verdicts and say why; the explanation becomes policy</li><li>Training, evaluation, deployment, and monitoring on the record, version by version</li><li>Any model as a backend: hosted LLMs, fine-tuned LLMs, small ML classifiers, and decision models like Jev</li></ul>Visit <a href='https://plexus.anth.us'>plexus.anth.us</a> for the product.</p>"
+excerpt: "<p>Plexus is our MLOps platform. We built it as the core infrastructure for the classifier lab we built for Call Criteria, and it has managed the full lifecycle of classifiers and AI agents at production scale for years: <ul><li>Hundreds of scorecards, millions of interactions scored</li><li>Reviewers correct verdicts and say why; the explanation becomes policy</li><li>Training, evaluation, deployment, and monitoring on the record, version by version</li><li>Any model as a backend: hosted LLMs, fine-tuned LLMs, small ML classifiers, and decision models like Jev</li></ul>Visit <a href='https://plexus.anth.us'>plexus.anth.us</a> for the product.</p>"
 images: []
 state: published
 ---
 
 ## An MLOps platform built from a running lab
 
-[Plexus](https://plexus.anth.us) is our platform for training, evaluating, deploying, and monitoring classifiers, the work known as MLOps. We built it as the core infrastructure for [the lab we ran for Call Criteria](/blog/call-criteria/), where hundreds of call-scoring classifiers were built, measured and corrected by reviewers, and we ran it for years across millions of scored interactions. It manages the complete machine learning lifecycle for classifiers and AI agents at production scale.
+[Plexus](https://plexus.anth.us) is our platform for training, evaluating, deploying, and monitoring classifiers, the work known as MLOps. We built it as the core infrastructure for [the lab we built for Call Criteria](/blog/call-criteria/), where hundreds of call-scoring classifiers were built, measured and corrected by reviewers, and we have run it for years across millions of scored interactions. It manages the complete machine learning lifecycle for classifiers and AI agents at production scale.
 
 ### Built for feedback at scale
 
@@ -37,7 +37,7 @@ Plexus was designed for lab work: creating classifiers, measuring them, and refi
 4. The model refits on the corrections and a new version is evaluated against held-out review.
 5. The version that scores better is promoted, on the record.
 
-That loop ran in production for years. Once a scorecard was aligned, the reviewers stepped back and the human labelling effort on it dropped, with ongoing feedback keeping it aligned rather than rebuilding it.
+That loop has run in production for years. Once a scorecard is aligned, the reviewers step back and the human labelling effort on it drops, with ongoing feedback keeping it aligned rather than rebuilding it.
 
 ### Any model as a backend
 
@@ -46,8 +46,8 @@ That loop ran in production for years. Once a scorecard was aligned, the reviewe
 - **Serverless on AWS**: deployed in the client's own AWS account so the models, the data, and the record belong to them
 - **Production scale**: hundreds of classifiers running at once, each with its own gate and its own reviewers
 
-### What it produced
+### What it has produced
 
-For Call Criteria, Plexus managed hundreds of classification models and AI agents that scored millions of calls, with accuracy climbing month over month on the record. The same loop is what we offer today as the [classifier lab](/blog/plexus-classifier-lab/), and what we run on the [new decision models](/decision-models/). If you have a high-volume judgment task, [here's how an engagement works](/engage).
+For Call Criteria, Plexus has managed hundreds of classification models and AI agents that have scored millions of calls, with accuracy climbing month over month on the record. The same loop is what we offer today as the [classifier lab](/blog/plexus-classifier-lab/), and what we run on the [new decision models](/decision-models/). If you have a high-volume judgment task, [here's how an engagement works](/engage).
 
 The product site is [plexus.anth.us](https://plexus.anth.us).
