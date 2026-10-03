@@ -7,52 +7,47 @@ authors:
   - author: <a href="/ryan">Ryan Porter</a>
 tags: ["solutions"]
 preview_image: "./images/plexus-logo.png"
-excerpt: "<p>Plexus is our custom MLOps platform built as the core infrastructure for the AI/ML lab at Call Criteria. It manages the complete machine learning lifecycle for creating AI agents and ML models for classification at production scale: <ul><li>Custom-tailored MLOps lifecycle management for manual lab work</li><li>Full RLHF data flywheel at scale with continuous online learning</li><li>Constantly aligns more closely with human feedback over time</li><li>Manages training, evaluation, deployment, and monitoring of self-evolving AI agents</li><li>Enterprise-grade platform supporting production-scale classification systems</li></ul>Plexus represents our expertise in building sophisticated MLOps infrastructure that enables true continuous learning and model improvement. Visit <a href='https://plexus.anth.us'>plexus.anth.us</a> to learn more.</p>"
+excerpt: "<p>Plexus is our MLOps platform. We built it as the core infrastructure for the classifier lab we ran for Call Criteria, and it has managed the full lifecycle of classifiers and AI agents at production scale for years: <ul><li>Hundreds of scorecards, millions of interactions scored</li><li>Reviewers correct verdicts and say why; the explanation becomes policy</li><li>Training, evaluation, deployment, and monitoring on the record, version by version</li><li>Any model as a backend: hosted LLMs, fine-tuned LLMs, small ML classifiers, and decision models like Jev</li></ul>Visit <a href='https://plexus.anth.us'>plexus.anth.us</a> for the product.</p>"
 images: []
 state: published
 ---
 
-## Custom MLOps Platform for Production-Scale AI
+## An MLOps platform built from a running lab
 
-[Plexus](https://plexus.anth.us) is our custom MLOps lifecycle management platform, built as the core infrastructure for the AI/ML lab we created for Call Criteria. It manages the complete machine learning lifecycle for developing AI agents and ML models for classification at production scale.
+[Plexus](https://plexus.anth.us) is our platform for training, evaluating, deploying, and monitoring classifiers, the work known as MLOps. We built it as the core infrastructure for [the lab we ran for Call Criteria](/blog/call-criteria/), where hundreds of call-scoring classifiers were built, measured and corrected by reviewers, and we ran it for years across millions of scored interactions. It manages the complete machine learning lifecycle for classifiers and AI agents at production scale.
 
-### Purpose-Built for RLHF at Scale
+### Built for feedback at scale
 
-Plexus was designed specifically to support manual lab work in creating and refining AI agents and ML models. At its core, it implements a full **RLHF (Reinforcement Learning from Human Feedback) data flywheel** that operates continuously at production scale, constantly aligning more closely with human feedback through continuous online learning.
+Plexus was designed for lab work: creating classifiers, measuring them, and refining them from reviewer feedback. At its core it runs a reinforcement learning from human feedback (RLHF) loop continuously in production, so each scorecard's verdicts track its reviewers' judgment more closely over time.
 
-### MLOps Lifecycle Management
+### What it manages
 
-Plexus handles every stage of the machine learning lifecycle:
+- **Model development**: creating and experimenting with AI agents and classification models
+- **Training pipeline**: training workflows that incorporate reviewer feedback
+- **Evaluation**: held-out tests on every change, with metrics built for imbalanced data such as [Gwet's AC1](https://plexus.anth.us/documentation/evaluation-metrics)
+- **Deployment**: a new version serves only when it clears held-out review on the slices that matter
+- **Monitoring**: accuracy and drift tracked in production
+- **Continuous learning**: retraining from reviewer corrections, with a record of what changed and who approved it
 
-- **Model Development**: Support for creating and experimenting with AI agents and classification models
-- **Training Pipeline**: Automated training workflows that incorporate human feedback
-- **Evaluation Framework**: Rigorous testing and validation with sophisticated analysis tools
-- **Deployment Management**: Safe, controlled rollout of model updates to production
-- **Performance Monitoring**: Real-time tracking of model accuracy and drift detection
-- **Continuous Learning**: Automated retraining based on human expert feedback
+### The feedback loop
 
-### The RLHF Data Flywheel
+1. A classifier scores content in production.
+2. Reviewers audit a share of the verdicts, agree or disagree, and say why.
+3. Every disagreement is a labelled example aimed at the cases the model was least sure about, and the explanation becomes stated policy.
+4. The model refits on the corrections and a new version is evaluated against held-out review.
+5. The version that scores better is promoted, on the record.
 
-The platform's most powerful feature is its implementation of a self-reinforcing data flywheel:
+That loop ran in production for years. Once a scorecard was aligned, the reviewers stepped back and the human labelling effort on it dropped, with ongoing feedback keeping it aligned rather than rebuilding it.
 
-1. AI agents classify content in production
-2. Human experts review and provide feedback on AI decisions
-3. Feedback is captured and fed back into the training pipeline
-4. Models continuously retrain and improve based on this feedback
-5. The system gets smarter over time, aligning ever more closely with human judgment
+### Any model as a backend
 
-This isn't a one-time training process—it's continuous online learning that creates a sustainable competitive advantage.
+- **Multi-model**: hosted LLMs, fine-tuned LLMs served with vLLM, small language models on SageMaker Serverless Inference, and decision models like Jev, each treated as one more classifier backend
+- **Human in the loop**: reviewer feedback is a first-class input, not an afterthought
+- **Serverless on AWS**: deployed in the client's own AWS account so the models, the data, and the record belong to them
+- **Production scale**: hundreds of classifiers running at once, each with its own gate and its own reviewers
 
-### Enterprise-Grade Infrastructure
+### What it produced
 
-- **Multi-Model Support**: Use any AI/ML model from leading providers or deploy custom models
-- **Human-in-the-Loop**: Seamlessly integrate expert human validation and feedback
-- **Enterprise Security**: SOC 2 Type II certified with end-to-end encryption
-- **Serverless Architecture**: Built on AWS Well-Architected principles for reliability and scalability
-- **Production Scale**: Proven to handle high-volume classification workloads
+For Call Criteria, Plexus managed hundreds of classification models and AI agents that scored millions of calls, with accuracy climbing month over month on the record. The same loop is what we offer today as the [classifier lab](/blog/plexus-classifier-lab/), and what we run on the [new decision models](/decision-models/). If you have a high-volume judgment task, [here's how an engagement works](/engage).
 
-### Real-World Impact
-
-Plexus powers the AI/ML lab at Call Criteria, managing hundreds of classification models and AI agents that process millions of interactions. The platform's continuous learning capabilities have enabled unprecedented improvements in model accuracy and alignment with business requirements over time.
-
-Learn more about how Plexus enables production-scale AI with continuous improvement at [plexus.anth.us](https://plexus.anth.us). 
+The product site is [plexus.anth.us](https://plexus.anth.us).
