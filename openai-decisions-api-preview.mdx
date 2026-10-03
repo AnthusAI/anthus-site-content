@@ -52,7 +52,7 @@ The problems come from ProofWriter, a dataset from the Allen Institute for AI. E
 
 There are two versions of the task. In the open-world one the answer is true, false or unknown: unknown when the rules settle neither the statement nor its opposite. In the closed-world one, anything you can't prove is false. We sampled 1,800 problems for each, about 300 at every depth, and recomputed every gold answer with an independent solver.
 
-Luna got the same treatment as everyone else. One request per problem. The problem, the question and the meaning of each option, word for word what Jev receives. A strict JSON schema that only allows the three options. Reasoning off, which is the setting a fast decision API implies. We wrote our predictions down before any model answered.
+Luna got the same treatment as everyone else. One request per problem. The problem, the question and the meaning of each option, word for word what Jev receives. A strict JSON schema that only allows the three options. Reasoning off, which is the setting a fast decision API implies.
 
 ## Accuracy: fine on the page, coin flips five steps in
 
@@ -127,7 +127,7 @@ A log-probability of −0.00182 is a probability of 99.82%. We asked for five al
 
 ## When Luna says 99%
 
-One example proves nothing, so we asked for log-probabilities on all 3,600 problems with exactly the benchmark's request. It cost about 14 cents, and every request and response is [kept verbatim](https://hard-decisions.anth.us/openai-decisions-api-preview/). We preregistered four predictions first. All four held.
+One example proves nothing, so we asked for log-probabilities on all 3,600 problems with exactly the benchmark's request. It cost about 14 cents, and every request and response is [kept verbatim](https://hard-decisions.anth.us/openai-decisions-api-preview/).
 
 <figure className="center-full-image">
   <BlogImage
@@ -192,6 +192,6 @@ A specialized Luna may do better than the general one. When the Decisions API op
 
 ## How we measured
 
-Every model answered the same 3,600 problems once, with the same wording and no examples, and the predictions were written down before any answers came in. We preregistered the Luna probe separately, and it sits outside the scored benchmark. Luna ran with reasoning off at OpenAI's default sampling. ProofWriter is synthetic, templated logic, so these numbers describe multi-step reasoning of that kind; other tasks deserve their own test. The full results, the preregistration and every record are on [hard-decisions.anth.us](https://hard-decisions.anth.us/).
+Every model answered the same 3,600 problems once, with the same wording and no examples. The Luna probe sits outside the scored benchmark. Luna ran with reasoning off at OpenAI's default sampling. ProofWriter is synthetic, templated logic, so these numbers describe multi-step reasoning of that kind; other tasks deserve their own test. The full results and every record are on [hard-decisions.anth.us](https://hard-decisions.anth.us/).
 
 If you're choosing between the Decisions API, Jev and an open model, run the same kind of test on your own decisions before you trust any of them: labeled cases from your own work, hard ones included, every model asked the same way, accuracy by difficulty, and a check that each model's confidence separates its right answers from its wrong ones. ProofWriter shows how these models handle chained logic; your own cases show how they'll handle your decisions. [That's work we do with teams](/ai-solutions/).
