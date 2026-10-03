@@ -32,7 +32,7 @@ Suppose you route decisions on a model's confidence: accept everything above 90%
 
 The short version: Jev's confidence is useful, but out of the box it ran up to 15 points overconfident, and it isn't a probability of being right until you calibrate it against your own labels. A calibration step closes most of that gap. The way you set up the question in the request changes what the raw numbers look like, too.
 
-This is the same problem behind every confidence-gated system: the model hands you a number, and only your own reviewers can tell you what that number is worth. Calibrating it means labeling a few hundred of your own verdicts, agree or disagree, and fitting a curve to what your reviewers actually did. Once the number is honest, you can set a real threshold, auto-accept above it, and route everything else to a person. That calibration loop costs far less than building a labeled dataset before you ever start classifying.
+This is the same problem behind every confidence-gated system: the model hands you a number, and only your own reviewers can tell you what that number is worth. Calibrating it means labeling a few hundred of your own verdicts, agree or disagree, and fitting a curve to what your reviewers actually did. Once the number matches what your reviewers found, you can set a real threshold, auto-accept above it, and route everything else to a person. That calibration loop costs far less than building a labeled dataset before you ever start classifying.
 
 <figure className="center-full-image">
   <BlogImage
@@ -79,7 +79,7 @@ And the pattern is visible in the raw buckets. For Noul, accuracy climbs from 47
 
 ## But the numbers aren't probabilities of being right yet
 
-Ranking well doesn't make the numbers honest. Averaged over all 8,801 examples, Noul's mean confidence was 79.0% against 72.3% accuracy: about 7 points overconfident. Choice's was 91.4% against 76.1%: about 15 points. Without the arbitrary-label neutral tier those gaps shrink to about 1 and 9 points. So Noul is modestly overconfident, and Choice is clearly overconfident.
+Ranking well doesn't mean the stated confidence matches the observed accuracy. Averaged over all 8,801 examples, Noul's mean confidence was 79.0% against 72.3% accuracy: about 7 points overconfident. Choice's was 91.4% against 76.1%: about 15 points. Without the arbitrary-label neutral tier those gaps shrink to about 1 and 9 points. So Noul is modestly overconfident, and Choice is clearly overconfident.
 
 The averages hide where the trouble is, and it's different for each question type.
 
@@ -179,7 +179,7 @@ For the Noul question on the test set:
 
 Neither method changes which answers rank above which, so accuracy and AUROC barely move. Calibration makes the number mean what it says, and it can't add information the score doesn't contain.
 
-This is the mechanism a production confidence-gated system runs on: fit the calibration curve, set a threshold in calibrated terms, and let everything above it go straight through while everything below routes to a reviewer. The curve just has to be honest, because the reviewer catches what falls under the bar.
+This is the mechanism a production confidence-gated system runs on: fit the calibration curve, set a threshold in calibrated terms, and let everything above it go straight through while everything below routes to a reviewer. The curve just has to be calibrated, because the reviewer catches what falls under the bar.
 
 <figure className="center-full-image">
   <BlogImage
@@ -225,7 +225,7 @@ A few hundred labels is also the number we've found holds up in production: enou
 1. **Pick the question setup first**, and treat its wording and options as part of the model.
 2. **Label a few hundred examples** from your own data, including the ambiguous ones. The results above depend heavily on how many hard cases there are.
 3. **Fit isotonic regression** on part of them and check it on the rest.
-4. **Set thresholds in calibrated terms.** "Accept above 90%" then means the accepted answers are right about 90% of the time. This is how we route work in production: the confident majority clears automatically, and a reviewer only sees the calls that need a person, which is what lets a QA operation cover every call instead of a sample. On the non-neutral examples, ranking by calibrated confidence let us auto-accept roughly 65 to 74% of decisions at 95% accuracy or better, depending on the setup. That range is sensitive to ties, because Jev rounds its probabilities to two decimals, so we wouldn't quote a precise figure.
+4. **Set thresholds in calibrated terms.** "Accept above 90%" then means the accepted answers are right about 90% of the time. This is how we route work in production: the confident majority clears automatically, and a reviewer only sees the calls that need a person, which is what lets a QA operation cover far more calls than a sampled audit. On the non-neutral examples, ranking by calibrated confidence let us auto-accept roughly 65 to 74% of decisions at 95% accuracy or better, depending on the setup. That range is sensitive to ties, because Jev rounds its probabilities to two decimals, so we wouldn't quote a precise figure.
 5. **Refit when the wording, the data source, or the model version changes.**
 
 ## What we haven't tested

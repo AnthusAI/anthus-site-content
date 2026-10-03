@@ -28,7 +28,7 @@ import BlogImage from "../components/blog-image"
   />
 </figure>
 
-Say you've got a hosted decision model grading text for you: support tickets, call transcripts, product reviews. It's fast and cheap, and most of the time it agrees with your reviewers. We put one in front of 8,801 labelled items and had reviewers agree or disagree with its verdicts one at a time, the way a QA team would. Its confidence got honest fast. Out of the box it was about 15 points overconfident; after 87 rounds of feedback the gap was 3. Its accuracy didn't move. Through those same 87 rounds it sat at 77 percent, because the rule the reviewers were following wasn't in any question we'd asked it.
+Say you've got a hosted decision model grading text for you: support tickets, call transcripts, product reviews. It's fast and cheap, and most of the time it agrees with your reviewers. We put one in front of 8,801 labelled items and had reviewers agree or disagree with its verdicts one at a time, the way a QA team would. Its stated confidence moved toward its real accuracy fast. Out of the box it was about 15 points overconfident; after 87 rounds of feedback the gap was 3. Its accuracy didn't move. Through those same 87 rounds it sat at 77 percent, because the rule the reviewers were following wasn't in any question we'd asked it.
 
 At 140 rounds the system read the disagreements, wrote the unwritten rule in one plain sentence, and proposed one extra question for the model. A person read the proposal and approved it. Accuracy went from 77 to 87 percent. Nobody trained anything.
 
@@ -42,7 +42,7 @@ That's the method we run through Plexus, our MLOps platform. Every number here c
 
 **Score it against people, not against itself.** A classifier that agrees with its own training data has proved nothing. Score it against held-out human judgments it never saw. In that same study, a small model trained only on a bigger system's outputs still had to answer to human labels, and that's the number that counted: 91.2 percent agreement with the human verdict, against 89.0 for the bigger system it learned from. The small model wasn't smarter. It just didn't inherit the bigger one's blind spots on this data, and you'd only catch that by scoring against people.
 
-**Make the confidence honest.** A raw model score isn't a probability of being right. In our testing, verdicts that came back at 95 to 100 percent confidence were right 83.5 percent of the time. Calibration fixes that: fit the raw score to observed accuracy on labelled data, so "90 percent confident" means right about 90 percent of the time. Only then can you gate on it.
+**Calibrate the confidence.** A raw model score isn't a probability of being right. In our testing, verdicts that came back at 95 to 100 percent confidence were right 83.5 percent of the time. Calibration fixes that: fit the raw score to observed accuracy on labelled data, so "90 percent confident" means right about 90 percent of the time. Only then can you gate on it.
 
 **Route the rest to a person.** Confident, low-stakes cases pass through. The uncertain middle, and anything above a stakes threshold, goes to a reviewer. Every case a reviewer touches becomes a labelled example the model didn't have, aimed at the cases it was least sure about. That's human-in-the-loop doing its actual job: making the model less wrong.
 
