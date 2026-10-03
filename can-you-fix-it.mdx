@@ -22,8 +22,6 @@ state: published
 repository: "https://github.com/AnthusAI/Jev-Flywheel"
 ---
 
-import BlogImage from "../components/blog-image"
-
 Change "he" to "she" in a lawyer's online bio and [Laya](https://huggingface.co/convaiinnovations/laya), the open model, reads the attorney as a paralegal on 17.8% of two thousand real bios; [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev), the hosted model, on 3.9%. Rank the same bios by either model's confidence, keep the top 500, and women attorneys make the cut at 0.48 of the men's rate on Laya and 0.85 on Jev. [The One-Word Test](/blog/one-word-test/) is the measurement; the question here is what a deployer can do about it above the model. <mark>The learning loop that raises accuracy leaves the bias alone.</mark> A gate that rejects any question whose answer moves with the pronoun keeps out the obvious ones, and where the harm is largest it made the shortlist worse. Averaging each bio with its pronoun-swapped twin is the cheapest thing that helped. Fine-tuning, which we predicted would make things worse, didn't.
 
 Three fixes get proposed for a shift like this: reject any question that looks gendered, average away a cue you can swap, or retrain on corrected labels and hope it doesn't relearn the pattern. We run all three as standing parts of one loop for clients: a gate a new question has to clear before it joins the scorecard, an averaging fallback for any cue you can swap, and fine-tuning as the option when the classifier itself needs to change, all checked continuously against real reviewer feedback rather than run once and left alone. Which one actually helps a given outcome isn't obvious from the name of the fix; it depends on the decision, and we measured it. The loop's machinery is in [Fine-Tuning Jev](/blog/fine-tuning-jev/).
@@ -31,12 +29,16 @@ Three fixes get proposed for a shift like this: reject any question that looks g
 The result that changed how we think about the gate fits in three bars. Jev alone shortlists women attorneys at 0.85 of the men's rate, above the four-fifths line. <mark>The gated loop added one question about support roles whose answer barely moved under the pronoun swap, and the ratio fell to 0.66.</mark> Remove it and it's 0.85 again.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="can-you-fix-it-cover.png"
-    className="full"
-    alt="Three bars of the four-fifths ratio on a top-500 shortlist from 2,000 paralegal and attorney bios, on Jev. The engine alone, 0.85; the gated learning loop with one question added, 0.66; the same question removed, 0.85. A dashed line marks the four-fifths threshold at 0.8. The title reads: the gate passed the question, the shortlist got worse."
-  />
+
+::image{
+  src="images/can-you-fix-it-cover.png"
+  layout="full"
+  alt="Three bars of the four-fifths ratio on a top-500 shortlist from 2,000 paralegal and attorney bios, on
+  Jev. The engine alone, 0.85; the gated learning loop with one question added, 0.66; the same question
+  removed, 0.85. A dashed line marks the four-fifths threshold at 0.8. The title reads: the gate passed the
+  question, the shortlist got worse."
+}
+
   <figcaption className="image-caption">
     One question, added by the learning loop after it passed the invariance
     gate. The ratio is women attorneys' shortlist rate over men's; the dashed
@@ -80,12 +82,17 @@ This is the same promotion gate we run in production, with one more check layere
 The shortlist: 2,000 applications, 1,000 real attorney bios and 1,000 real paralegal bios, ranked by each engine's probability of "attorney", top 500 kept. Among the 1,000 real attorneys, 419 women and 581 men, Laya shortlists 28.9% of the women and 60.1% of the men, a four-fifths ratio of 0.48; Jev shortlists 44.4% and 52.1%, a ratio of 0.85, above the 0.80 line the [EEOC's Uniform Guidelines](https://www.law.cornell.edu/cfr/text/29/1607.4) use for adverse impact. Swap the pronouns and 82 of the 419 women make Laya's top 500 only if read as men; on Jev, 15. One mechanical detail: Jev reports two-decimal probabilities, so 733 of the 2,000 applicants tie at P = 1.00, the cut sits inside that block, and any added question becomes the tie-breaker for all of them.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="encoding-prejudice-shortlist.png"
-    className="full"
-    alt="Bar chart of the share of real attorneys who make a top-500 shortlist out of 2,000 paralegal and attorney bios, women against men, per engine. Jev: 44 percent of women attorneys and 52 percent of men, a four-fifths ratio of 0.85 with a 95 percent interval of 0.73 to 0.96. Laya: 29 percent of women and 60 percent of men, a ratio of 0.48 with an interval of 0.40 to 0.55. A dashed line marks four-fifths of the men's rate, the EEOC rule of thumb."
-  />
+
+::image{
+  src="images/encoding-prejudice-shortlist.png"
+  layout="full"
+  alt="Bar chart of the share of real attorneys who make a top-500 shortlist out of 2,000 paralegal and
+  attorney bios, women against men, per engine. Jev: 44 percent of women attorneys and 52 percent of men, a
+  four-fifths ratio of 0.85 with a 95 percent interval of 0.73 to 0.96. Laya: 29 percent of women and 60
+  percent of men, a ratio of 0.48 with an interval of 0.40 to 0.55. A dashed line marks four-fifths of the
+  men's rate, the EEOC rule of thumb."
+}
+
   <figcaption className="image-caption">
     The constructed shortlist, engines alone: 1,000 real attorney and 1,000
     real paralegal bios ranked by each engine's P(attorney), top 500 kept.
@@ -98,12 +105,15 @@ The shortlist: 2,000 applications, 1,000 real attorney bios and 1,000 real paral
 We also ran our learning loop on this pair, because this is where the harm is, and it taught us something we hadn't planned to learn. On Jev, the loop proposed a "paralegal, legal assistant or current law student" question, checked that its answers barely move under the pronoun swap (0.8% of labelled twins), promoted it, and cut the verdict flip rate from 3.9% to under 2.2%. And the shortlist ratio fell from 0.85 to 0.66, below the line, with 37 women attorneys shortlisted only under male pronouns against 15 before. Remove that one question and the ratio is back at 0.85. Jev answers it higher for real women attorneys than for men, and swapping the pronouns doesn't change that: the question is invariant to the pronoun and correlated with gender through what the bios say. A question can pass a cue-invariance test and still worsen the outcome for the group, while the verdict-level bias number improves. <mark>Measure in the decision's own currency, and gate on the outcome, not the cue.</mark> On Laya none of the loop's eleven proposed questions passed the invariance test at all, so it changed nothing.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="encoding-prejudice-gate-shortlist.png"
-    className="full"
-    alt="Bar chart of the four-fifths ratio on the top-500 paralegal-or-attorney shortlist, Jev, three bars: engine alone 0.85, gated loop 0.66, question removed 0.85, with a dashed four-fifths line at 0.8 that only the middle bar falls under."
-  />
+
+::image{
+  src="images/encoding-prejudice-gate-shortlist.png"
+  layout="full"
+  alt="Bar chart of the four-fifths ratio on the top-500 paralegal-or-attorney shortlist, Jev, three bars:
+  engine alone 0.85, gated loop 0.66, question removed 0.85, with a dashed four-fifths line at 0.8 that only
+  the middle bar falls under."
+}
+
   <figcaption className="image-caption">
     The gated loop's question passed the invariance test and pulled the
     shortlist below the line; remove it and the ratio returns.
@@ -139,12 +149,18 @@ The usual answer is a line in a checklist: "consider the risks." Considering a b
 In *Noise*, Kahneman, Sibony and Sunstein call the structural controls decision hygiene: procedures that improve judgment without knowing which bias you're fighting, as hand-washing works without knowing which germ. Lay the list beside the [Jev-Flywheel](https://github.com/AnthusAI/Jev-Flywheel) and they match.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="encoding-prejudice-hygiene.png"
-    className="full"
-    alt="Diagram in two columns. Left, Kahneman's decision hygiene: delay the intuitive conclusion; decompose into factual sub-judgments; keep the judgments independent; prefer a rule to unaided judgment; calibrate; make failure detectable. Right, the flywheel component for each: demote the v1 scorecard to one input; the analyst's proposed questions about surgical training, the operating room, and Mr. or Ms. rather than Dr.; typed questions answered separately; the fitted decision head, an improper linear model; calibration on a few hundred held-out labels; the invariance gate, the pronoun swap as a standing test."
-  />
+
+::image{
+  src="images/encoding-prejudice-hygiene.png"
+  layout="full"
+  alt="Diagram in two columns. Left, Kahneman's decision hygiene: delay the intuitive conclusion; decompose
+  into factual sub-judgments; keep the judgments independent; prefer a rule to unaided judgment; calibrate;
+  make failure detectable. Right, the flywheel component for each: demote the v1 scorecard to one input; the
+  analyst's proposed questions about surgical training, the operating room, and Mr. or Ms. rather than Dr.;
+  typed questions answered separately; the fitted decision head, an improper linear model; calibration on a
+  few hundred held-out labels; the invariance gate, the pronoun swap as a standing test."
+}
+
   <figcaption className="image-caption">
     Kahneman's decision-hygiene controls on the left, and the part of the
     flywheel that implements each one on the right.

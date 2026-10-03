@@ -14,15 +14,14 @@ images:
 state: published
 ---
 
-import BlogImage from "../../components/blog-image"
-
 <p class="center-full-image">
-  <BlogImage
-    className="center-small-image"
-    images={props.pageContext.frontmatter.images}
-    name="saas-isnt-dead-sameness-is.png"
-    alt="One neon cloud feeding many different application screens"
-  />
+
+::image{
+  src="images/posts/saas-isnt-dead-sameness-is.png"
+  layout="center-small-image"
+  alt="One neon cloud feeding many different application screens"
+}
+
 </p>
 
 "Companies will still pay other companies to host important software, secure it, operate it, maintain authoritative data, track regulatory changes, connect to external networks, and answer the phone when something breaks.

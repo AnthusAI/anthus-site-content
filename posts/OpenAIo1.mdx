@@ -14,14 +14,14 @@ images:
 state: published
 ---
 
-import BlogImage from '../../components/blog-image';
-
 <p class="center-full-image">
-    <BlogImage className="center-small-image"
-        images={props.pageContext.frontmatter.images} 
-        name="OpenAIo1.png"
-        alt="OpenAI o1: Advanced reasoning system"
-    />
+
+::image{
+  src="images/posts/OpenAIo1.png"
+  layout="center-small-image"
+  alt="OpenAI o1: Advanced reasoning system"
+}
+
 </p>
 
 [OpenAI's o1](https://openai.com/o1/) and [o1 mini](https://openai.com/index/openai-o1-mini-advancing-cost-efficient-reasoning/) showcase advanced reasoning capabilities in large language models, building upon research in [learning to reason](https://openai.com/index/learning-to-reason-with-llms/).
@@ -31,21 +31,25 @@ Recent discussions have highlighted several intriguing aspects of o1 and o1 mini
 o1 represents a significant shift in AI architecture and reasoning capabilities. It marks a move towards scaling adaptive compute at inference time, embodying an advanced "thinking before answering" approach. This architectural innovation is best understood by comparing it to traditional models.
 
 <p class="center-full-image">
-    <BlogImage className="center-small-image"
-        images={props.pageContext.frontmatter.images} 
-        name="Transformer-API.png"
-        alt="An API that wraps a transformer model."
-    />
+
+::image{
+  src="images/posts/Transformer-API.png"
+  layout="center-small-image"
+  alt="An API that wraps a transformer model."
+}
+
 </p>
 
 Traditionally, AI models like GPT have been transformer-based, with an API wrapping a single large language model. This approach, while powerful, has limitations in complex reasoning tasks.
 
 <p class="center-full-image">
-    <BlogImage className="center-small-image"
-        images={props.pageContext.frontmatter.images} 
-        name="Agentic-API.png"
-        alt="An API that wraps an agentic workflow."
-    />
+
+::image{
+  src="images/posts/Agentic-API.png"
+  layout="center-small-image"
+  alt="An API that wraps an agentic workflow."
+}
+
 </p>
 
 In contrast, o1 utilizes an agentic workflow behind its API. This means it can break down complex problems into smaller, manageable steps, much like a human would approach problem-solving. This architectural difference allows for more sophisticated reasoning and adaptability.
@@ -55,21 +59,25 @@ In contrast, o1 utilizes an agentic workflow behind its API. This means it can b
 o1 demonstrates a specialized focus on STEM-related tasks, particularly excelling in coding and technical problem-solving. This specialization is a result of its training, which heavily emphasized reasoning about STEM questions.
 
 <p class="center-full-image">
-    <BlogImage className="center-small-image"
-        images={props.pageContext.frontmatter.images} 
-        name="o1-is-great-at-coding.png"
-        alt="Illustration showing o1's proficiency in coding and STEM tasks"
-    />
+
+::image{
+  src="images/posts/o1-is-great-at-coding.png"
+  layout="center-small-image"
+  alt="Illustration showing o1's proficiency in coding and STEM tasks"
+}
+
 </p>
 
 However, this specialized training comes with trade-offs. The model's exposure to literature, popular culture, and creative writing was comparatively limited. As a result, o1 may struggle with tasks requiring broader cultural knowledge or creative expression.
 
 <p class="center-full-image">
-    <BlogImage className="center-small-image"
-        images={props.pageContext.frontmatter.images} 
-        name="o1-sucks-at-writing.png"
-        alt="Illustration depicting o1's limitations in creative writing and cultural tasks"
-    />
+
+::image{
+  src="images/posts/o1-sucks-at-writing.png"
+  layout="center-small-image"
+  alt="Illustration depicting o1's limitations in creative writing and cultural tasks"
+}
+
 </p>
 
 This specialization highlights an important consideration in AI development: the balance between depth in specific domains and breadth across diverse fields of knowledge. While o1 excels in its targeted areas, it may not be the optimal choice for tasks outside its primary focus.

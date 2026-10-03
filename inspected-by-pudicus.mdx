@@ -16,22 +16,49 @@ tags:
   - articles
   - AI
   - coding agents
+citations:
+  cusumano-1991-japan-s-software-factories:
+    type: book
+    title: 'Japan''s Software Factories: A Challenge to U.S. Management'
+    author: [{family: Cusumano, given: Michael A.}]
+    publisher: Oxford University Press
+    issued: {date-parts: [[1991]]}
+  qian-2023-communicative-agents-for-software-development:
+    type: article-journal
+    title: Communicative Agents for Software Development
+    author: [{family: Qian, given: Chenglin}, {family: Cong, given: Xin}, {family: Yang, given: Cheng}, {family: Chen, given: Weize}, {family: Su, given: Yusheng}, {family: Xu, given: Juyuan}, {family: Liu, given: Zhiyuan}, {family: Sun, given: Maosong}]
+    container-title: arXiv preprint arXiv:2307.07924
+    URL: https://arxiv.org/abs/2307.07924
+    issued: {date-parts: [[2023]]}
+  smith-2001-shift-left-testing:
+    type: article-journal
+    title: Shift-Left Testing
+    author: [{family: Smith, given: Larry}]
+    container-title: Dr. Dobb's Journal
+    URL: https://www.drdobbs.com/shift-left-testing/184404768
+    issued: {date-parts: [[2001]]}
+  git-2026-githooks:
+    type: webpage
+    title: githooks
+    container-title: Git
+    URL: https://git-scm.com/docs/githooks
+    accessed: {date-parts: [[2026, 8, 31]]}
 ---
 
-import BlogImage from "../components/blog-image"
-import { Citation, CitationsList } from "gatsby-citation-manager"
-
 <p class="center-full-image">
-  <BlogImage
-  images={props.pageContext.frontmatter.images}
-  name="inspected-by-sticker-cover.png"
-  alt="A computer monitor in a professional office displaying lines of code in a dark-theme editor, with a physical paper sticker reading 'INSPECTED BY 247' stuck directly onto the glass."
- className="center-small-image" />
+
+::image{
+  src="images/inspected-by-sticker-cover.png"
+  layout="center-small-image"
+  alt="A computer monitor in a professional office displaying lines of code in a dark-theme editor, with a
+  physical paper sticker reading 'INSPECTED BY 247' stuck directly onto the glass."
+}
+
 </p>
 
 Agent swarms write a lot of code. They also skip git hooks. `--no-verify` is right there in the man page, and they've learned it. The hook we actually need is the one that scans for secrets and other sensitive information *before* the commit. After a key is in git history, you're rotating credentials and rewriting history. That's the expensive part.
 
-Some people call the swarm a software factory<Citation data={{ type: "book", author: [{ family: "Cusumano", given: "Michael A." }], title: "Japan's Software Factories: A Challenge to U.S. Management", publisher: "Oxford University Press", issued: { "date-parts": [[1991]] } }} />, others a model zoo or a coder agent swarm<Citation data={{ type: "article-journal", author: [{ family: "Qian", given: "Chenglin" }, { family: "Cong", given: "Xin" }, { family: "Yang", given: "Cheng" }, { family: "Chen", given: "Weize" }, { family: "Su", given: "Yusheng" }, { family: "Xu", given: "Juyuan" }, { family: "Liu", given: "Zhiyuan" }, { family: "Sun", given: "Maosong" }], title: "Communicative Agents for Software Development", "container-title": "arXiv preprint arXiv:2307.07924", issued: { "date-parts": [[2023]] }, URL: "https://arxiv.org/abs/2307.07924" }} />. The volume is the same either way: because [AI coding costs have collapsed](/blog/ai-coding-cost-collapse-2026), these things can fill a repo overnight. A human on every diff is already theater. As we've seen when [giving our coding agents a boss](/blog/grok-bot-gave-my-coding-agents-a-boss), the leftover control isn't a person staring at the patch. It's whether the secret scanner ran on this tree, before the commit.
+Some people call the swarm a software factory[@cusumano-1991-japan-s-software-factories], others a model zoo or a coder agent swarm[@qian-2023-communicative-agents-for-software-development]. The volume is the same either way: because [AI coding costs have collapsed](/blog/ai-coding-cost-collapse-2026), these things can fill a repo overnight. A human on every diff is already theater. As we've seen when [giving our coding agents a boss](/blog/grok-bot-gave-my-coding-agents-a-boss), the leftover control isn't a person staring at the patch. It's whether the secret scanner ran on this tree, before the commit.
 
 CI will not save you here. By the time a pipeline sees the commit, the secret is already in history.
 
@@ -54,19 +81,11 @@ If the commit can land without that record, or if the record can be yesterday's 
 
 ## Catch it before the commit
 
-"Shift-left" usually means finding a bug on a laptop is cheaper than finding it in CI, which is cheaper than finding it in production.<Citation data={{ type: "article-journal", author: [{ family: "Smith", given: "Larry" }], title: "Shift-Left Testing", "container-title": "Dr. Dobb's Journal", issued: { "date-parts": [[2001]] }, URL: "https://www.drdobbs.com/shift-left-testing/184404768" }} /> Secrets are worse than bugs. Once they're committed, the fix is rotation plus history surgery. The check has to run at the moment the agent tries to commit, not after GitHub already has the object.
+"Shift-left" usually means finding a bug on a laptop is cheaper than finding it in CI, which is cheaper than finding it in production.[@smith-2001-shift-left-testing] Secrets are worse than bugs. Once they're committed, the fix is rotation plus history surgery. The check has to run at the moment the agent tries to commit, not after GitHub already has the object.
 
 ## Skip is the process hole
 
-Git will let you walk around the inspector. Native hooks "can be bypassed with the `--no-verify` option."<Citation
-  data={{
-    type: "webpage",
-    "container-title": "Git",
-    title: "githooks",
-    URL: "https://git-scm.com/docs/githooks",
-    accessed: { "date-parts": [[2026, 8, 31]] }
-  }}
-/> Agents have learned this. They stash, they quiet the hook, they commit on a runner that never had one. That's how secrets get in.
+Git will let you walk around the inspector. Native hooks "can be bypassed with the `--no-verify` option."[@git-2026-githooks] Agents have learned this. They stash, they quiet the hook, they commit on a runner that never had one. That's how secrets get in.
 
 Treat that the way ITIL treats a change implemented without a ticket:
 
@@ -81,7 +100,14 @@ Treat that the way ITIL treats a change implemented without a ticket:
 A `commit-msg` hook runs a pinned scanner over the staged tree. If the scan is clean, the hook writes an HMAC receipt onto the commit: inspector identity, this git tree, the result, the time, a signature. Later stages check that receipt. No receipt, no deploy. The scanners behind the hook are pluggable: Gitleaks, Tactus, whatever you pin.
 
 <p class="center-full-image">
-  <BlogImage images={props.pageContext.frontmatter.images} name="pudicus-validation.png" className="center-full-image" alt="Architecture diagram showing the Pudicus Git Hook running scanners, minting a cryptographic signature, and later stages refusing a commit with no receipt." />
+
+::image{
+  src="diagrams/pudicus-validation.png"
+  layout="center-full-image"
+  alt="Architecture diagram showing the Pudicus Git Hook running scanners, minting a cryptographic signature,
+  and later stages refusing a commit with no receipt."
+}
+
 </p>
 
 The agent can't mint the sticker. It doesn't hold the secret. So the easy path is letting the hook run.
@@ -99,11 +125,19 @@ Pudicus ties the signature to the **Tree Hash** (the exact state of the files) r
 If an agent bypasses the hook with `--no-verify`, you don't have to rewrite git history. You can run `pudicus approve`, which creates an empty "paperwork" commit at the tip of your branch holding the signatures for the older commits. Later stages pool those signatures and check them against the tree you're about to ship.
 
 <p class="center-full-image">
-  <BlogImage images={props.pageContext.frontmatter.images} name="pudicus-signature-pooling.png" className="center-full-image" alt="Diagram showing how an Approval Commit signs previous trees, allowing later stages to pool valid signatures." />
+
+::image{
+  src="diagrams/pudicus-signature-pooling.png"
+  layout="center-full-image"
+  alt="Diagram showing how an Approval Commit signs previous trees, allowing later stages to pool valid
+  signatures."
+}
+
 </p>
 
 We're running Pudicus on all of our agent-written commits. You can [view the source and install it from GitHub](https://github.com/AnthusAI/Pudicus). If you need help keeping secrets out of agent-written history, talk to us at [anth.us](https://anth.us).
 
 ## References
 
-<CitationsList citationFormat="apa" />
+::citations{format="apa"}
+

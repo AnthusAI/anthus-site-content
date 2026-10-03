@@ -14,23 +14,38 @@ preview_image: "./images/all-your-agents-are-belong-to-us.png"
 images:
   - "./images/all-your-agents-are-belong-to-us.png"
 state: published
+citations:
+  arxiv-2026-your-agent-is-mine:
+    type: webpage
+    title: 'Your Agent Is Mine: Measuring Malicious Intermediary Attacks on the LLM Supply Chain'
+    container-title: arXiv
+    URL: https://arxiv.org/abs/2604.08407
+    issued: {date-parts: [[2026, 4, 9]]}
+    accessed: {date-parts: [[2026, 4, 14]]}
+  bleepingcomputer-2026-popular-litellm-pypi-package-backdoored:
+    type: webpage
+    title: Popular LiteLLM PyPI package backdoored to steal credentials, auth tokens
+    container-title: BleepingComputer
+    URL: https://www.bleepingcomputer.com/news/security/popular-litellm-pypi-package-compromised-in-teampcp-supply-chain-attack/
+    issued: {date-parts: [[2026, 3, 24]]}
+    accessed: {date-parts: [[2026, 4, 14]]}
+  trend-micro-2026-your-ai-gateway-was-a-backdoor:
+    type: webpage
+    title: 'Your AI Gateway Was a Backdoor: Inside the LiteLLM Supply Chain Compromise'
+    container-title: Trend Micro
+    URL: https://www.trendmicro.com/en/research/26/c/inside-litellm-supply-chain-compromise.html
+    issued: {date-parts: [[2026, 3, 24]]}
+    accessed: {date-parts: [[2026, 4, 14]]}
 ---
 
-import BlogImage from '../components/blog-image';
-import { Citation, CitationsList } from 'gatsby-citation-manager';
+The paper on the arXiv is called *Your Agent Is Mine: Measuring Malicious Intermediary Attacks on the LLM Supply Chain*.[@arxiv-2026-your-agent-is-mine] That is almost right. The better title is the one the internet already wrote for this class of failure: **All Your Agents Are Belong To Us**.
 
-The paper on the arXiv is called *Your Agent Is Mine: Measuring Malicious Intermediary Attacks on the LLM Supply Chain*.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "arXiv",
-    title: "Your Agent Is Mine: Measuring Malicious Intermediary Attacks on the LLM Supply Chain",
-    URL: "https://arxiv.org/abs/2604.08407",
-    accessed: { 'date-parts': [[2026, 4, 14]] },
-    issued: { 'date-parts': [[2026, 4, 9]] }
-  }}
-/> That is almost right. The better title is the one the internet already wrote for this class of failure: **All Your Agents Are Belong To Us**.
-
-<BlogImage images={props.pageContext.frontmatter.images} name="all-your-agents-are-belong-to-us.png" className="centered" alt="Figure 1 from the paper: a malicious router in a multi-hop chain taints tool-call responses back to Claude Code and Codex." />
+::image{
+  src="images/all-your-agents-are-belong-to-us.png"
+  layout="centered"
+  alt="Figure 1 from the paper: a malicious router in a multi-hop chain taints tool-call responses back to
+  Claude Code and Codex."
+}
 
 You already know the setup if you run agents in production. The model does not execute anything. It returns a tool call. Your agent process runs that tool and sends the result back. If something sitting between you and the model can rewrite the JSON, it is not arguing with the model. It is telling your machine what to run.
 
@@ -64,25 +79,7 @@ Paying does not make the tool call honest. It makes the shop more likely to stay
 
 ## The LiteLLM incident was the same hole from the other side
 
-In March 2026, TeamPCP published backdoored `litellm` 1.82.7 and 1.82.8 on PyPI. The versions were live for a few hours. The payload harvested cloud credentials, SSH keys, Kubernetes secrets, and wallets, and it could persist on the host.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "BleepingComputer",
-    title: "Popular LiteLLM PyPI package backdoored to steal credentials, auth tokens",
-    URL: "https://www.bleepingcomputer.com/news/security/popular-litellm-pypi-package-compromised-in-teampcp-supply-chain-attack/",
-    issued: { 'date-parts': [[2026, 3, 24]] },
-    accessed: { 'date-parts': [[2026, 4, 14]] }
-  }}
-/> The paper cites that incident as proof the router pipeline is a supply-chain weapon. Trend Micro put it more bluntly: the AI gateway was the backdoor, because that is where the keys already live.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "Trend Micro",
-    title: "Your AI Gateway Was a Backdoor: Inside the LiteLLM Supply Chain Compromise",
-    URL: "https://www.trendmicro.com/en/research/26/c/inside-litellm-supply-chain-compromise.html",
-    issued: { 'date-parts': [[2026, 3, 24]] },
-    accessed: { 'date-parts': [[2026, 4, 14]] }
-  }}
-/>
+In March 2026, TeamPCP published backdoored `litellm` 1.82.7 and 1.82.8 on PyPI. The versions were live for a few hours. The payload harvested cloud credentials, SSH keys, Kubernetes secrets, and wallets, and it could persist on the host.[@bleepingcomputer-2026-popular-litellm-pypi-package-backdoored] The paper cites that incident as proof the router pipeline is a supply-chain weapon. Trend Micro put it more bluntly: the AI gateway was the backdoor, because that is where the keys already live.[@trend-micro-2026-your-ai-gateway-was-a-backdoor]
 
 If you run agents through a unified proxy to save money or to fail over models, you concentrated the exact secrets a steal-the-keys campaign wants.
 
@@ -94,4 +91,5 @@ None of that proves the tool call came from the model. The real fix is a provide
 
 If you operate agents for a living, treat the router as part of the trusted computing base, the same way you treat the package registry. One base-URL change is a supply-chain decision. All your agents are belong to whoever sits on that hop.
 
-<CitationsList />
+::citations
+

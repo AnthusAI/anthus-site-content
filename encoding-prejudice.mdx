@@ -22,19 +22,20 @@ state: published
 repository: "https://github.com/AnthusAI/Jev-Flywheel"
 ---
 
-import BlogImage from "../components/blog-image"
-
 A new kind of artificial intelligence took the software world by storm in the last week. Unlike the chat-style AI that writes out its reasoning, these models answer a simple question about a document in a fraction of a second, for a fraction of a cent, with no explanation at all. Engineers are already putting them in front of the queues that decide which applications get read, which claims get flagged, which customers get called back, and the trade is speed and cost against visibility: with the older kind of AI you could at least read why it decided something; <mark>with these, there is nothing to read, and there is no free lunch</mark>.
 
 So we asked what one of these models does with what it can't explain. Two thousand real online bios of lawyers and paralegals, two of these models, one free and one a paid service, one question: paralegal or attorney? Then we changed one word in every bio, "he" to "she" or the reverse, and asked again. Nothing about anyone's work had changed. <mark>The free model changed its answer on nearly one bio in five, and every time, the woman became the paralegal.</mark> The paid model changed on about one in twenty-five, almost always the same way. <mark>That is gender bias, in one number: the same bio, judged lower because of one pronoun.</mark> The question nobody is asking is what the models do to the people on the other end.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="encoding-prejudice-cover.png"
-    className="full"
-    alt="Two bars show how often each model's answer changed when the pronoun was swapped, on 2,000 real bios asked one question, paralegal or attorney: 3.9 percent for the paid model, Jev, and 17.8 percent for the free one, Laya."
-  />
+
+::image{
+  src="images/encoding-prejudice-cover.png"
+  layout="full"
+  alt="Two bars show how often each model's answer changed when the pronoun was swapped, on 2,000 real bios
+  asked one question, paralegal or attorney: 3.9 percent for the paid model, Jev, and 17.8 percent for the
+  free one, Laya."
+}
+
   <figcaption className="image-caption">
     Two thousand real online bios, one question: paralegal or attorney? We changed
     "he" to "she" and asked again. The bars are how often the answer changed.
@@ -54,12 +55,16 @@ Her bio came from a [public research collection](https://huggingface.co/datasets
 We did that to the pile [name] is in, ranking all two thousand bios by how sure each model was that the person was an attorney and keeping the top five hundred. Among the real attorneys, <mark>the free model put 60 of every 100 men on the list and 29 of every 100 women</mark>; the paid model, 52 and 44. Then the swap: 82 of the 419 women attorneys, [name] among them, make the free model's list only as "he", and 15 make the paid model's. <mark>It never went the other way, on either model.</mark> Nobody at the company would have decided to prefer men. The shortlist would have looked perfectly reasonable, and [name] would never know why she wasn't on it.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="encoding-prejudice-shortlist.png"
-    className="full"
-    alt="Bar chart of the share of real attorneys who make a top-500 shortlist out of 2,000 paralegal and attorney bios, women against men, per model. Jev, the paid model: 44 percent of women attorneys and 52 percent of men. Laya, the free model: 29 percent of women and 60 percent of men. A dashed line marks four-fifths of the men's rate, the federal rule of thumb for adverse impact in hiring."
-  />
+
+::image{
+  src="images/encoding-prejudice-shortlist.png"
+  layout="full"
+  alt="Bar chart of the share of real attorneys who make a top-500 shortlist out of 2,000 paralegal and
+  attorney bios, women against men, per model. Jev, the paid model: 44 percent of women attorneys and 52
+  percent of men. Laya, the free model: 29 percent of women and 60 percent of men. A dashed line marks
+  four-fifths of the men's rate, the federal rule of thumb for adverse impact in hiring."
+}
+
   <figcaption className="image-caption">
     The 2,000-bio pile holds 1,000 real attorneys, 419 women and 581 men. Solid
     bars are women attorneys, pale bars men. The free model shortlists 28.9% of
@@ -75,12 +80,15 @@ Now suppose she applies somewhere else. If every firm ends up using the same HR 
 Since [*Griggs v. Duke Power*](https://www.law.cornell.edu/supremecourt/text/401/424) in 1971, a hiring practice that shuts a group out can violate Title VII of the Civil Rights Act on its effect, not its intent. Researchers who study the new shape have a name for it, monoculture: everyone's judge making the same mistake about the same person. The benefits of a fast, cheap gatekeeper are diffuse and go to whoever installs it. The harms concentrate on people who never see the model and can't appeal to it. If every firm rents the same reader, then for [name] it has made up its mind about "she", and there's nowhere left to be read differently: <mark>a rut, and the machinery keeps her in it</mark>.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="encoding-prejudice-monoculture.png"
-    className="full"
-    alt="Diagram: one person, a woman attorney whose bio is read as paralegal, feeds into four decisions at four different institutions, and all four feed into one rented model with the same weights, the same answer and the same mistake."
-  />
+
+::image{
+  src="images/encoding-prejudice-monoculture.png"
+  layout="full"
+  alt="Diagram: one person, a woman attorney whose bio is read as paralegal, feeds into four decisions at
+  four different institutions, and all four feed into one rented model with the same weights, the same answer
+  and the same mistake."
+}
+
   <figcaption className="image-caption">
     One person, four decisions, one rented model. Four judges used to make four
     different errors, and one of them said yes. One judge makes one error
@@ -97,12 +105,16 @@ That sounds small. Put the better model in front of a million decisions a year a
 We measure the same way before we ship a scorecard in production: overall accuracy and calibration aren't enough, because a model can look fine in aggregate and still be systematically wrong for one group. Every promoted scorecard gets checked by slice, and a regression for one group holds up the release even when the aggregate number improved.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="encoding-prejudice-pairs.png"
-    className="full"
-    alt="Bar chart of how often each model's answer changed under a pronoun swap on four occupation pairs, ordered by the gap in women's share between the two titles, with 95 percent intervals. Teacher or professor: Jev 1.2 percent, Laya 7.6. Surgeon or physician: Jev 1.1, Laya 8.0. Nurse or physician: Jev 3.3, Laya 13.5. Paralegal or attorney: Jev 3.9, Laya 17.8."
-  />
+
+::image{
+  src="images/encoding-prejudice-pairs.png"
+  layout="full"
+  alt="Bar chart of how often each model's answer changed under a pronoun swap on four occupation pairs,
+  ordered by the gap in women's share between the two titles, with 95 percent intervals. Teacher or
+  professor: Jev 1.2 percent, Laya 7.6. Surgeon or physician: Jev 1.1, Laya 8.0. Nurse or physician: Jev 3.3,
+  Laya 13.5. Paralegal or attorney: Jev 3.9, Laya 17.8."
+}
+
   <figcaption className="image-caption">
     The first four jobs we tested, two models, 2,000 bios per pair. The free
     model's answer changed on 7.65%, 7.95%, 13.5% and 17.85% of bios; the paid

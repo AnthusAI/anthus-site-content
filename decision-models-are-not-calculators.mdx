@@ -21,8 +21,6 @@ state: published
 repository: "https://github.com/AnthusAI/Decision-Models-Are-Not-Calculators"
 ---
 
-import BlogImage from '../components/blog-image';
-
 [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev) is a decision model: give it a description and a list of possible answers, and it returns a choice and probabilities for the options. We asked it which face had shown on a fair six-sided die rolled out of sight. Jev chose one and assigned it 88% probability. With no information about the roll, every face still had the same one-in-six chance. Why did the model favor one so strongly?
 
 We had a hypothesis inspired by Benford's Law. First we looked at Jev's answer. Then we moved one around the list of choices and asked two other decision models the same question. The results took us somewhere less tidy than our initial explanation.
@@ -88,11 +86,21 @@ Would the same preference show up elsewhere? We gave the identical question matr
 | Kev | 1,410 | 294 | 18.6% | 18.4% |
 | Laya | 40 | 2,610 | 6.5% | 66.2% |
 
-<BlogImage images={props.pageContext.frontmatter.images} name="decision-models-are-not-calculators.png" className="full" alt="Decision Models Are Not Calculators: mean reported probabilities for digit-labelled die faces. Jev concentrates on one, Kev is comparatively even, and Laya concentrates on six." />
+::image{
+  src="images/decision-models-are-not-calculators.png"
+  layout="full"
+  alt="Decision Models Are Not Calculators: mean reported probabilities for digit-labelled die faces. Jev
+  concentrates on one, Kev is comparatively even, and Laya concentrates on six."
+}
 
 Kev selected one in **49.0%** of its replies. That's a preference, but nothing like Jev's. Its mean digit probabilities were much closer to one-sixth, and in the first digit pass it chose the **first-listed option in 426 of 720 orders**. Laya went the other way: it selected **six in 2,610 replies**, or **90.6%**. With word labels, its mean reported P(six) reached **91.8%** in the first pass. None of those patterns reveals a training-data cause.
 
-<BlogImage images={props.pageContext.frontmatter.images} name="decision-models-face-probabilities.png" className="full" alt="Mean reported probabilities by die face and label form for Jev, Kev, and Laya. The dashed line marks the one-in-six fair-die baseline." />
+::image{
+  src="images/decision-models-face-probabilities.png"
+  layout="full"
+  alt="Mean reported probabilities by die face and label form for Jev, Kev, and Laya. The dashed line marks
+  the one-in-six fair-die baseline."
+}
 
 The chart groups probabilities by the face named in each answer, even when that answer moved to another position. The dashed line marks the fair-die baseline stated in the prompt, independent of the models' outputs.
 
@@ -100,7 +108,12 @@ The chart groups probabilities by the face named in each answer, even when that 
 
 The ordering test did more than rule out a first-slot shortcut for Jev. In the first digit pass, Laya **never selected the last-listed option**. Kev's first-position preference was much stronger than a position-neutral pattern across this balanced matrix. Spelling the same faces as words changed Kev's selected answer in **324 of 720 paired orders** and Laya's in **129**. Jev kept choosing one.
 
-<BlogImage images={props.pageContext.frontmatter.images} name="decision-models-option-position.png" className="full" alt="Selected-option share by list position for Jev, Kev, and Laya with digit and word labels. Kev favors early positions; Laya's digit responses never choose the final position." />
+::image{
+  src="images/decision-models-option-position.png"
+  layout="full"
+  alt="Selected-option share by list position for Jev, Kev, and Laya with digit and word labels. Kev favors
+  early positions; Laya's digit responses never choose the final position."
+}
 
 Exact repeat requests selected the same face in every case for all three models. Kev and Laya returned identical probability vectors on repeat; Jev's probabilities moved slightly without changing its choice. Those repeats check stability of the model response. They aren't new die rolls.
 

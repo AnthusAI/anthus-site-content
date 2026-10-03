@@ -12,13 +12,10 @@ tags:
 state: published
 ---
 
-import BlogImage from '../../components/blog-image';
-
 <p class="center-full-image">
-    <BlogImage className="center-small-image"
-        images={props.pageContext.frontmatter.images} 
-        name="anthropic-citations.png"
-    />
+
+::image{src="images/posts/anthropic-citations.png" layout="center-small-image" alt=""}
+
 </p>
 
 Anthropic has released their Citations API, enabling Claude to provide precise citations for its responses. This development is particularly intriguing for agent-based systems where explainability and verification are crucial.

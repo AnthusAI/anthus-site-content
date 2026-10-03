@@ -19,8 +19,6 @@ images:
 state: published
 ---
 
-import BlogImage from "../components/blog-image"
-
 Say you send an agent's next step to a decision model, and you only let it act on its own when it's at least 99% sure. Everything else goes to a person. That rule is only as good as the 99%. We gave GPT-6 Luna, the model behind OpenAI's new Decisions API, 3,600 reasoning problems and asked for exactly that kind of answer. When Luna said it was 99% sure or more, it was right 68% of the time.
 
 OpenAI announced the Decisions API at DevDay on September 29, in limited preview. It picks one answer from a list you define, so software can branch on it: classify a message, route a request, choose what an agent does next. [The Decoder](https://the-decoder.com/openai-expands-codex-and-its-api-at-devday-with-security-scans-a-decisions-api-and-ultrafast/) and [Axios](https://www.axios.com/2026/09/29/openai-dev-day-2026-dots-space-sol) report it runs on "a version of GPT-6 Luna," OpenAI's low-cost model, and OpenAI's own chart puts it at 150 milliseconds a decision. It's OpenAI's answer to [Jev](/blog/making-decisions-instead-of-generating-text/).
@@ -34,12 +32,15 @@ We've been routing on a model's confidence since 2023. For [Call Criteria](/blog
 That's the pain the Decisions API could end. What we're hoping for most is that OpenAI now treats calibration as a product: a confidence you can set a threshold on, documented and tested, instead of something withheld from the API, which we suspect, without proof, is partly about making the models harder to distill. A decision endpoint is where that would have to happen. So we wanted to know what the model underneath does today.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="openai-decisions-api-preview-accuracy-by-depth.png"
-    className="full"
-    alt="Line chart of accuracy by proof depth from 0 to 5 on 3,600 problems. Jev starts near 99% and is still at 85% at depth 5. GPT-6 Luna starts near 96%, drops to 77% at depth 1 and 63% at depth 2, and ends at 45% at depth 5."
-  />
+
+::image{
+  src="images/openai-decisions-api-preview-accuracy-by-depth.png"
+  layout="full"
+  alt="Line chart of accuracy by proof depth from 0 to 5 on 3,600 problems. Jev starts near 99% and is still
+  at 85% at depth 5. GPT-6 Luna starts near 96%, drops to 77% at depth 1 and 63% at depth 2, and ends at 45%
+  at depth 5."
+}
+
   <figcaption className="image-caption">
     Accuracy by the number of inference steps the answer needs, both
     ProofWriter tasks pooled.
@@ -130,12 +131,15 @@ A log-probability of −0.00182 is a probability of 99.82%. We asked for five al
 One example proves nothing, so we asked for log-probabilities on all 3,600 problems with exactly the benchmark's request. It cost about 14 cents, and every request and response is [kept verbatim](https://hard-decisions.anth.us/openai-decisions-api-preview/).
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="openai-decisions-api-preview-reliability.png"
-    className="full"
-    alt="Reliability chart of stated probability against actual accuracy. Jev's line climbs close to the diagonal and reaches 98.9% accuracy among 1,667 answers stated at 99% or more. GPT-6 Luna's line stays near 50% for every band up to 97% and reaches only 68% among 2,672 answers stated at 99% or more."
-  />
+
+::image{
+  src="images/openai-decisions-api-preview-reliability.png"
+  layout="full"
+  alt="Reliability chart of stated probability against actual accuracy. Jev's line climbs close to the
+  diagonal and reaches 98.9% accuracy among 1,667 answers stated at 99% or more. GPT-6 Luna's line stays near
+  50% for every band up to 97% and reaches only 68% among 2,672 answers stated at 99% or more."
+}
+
   <figcaption className="image-caption">
     Each point is a band of stated probability; the dashed diagonal is where
     a perfectly calibrated model would sit. Both tasks pooled.
@@ -155,12 +159,15 @@ The other numbers say the same thing:
 Overconfidence on its own is fixable. If a model's 99% always means 68%, you can relabel it, the same way [Jev's confidence calibrates](/blog/can-you-trust-jev-confidence/). What calibration can't fix is a probability that doesn't move with being right.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="openai-decisions-api-preview-auroc-by-depth.png"
-    className="full"
-    alt="Line chart of AUROC by proof depth. Jev stays between 0.76 and 0.97 at every depth and ends at 0.84. GPT-6 Luna falls from 0.88 at depth 0 to 0.72, 0.63, 0.56 and 0.54, and ends at 0.51 at depth 5, on the coin-flip line."
-  />
+
+::image{
+  src="images/openai-decisions-api-preview-auroc-by-depth.png"
+  layout="full"
+  alt="Line chart of AUROC by proof depth. Jev stays between 0.76 and 0.97 at every depth and ends at 0.84.
+  GPT-6 Luna falls from 0.88 at depth 0 to 0.72, 0.63, 0.56 and 0.54, and ends at 0.51 at depth 5, on the
+  coin-flip line."
+}
+
   <figcaption className="image-caption">
     How well each model's stated probability separates its right answers
     from its wrong ones, by proof depth. 0.5 is no information at all.

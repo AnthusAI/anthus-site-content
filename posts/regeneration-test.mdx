@@ -14,15 +14,15 @@ images:
 state: published
 ---
 
-import BlogImage from "../../components/blog-image"
-
 <p class="center-full-image">
-  <BlogImage
-    className="center-small-image"
-    images={props.pageContext.frontmatter.images}
-    name="regeneration-test.png"
-    alt="Simple diagram: regeneratable implementation bricks on the left, durable architectural constraints on the right"
-  />
+
+::image{
+  src="images/posts/regeneration-test.png"
+  layout="center-small-image"
+  alt="Simple diagram: regeneratable implementation bricks on the left, durable architectural constraints on
+  the right"
+}
+
 </p>
 
 The marginal value of *creating* software is dropping toward zero. [Useful coding capability got dramatically cheaper](/blog/ai-coding-cost-collapse-2026/) while agents learned to stay on a task longer. What still pays is deciding what the system is allowed to mean — and [making those rules real enough that a runtime can reject a bad path](/blog/everything-as-code-integration/).

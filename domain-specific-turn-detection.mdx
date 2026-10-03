@@ -16,13 +16,14 @@ state: published
 repository: "https://github.com/AnthusAI/turn-detector-fine-tuning"
 ---
 
-import BlogImage from '../components/blog-image';
-
 <div className="center-full-image">
-    <BlogImage className="center-full-image"
-        images={props.pageContext.frontmatter.images}
-        name="domain-specific-turn-detection.png"
-        alt="Domain-Specific Turn Detection" />
+
+::image{
+  src="images/domain-specific-turn-detection.png"
+  layout="center-full-image"
+  alt="Domain-Specific Turn Detection"
+}
+
 </div>
 
 Turn detection is the subtle art of knowing when a user has finished speaking. In a voice bot, getting this wrong leads to two painful failure modes:
@@ -54,10 +55,13 @@ To prevent memorization, we enforced a **one-shot rule**: every unique sentence 
 When we tested our domain-specific model on the call center test set, the results were literally perfect.
 
 <div className="center-full-image">
-    <BlogImage className="center-full-image"
-        images={props.pageContext.frontmatter.images}
-        name="turn-detection-confusion-matrix.png"
-        alt="Confusion Matrix showing 100% accuracy" />
+
+::image{
+  src="images/turn-detection-confusion-matrix.png"
+  layout="center-full-image"
+  alt="Confusion Matrix showing 100% accuracy"
+}
+
 </div>
 
 *   **Model_General**: 87.5% accuracy
@@ -141,10 +145,13 @@ We analyzed the **Interruption Rate (IR)** of our new normalized model and found
 But we realized we could tune the **decision threshold**. By default, the model predicts "Complete" if confidence > 50%. By raising that bar, we can tell the model: "Only interrupt the user if you are *really* sure."
 
 <div className="center-full-image">
-    <BlogImage className="center-full-image"
-        images={props.pageContext.frontmatter.images}
-        name="turn-detection-threshold-optimization.png"
-        alt="Threshold optimization chart showing trade-off between interruptions and missed turns" />
+
+::image{
+  src="images/turn-detection-threshold-optimization.png"
+  layout="center-full-image"
+  alt="Threshold optimization chart showing trade-off between interruptions and missed turns"
+}
+
 </div>
 
 By raising the threshold to **0.74**, we reduced the interruption rate from 12.4% to **5.1%**. The trade-off was a higher Missed Turn Rate (18.7%), meaning the bot would sometimes wait a bit longer to confirm the user was done. For a polite support bot, this is the right trade-off.

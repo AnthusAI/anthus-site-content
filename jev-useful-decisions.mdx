@@ -24,26 +24,25 @@ images:
 state: published
 ---
 
-import BlogImage from "../components/blog-image"
-
-<BlogImage
-  images={props.pageContext.frontmatter.images}
-  name="jev-confidence.png"
-  className="right"
+::image{
+  src="images/jev-confidence.png"
+  layout="right"
   alt="Three confidence bubbles show AI decisions at 76%, 92%, and 98%."
-/>
+}
 
 Anthus has spent the last several years building post-call quality analysis at industrial scale. After a customer-service conversation ends, our systems analyze the recording or transcript against a scorecard: did the representative resolve the request, follow policy, or leave something unanswered? We began with conventional ML models, then increasingly used LLMs when the work called for more nuanced language understanding. LLMs brought a mismatch: they produce open-ended text, and a QA scorecard needs a bounded decision with a usable measure of uncertainty.
 
 Jev points at a different way to close that gap. Instead of fitting a text generator into a classifier's job, TypeSafe designed Jev to return typed decisions and probabilities directly: give it a state and a set of bounded questions, and each one comes back as a choice, a score, or a probability, no parsing or retries required to get there. For post-call QA, that could move the classifier's home from a wrapper we build around a text generator to a model whose native output already is the classifier, with the application still responsible for scorecards, thresholds, and review policy.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="jev-square-peg-round-hole.jpg"
-    className="full"
-    alt="A robot tries to fit a square red peg into a round opening, representing the difficulty of adapting text-generating models into bounded classifiers."
-  />
+
+::image{
+  src="images/jev-square-peg-round-hole.jpg"
+  layout="full"
+  alt="A robot tries to fit a square red peg into a round opening, representing the difficulty of adapting
+  text-generating models into bounded classifiers."
+}
+
   <figcaption className="image-caption">
     Turning a text generator into a classifier means constraining, parsing,
     retrying, and routing an output that was never designed to be a bounded
@@ -86,12 +85,14 @@ The interface still leaves the application in charge. Jev evaluates questions in
 The supplied playground example shows why the interface is appealing. It places a bank-call transcript beside several scoring questions. The visible run returns 99% yes for whether the representative thanked the customer and 91% yes for whether they identified whom they represented. A separate Choice question about successful handling returns YES 95%, NO 5%, and NA 0%.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="jev-playground-example.png"
-    className="full"
-    alt="TypeSafe AI playground showing a bank-call transcript and Jev’s structured call-quality decisions with probabilities and confidence scores."
-  />
+
+::image{
+  src="images/jev-playground-example.png"
+  layout="full"
+  alt="TypeSafe AI playground showing a bank-call transcript and Jev’s structured call-quality decisions with
+  probabilities and confidence scores."
+}
+
   <figcaption className="image-caption">
     An example Jev request in TypeSafe’s playground submits one call transcript
     with several bounded questions, then returns typed answers and probability
@@ -141,12 +142,15 @@ For comparison, consider a 10-question scorecard implemented as 10 separate GPT-
 On those deliberately simple assumptions, the Jev model charge is about 180 times lower. A batched LLM prompt, cached input, different transcript length, or more output and reasoning tokens changes the math. So does transcription, storage, engineering, and human review. A cheap model decision can still create an expensive review queue if its threshold is poorly chosen.
 
 <div className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="jev-cost-comparison.png"
-    className="full"
-    alt="Linear bar chart comparing model-token cost for one million 10-question scorecards: GPT-5.4 mini costs 75,450 dollars for ten separate calls, while Jev costs 420 dollars for one grouped request, about 180 times lower."
-  />
+
+::image{
+  src="images/jev-cost-comparison.png"
+  layout="full"
+  alt="Linear bar chart comparing model-token cost for one million 10-question scorecards: GPT-5.4 mini costs
+  75,450 dollars for ten separate calls, while Jev costs 420 dollars for one grouped request, about 180 times
+  lower."
+}
+
 </div>
 
 The operational metric we care about is cost per accepted decision at a defined error tolerance. We would track that alongside calibration, tail latency, review rate, and human minutes. For an overnight scoring batch, latency may barely matter. For a result needed seconds after hangup, it may decide whether the feature works at all.

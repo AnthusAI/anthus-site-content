@@ -15,16 +15,88 @@ preview_image: "./images/code-based-hill-climbing.png"
 images:
   - ./images/code-based-hill-climbing.png
 state: draft
+citations:
+  google-deepmind-2025-alphaevolve-a-gemini-powered-coding-agent:
+    type: webpage
+    title: 'AlphaEvolve: A Gemini-powered coding agent for designing advanced algorithms'
+    container-title: Google DeepMind
+    URL: https://deepmind.google/discover/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/
+    issued: {date-parts: [[2025, 5, 14]]}
+    accessed: {date-parts: [[2026, 8, 29]]}
+  google-deepmind-2026-alphaevolve-how-our-gemini-powered-coding:
+    type: webpage
+    title: 'AlphaEvolve: How our Gemini-powered coding agent is scaling impact across fields'
+    container-title: Google DeepMind
+    URL: https://deepmind.google/blog/alphaevolve-impact/
+    issued: {date-parts: [[2026, 5, 7]]}
+    accessed: {date-parts: [[2026, 8, 29]]}
+  karpathy-2026-karpathy-autoresearch-ai-agents-running-research:
+    type: webpage
+    title: 'karpathy/autoresearch: AI agents running research on single-GPU nanochat training automatically'
+    author: Andrej Karpathy
+    container-title: GitHub
+    URL: https://github.com/karpathy/autoresearch
+    issued: {date-parts: [[2026, 3, 1]]}
+    accessed: {date-parts: [[2026, 8, 29]]}
+  bonetto-2026-auto-architecture-karpathy-s-loop-pointed:
+    type: webpage
+    title: 'Auto-Architecture: Karpathy''s Loop, Pointed at a CPU'
+    author: Felipe Sens Bonetto
+    container-title: GitHub
+    URL: https://github.com/FeSens/auto-arch-tournament/blob/main/docs/auto-arch-tournament-blog-post.md
+    issued: {date-parts: [[2026, 4, 28]]}
+    accessed: {date-parts: [[2026, 8, 29]]}
+  pedoeem-2026-ultimate-guide-to-llm:
+    type: webpage
+    title: The Ultimate Guide to LLM-as-a-Judge
+    author: Jonathan Pedoeem
+    container-title: PromptLayer
+    URL: https://www.promptlayer.com/blog/the-ultimate-guide-to-llm-as-a-judge
+    issued: {date-parts: [[2026, 7, 10]]}
+    accessed: {date-parts: [[2026, 8, 29]]}
+  dropbox-tech-blog-2026-how-we-optimized-dash-s-relevance:
+    type: webpage
+    title: How we optimized Dash's relevance judge with DSPy
+    container-title: Dropbox Tech Blog
+    URL: https://dropbox.tech/machine-learning/optimizing-dropbox-dash-relevance-judge-with-dspy
+    issued: {date-parts: [[2026, 3, 17]]}
+    accessed: {date-parts: [[2026, 8, 29]]}
+  cisco-foundation-ai-2026-fully-automated-prompt-optimization:
+    type: webpage
+    title: Fully Automated Prompt Optimization
+    container-title: Cisco Foundation AI
+    URL: https://cisco-foundation-ai.github.io/blogs/fully-automated-prompt-optimization/
+    issued: {date-parts: [[2026, 6, 17]]}
+    accessed: {date-parts: [[2026, 8, 29]]}
+  arxiv-2025-gepa-reflective-prompt-evolution-can-outperform:
+    type: article-journal
+    title: 'GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning'
+    container-title: arXiv
+    URL: https://arxiv.org/abs/2507.19457
+    issued: {date-parts: [[2025, 7, 25]]}
+    accessed: {date-parts: [[2026, 8, 29]]}
+  benoit-2026-ode-to-gepa:
+    type: webpage
+    title: Ode to GEPA
+    author: Harold Benoit
+    container-title: haroldbenoit.com
+    URL: https://haroldbenoit.com/blog/ode_to_gepa/
+    issued: {date-parts: [[2026, 1, 1]]}
+    accessed: {date-parts: [[2026, 8, 29]]}
+  willison-2025-designing-agentic-loops:
+    type: webpage
+    title: Designing agentic loops
+    author: Simon Willison
+    container-title: Simon Willison's Weblog
+    URL: https://simonwillison.net/2025/Sep/30/designing-agentic-loops/
+    issued: {date-parts: [[2025, 9, 30]]}
+    accessed: {date-parts: [[2026, 8, 29]]}
 ---
 
-import BlogImage from '../components/blog-image';
-import { Citation, CitationsList } from 'gatsby-citation-manager';
-
 <p className="center-full-image">
-    <BlogImage className="center-small-image"
-        images={props.pageContext.frontmatter.images}
-        name="code-based-hill-climbing.png"
-        alt="Code-based hill-climbing" />
+
+::image{src="images/code-based-hill-climbing.png" layout="center-small-image" alt="Code-based hill-climbing"}
+
 </p>
 
 There is a technique quietly showing up in a lot of unrelated places right now, and it is simple enough to write down in one line: an agent edits a program, a metric scores the result, the better version survives, repeat.
@@ -35,45 +107,17 @@ Three groups made that concrete in public over the last year, at wildly differen
 
 ## DeepMind runs it in production
 
-AlphaEvolve is Google DeepMind's evolutionary coding agent: Gemini models propose programs, automated evaluators score them, and a database of past programs decides what gets mutated next.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "Google DeepMind",
-    title: "AlphaEvolve: A Gemini-powered coding agent for designing advanced algorithms",
-    URL: "https://deepmind.google/discover/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/",
-    issued: { 'date-parts': [[2025, 5, 14]] },
-    accessed: { 'date-parts': [[2026, 8, 29]] }
-  }}
-/> It is not a demo. The results are in production across Google's own stack.
+AlphaEvolve is Google DeepMind's evolutionary coding agent: Gemini models propose programs, automated evaluators score them, and a database of past programs decides what gets mutated next.[@google-deepmind-2025-alphaevolve-a-gemini-powered-coding-agent] It is not a demo. The results are in production across Google's own stack.
 
 A scheduling heuristic AlphaEvolve discovered for Borg has been running Google's data centers for over a year and continuously recovers about **0.7% of the company's worldwide compute**. It proposed a Verilog rewrite that stripped unnecessary bits out of a matrix-multiplication circuit, and that change went into an upcoming TPU. It restructured a matrix multiplication kernel in Gemini's own architecture for a **23% speedup**, worth roughly 1% off Gemini's total training time, and found a **32.5% speedup** for a FlashAttention kernel implementation — a layer human engineers usually leave to the compiler. On the mathematics side it found a way to multiply 4×4 complex-valued matrices with 48 scalar multiplications, improving on Strassen's 1969 result.
 
-The 2026 follow-up widened the range considerably. AlphaEvolve improved DeepConsensus enough to cut DNA variant-detection errors by 30%. It took a graph neural network for electricity-grid planning from finding feasible solutions 14% of the time to over 88%. It cut write amplification in a storage system by 20%, and shaved nearly 9% off the storage footprint of compiled software.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "Google DeepMind",
-    title: "AlphaEvolve: How our Gemini-powered coding agent is scaling impact across fields",
-    URL: "https://deepmind.google/blog/alphaevolve-impact/",
-    issued: { 'date-parts': [[2026, 5, 7]] },
-    accessed: { 'date-parts': [[2026, 8, 29]] }
-  }}
-/>
+The 2026 follow-up widened the range considerably. AlphaEvolve improved DeepConsensus enough to cut DNA variant-detection errors by 30%. It took a graph neural network for electricity-grid planning from finding feasible solutions 14% of the time to over 88%. It cut write amplification in a storage system by 20%, and shaved nearly 9% off the storage footprint of compiled software.[@google-deepmind-2026-alphaevolve-how-our-gemini-powered-coding]
 
 Data center scheduling, chip design, genomics, grid planning, and compiler output have almost nothing in common as engineering domains. What they have in common is that DeepMind could write down a program for each one and a number that says whether the program got better. DeepMind is explicit about the boundary: the approach applies to problems whose solution can be expressed as an algorithm and verified automatically. That sentence is a scoping constraint, and it is the whole ballgame.
 
 ## Karpathy shrank it to one file
 
-At the opposite end of the budget, Andrej Karpathy's `autoresearch` puts the same loop on a single GPU. You give an agent a small but real LLM training setup and let it run overnight. It edits the code, trains for five minutes, checks whether the result improved, keeps or discards, and goes again.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "GitHub",
-    title: "karpathy/autoresearch: AI agents running research on single-GPU nanochat training automatically",
-    author: "Andrej Karpathy",
-    URL: "https://github.com/karpathy/autoresearch",
-    issued: { 'date-parts': [[2026, 3, 1]] },
-    accessed: { 'date-parts': [[2026, 8, 29]] }
-  }}
-/>
+At the opposite end of the budget, Andrej Karpathy's `autoresearch` puts the same loop on a single GPU. You give an agent a small but real LLM training setup and let it run overnight. It edits the code, trains for five minutes, checks whether the result improved, keeps or discards, and goes again.[@karpathy-2026-karpathy-autoresearch-ai-agents-running-research]
 
 The repo is three files. `train.py` holds the model, optimizer, and training loop, and it is the only file the agent may touch. `prepare.py` holds the data prep and evaluation utilities, and it is off limits. `program.md` holds the instructions, and it is the file the *human* iterates on. The agent programs the model; you program the agent.
 
@@ -86,17 +130,7 @@ One GPU, one file, one metric. The agent is a commodity — Karpathy tells you t
 
 ## The same loop, pointed at a CPU
 
-Felipe Sens Bonetto asked the obvious follow-up question: does this generalize outside the agent's home turf? Python and gradient descent are the friendliest possible terrain for a language model. So he pointed the loop at a five-stage in-order RV32IM CPU core written in SystemVerilog — the textbook pipeline, no caches, no branch predictor.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "GitHub",
-    title: "Auto-Architecture: Karpathy's Loop, Pointed at a CPU",
-    author: "Felipe Sens Bonetto",
-    URL: "https://github.com/FeSens/auto-arch-tournament/blob/main/docs/auto-arch-tournament-blog-post.md",
-    issued: { 'date-parts': [[2026, 4, 28]] },
-    accessed: { 'date-parts': [[2026, 8, 29]] }
-  }}
-/>
+Felipe Sens Bonetto asked the obvious follow-up question: does this generalize outside the agent's home turf? Python and gradient descent are the friendliest possible terrain for a language model. So he pointed the loop at a five-stage in-order RV32IM CPU core written in SystemVerilog — the textbook pipeline, no caches, no branch predictor.[@bonetto-2026-auto-architecture-karpathy-s-loop-pointed]
 
 In 9 hours and 51 minutes the loop ran 73 hypotheses and accepted 10. CoreMark throughput went from **301 to 578 iterations per second**, a 92% improvement over the locked baseline, while LUT count dropped from 9,880 to 5,944 — roughly **40% fewer** logic cells. A smaller design that the synthesizer also clocks faster, 135 MHz to 199 MHz.
 
@@ -116,52 +150,15 @@ None of that is loop design. All of it is answering the question "what does bett
 
 Three more data points make the same case from the LLM side.
 
-**PromptLayer versioned an LLM judge eighteen times and then refused the improvement.** Their assertion checker is a boolean classifier — does this output satisfy this assertion, true or false. They had no labeled data, so they bootstrapped some: 1,000 real assertion calls pulled from production request logs, re-run through several stronger models, with the agreement (and human review of the disagreements) taken as ground truth. Zero hand-labeling from scratch. Then they ran every candidate against those 1,000 rows. The incumbent production prompt scored **88.6%** agreement. Their improved prompt with a citation requirement scored **84.4%**. As they put it, the shiny candidates lost, and without the eval they would have shipped one of them on vibes.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "PromptLayer",
-    title: "The Ultimate Guide to LLM-as-a-Judge",
-    author: "Jonathan Pedoeem",
-    URL: "https://www.promptlayer.com/blog/the-ultimate-guide-to-llm-as-a-judge",
-    issued: { 'date-parts': [[2026, 7, 10]] },
-    accessed: { 'date-parts': [[2026, 8, 29]] }
-  }}
-/>
+**PromptLayer versioned an LLM judge eighteen times and then refused the improvement.** Their assertion checker is a boolean classifier — does this output satisfy this assertion, true or false. They had no labeled data, so they bootstrapped some: 1,000 real assertion calls pulled from production request logs, re-run through several stronger models, with the agreement (and human review of the disagreements) taken as ground truth. Zero hand-labeling from scratch. Then they ran every candidate against those 1,000 rows. The incumbent production prompt scored **88.6%** agreement. Their improved prompt with a citation requirement scored **84.4%**. As they put it, the shiny candidates lost, and without the eval they would have shipped one of them on vibes.[@pedoeem-2026-ultimate-guide-to-llm]
 
 Their sharpest finding is one every team running evals should internalize: a judge prompt is calibrated to a model, not just to a task. When they upgraded to GPT-5 expecting free accuracy, the smarter model started hedging about its own epistemics — asked to verify a name against a transcript, it would answer false on the grounds that it could not truly verify anyone's name. Combined with an earlier "when unsure, say false" rule, the judge went systematically over-skeptical. Nothing about the prompt or the data had changed. If you swap judge models without re-calibrating, every historical eval score silently changes meaning.
 
-**Dropbox turned the metric itself into the optimization target.** Dash's relevance judge rates a query-document pair from 1 to 5, and quality is measured as normalized mean squared error against human annotators. Moving from an expensive proprietary model to a cheaper open-weight one broke the hand-tuned prompt, so they ran DSPy's GEPA optimizer against the fixed metric and cut **NMSE from 8.83 to 4.86**, a 45% reduction. Adaptation time for a new model dropped from one or two weeks of manual iteration to one or two days.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "Dropbox Tech Blog",
-    title: "How we optimized Dash's relevance judge with DSPy",
-    URL: "https://dropbox.tech/machine-learning/optimizing-dropbox-dash-relevance-judge-with-dspy",
-    issued: { 'date-parts': [[2026, 3, 17]] },
-    accessed: { 'date-parts': [[2026, 8, 29]] }
-  }}
-/>
+**Dropbox turned the metric itself into the optimization target.** Dash's relevance judge rates a query-document pair from 1 to 5, and quality is measured as normalized mean squared error against human annotators. Moving from an expensive proprietary model to a cheaper open-weight one broke the hand-tuned prompt, so they ran DSPy's GEPA optimizer against the fixed metric and cut **NMSE from 8.83 to 4.86**, a 45% reduction. Adaptation time for a new model dropped from one or two weeks of manual iteration to one or two days.[@dropbox-tech-blog-2026-how-we-optimized-dash-s-relevance]
 
 Notice the shape of their metric, though. It is not just agreement. Because the judge's output is JSON consumed by downstream pipelines, malformed output counts as fully incorrect — an operational failure folded into the quality score. That definitional choice is what let them discover that a much smaller model produced malformed JSON on more than 40% of responses in the baseline configuration, and then drive that down by over 97%. A metric that only measured agreement would have been blind to the thing that actually breaks the pipeline.
 
-**Cisco's FAPO found the ceiling that prompts cannot break through.** FAPO is a Claude Code-driven optimizer for multi-step LLM pipelines: evaluate, attribute failures to the step that caused them, propose a variant aimed at the dominant failure cluster, have an independent reviewer check it for scope compliance and data leakage, accept only if it beats the previous best.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "Cisco Foundation AI",
-    title: "Fully Automated Prompt Optimization",
-    URL: "https://cisco-foundation-ai.github.io/blogs/fully-automated-prompt-optimization/",
-    issued: { 'date-parts': [[2026, 6, 17]] },
-    accessed: { 'date-parts': [[2026, 8, 29]] }
-  }}
-/> Benchmarked against GEPA<Citation
-  data={{
-    type: "article-journal",
-    "container-title": "arXiv",
-    title: "GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning",
-    URL: "https://arxiv.org/abs/2507.19457",
-    issued: { 'date-parts': [[2025, 7, 25]] },
-    accessed: { 'date-parts': [[2026, 8, 29]] }
-  }}
-/> across six benchmarks, FAPO won 15 of 18 model-benchmark comparisons.
+**Cisco's FAPO found the ceiling that prompts cannot break through.** FAPO is a Claude Code-driven optimizer for multi-step LLM pipelines: evaluate, attribute failures to the step that caused them, propose a variant aimed at the dominant failure cluster, have an independent reviewer check it for scope compliance and data leakage, accept only if it beats the previous best.[@cisco-foundation-ai-2026-fully-automated-prompt-optimization] Benchmarked against GEPA[@arxiv-2025-gepa-reflective-prompt-evolution-can-outperform] across six benchmarks, FAPO won 15 of 18 model-benchmark comparisons.
 
 The number that matters here is the split on HoVer, a multi-hop claim verification task. Baseline accuracy was 35.9%. GEPA, which is restricted to editing prompts, got it to 48.5%. FAPO got it to 83.8% — but only because its failure attribution identified a retrieval bottleneck and escalated from editing prompt text to changing the pipeline structure. The two benchmarks where FAPO escalated to structural changes are exactly the two where it won by more than 30 points. On the four benchmarks where it stayed at the prompt level, the margins were single digits.
 
@@ -221,17 +218,7 @@ return "accept"
 
 The targeted set is where the known misses live, so the loop optimizes against it. The random set is the honest sample of production, and its only job is to catch a change that fixed the failure cluster by breaking everything else. Without the second check, an agent optimizing a classifier will find the cheapest way to satisfy the targeted set, and the cheapest way is frequently to bias the whole classifier toward whichever label dominates the misses.
 
-We are not alone in treating a classifier as an evolvable program — Harold Benoit has written about the same job class, web-page quality classifiers, from the GEPA side.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "haroldbenoit.com",
-    title: "Ode to GEPA",
-    author: "Harold Benoit",
-    URL: "https://haroldbenoit.com/blog/ode_to_gepa/",
-    issued: { 'date-parts': [[2026, 1, 1]] },
-    accessed: { 'date-parts': [[2026, 8, 29]] }
-  }}
-/> What we have added is the diagnosis step in the middle: the loop does not propose changes against a scalar. It proposes them against clustered root causes on the specific items that were wrong, which is what makes "add an applicability gate" or "extract the evidence before judging it" reachable moves instead of random mutations.
+We are not alone in treating a classifier as an evolvable program — Harold Benoit has written about the same job class, web-page quality classifiers, from the GEPA side.[@benoit-2026-ode-to-gepa] What we have added is the diagnosis step in the middle: the loop does not propose changes against a scalar. It proposes them against clustered root causes on the specific items that were wrong, which is what makes "add an applicability gate" or "extract the evidence before judging it" reachable moves instead of random mutations.
 
 ## Instrumenting somebody else's tool
 
@@ -274,17 +261,7 @@ So the question to ask about any part of your system is not whether it is writte
 
 1. **An agent can propose a modification to it.** That means text, in a repository, with an obvious unit of change. This is the requirement almost everyone meets first and it is the least interesting of the three.
 2. **A runtime can execute it and produce a number.** Not a vibe, not a review, a number — and ideally a number that decomposes, so a failure can be attributed to a step rather than just deducted from a total.
-3. **Something can refuse the change.** A formal property, a held-out set, a type checker, a regression suite, a generalization guard. Simon Willison's framing of agentic loop design lands on the same point from the other side: the design work is choosing the goal and the boundaries, not the iteration.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "Simon Willison's Weblog",
-    title: "Designing agentic loops",
-    author: "Simon Willison",
-    URL: "https://simonwillison.net/2025/Sep/30/designing-agentic-loops/",
-    issued: { 'date-parts': [[2025, 9, 30]] },
-    accessed: { 'date-parts': [[2026, 8, 29]] }
-  }}
-/>
+3. **Something can refuse the change.** A formal property, a held-out set, a type checker, a regression suite, a generalization guard. Simon Willison's framing of agentic loop design lands on the same point from the other side: the design work is choosing the goal and the boundaries, not the iteration.[@willison-2025-designing-agentic-loops]
 
 Most teams have the first. Some have the second. The third is where the work is, and it is the one that does not get built unless someone decides it is the product rather than the plumbing.
 
@@ -304,4 +281,5 @@ Then add the loop. It is the easy part, and by the time you have a metric you tr
 
 ## References
 
-<CitationsList citationFormat="apa" />
+::citations{format="apa"}
+

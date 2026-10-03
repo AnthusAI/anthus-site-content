@@ -16,14 +16,12 @@ images:
 state: published
 ---
 
-import BlogImage from "../components/blog-image"
-
-<BlogImage
-  images={props.pageContext.frontmatter.images}
-  name="from-pair-programmer-to-executive.png"
-  className="centered"
-  alt="A human directs a small organization of coding bots, each working independently from a separate office pod."
-/>
+::image{
+  src="images/from-pair-programmer-to-executive.png"
+  layout="centered"
+  alt="A human directs a small organization of coding bots, each working independently from a separate office
+  pod."
+}
 
 I didn’t even hear about the bug until after it was fixed.
 

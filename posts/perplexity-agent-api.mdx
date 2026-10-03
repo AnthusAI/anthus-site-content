@@ -14,13 +14,14 @@ images:
 state: published
 ---
 
-import BlogImage from '../../components/blog-image';
-
 <p class="center-full-image">
-    <BlogImage className="center-small-image"
-        images={props.pageContext.frontmatter.images}
-        name="perplexity-agent-api.png"
-        alt="Perplexity Agent API: a managed runtime for agentic workflows" />
+
+::image{
+  src="images/posts/perplexity-agent-api.png"
+  layout="center-small-image"
+  alt="Perplexity Agent API: a managed runtime for agentic workflows"
+}
+
 </p>
 
 [Perplexity's Agent API](https://www.perplexity.ai/hub/blog/agent-api-a-managed-runtime-for-agentic-workflows) is a managed runtime for the agent loop: search, tool execution, reasoning, and multi-model fallback, one endpoint and one key. They say it replaces a model router, a search layer, an embeddings provider, a sandbox, and a monitoring stack. Built-in `web_search` and `fetch_url`, plus your own functions.

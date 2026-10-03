@@ -14,13 +14,14 @@ images:
 state: published
 ---
 
-import BlogImage from '../../components/blog-image';
-
 <p class="center-full-image">
-  <BlogImage className="center-small-image"
-    images={props.pageContext.frontmatter.images}
-    name="model-context-protocol.png"
-    alt="Model Context Protocol: one protocol instead of N connectors" />
+
+::image{
+  src="images/posts/model-context-protocol.png"
+  layout="center-small-image"
+  alt="Model Context Protocol: one protocol instead of N connectors"
+}
+
 </p>
 
 [Anthropic open-sourced the Model Context Protocol](https://www.anthropic.com/news/model-context-protocol). The pitch is small and structural: stop writing a custom connector for every data source. Expose tools and resources through one client-server protocol. Clients are AI apps. Servers wrap GitHub, Slack, Postgres, the local filesystem, whatever you actually need.

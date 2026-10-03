@@ -16,10 +16,107 @@ tags:
   - articles
   - ai
   - economics
+citations:
+  gundlach-2025-price-of-progress:
+    type: article-journal
+    title: 'The Price of Progress: Price Performance and the Future of AI'
+    author: [Hans Gundlach, Jayson Lynch, Matthias Mertens, Neil Thompson]
+    container-title: arXiv
+    DOI: 10.48550/arXiv.2511.23455
+    URL: https://arxiv.org/abs/2511.23455
+    issued: {date-parts: [[2025, 11]]}
+    accessed: {date-parts: [[2026, 8, 16]]}
+  gundlach-2025-price-of-progress-2:
+    type: article-journal
+    title: 'The Price of Progress: Price Performance and the Future of AI'
+    author: [Hans Gundlach, Jayson Lynch, Matthias Mertens, Neil Thompson]
+    container-title: arXiv
+    DOI: 10.48550/arXiv.2511.23455
+    URL: https://arxiv.org/html/2511.23455v2
+    issued: {date-parts: [[2025, 11]]}
+    accessed: {date-parts: [[2026, 8, 16]]}
+  arxiv-2026-benchmark-for-dialogue-driven-coding-agents:
+    type: article-journal
+    title: A Benchmark for Dialogue-Driven Coding Agents
+    container-title: arXiv
+    URL: https://arxiv.org/html/2606.13995v1
+    issued: {date-parts: [[2026, 6]]}
+    accessed: {date-parts: [[2026, 8, 16]]}
+  openai-developers-2026-run-long-horizon-tasks-with-codex:
+    type: webpage
+    title: Run long horizon tasks with Codex
+    container-title: OpenAI Developers
+    URL: https://developers.openai.com/blog/run-long-horizon-tasks-with-codex
+    accessed: {date-parts: [[2026, 8, 16]]}
+  addy-osmani-2026-long-running-agents:
+    type: webpage
+    title: Long-running Agents
+    container-title: Addy Osmani
+    URL: https://addyosmani.com/blog/long-running-agents/
+    accessed: {date-parts: [[2026, 8, 16]]}
+  stanford-digital-economy-lab-2026-how-are-ai-agents-spending:
+    type: webpage
+    title: How are AI agents spending your tokens?
+    container-title: Stanford Digital Economy Lab
+    URL: https://digitaleconomy.stanford.edu/news/how-are-ai-agents-spending-your-tokens/
+    accessed: {date-parts: [[2026, 8, 16]]}
+  web-developer-2026-claude-code-adds-nested-subagents:
+    type: webpage
+    title: Claude Code Adds Nested Subagents and Experimental Agent Teams
+    container-title: Web Developer
+    URL: https://webdeveloper.com/news/claude-code-nested-subagents-agent-teams/
+    accessed: {date-parts: [[2026, 8, 16]]}
+  arxiv-2026-harness-effect:
+    type: article-journal
+    title: 'The Harness Effect: How Orchestration Design Sets the Token Economics of Enterprise Agentic AI'
+    container-title: arXiv
+    URL: https://arxiv.org/html/2607.06906
+    issued: {date-parts: [[2026, 7]]}
+    accessed: {date-parts: [[2026, 8, 16]]}
+  devtools-academy-2026-state-of-ai-coding-agents-2026:
+    type: webpage
+    title: State of AI Coding Agents 2026
+    container-title: DevTools Academy
+    URL: https://www.devtoolsacademy.com/blog/state-of-ai-coding-agents-2026
+    accessed: {date-parts: [[2026, 8, 16]]}
+  anthropic-2026-claude-code-subagents-and-agent-teams:
+    type: webpage
+    title: Claude Code subagents and Agent Teams
+    container-title: Anthropic
+    URL: https://docs.claude.com/en/docs/claude-code/sub-agents
+    accessed: {date-parts: [[2026, 8, 16]]}
+  totalum-2026-claude-code-subagents:
+    type: webpage
+    title: 'Claude Code subagents: the 2026 production playbook'
+    container-title: Totalum
+    URL: https://www.totalum.app/blog/claude-code-subagents-totalum
+    issued: {date-parts: [[2026, 8]]}
+    accessed: {date-parts: [[2026, 8, 16]]}
+  augment-code-2026-accelerating-large-engineering-projects-with-cosmos:
+    type: webpage
+    title: Accelerating large engineering projects with Cosmos
+    container-title: Augment Code
+    URL: https://www.augmentcode.com/blog/accelerating-large-engineering-projects-with-cosmos
+    accessed: {date-parts: [[2026, 8, 16]]}
+  github-2026-scribe-self-updating-agents-md:
+    type: software
+    title: 'Scribe: self-updating AGENTS.md from the code graph'
+    container-title: GitHub
+    URL: https://github.com/brn-mwai/scribe
+    accessed: {date-parts: [[2026, 8, 16]]}
+  augment-code-2026-self-updating-documentation:
+    type: webpage
+    title: 'Self-Updating Documentation: Docs Agents Keep in Sync'
+    container-title: Augment Code
+    URL: https://www.augmentcode.com/guides/self-updating-documentation-docs-agents-sync
+    accessed: {date-parts: [[2026, 8, 16]]}
+  jevons-1865-coal-question:
+    type: book
+    title: 'The Coal Question: An Inquiry Concerning the Progress of the Nation, and the Probable Exhaustion of Our Coal-Mines'
+    author: William Stanley Jevons
+    publisher: Macmillan and Co.
+    issued: {date-parts: [[1865]]}
 ---
-
-import BlogImage from "../components/blog-image"
-import { Citation, CitationsList } from "gatsby-citation-manager"
 
 _Coding agents didn't just get better. Useful coding capability got dramatically cheaper._
 
@@ -39,64 +136,33 @@ So the useful question isn't, "What's the smartest model?" It's: <mark>what does
 
 A model can look cheap per token while burning a huge number of tokens to finish a task. Agent loops add retries, tool calls, test runs, and context re-ingestion. So the number that matters isn't the list price. It's what you spend to get useful work done.
 
-A March 2026 paper from MIT FutureTech and CSAIL gives us a better way to measure this.<Citation
-data={{
-    type: "article-journal",
-    title: "The Price of Progress: Price Performance and the Future of AI",
-    author: ["Hans Gundlach", "Jayson Lynch", "Matthias Mertens", "Neil Thompson"],
-    "container-title": "arXiv",
-    DOI: "10.48550/arXiv.2511.23455",
-    URL: "https://arxiv.org/abs/2511.23455",
-    accessed: { 'date-parts': [[2026, 8, 16]] },
-    issued: { 'date-parts': [[2025, 11]] }
-  }}
-/> The authors combine historical inference-price data with benchmark token use from Epoch AI's Benchmark Hub and evaluate **price-adjusted performance** across knowledge, math, and software engineering—not just raw API rates.
+A March 2026 paper from MIT FutureTech and CSAIL gives us a better way to measure this.[@gundlach-2025-price-of-progress] The authors combine historical inference-price data with benchmark token use from Epoch AI's Benchmark Hub and evaluate **price-adjusted performance** across knowledge, math, and software engineering—not just raw API rates.
 
-Their headline finding: the cost of a given benchmark-performance level on the Pareto frontier has been falling roughly **5× to 10× per year** across GPQA-Diamond, AIME, and SWE-bench Verified. For software engineering specifically, SWE-bench Verified's sample is still small, so confidence intervals are wide—but the estimated annual price reduction is in the same ballpark, about **4.7× per year** on the cost-performance frontier.<Citation
-data={{
-    type: "article-journal",
-    title: "The Price of Progress: Price Performance and the Future of AI",
-    author: ["Hans Gundlach", "Jayson Lynch", "Matthias Mertens", "Neil Thompson"],
-    "container-title": "arXiv",
-    DOI: "10.48550/arXiv.2511.23455",
-    URL: "https://arxiv.org/html/2511.23455v2",
-    accessed: { 'date-parts': [[2026, 8, 16]] },
-    issued: { 'date-parts': [[2025, 11]] }
-  }}
-/>
+Their headline finding: the cost of a given benchmark-performance level on the Pareto frontier has been falling roughly **5× to 10× per year** across GPQA-Diamond, AIME, and SWE-bench Verified. For software engineering specifically, SWE-bench Verified's sample is still small, so confidence intervals are wide—but the estimated annual price reduction is in the same ballpark, about **4.7× per year** on the cost-performance frontier.[@gundlach-2025-price-of-progress-2]
 
-<BlogImage
-  images={props.pageContext.frontmatter.images}
-  name="price-of-fixed-capability.png"
-  className="full"
-  alt="Log-scale chart of the cost to reach a fixed benchmark score from 2023 to 2026, falling roughly five to ten times per year across GPQA-Diamond, AIME, and SWE-bench Verified."
-/>
+::image{
+  src="images/price-of-fixed-capability.png"
+  layout="full"
+  alt="Log-scale chart of the cost to reach a fixed benchmark score from 2023 to 2026, falling roughly five
+  to ten times per year across GPQA-Diamond, AIME, and SWE-bench Verified."
+}
 
 That method matters because the researchers price a full **benchmark run**—including input, output, reasoning, and cached tokens. They're measuring the cost of reaching a fixed result, not claiming that models somehow got ten times smarter.
 
 For SWE-bench Verified, the estimate is about **4.7× cheaper per year**, although the sample is small and the confidence interval is wide. Compounded over the roughly 18 months since "vibe coding" was coined, that's close to the order-of-magnitude change in the opening. The exact multiplier is less important than the direction: the same useful capability keeps getting cheaper, fast.
 
-<BlogImage
-  images={props.pageContext.frontmatter.images}
-  name="ai-coding-cost-collapse-2026.png"
-  className="centered"
-  alt="Three falling log-scale cost curves for GPQA-Diamond, AIME, and SWE-bench Verified, annotated 5x to 10x cheaper per year, titled Same coding capability, falling price."
-/>
+::image{
+  src="images/ai-coding-cost-collapse-2026.png"
+  layout="centered"
+  alt="Three falling log-scale cost curves for GPQA-Diamond, AIME, and SWE-bench Verified, annotated 5x to
+  10x cheaper per year, titled Same coding capability, falling price."
+}
 
 ## What one resolved task costs
 
 For engineering leaders, the MIT paper is the academic anchor. For day-to-day tool selection, agent benchmarks are more legible.
 
-_Dialogue-SWEBench_, a June 2026 benchmark from UC Santa Cruz, reports **dollars per resolved interactive repository task** on a dialogue-driven software engineering benchmark—not list price.<Citation
-data={{
-    type: "article-journal",
-    title: "A Benchmark for Dialogue-Driven Coding Agents",
-    "container-title": "arXiv",
-    URL: "https://arxiv.org/html/2606.13995v1",
-    accessed: { 'date-parts': [[2026, 8, 16]] },
-    issued: { 'date-parts': [[2026, 6]] }
-  }}
-/> That's much closer to what you actually pay when a coding agent does the work.
+_Dialogue-SWEBench_, a June 2026 benchmark from UC Santa Cruz, reports **dollars per resolved interactive repository task** on a dialogue-driven software engineering benchmark—not list price.[@arxiv-2026-benchmark-for-dialogue-driven-coding-agents] That's much closer to what you actually pay when a coding agent does the work.
 
 | Model / agent configuration          | Resolved tasks | Cost per task |
 | ------------------------------------ | -------------: | ------------: |
@@ -113,32 +179,17 @@ Here's the point: for a lot of everyday engineering work, the best-value model i
 
 The price collapse didn't arrive alone. Agents also got better at working autonomously for longer instead of answering one prompt and stopping.
 
-The capability curve is real and dated. OpenAI's December 2025 Codex release was, in their own words, "the moment that people began to believe that using autonomous coding agents could be reliable"—driven by "a huge jump in how long the model could reliably follow instructions." A single 25-hour uninterrupted run produced 30,000 lines of code on 13 million tokens, with the model running its own verification steps at every milestone.<Citation
-data={{
-    type: "webpage",
-    "container-title": "OpenAI Developers",
-    title: "Run long horizon tasks with Codex",
-    URL: "https://developers.openai.com/blog/run-long-horizon-tasks-with-codex",
-    accessed: { 'date-parts': [[2026, 8, 16]] }
-  }}
-/> METR's time-horizon metric—the length of task a frontier model can complete with 50% reliability—has been **doubling roughly every seven months since 2019**.<Citation
-data={{
-    type: "webpage",
-    "container-title": "Addy Osmani",
-    title: "Long-running Agents",
-    URL: "https://addyosmani.com/blog/long-running-agents/",
-    accessed: { 'date-parts': [[2026, 8, 16]] }
-  }}
-/>
+The capability curve is real and dated. OpenAI's December 2025 Codex release was, in their own words, "the moment that people began to believe that using autonomous coding agents could be reliable"—driven by "a huge jump in how long the model could reliably follow instructions." A single 25-hour uninterrupted run produced 30,000 lines of code on 13 million tokens, with the model running its own verification steps at every milestone.[@openai-developers-2026-run-long-horizon-tasks-with-codex] METR's time-horizon metric—the length of task a frontier model can complete with 50% reliability—has been **doubling roughly every seven months since 2019**.[@addy-osmani-2026-long-running-agents]
 
 While the price of a fixed level of coding was falling, the length of task an agent could stay on was doubling roughly every seven months. Two exponential curves were moving at the same time.
 
-<BlogImage
-  images={props.pageContext.frontmatter.images}
-  name="two-multiplying-curves.png"
-  className="full"
-  alt="Two stacked log-scale charts: the price of fixed coding capability falls while the length of task an agent can complete at fifty percent reliability rises. Together, the trends make more work practical to automate."
-/>
+::image{
+  src="images/two-multiplying-curves.png"
+  layout="full"
+  alt="Two stacked log-scale charts: the price of fixed coding capability falls while the length of task an
+  agent can complete at fifty percent reliability rises. Together, the trends make more work practical to
+  automate."
+}
 
 These curves don't just make existing automation cheaper. Together, they move the boundary of what can be automated. As agents stay reliable for longer and the cost of those long loops falls, tasks that were impractical a few months ago cross into ordinary use.
 
@@ -146,15 +197,7 @@ These curves don't just make existing automation cheaper. Together, they move th
 
 Long autonomous loops are exactly the kind of token-heavy work that only becomes practical when model usage gets cheap.
 
-An agent loop isn't a chat. A chatbot returns one response. An agent plans, calls tools, verifies, retries, and re-reads its accumulated context on every step. Stanford's Digital Economy Lab gave this a name: the **"pricey context snowball."** Input tokens, not output tokens, drive the cost of agentic work, because the agent re-sends a growing context window on every step of a multi-step task.<Citation
-data={{
-    type: "webpage",
-    "container-title": "Stanford Digital Economy Lab",
-    title: "How are AI agents spending your tokens?",
-    URL: "https://digitaleconomy.stanford.edu/news/how-are-ai-agents-spending-your-tokens/",
-    accessed: { 'date-parts': [[2026, 8, 16]] }
-  }}
-/> A 50-turn session can run a 25:1 ratio of input to output tokens. The cost grows with the loop length, not the answer length.
+An agent loop isn't a chat. A chatbot returns one response. An agent plans, calls tools, verifies, retries, and re-reads its accumulated context on every step. Stanford's Digital Economy Lab gave this a name: the **"pricey context snowball."** Input tokens, not output tokens, drive the cost of agentic work, because the agent re-sends a growing context window on every step of a multi-step task.[@stanford-digital-economy-lab-2026-how-are-ai-agents-spending] A 50-turn session can run a 25:1 ratio of input to output tokens. The cost grows with the loop length, not the answer length.
 
 <div className="blockDiagram">
   <div className="title">The Context Snowball</div>
@@ -226,66 +269,25 @@ data={{
   </div>
 </div>
 
-Agent hierarchies can make that curve even steeper. A single top-level task can expand into a tree of agents, each carrying its own context window.<Citation
-data={{
-    type: "webpage",
-    "container-title": "Web Developer",
-    title: "Claude Code Adds Nested Subagents and Experimental Agent Teams",
-    URL: "https://webdeveloper.com/news/claude-code-nested-subagents-agent-teams/",
-    accessed: { 'date-parts': [[2026, 8, 16]] }
-  }}
-/> Delegating a milestone to a hierarchy of agents is token-expensive by design.
+Agent hierarchies can make that curve even steeper. A single top-level task can expand into a tree of agents, each carrying its own context window.[@web-developer-2026-claude-code-adds-nested-subagents] Delegating a milestone to a hierarchy of agents is token-expensive by design.
 
 That's why this isn't just a savings story. <mark>Cheaper model usage made longer loops and agent hierarchies affordable.</mark>
 
-A July 2026 paper, _The Harness Effect_, measures the second lever directly: holding the model constant, swapping in a better orchestration layer cut cost per task by 41%—more than switching between the cheapest and most expensive model did. The harness moved cost per task more than model choice did.<Citation
-data={{
-    type: "article-journal",
-    title: "The Harness Effect: How Orchestration Design Sets the Token Economics of Enterprise Agentic AI",
-    "container-title": "arXiv",
-    URL: "https://arxiv.org/html/2607.06906",
-    accessed: { 'date-parts': [[2026, 8, 16]] },
-    issued: { 'date-parts': [[2026, 7]] }
-  }}
-/> Better orchestration and cheaper models arrived together. That's what made this kind of delegation practical.
+A July 2026 paper, _The Harness Effect_, measures the second lever directly: holding the model constant, swapping in a better orchestration layer cut cost per task by 41%—more than switching between the cheapest and most expensive model did. The harness moved cost per task more than model choice did.[@arxiv-2026-harness-effect] Better orchestration and cheaper models arrived together. That's what made this kind of delegation practical.
 
 ## What this changes
 
-This is where the cost collapse becomes more interesting than a cheaper invoice. The unit of work starts to change. Instead of asking an assistant for a few lines, a developer can hand a patch-shaped problem to agents that read the repo, edit it, test it, and return work for review.<Citation
-data={{
-    type: "webpage",
-    "container-title": "DevTools Academy",
-    title: "State of AI Coding Agents 2026",
-    URL: "https://www.devtoolsacademy.com/blog/state-of-ai-coding-agents-2026",
-    accessed: { 'date-parts': [[2026, 8, 16]] }
-  }}
-/> The pieces are already familiar: isolated subagents, git worktrees that keep parallel changes apart, shared task lists, and batch commands that fan out mechanical work.<Citation
-data={{
-    type: "webpage",
-    "container-title": "Anthropic",
-    title: "Claude Code subagents and Agent Teams",
-    URL: "https://docs.claude.com/en/docs/claude-code/sub-agents",
-    accessed: { 'date-parts': [[2026, 8, 16]] }
-  }}
-/> The harnesses matured. What was missing was the economics.
+This is where the cost collapse becomes more interesting than a cheaper invoice. The unit of work starts to change. Instead of asking an assistant for a few lines, a developer can hand a patch-shaped problem to agents that read the repo, edit it, test it, and return work for review.[@devtools-academy-2026-state-of-ai-coding-agents-2026] The pieces are already familiar: isolated subagents, git worktrees that keep parallel changes apart, shared task lists, and batch commands that fan out mechanical work.[@anthropic-2026-claude-code-subagents-and-agent-teams] The harnesses matured. What was missing was the economics.
 
-As the cost per agent falls, the same budget can support several agents working in parallel. Three to five concurrent agents is a common practical range, while genuinely parallel jobs can fan out much further.<Citation
-data={{
-    type: "webpage",
-    "container-title": "Totalum",
-    title: "Claude Code subagents: the 2026 production playbook",
-    URL: "https://www.totalum.app/blog/claude-code-subagents-totalum",
-    accessed: { 'date-parts': [[2026, 8, 16]] },
-    issued: { 'date-parts': [[2026, 8]] }
-  }}
-/>
+As the cost per agent falls, the same budget can support several agents working in parallel. Three to five concurrent agents is a common practical range, while genuinely parallel jobs can fan out much further.[@totalum-2026-claude-code-subagents]
 
-<BlogImage
-  images={props.pageContext.frontmatter.images}
-  name="robot-workstation-army.png"
-  className="full"
-  alt="Endless rows of identical pink-eyed robots tethered by cable to developer workstations, monitors glowing with code, in a dim teal-lit industrial office."
-/>
+::image{
+  src="images/robot-workstation-army.png"
+  layout="full"
+  alt="Endless rows of identical pink-eyed robots tethered by cable to developer workstations, monitors
+  glowing with code, in a dim teal-lit industrial office."
+}
+
 <p
   style={{
     textAlign: "center",
@@ -297,15 +299,7 @@ data={{
   The same budget, a different unit of work.
 </p>
 
-The real change isn't simply that coding got cheaper. It's that the same budget can support a different way of working, including whole milestones handed to a supervised group of agents. Augment describes the shift as moving the unit of engineering work from the pull request to the project.<Citation
-data={{
-    type: "webpage",
-    "container-title": "Augment Code",
-    title: "Accelerating large engineering projects with Cosmos",
-    URL: "https://www.augmentcode.com/blog/accelerating-large-engineering-projects-with-cosmos",
-    accessed: { 'date-parts': [[2026, 8, 16]] }
-  }}
-/>
+The real change isn't simply that coding got cheaper. It's that the same budget can support a different way of working, including whole milestones handed to a supervised group of agents. Augment describes the shift as moving the unit of engineering work from the pull request to the project.[@augment-code-2026-accelerating-large-engineering-projects-with-cosmos]
 
 ## Chore tasks that finally get done
 
@@ -313,23 +307,7 @@ Every engineering team has a list of work that is obviously valuable and never g
 
 These are the tasks that parallel agents are best at, because they are well-scoped, repeatable, and low-stakes enough to run under human review rather than by hand. And the tooling for them is now shipping.
 
-Documentation maintenance is the clearest example. Tools like Scribe read the actual structure of a codebase from the code graph, regenerate an accurate `AGENTS.md`, and open a merge request when the docs have drifted from the code—then keep watching and open another MR the next time they drift.<Citation
-data={{
-    type: "software",
-    "container-title": "GitHub",
-    title: "Scribe: self-updating AGENTS.md from the code graph",
-    URL: "https://github.com/brn-mwai/scribe",
-    accessed: { 'date-parts': [[2026, 8, 16]] }
-  }}
-/> The pattern generalizes: a CI drift check compares the merge diff against the prose, an agent drafts a correction, and a human reviews and merges. The same loop applies to dependency upgrades, test backfills, changelog generation, and triaging security advisories.<Citation
-data={{
-    type: "webpage",
-    "container-title": "Augment Code",
-    title: "Self-Updating Documentation: Docs Agents Keep in Sync",
-    URL: "https://www.augmentcode.com/guides/self-updating-documentation-docs-agents-sync",
-    accessed: { 'date-parts': [[2026, 8, 16]] }
-  }}
-/>
+Documentation maintenance is the clearest example. Tools like Scribe read the actual structure of a codebase from the code graph, regenerate an accurate `AGENTS.md`, and open a merge request when the docs have drifted from the code—then keep watching and open another MR the next time they drift.[@github-2026-scribe-self-updating-agents-md] The pattern generalizes: a CI drift check compares the merge diff against the prose, an agent drafts a correction, and a human reviews and merges. The same loop applies to dependency upgrades, test backfills, changelog generation, and triaging security advisories.[@augment-code-2026-self-updating-documentation]
 
 The catch is that none of this should auto-merge. The agents do the work that used to never get done; a human still decides whether it ships. <mark>The productivity dividend lands in the gap between "nobody had time" and "somebody reviewed it."</mark>
 
@@ -343,15 +321,7 @@ That's the human payoff of the cost collapse. It isn't just that you can spend l
 
 But there's another side to this, and it's the same paradox we saw when content got cheap.
 
-When a resource gets cheaper, you don't use less of it. You use more of it, because the cheapness enables new uses that weren't viable before. William Stanley Jevons noticed it with coal in 1865: Watt's efficient steam engine didn't reduce coal consumption, it increased it, because steam engines became economical for factories, trains, and pumps that would never have used them before.<Citation
-data={{
-    type: "book",
-    title: "The Coal Question: An Inquiry Concerning the Progress of the Nation, and the Probable Exhaustion of Our Coal-Mines",
-    author: "William Stanley Jevons",
-    publisher: "Macmillan and Co.",
-    issued: { "date-parts": [[1865]] }
-  }}
-/>
+When a resource gets cheaper, you don't use less of it. You use more of it, because the cheapness enables new uses that weren't viable before. William Stanley Jevons noticed it with coal in 1865: Watt's efficient steam engine didn't reduce coal consumption, it increased it, because steam engines became economical for factories, trains, and pumps that would never have used them before.[@jevons-1865-coal-question]
 
 Coding follows the same curve. Demand expands in two directions: we run familiar automations more often, and we automate longer, more complicated work that agents couldn't reliably finish before. The unit price falls while both the number and the size of viable tasks grow, so total spending can still rise.
 
@@ -376,4 +346,5 @@ That doesn't make the human less important. It moves the scarce resource from im
 
 ## References
 
-<CitationsList citationFormat="apa" />
+::citations{format="apa"}
+

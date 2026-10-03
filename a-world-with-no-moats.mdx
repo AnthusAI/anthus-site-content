@@ -13,9 +13,11 @@ images: ["images/the-revolution-will-be-commodified.png"]
 state: published
 ---
 
-import BlogImage from '../components/blog-image';
-
-<BlogImage images={props.pageContext.frontmatter.images} name="the-revolution-will-be-commodified.png" className="right" alt="THE REVOLUTION WILL BE COMMODIFIED" />
+::image{
+  src="images/the-revolution-will-be-commodified.png"
+  layout="right"
+  alt="THE REVOLUTION WILL BE COMMODIFIED"
+}
 
 In the late 1980s and early 1990s, Microsoft's operating systems stood unchallenged, wrapped in a mystique of secrecy. The company's "Fear, Uncertainty, and Doubt" marketing strategy implied that Windows had exclusive, magical capabilities necessary for computing — <mark>alternatives barely even existed</mark> because Microsoft had convinced most people there weren't any worth considering. They said the code stayed closed and secret for our protection: hackers couldn't exploit what they couldn't see. But security doesn't work that way. It was for Microsoft's protection, not ours.
 

@@ -20,8 +20,6 @@ images:
 state: published
 ---
 
-import BlogImage from "../components/blog-image"
-
 It started with a question that seemed to have an obvious answer. Jev, a decision model from TypeSafe, lets one request ask several questions about the same piece of text. So what happens if you put the same question in one request ten times? Same model, same text, same question, sent at the same moment. Ten identical answers, surely.
 
 We tried it on five logic problems. On one of them, the ten copies came back with ten different sets of probabilities, and they didn't agree on the answer either: four said the statement was false and six said it was unknown. The correct answer was false.
@@ -35,12 +33,17 @@ It matters outside a lab. Run the same batch of records through a decision model
 The book's main remedy for noise is to average several judgments, and Jev makes that unusually cheap, because a request can carry the same question many times. So we asked two questions in turn. Does averaging the copies make Jev more accurate? It doesn't. Does it at least make Jev give the same answer when you ask again? It does: ten copies cut the changes by about a third. That's the line the book draws: averaging removes noise, not bias.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="jev-pooled-flips.png"
-    className="full"
-    alt="Line chart of how often a repeated request changes Jev's answer, against the number of copies of the question in one request: 1, 2, 3, 5, 10 and 20. For the three-option logic task the rate goes from 2.5 percent with one copy to 1.8 percent with ten and 2.0 percent with twenty. For the two-option task it goes from 2.0 percent to 1.2 percent with ten and 1.4 percent with twenty. Ten copies gave 29 and 37 percent fewer changed answers than one copy."
-  />
+
+::image{
+  src="images/jev-pooled-flips.png"
+  layout="full"
+  alt="Line chart of how often a repeated request changes Jev's answer, against the number of copies of the
+  question in one request: 1, 2, 3, 5, 10 and 20. For the three-option logic task the rate goes from 2.5
+  percent with one copy to 1.8 percent with ten and 2.0 percent with twenty. For the two-option task it goes
+  from 2.0 percent to 1.2 percent with ten and 1.4 percent with twenty. Ten copies gave 29 and 37 percent
+  fewer changed answers than one copy."
+}
+
   <figcaption className="image-caption">
     How often sending the same request again changes the answer. Each point is
     1,000 logic problems answered five times. The vertical bars show how
@@ -68,12 +71,14 @@ Everything ran on `jev-1.13.0`, about 100,000 requests, $5.50 in total.
 Accuracy was the first thing we tested, because a more accurate answer would have been worth paying for. It didn't improve: not with three copies, not with twenty, not with the options shuffled or the question reworded. Across every arm and task, pooled accuracy stayed within a point of a single answer.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="jev-pooled-accuracy.png"
-    className="full"
-    alt="Line chart of accuracy against the number of copies in one request. The two-option task stays between 89.3 and 89.6 percent; the three-option task stays between 84.6 and 85.2 percent, from one copy to twenty."
-  />
+
+::image{
+  src="images/jev-pooled-accuracy.png"
+  layout="full"
+  alt="Line chart of accuracy against the number of copies in one request. The two-option task stays between
+  89.3 and 89.6 percent; the three-option task stays between 84.6 and 85.2 percent, from one copy to twenty."
+}
+
   <figcaption className="image-caption">
     Accuracy on the same 1,000 problems per task, averaged over five runs. The
     lines are flat from one copy to twenty.
@@ -110,12 +115,15 @@ We also checked whether the copies get noisier in longer requests. They don't: t
 The answers flip when Jev's top two options are nearly tied. Pooling tightens them, so they flip less often, but it can't move them away from the tie.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="jev-pooled-close-calls.png"
-    className="full"
-    alt="Dot plot of the eight least stable problems on the three-option task. With one copy, each problem's five runs spread across about 0.3 to 0.6 probability. With ten copies the five runs sit closer together but still around the middle, mostly between about 0.4 and 0.6."
-  />
+
+::image{
+  src="images/jev-pooled-close-calls.png"
+  layout="full"
+  alt="Dot plot of the eight least stable problems on the three-option task. With one copy, each problem's
+  five runs spread across about 0.3 to 0.6 probability. With ten copies the five runs sit closer together but
+  still around the middle, mostly between about 0.4 and 0.6."
+}
+
   <figcaption className="image-caption">
     Each row is one problem, each dot one of its five runs. Ten copies pull the
     runs together, but they stay where they were: in the middle.
@@ -133,12 +141,15 @@ The more useful number is what each avoided change costs. Ten copies add $56 to 
 Your copy cost is the length of your question, so a long question makes every copy dearer, and a long document makes the copies relatively cheaper, since the document is only sent once.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="jev-pooled-cost.png"
-    className="full"
-    alt="Line chart of how often a repeat changes the answer against Jev's cost per million decisions. Both tasks fall from about 2 to 2.5 percent at about 23 dollars with one copy to their lowest at ten copies, 79 to 90 dollars, then rise slightly at twenty copies, 141 to 163 dollars."
-  />
+
+::image{
+  src="images/jev-pooled-cost.png"
+  layout="full"
+  alt="Line chart of how often a repeat changes the answer against Jev's cost per million decisions. Both
+  tasks fall from about 2 to 2.5 percent at about 23 dollars with one copy to their lowest at ten copies, 79
+  to 90 dollars, then rise slightly at twenty copies, 141 to 163 dollars."
+}
+
   <figcaption className="image-caption">
     Changed answers against what a million decisions cost on Jev. Past ten
     copies, extra money buys nothing.

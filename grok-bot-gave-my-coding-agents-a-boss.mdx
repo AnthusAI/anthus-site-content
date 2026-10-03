@@ -22,8 +22,6 @@ images:
 state: published
 ---
 
-import BlogImage from "../components/blog-image"
-
 <div
   style={{
     float: "right",
@@ -33,12 +31,14 @@ import BlogImage from "../components/blog-image"
     marginBottom: "16px",
   }}
 >
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="grok-bot-app.png"
-    className="right-aligned"
-    alt="The Grok Bot app on a phone: a list of bots by role — DataParade, Software Director, Researcher, Applied Research, Publicist, Product, Anth.us, Papyrus — each with its own recent message."
-  />
+
+::image{
+  src="images/grok-bot-app.png"
+  layout="right-aligned"
+  alt="The Grok Bot app on a phone: a list of bots by role — DataParade, Software Director, Researcher,
+  Applied Research, Publicist, Product, Anth.us, Papyrus — each with its own recent message."
+}
+
 </div>
 
 **Grok Bot rapidly became the control room for my army of bots—with less help from me than I expected.**
@@ -52,12 +52,13 @@ This is completely nuts.
 I wrote about the larger management shift in [From Pair Programmer to Executive](/blog/from-pair-programmer-to-executive/). This article is about the product that made the shift feel real.
 
 <div style={{ maxWidth: "420px", margin: "0 auto var(--base-line-height)" }}>
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="grok-bot-agent-to-agent.png"
-    className="full"
-    alt="Anth.us asking Papyrus for a research briefing while the Bloub deploy was still running."
-  />
+
+::image{
+  src="images/grok-bot-agent-to-agent.png"
+  layout="full"
+  alt="Anth.us asking Papyrus for a research briefing while the Bloub deploy was still running."
+}
+
 </div>
 
 <p>
@@ -76,12 +77,13 @@ The experience is new because the machinery disappears.
 On the first night, a bot went live in the Anthus AI Solutions Discord and sat in `#general`. [Papyrus](https://papyrus.anth.us) started an hourly research watch. A separate site bot received a link, created a post, and handed it to Amplify. While that build ran, the site bot asked the research bot for a trend briefing.
 
 <div className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="grok-bot-after-a-week.png"
-    className="full"
-    alt="Papyrus in Grok Bot: an hourly research watch, with the bot's screen and routines in the side pane."
-  />
+
+::image{
+  src="images/grok-bot-after-a-week.png"
+  layout="full"
+  alt="Papyrus in Grok Bot: an hourly research watch, with the bot's screen and routines in the side pane."
+}
+
 </div>
 
 <p>
@@ -108,12 +110,14 @@ Remote coding agents are not new. Cursor, Claude Code, Codex, and Antigravity ca
 Grok Bot hides most of it. The computer is simply there.
 
 <div className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="grok-bot-has-a-computer.png"
-    className="full"
-    alt="The bot's own desktop, running Chrome against a dev server on its localhost: the Kanbus board for a project it is working on, where every issue is a .json file in the repo."
-  />
+
+::image{
+  src="images/grok-bot-has-a-computer.png"
+  layout="full"
+  alt="The bot's own desktop, running Chrome against a dev server on its localhost: the Kanbus board for a
+  project it is working on, where every issue is a .json file in the repo."
+}
+
 </div>
 
 <p>
@@ -139,12 +143,13 @@ Kanbus improved that by giving all of them a shared project record. Tasks, bugs,
 That's why the 4:13 message felt so uncanny. The surprising part wasn't that a model found a bug or wrote code. It was that the work moved through several defined responsibilities and came back for checking without me standing inside every exchange.
 
 <div className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="grok-bot-plantuml-request.png"
-    className="full"
-    alt="Asking Software Director to chart the recent bot-to-bot traffic as PlantUML."
-  />
+
+::image{
+  src="images/grok-bot-plantuml-request.png"
+  layout="full"
+  alt="Asking Software Director to chart the recent bot-to-bot traffic as PlantUML."
+}
+
 </div>
 
 <p>
@@ -156,12 +161,13 @@ That's why the 4:13 message felt so uncanny. The surprising part wasn't that a m
 </p>
 
 <div className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="grok-bot-bot-to-bot-mail.png"
-    className="full"
-    alt="Sequence diagram of bot-to-bot messages between Aug 26 and Aug 29."
-  />
+
+::image{
+  src="diagrams/grok-bot-bot-to-bot-mail.png"
+  layout="full"
+  alt="Sequence diagram of bot-to-bot messages between Aug 26 and Aug 29."
+}
+
 </div>
 
 <p>

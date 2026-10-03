@@ -18,14 +18,12 @@ tags:
   - how-to
 ---
 
-import BlogImage from '../components/blog-image';
-
-<BlogImage
-  images={props.pageContext.frontmatter.images}
-  name="never-use-fast-toll-plaza.png"
-  className="centered"
-  alt="First-person view of an autonomous coding agent approaching a toll plaza: Standard has one dollar mark and Fast has six dollar marks."
-/>
+::image{
+  src="images/never-use-fast-toll-plaza.png"
+  layout="centered"
+  alt="First-person view of an autonomous coding agent approaching a toll plaza: Standard has one dollar mark
+  and Fast has six dollar marks."
+}
 
 [Maximize Value, Not Intelligence](/blog/maximize-value-not-intelligence/) is the argument: route to the cheapest model that clears your bar, and make the expensive tier opt-in. This is the settings version — the buttons that implement it, and the one button that quietly undoes it.
 
@@ -56,11 +54,13 @@ Which is why this is a rule and not a preference. The situations where you canno
 **Buy Fast when a human is blocked and the wait is the actual expense.** Live pairing where a teammate is watching the cursor. A production incident where minutes have a dollar value. A demo. That is the list. In each case someone's attention is metered at far more than a 2× token multiple, and the arithmetic flips cleanly.
 
 <div style={{ maxWidth: '26rem', margin: '0 auto var(--base-line-height)' }}>
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="never-use-fast-decision.svg"
-    alt="Decision diagram: when a human is waiting, Fast may be worth buying; otherwise use Standard and start another agent."
-  />
+
+::image{
+  src="images/never-use-fast-decision.svg"
+  alt="Decision diagram: when a human is waiting, Fast may be worth buying; otherwise use Standard and start
+  another agent."
+}
+
 </div>
 
 *The decision is not “do I prefer speed?” It is “whose attention becomes available sooner?”*
