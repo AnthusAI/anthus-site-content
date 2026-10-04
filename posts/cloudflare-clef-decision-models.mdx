@@ -1,0 +1,56 @@
+---
+title: "Cloudflare's Clef: Open Decision Models That Classify Images as Well as Text"
+slug: "cloudflare-clef-decision-models"
+date: "2026-10-01"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+tags:
+  - posts
+excerpt: |
+  Cloudflare open-sourced Clef, a decision model that returns typed answers with probabilities and accepts images, unlike text-only Jev.
+preview_image: "../images/posts/cloudflare-clef-decision-models.png"
+images:
+  - "../images/posts/cloudflare-clef-decision-models.png"
+state: published
+---
+
+<p class="center-full-image">
+
+::image{
+  src="images/posts/cloudflare-clef-decision-models.png"
+  layout="center-small-image"
+  alt="Cloudflare blog graphic for the Clef announcement: the title 'Introducing Clef: our open-source decision models, and new RL fine-tuning platform' beside a crystal ball with a clef symbol"
+}
+
+</p>
+
+On October 1, 2026, Cloudflare [released Clef and Clef-flash](https://blog.cloudflare.com/clef-decision-models/), two open-source models that answer questions with a typed choice and a probability instead of writing text. Clef accepts images as well as text, so the input to a decision can be a screenshot, a scanned document or a photo, while Cloudflare says Jev only classifies text today. Cloudflare calls these decision models: you give one a state and a list of questions, and it returns an answer and a probability for each. Cloudflare hosts both models on Workers AI and published the weights on Hugging Face under Apache 2.0. It also announced a reinforcement learning service for fine-tuning them on a customer's own data.
+
+## Image classification
+
+Cloudflare says Clef has a vision encoder, so it can take in images and classify visual content. Its [changelog](https://developers.cloudflare.com/changelog/post/2026-10-01-clef-workers-ai/) says you can pass up to four images alongside the state, and Cloudflare's [post](https://blog.cloudflare.com/clef-decision-models/) says Jev only classifies text today.
+
+That makes it possible to classify screenshots, scanned documents, product photos or UI states and get back a typed label with a probability, rather than a caption your code has to parse. Clef isn't the only decision model that takes images. Perplexity's Decisions API also accepts images in the state, per its [docs](https://docs.perplexity.ai/docs/decisions/quickstart). Strands Decider 2B's [Hugging Face card](https://huggingface.co/StrandsAgents/strands-decider-2B-hobson-v19) describes a Qwen3.5 text decoder and doesn't mention image input, and Cloudflare says Jev is text-only.
+
+Cloudflare publishes no accuracy numbers for image inputs in the posts we read, so teams should test on their own images before relying on it.
+
+## Why it matters
+
+Many of the choices an agent makes are classification problems: which tool to call, whether to retry, whether a message is urgent, whether an output passes a check. A general-purpose language model can answer those, but it generates text first and your code has to parse it. A decision model returns the answer directly, so each call is cheaper, the possible outputs are bounded, and every decision comes with a score you can log and audit.
+
+Jev is a hosted model, and [Clef is the open-weight alternative](https://blog.cloudflare.com/clef-decision-models/) to it. Open weights and an RL fine-tuning service matter to us because a decision model can often be improved by fine-tuning on one team's data, and that's the work we do. We've written about [fine-tuning Jev](/blog/fine-tuning-jev/) and [comparing decision models on a client's own scorecards](/blog/jev-vs-laya/). The [decision models page](/decision-models/) collects the rest of the measurements.
+
+## Key technical notes
+
+- Two models: Clef (27B parameters) and Clef-flash (9B), both built on Qwen backbones, with a 64K-token context window against Jev's 32K, per [Cloudflare's post](https://blog.cloudflare.com/clef-decision-models/). Clef has a vision encoder and takes up to four images per request, per the [changelog](https://developers.cloudflare.com/changelog/post/2026-10-01-clef-workers-ai/).
+- The API uses the same System One format as Jev, and the [changelog](https://developers.cloudflare.com/changelog/post/2026-10-01-clef-workers-ai/) says you can switch an existing Jev integration to Clef by changing the endpoint and model. A request can ask up to 64 questions, in three types: yes/no, multiple choice and scored rubric.
+- Cloudflare reports median latency of 209.3 ms for Clef and 38.8 ms for Clef-flash, against 524.1 ms for Jev. Across 43 benchmark runs, the [changelog](https://developers.cloudflare.com/changelog/post/2026-10-01-clef-workers-ai/) says Clef is 2.5x faster than Jev at the median and Clef-flash 13x faster.
+- Cloudflare reports Clef ahead of Jev on 7 of 10 decision benchmarks, including 94.20% macro-F1 on BANKING77 against 79.74% for Jev. These are Cloudflare's own measurements and we haven't reproduced them.
+- The RL fine-tuning service starts with Cloudflare's forward-deployed engineers. Self-serve is planned, using AI Gateway to capture data, Workers AI to roll out models, and a new Trainer component to update weights. The announcement doesn't give pricing.
+
+## Sources
+
+- [Introducing Clef: our open-source decision models, and new RL fine-tuning platform](https://blog.cloudflare.com/clef-decision-models/), Cloudflare blog, October 1, 2026
+- [Clef on Workers AI](https://developers.cloudflare.com/changelog/post/2026-10-01-clef-workers-ai/), Cloudflare changelog, October 1, 2026
+- Cover image: Cloudflare, from the [Clef announcement](https://blog.cloudflare.com/clef-decision-models/), padded to 1200x630
+- [TypeSafe AI's Jev now available on AI Gateway](https://vercel.com/changelog/typesafe-ai-jev-now-available-on-ai-gateway), Vercel changelog, September 16, 2026

@@ -1,0 +1,50 @@
+---
+title: "Perplexity Open-Sources a 27B Decision Model"
+slug: "perplexity-decider-27b"
+date: "2026-10-01"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+tags:
+  - posts
+excerpt: |
+  Perplexity released pplx-decider-v1-27b, an open-weight 27B decision model that scores 85.71% against Jev's 84.51% on Perplexity's own 11-task evaluation, and prices it at $0.04 per million input tokens.
+preview_image: "../images/posts/perplexity-decider-27b.png"
+images:
+  - "../images/posts/perplexity-decider-27b.png"
+state: published
+---
+
+<p class="center-full-image">
+
+::image{
+  src="images/posts/perplexity-decider-27b.png"
+  layout="center-small-image"
+  alt="Diagram of the decision flow: a state with a question and fixed options goes into pplx-decider-v1-27b, which returns a typed answer with probabilities, such as yes/no, a probability for each option, or a rubric score"
+}
+
+</p>
+
+On October 1, 2026, Perplexity [opened a Decisions API](https://docs.perplexity.ai/docs/decisions/quickstart) and released the model behind it, [pplx-decider-v1-27b](https://huggingface.co/perplexity-ai/pplx-decider-v1-27b), as open weights under Apache 2.0. It reads text, JSON or images and answers yes/no, multiple-choice and scored questions with a probability for each option, without generating text, which makes it a decision model. It's fine-tuned from Qwen3.8-27B.
+
+## Why it matters
+
+When an agent decides where to route a request or whether to retry, that's a classification problem, and a typed decision model handles it more cheaply and with bounded outputs than a general language model does. Perplexity's [docs](https://docs.perplexity.ai/docs/decisions/quickstart) price this one at $0.04 per million input tokens with free output. AI Weekly reports that [Jev](https://vercel.com/changelog/typesafe-ai-jev-now-available-on-ai-gateway) is listed at $0.042, so the two cost about the same, and Perplexity's weights are open.
+
+The headline score needs context. Perplexity's model card reports an overall 85.71% on an 11-task panel, against 84.51% for Jev. The panel is Perplexity's own and was measured through the Perplexity API. Jev scored higher on some individual tasks, and on JevBench public hard the model card lists 73.27% for Jev and 70.30% for Perplexity's model. A 1.2-point average difference on a vendor's panel doesn't tell you which model is better on your data. That's why we measure candidates on a client's own labeled examples, as in [our Jev and Laya comparison](/blog/jev-vs-laya/), and fine-tune the one that fits. See the [decision models page](/decision-models/) for the full set of measurements.
+
+## Key technical notes
+
+- 27B parameters, Apache 2.0, with a 262,144-token context window. The Decisions API accepts images in the state alongside text, per the [docs](https://docs.perplexity.ai/docs/decisions/quickstart).
+- Choice questions take up to 255 options, and the model returns a probability for each.
+- The evaluation covers 11 tasks and 7,210 samples. Perplexity reports 85.71% for its model, 84.51% for Jev and 74.76% for the Qwen3.8-27B base model.
+- The API allows 10 requests per second per organization. Latency is about 2 seconds for a few hundred tokens and about 23 seconds near the input limit, which is slower than the small decision models released the same day.
+- Models of this class return a probability, but whether that probability is calibrated is a separate question. We tested it for Jev in [Can you trust Jev's confidence?](/blog/can-you-trust-jev-confidence/).
+
+## Sources
+
+- [Decisions API quickstart](https://docs.perplexity.ai/docs/decisions/quickstart), Perplexity docs, for the $0.04 price, rate limit and latency
+- [perplexity-ai/pplx-decider-v1-27b](https://huggingface.co/perplexity-ai/pplx-decider-v1-27b), Hugging Face model card
+- [Amazon Ships Strands Decider 2B, an Open-Source Jev Rival](https://aiweekly.co/alerts/amazon-ships-strands-decider-2b-an-open-source-jev-rival), AI Weekly, for Jev's $0.042 per million input tokens price
+- [Perplexity Open-Sources 27B Decider, Edges Jev on 11-Test Panel](https://aiweekly.co/alerts/perplexity-open-sources-27b-decider-edges-jev-on-11-test-panel), AI Weekly, for the October 1, 2026 release date and panel details
+- Cover image: diagram by Anth.us of the decision flow described in the [model card](https://huggingface.co/perplexity-ai/pplx-decider-v1-27b); Perplexity published no announcement graphic we could reuse
+- [TypeSafe AI's Jev now available on AI Gateway](https://vercel.com/changelog/typesafe-ai-jev-now-available-on-ai-gateway), Vercel changelog, September 16, 2026
