@@ -58,7 +58,7 @@ We started with one pair of occupations that share a vocabulary and differ in wh
 
 The number we report is the **flip rate**: the share of bios whose verdict changed. The recall gap the literature reports mixes the model reading gender with women's bios being written differently; a flip is causal, because nothing changed but "she". Every prediction about the swap was written down before either engine answered, in [the repo's pre-registration](https://github.com/AnthusAI/Jev-Flywheel/blob/main/studies/PREREGISTERED.md), and the whole thing replays offline from committed fixtures.
 
-This is the same shape of check we run before a scorecard ships in production: score held-out items overall and by slice, since a model can look fine on average and still be systematically wrong for one group. Every promotion in [Plexus](/platform/plexus) gets checked that way, and a regression on a slice holds up the release even when the aggregate number improved.
+This is the same shape of check we run before a scorecard ships in production: score held-out items overall and by slice, since a model can look fine on average and still be systematically wrong for one group. Every promotion in [Primus](/platform/primus) gets checked that way, and a regression on a slice holds up the release even when the aggregate number improved.
 
 ## Worst case, measured: the open model
 
@@ -241,7 +241,7 @@ A System 1 model changes the shape of the problem in three ways.
 
 And the law doesn't require anyone to have meant it: [*Griggs v. Duke Power*](https://www.law.cornell.edu/supremecourt/text/401/424) settled in 1971 that an employment practice with a discriminatory effect can violate Title VII whether or not the employer intended one.
 
-The audit trail is what makes a shift like this visible. Every promoted scorecard in Plexus records who approved which version and why, so when a verdict moves on a slice, you can trace it to a specific change and a specific signoff rather than discovering it as a lawsuit or a public post.
+The audit trail is what makes a shift like this visible. Every promoted scorecard in Primus records who approved which version and why, so when a verdict moves on a slice, you can trace it to a specific change and a specific signoff rather than discovering it as a lawsuit or a public post.
 
 ## What we haven't shown
 
@@ -258,7 +258,7 @@ The audit trail is what makes a shift like this visible. Every promoted scorecar
 
 The checks here are the small, reproducible version of a loop we run continuously in production. When a reviewer disagrees with a verdict and says why, that explanation becomes a question the scorecard asks going forward, so the same mistake doesn't recur unnoticed. We've run that loop for a call-center QA operation across hundreds of scorecards and millions of interactions; the [case study](/blog/call-criteria/) is what continuous review looks like at that scale.
 
-[Plexus](/platform/plexus) is where we run the per-slice checks, the approval gate, and the audit trail that catch a shift like the ones measured here before it ships.
+[Primus](/platform/primus) is where we run the per-slice checks, the approval gate, and the audit trail that catch a shift like the ones measured here before it ships.
 
 If you have a classifier making decisions about people and no standing check for verdict shifts by name or pronoun, we'll build one against your own data. [Here's how an engagement works](/engage).
 
@@ -284,4 +284,4 @@ make pairs   # the pronoun swap on three more occupation pairs
 python scripts/bios_shortlist.py   # the shortlist, both engines, cuts 250/500/1000
 ```
 
-The repo is deliberately small: one score, a logistic head, no database. [Plexus](https://github.com/AnthusAI/Plexus) is the industrial version of the same loop, with reviewer workflows, vetted labels, audit trails and the MLOps around continuous learning from human feedback, and the [Anthus AI Solutions](https://anth.us) team builds and runs it.
+The repo is deliberately small: one score, a logistic head, no database. [Primus](https://github.com/AnthusAI/Primus) is the industrial version of the same loop, with reviewer workflows, vetted labels, audit trails and the MLOps around continuous learning from human feedback, and the [Anthus AI Solutions](https://anth.us) team builds and runs it.

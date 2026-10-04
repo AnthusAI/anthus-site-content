@@ -256,6 +256,6 @@ Until then, the answer to the question in the title is: yes, with a calibration 
 
 This dataset and this test set are the small, reproducible version of a calibration loop we've run in production for years. A reviewer agrees or disagrees with a verdict, and that label refits the curve; when a reviewer's comment points at a pattern the model keeps missing, that pattern becomes a stated policy the system checks going forward. We've run that loop for a call-center QA operation across hundreds of scorecards and millions of interactions, and it's the [case study](/blog/call-criteria/) behind the coverage numbers a calibrated confidence threshold makes possible.
 
-[Plexus](/platform/plexus) is where we run it: the calibration, the auto-accept thresholds, the reviewer workflow, and the audit trail behind every promoted change.
+[Primus](/platform/primus) is where we run it: the calibration, the auto-accept thresholds, the reviewer workflow, and the audit trail behind every promoted change.
 
 If you're routing decisions on a model's confidence and want to know whether your threshold means what it says, we'll calibrate it against your own labels. The whole loop, with the published measurement behind each step, is on the [decision models page](/decision-models/). [Here's how an engagement works](/engage).

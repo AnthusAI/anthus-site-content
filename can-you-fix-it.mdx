@@ -194,7 +194,7 @@ Five of the six were in the flywheel before this study. **Delay the intuitive co
 
 The arms above are the small, reproducible version of a loop we've operated in production for years. A reviewer corrects a verdict and explains why, and that explanation becomes a candidate question, an averaging rule, or a fine-tuning cycle, checked against held-out data and the decision's own outcome before anything ships. We've run that loop for a call-center QA operation across hundreds of scorecards and millions of interactions, and the [case study](/blog/call-criteria/) is what it looks like when the gate, the reviewer workflow, and the audit trail run continuously.
 
-[Plexus](/platform/plexus) is where we run it: the scorecard promotion gate, the outcome-level check by group, and the record of who approved each change.
+[Primus](/platform/primus) is where we run it: the scorecard promotion gate, the outcome-level check by group, and the record of who approved each change.
 
 If you're shipping a classifier that touches people and want the gate, the averaging fallback, and the fine-tuning option checked against your own reviewers, we'll set that up. [Here's how an engagement works](/engage).
 
@@ -219,4 +219,4 @@ make flipopt   # twin averaging and the fitted-head arms at the 2% gate, no GPU
 
 The loop arms replay one recording at a time with `flywheel replay fixtures/bios/recordings/<arm>-seed<N> --fixtures fixtures/bios`; the fine-tune and any seed that promoted a question need Apple silicon or a Jev key to regenerate, and everything else runs from committed answers.
 
-The repo is deliberately small: one score, a logistic head, no database. [Plexus](https://github.com/AnthusAI/Plexus) is the industrial version of the same loop, with reviewer workflows, vetted labels, audit trails and the MLOps around continuous learning from human feedback, and the [Anthus AI Solutions](https://anth.us) team builds and runs it.
+The repo is deliberately small: one score, a logistic head, no database. [Primus](https://github.com/AnthusAI/Primus) is the industrial version of the same loop, with reviewer workflows, vetted labels, audit trails and the MLOps around continuous learning from human feedback, and the [Anthus AI Solutions](https://anth.us) team builds and runs it.

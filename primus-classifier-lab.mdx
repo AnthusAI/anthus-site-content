@@ -1,6 +1,6 @@
 ---
-title: "Plexus Is a Classifier Lab: Operationalizing Classifiers at Scale"
-slug: "plexus-classifier-lab"
+title: "Primus Is a Classifier Lab: Operationalizing Classifiers at Scale"
+slug: "primus-classifier-lab"
 date: "2026-09-27"
 authors:
   - author: <a href="/ryan">Ryan Porter</a>
@@ -12,17 +12,17 @@ tags:
   - client-acquisition
 excerpt: |
   A hosted decision model sat at 77 percent accuracy through 87 rounds of reviewer feedback, then one approved question took it to 87. Here is the loop that did it, every figure published, and the offer to run it on your judgment task.
-preview_image: "./images/plexus-classifier-lab.png"
+preview_image: "./images/primus-classifier-lab.png"
 images:
-  - ./images/plexus-classifier-lab.png
+  - ./images/primus-classifier-lab.png
 state: published
 ---
 <figure className="center-full-image">
 
 ::image{
-  src="images/plexus-classifier-lab.png"
+  src="images/primus-classifier-lab.png"
   layout="full"
-  alt="Four accuracy gauges from Plexus: 77 percent before, 87 after one approved question, 89 for the hosted
+  alt="Four accuracy gauges from Primus: 77 percent before, 87 after one approved question, 89 for the hosted
   teacher, 91.2 for the distilled student you own."
 }
 
@@ -34,7 +34,7 @@ At 140 rounds the system read the disagreements, wrote the unwritten rule in one
 
 Everything else in the method follows from that run. There are two usual ways to get a classifier: build a labelled dataset first and train your own, or take the zero-shot answer as it comes. The run above is a third way. Start classifying now with a decision model. Review its decisions as it makes them, and label the ones a reviewer disagrees with. Those labels cost far less than a dataset built up front, and they're what keeps the classifier aligned from then on.
 
-That's the method we run through Plexus, our MLOps platform. Every number here comes from work we've published. Here's the loop, one step at a time.
+That's the method we run through Primus, our MLOps platform. Every number here comes from work we've published. Here's the loop, one step at a time.
 
 ## The loop
 
@@ -75,6 +75,6 @@ We've run this loop in production for years, for a client running quality assura
 
 ## Who runs it
 
-None of this is secret. What we bring is the discipline to keep the loop running on your scorecards after the novelty wears off: the calibration that would otherwise go stale, the slice nobody re-checked in months, the safety net nobody tested. Plexus is where we run that discipline, managing training, evaluation, deployment, and monitoring for a classifier built to get smarter, not one built to just run.
+None of this is secret. What we bring is the discipline to keep the loop running on your scorecards after the novelty wears off: the calibration that would otherwise go stale, the slice nobody re-checked in months, the safety net nobody tested. Primus is where we run that discipline, managing training, evaluation, deployment, and monitoring for a classifier built to get smarter, not one built to just run.
 
 If you've got a high-volume judgment call your review team can't keep up with, we'll build the classifier, run the loop, and hand you the scorecard every month instead of once a year. The whole loop, with the published measurement behind each step, is on the [decision models page](/decision-models/). [Here's how an engagement works.](/engage)

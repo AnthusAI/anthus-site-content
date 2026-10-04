@@ -168,7 +168,7 @@ That is the same lesson as the CPU core, in a different domain. The loop can onl
 
 Which brings me to what we do with this at Anth.us.
 
-[Plexus](https://plexus.anth.us) is our MLOps platform for production-scale text classification. Its central artifact is a *score*: one business question asked of one piece of content, defined in YAML rather than buried in application code, and versioned like source.
+[Primus](https://primus.anth.us) is our MLOps platform for production-scale text classification. Its central artifact is a *score*: one business question asked of one piece of content, defined in YAML rather than buried in application code, and versioned like source.
 
 ```yaml
 name: Consent Confirmed
@@ -226,7 +226,7 @@ The same technique works on software we did not write, which is how we are using
 
 They have a privacy scanning tool. It works, they rely on it, and their engineers had a good qualitative sense of where it was weak and no way to argue about it with numbers. Our job was to give the tool a number.
 
-The method is the one described above, with none of the machinery specific to Plexus scores:
+The method is the one described above, with none of the machinery specific to Primus scores:
 
 - Assemble a labeled corpus with ground-truth labels for what the scanner should have found, and split it into a set the loop optimizes against and a held-out set it never sees.
 - Write a scorer that compares the tool's actual output against those labels, and pin the evaluation protocol so two runs are comparable — same corpus, same sampling, same configuration.

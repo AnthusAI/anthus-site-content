@@ -96,7 +96,7 @@ If you can answer those questions, you find the failure mode in your own testing
 
 The paired test and the audit trail are the small, reproducible version of a loop we've run in production for years. We've run it for a call-center QA operation across hundreds of scorecards and millions of interactions: model versions tracked, reviewer disagreements logged with the reason, and each new version scored against held-out human judgments before it was promoted. The [case study](/blog/call-criteria/) shows what that looks like at scale.
 
-[Plexus](/platform/plexus) is where we run it. It keeps the per-slice checks, the approval gate, and the record of who approved what, so the questions above have answers on file before anyone asks them.
+[Primus](/platform/primus) is where we run it. It keeps the per-slice checks, the approval gate, and the record of who approved what, so the questions above have answers on file before anyone asks them.
 
 If a model is about to make decisions about people on your behalf, we'll run the paired test on your data and build the record around it. [Here's how an engagement works](/engage).
 

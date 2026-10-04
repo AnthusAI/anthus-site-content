@@ -157,7 +157,7 @@ So the judgment gets split in two:
 
 One `scorecard.yaml` holds both halves. That's the whole adaptable surface: a list of questions and a handful of numbers.
 
-Scorecards are how we've run production classifiers for years. On Plexus a scorecard is a named, versioned set of questions and a head, evaluated against held-out items and promoted only when the numbers say so, with hundreds of them live at once for one client. The YAML in this repo is the small version of that object.
+Scorecards are how we've run production classifiers for years. On Primus a scorecard is a named, versioned set of questions and a head, evaluated against held-out items and promoted only when the numbers say so, with hundreds of them live at once for one client. The YAML in this repo is the small version of that object.
 
 ```yaml
 elements:
@@ -332,6 +332,6 @@ Clone the [repo](https://github.com/AnthusAI/Jev-Flywheel) and run `make demo`: 
 
 The repo is the small, reproducible version of a loop we've operated in production for years. Reviewers correct the model's verdicts and say why. The explanation becomes a stated policy. The system gets more trustworthy month over month, and every change is recorded so you can see what moved and whether it was better. We've run that for a call-center QA operation across hundreds of scorecards and millions of interactions, and it's the [case study](/blog/call-criteria/) behind every number on this page about what the method does when the labels are real.
 
-[Plexus](/platform/plexus) is where we run it: the questions, the fitted heads, the calibration, the gates, the reviewer workflow, the audit trail, and the distillation step when you're ready to own the classifier. The "what we haven't tested" list above is about this repo, not about the method. The part still to show here, continuous learning from a real review team, is the part we've been doing longest.
+[Primus](/platform/primus) is where we run it: the questions, the fitted heads, the calibration, the gates, the reviewer workflow, the audit trail, and the distillation step when you're ready to own the classifier. The "what we haven't tested" list above is about this repo, not about the method. The part still to show here, continuous learning from a real review team, is the part we've been doing longest.
 
 If you have a judgment task at volume and a team that can't review more than a sliver of it, we'll run this for you: your data, your reviewers, a fixed first month, and a scorecard you can inspect at the end of it. The whole loop, with the published measurement behind each step, is on the [decision models page](/decision-models/). [Here's how an engagement works](/engage).
