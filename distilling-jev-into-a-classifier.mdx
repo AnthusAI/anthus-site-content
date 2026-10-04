@@ -264,7 +264,7 @@ That's the same loop that keeps a production classifier's accuracy measured afte
 
 This repo is the small, reproducible version of a loop we've run in production for years: a reviewer corrects a verdict and says why, the explanation becomes a stated policy in the scorecard, and once the aligned system is trustworthy enough, we distill it into a small classifier a client owns and runs themselves. We've run that loop for a call-center QA operation across hundreds of scorecards and millions of interactions, and it's the [case study](/blog/call-criteria/) behind the ship-gate discipline in the results.
 
-[Primus](/platform/primus) is where we run it: the alignment, the calibration, the per-slice gates, and the distillation step that gets a hosted model off your hot path.
+[Plexus](/platform/plexus) is where we run it: the alignment, the calibration, the per-slice gates, and the distillation step that gets a hosted model off your hot path.
 
 If you've got a hosted model doing real work and want it distilled into something you own, we'll build and gate the student for you. [Here's how an engagement works](/engage).
 
