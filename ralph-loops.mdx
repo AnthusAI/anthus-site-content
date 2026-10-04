@@ -15,44 +15,101 @@ tags:
   - AI
   - how-to
   - explainer
+citations:
+  future-agi-2026-ralph-loop:
+    type: post-weblog
+    title: Ralph Loop
+    container-title: Future AGI
+    URL: https://futureagi.com/blog/loop-engineering/ralph-loop/
+    accessed: {date-parts: [[2026, 8, 29]]}
+  huntley-2025-ralph-wiggum-as-a-software-engineer:
+    type: webpage
+    title: Ralph Wiggum as a "software engineer"
+    author: Geoffrey Huntley
+    container-title: ghuntley.com
+    URL: https://ghuntley.com/ralph/
+    issued: {date-parts: [[2025, 7, 14]]}
+    accessed: {date-parts: [[2026, 8, 29]]}
+  codecentric-2026-ralph-wiggum-loop:
+    type: post-weblog
+    title: 'The Ralph Wiggum loop: autonomous code generation with a fresh context'
+    container-title: codecentric
+    URL: https://www.codecentric.de/en/knowledge-hub/blog/the-ralph-wiggum-loop-autonomous-code-generation-with-a-fresh-context
+    issued: {date-parts: [[2026, 4, 6]]}
+    accessed: {date-parts: [[2026, 8, 29]]}
+  huntley-2026-everything-is-a-ralph-loop:
+    type: webpage
+    title: everything is a ralph loop
+    author: Geoffrey Huntley
+    container-title: ghuntley.com
+    URL: https://ghuntley.com/loop/
+    issued: {date-parts: [[2026, 1]]}
+    accessed: {date-parts: [[2026, 8, 29]]}
+  thoughtworks-technology-radar-2026-ralph-loop:
+    type: webpage
+    title: Ralph loop
+    container-title: Thoughtworks Technology Radar
+    URL: https://www.thoughtworks.com/radar/techniques/ralph-loop
+    issued: {date-parts: [[2026, 4, 15]]}
+    accessed: {date-parts: [[2026, 8, 29]]}
+  wikipedia-2026-ralph-wiggum:
+    type: webpage
+    title: Ralph Wiggum
+    container-title: Wikipedia
+    URL: https://en.wikipedia.org/wiki/Ralph_Wiggum
+    accessed: {date-parts: [[2026, 8, 29]]}
+  venturebeat-2026-how-ralph-wiggum-went:
+    type: article-newspaper
+    title: How Ralph Wiggum went from The Simpsons to the biggest name in AI right now
+    container-title: VentureBeat
+    URL: https://venturebeat.com/technology/how-ralph-wiggum-went-from-the-simpsons-to-the-biggest-name-in-ai-right-now
+    issued: {date-parts: [[2026, 1, 6]]}
+    accessed: {date-parts: [[2026, 8, 29]]}
+  github-repomirrorhq-repomirror-2026-repomirror-md:
+    type: webpage
+    title: repomirror.md
+    container-title: GitHub — repomirrorhq/repomirror
+    URL: https://github.com/repomirrorhq/repomirror/blob/main/repomirror.md
+    accessed: {date-parts: [[2026, 8, 29]]}
+  dev-community-2026-i-accidentally-made-claude-ask-itself:
+    type: post-weblog
+    title: I accidentally made Claude ask itself the same question 1,966 times
+    container-title: DEV Community
+    URL: https://dev.to/sean8/i-accidentally-made-claude-ask-itself-the-same-question-1966-times-1c5h
+    accessed: {date-parts: [[2026, 8, 29]]}
+  github-anthropics-claude-plugins-2026-issue-65-cancel-ralph-is-ignored:
+    type: webpage
+    title: 'Issue #65: /cancel-ralph is ignored'
+    container-title: GitHub — anthropics/claude-plugins-official
+    URL: https://github.com/anthropics/claude-plugins-official/issues/65
+    accessed: {date-parts: [[2026, 8, 29]]}
+  github-anthropics-claude-plugins-2026-issue-66-ralph-loop-local-md:
+    type: webpage
+    title: 'Issue #66: ralph-loop.local.md parsing'
+    container-title: GitHub — anthropics/claude-plugins-official
+    URL: https://github.com/anthropics/claude-plugins-official/issues/66
+    accessed: {date-parts: [[2026, 8, 29]]}
+  github-snarktank-ralph-2026-ralph:
+    type: webpage
+    title: ralph
+    container-title: GitHub — snarktank/ralph
+    URL: https://github.com/snarktank/ralph
+    accessed: {date-parts: [[2026, 8, 29]]}
 ---
 
-import BlogImage from '../components/blog-image';
-import { Citation, CitationsList } from 'gatsby-citation-manager';
-
 <p class="center-full-image">
-    <BlogImage className="center-small-image"
-        images={props.pageContext.frontmatter.images}
-        name="ralph-loops.png"
-        alt="Ralph loops and loop engineering"
-    />
+
+::image{src="images/ralph-loops.png" layout="center-small-image" alt="Ralph loops and loop engineering"}
+
 </p>
 
-Spend a month inside coding agents in 2026 and you collect three habits that look like one habit. A teammate says they left Ralph running overnight. Your editor grows a `/goal` command. A different editor grows `/loop`. The plugin directory offers an official "Ralph Loop" plugin with its own `/ralph-loop`. All of it gets filed under the same heading — people are calling the heading *loop engineering*<Citation
-  data={{
-    type: "post-weblog",
-    "container-title": "Future AGI",
-    title: "Ralph Loop",
-    URL: "https://futureagi.com/blog/loop-engineering/ralph-loop/",
-    accessed: { 'date-parts': [[2026, 8, 29]] }
-  }}
-/> — and the filing is wrong.
+Spend a month inside coding agents in 2026 and you collect three habits that look like one habit. A teammate says they left Ralph running overnight. Your editor grows a `/goal` command. A different editor grows `/loop`. The plugin directory offers an official "Ralph Loop" plugin with its own `/ralph-loop`. All of it gets filed under the same heading — people are calling the heading *loop engineering*[@future-agi-2026-ralph-loop] — and the filing is wrong.
 
 These are three different verbs. They repeat different things, they keep state in different places, and they stop for different reasons. The gap between them is small enough to talk past and large enough to cost you a night of compute and a working tree you have to throw away.
 
 ## Ralph, precisely
 
-Geoffrey Huntley wrote the technique down in July 2025 under the title "Ralph Wiggum as a 'software engineer'". His own definition is one sentence: Ralph is a technique, and in its purest form it is a Bash loop.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "ghuntley.com",
-    title: "Ralph Wiggum as a \"software engineer\"",
-    author: "Geoffrey Huntley",
-    URL: "https://ghuntley.com/ralph/",
-    accessed: { 'date-parts': [[2026, 8, 29]] },
-    issued: { 'date-parts': [[2025, 7, 14]] }
-  }}
-/>
+Geoffrey Huntley wrote the technique down in July 2025 under the title "Ralph Wiggum as a 'software engineer'". His own definition is one sentence: Ralph is a technique, and in its purest form it is a Bash loop.[@huntley-2025-ralph-wiggum-as-a-software-engineer]
 
 ```bash
 while :; do cat PROMPT.md | claude-code ; done
@@ -64,49 +121,13 @@ The prompt never changes. Iteration 40 receives exactly the instructions iterati
 
 The context never persists. Each pass starts a cold agent that has no idea a previous pass happened. The context window cannot fill up, because it gets thrown away on a schedule of one.
 
-Memory therefore has to live on disk. The working tree, the git history, and whatever notes file the prompt tells the agent to maintain are the only things carrying information from one iteration to the next. That inversion is the actual idea: **the loop is stateless and the repository is the state.** Elsewhere in this business we spend our effort keeping context alive. Ralph spends its effort making context disposable, and pays for it by demanding that the repo be legible enough to re-brief a stranger every few minutes.<Citation
-  data={{
-    type: "post-weblog",
-    "container-title": "codecentric",
-    title: "The Ralph Wiggum loop: autonomous code generation with a fresh context",
-    URL: "https://www.codecentric.de/en/knowledge-hub/blog/the-ralph-wiggum-loop-autonomous-code-generation-with-a-fresh-context",
-    accessed: { 'date-parts': [[2026, 8, 29]] },
-    issued: { 'date-parts': [[2026, 4, 6]] }
-  }}
-/>
+Memory therefore has to live on disk. The working tree, the git history, and whatever notes file the prompt tells the agent to maintain are the only things carrying information from one iteration to the next. That inversion is the actual idea: **the loop is stateless and the repository is the state.** Elsewhere in this business we spend our effort keeping context alive. Ralph spends its effort making context disposable, and pays for it by demanding that the repo be legible enough to re-brief a stranger every few minutes.[@codecentric-2026-ralph-wiggum-loop]
 
-Huntley kept pulling on the thread; by January 2026 he was arguing that everything is a Ralph loop.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "ghuntley.com",
-    title: "everything is a ralph loop",
-    author: "Geoffrey Huntley",
-    URL: "https://ghuntley.com/loop/",
-    accessed: { 'date-parts': [[2026, 8, 29]] },
-    issued: { 'date-parts': [[2026, 1]] }
-  }}
-/> Thoughtworks put it on the Technology Radar in April 2026 at Assess, noting that people also call it a Wiggum loop.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "Thoughtworks Technology Radar",
-    title: "Ralph loop",
-    URL: "https://www.thoughtworks.com/radar/techniques/ralph-loop",
-    accessed: { 'date-parts': [[2026, 8, 29]] },
-    issued: { 'date-parts': [[2026, 4, 15]] }
-  }}
-/> So it is a real technique with a real name, which makes it worth getting the name right.
+Huntley kept pulling on the thread; by January 2026 he was arguing that everything is a Ralph loop.[@huntley-2026-everything-is-a-ralph-loop] Thoughtworks put it on the Technology Radar in April 2026 at Assess, noting that people also call it a Wiggum loop.[@thoughtworks-technology-radar-2026-ralph-loop] So it is a real technique with a real name, which makes it worth getting the name right.
 
 ## The name is wrong, and so is the story about the name
 
-I have been saying Ralph Wiggins for months. It is Ralph **Wiggum** — the Simpsons kid, who was himself named after Ralph Kramden.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "Wikipedia",
-    title: "Ralph Wiggum",
-    URL: "https://en.wikipedia.org/wiki/Ralph_Wiggum",
-    accessed: { 'date-parts': [[2026, 8, 29]] }
-  }}
-/> His signature line, which anyone who has watched a loop burn forty iterations on a passing test suite will appreciate: "Me fail English? That's unpossible!"
+I have been saying Ralph Wiggins for months. It is Ralph **Wiggum** — the Simpsons kid, who was himself named after Ralph Kramden.[@wikipedia-2026-ralph-wiggum] His signature line, which anyone who has watched a loop burn forty iterations on a passing test suite will appreciate: "Me fail English? That's unpossible!"
 
 The second correction is the better one. There is a gloss you will see repeated in half the writeups — that the technique is named for Wiggum because Wiggum fails, tries again, and eventually gets there. Go read the original post. That explanation is not in it. Later writers supplied the moral, it sounded right, and it stuck.
 
@@ -124,16 +145,7 @@ Here is the distinction that the shared vocabulary is hiding.
 
 Ralph discards the context window deliberately, which is why it can run for hours without degrading and why your `PROMPT.md` has to be good enough to onboard a new engineer every iteration. A `/goal` command does the opposite: it protects the session, because the accumulated understanding *is* the asset, and it stops on a condition rather than on you noticing. And `/loop` does not loop over a task at all — it schedules one. The repetition is on the wall clock, not on the work.
 
-VentureBeat covered the naming collision in January 2026 and framed it as a tale of two Ralphs — Huntley's bash technique on one side, the vendor plugin that borrowed the name on the other.<Citation
-  data={{
-    type: "article-newspaper",
-    "container-title": "VentureBeat",
-    title: "How Ralph Wiggum went from The Simpsons to the biggest name in AI right now",
-    URL: "https://venturebeat.com/technology/how-ralph-wiggum-went-from-the-simpsons-to-the-biggest-name-in-ai-right-now",
-    accessed: { 'date-parts': [[2026, 8, 29]] },
-    issued: { 'date-parts': [[2026, 1, 6]] }
-  }}
-/> That the collision made the trade press is a decent sign it is more than a pedant's complaint.
+VentureBeat covered the naming collision in January 2026 and framed it as a tale of two Ralphs — Huntley's bash technique on one side, the vendor plugin that borrowed the name on the other.[@venturebeat-2026-how-ralph-wiggum-went] That the collision made the trade press is a decent sign it is more than a pedant's complaint.
 
 ## What actually shipped
 
@@ -162,41 +174,9 @@ Every row above was rechecked on 29 August 2026. This table is the fastest-rotti
 
 A loop-engineering piece with no failure section is malpractice, and this pattern has generated unusually good failure stories.
 
-The repomirror project ran a while-true Claude loop to about 1,100 commits, and its own writeup records an agent that resolved a problem by `pkill`-ing itself.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "GitHub — repomirrorhq/repomirror",
-    title: "repomirror.md",
-    URL: "https://github.com/repomirrorhq/repomirror/blob/main/repomirror.md",
-    accessed: { 'date-parts': [[2026, 8, 29]] }
-  }}
-/> One developer wrote up accidentally making Claude ask itself the same question 1,966 times.<Citation
-  data={{
-    type: "post-weblog",
-    "container-title": "DEV Community",
-    title: "I accidentally made Claude ask itself the same question 1,966 times",
-    URL: "https://dev.to/sean8/i-accidentally-made-claude-ask-itself-the-same-question-1966-times-1c5h",
-    accessed: { 'date-parts': [[2026, 8, 29]] }
-  }}
-/> That is the fresh-context property working exactly as designed, with nothing on disk to record that the question already had an answer.
+The repomirror project ran a while-true Claude loop to about 1,100 commits, and its own writeup records an agent that resolved a problem by `pkill`-ing itself.[@github-repomirrorhq-repomirror-2026-repomirror-md] One developer wrote up accidentally making Claude ask itself the same question 1,966 times.[@dev-community-2026-i-accidentally-made-claude-ask-itself] That is the fresh-context property working exactly as designed, with nothing on disk to record that the question already had an answer.
 
-Then there is the stop button. The Ralph Loop plugin has an open issue reporting that `/cancel-ralph` gets ignored,<Citation
-  data={{
-    type: "webpage",
-    "container-title": "GitHub — anthropics/claude-plugins-official",
-    title: "Issue #65: /cancel-ralph is ignored",
-    URL: "https://github.com/anthropics/claude-plugins-official/issues/65",
-    accessed: { 'date-parts': [[2026, 8, 29]] }
-  }}
-/> alongside another about the plugin's local config file not parsing the way people expect.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "GitHub — anthropics/claude-plugins-official",
-    title: "Issue #66: ralph-loop.local.md parsing",
-    URL: "https://github.com/anthropics/claude-plugins-official/issues/66",
-    accessed: { 'date-parts': [[2026, 8, 29]] }
-  }}
-/> An in-band cancel is a message the running agent has to choose to act on. If that is your only stop button, you do not have a stop button — you have a suggestion box.
+Then there is the stop button. The Ralph Loop plugin has an open issue reporting that `/cancel-ralph` gets ignored,[@github-anthropics-claude-plugins-2026-issue-65-cancel-ralph-is-ignored] alongside another about the plugin's local config file not parsing the way people expect.[@github-anthropics-claude-plugins-2026-issue-66-ralph-loop-local-md] An in-band cancel is a message the running agent has to choose to act on. If that is your only stop button, you do not have a stop button — you have a suggestion box.
 
 Huntley is refreshingly direct about the cost in the original post: run this and you will wake up to a broken codebase that does not compile from time to time. That is the inventor's own disclosure, in the post everyone cites.
 
@@ -206,15 +186,7 @@ None of these are model bugs; they are what happens when the stopping problem ge
 
 Which means the engineering in loop engineering is all outside the model.
 
-**Write the prompt as a program that executes N times against N different repository states.** It has to still be correct on iteration 40, when the tree looks nothing like it did on iteration 1. The `snarktank/ralph` layout does this with a PRD plus a `progress.txt` the loop appends to<Citation
-  data={{
-    type: "webpage",
-    "container-title": "GitHub — snarktank/ralph",
-    title: "ralph",
-    URL: "https://github.com/snarktank/ralph",
-    accessed: { 'date-parts': [[2026, 8, 29]] }
-  }}
-/> — that file is the only reason iteration 41 differs from iteration 40.
+**Write the prompt as a program that executes N times against N different repository states.** It has to still be correct on iteration 40, when the tree looks nothing like it did on iteration 1. The `snarktank/ralph` layout does this with a PRD plus a `progress.txt` the loop appends to[@github-snarktank-ralph-2026-ralph] — that file is the only reason iteration 41 differs from iteration 40.
 
 **Give it a bound the agent cannot negotiate with.** An iteration cap, a wall-clock timeout, a sentinel file checked by the shell rather than by the model. The bound belongs in the process that spawns the agent, not in the agent's instructions.
 
@@ -253,4 +225,5 @@ The names will keep drifting; that is what the last year of this has demonstrate
 
 ## References
 
-<CitationsList citationFormat="apa" />
+::citations{format="apa"}
+

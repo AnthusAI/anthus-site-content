@@ -14,8 +14,6 @@ images:
 state: published
 ---
 
-import BlogImage from '../../components/blog-image';
-
 ## Fine-Tuning LLMs for Better Classification
 
 When building text classification systems, a key question emerges: how much can LLM fine-tuning improve classification accuracy compared to using base models with prompt engineering alone?
@@ -44,21 +42,19 @@ The results speak for themselves:
 
 ### Before Fine-Tuning
 
-<BlogImage 
-  images={props.pageContext.frontmatter.images} 
-  name="freud-detector-base.png"
-  alt="Confusion matrix showing base model performance" 
-/>
+::image{
+  src="images/llm-classifiers/freud-detector-base.png"
+  alt="Confusion matrix showing base model performance"
+}
 
 The base model shows decent performance but struggles with false negatives—missing positive cases that should be caught.
 
 ### After Fine-Tuning
 
-<BlogImage 
-  images={props.pageContext.frontmatter.images} 
-  name="freud-detector-fine-tuned.png"
-  alt="Confusion matrix showing fine-tuned model performance" 
-/>
+::image{
+  src="images/llm-classifiers/freud-detector-fine-tuned.png"
+  alt="Confusion matrix showing fine-tuned model performance"
+}
 
 The fine-tuned model demonstrates significantly improved accuracy, particularly in correctly identifying positive cases (8 correct vs 4 in the base model).
 

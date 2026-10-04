@@ -13,14 +13,10 @@ images:
   - "../images/posts/superwhisper_logo.png"
 ---
 
-import BlogImage from '../../components/blog-image';
-
 <p class="center-full-image">
-    <BlogImage className="center-small-image"
-        images={props.pageContext.frontmatter.images} 
-        name="superwhisper_logo.png"
-        alt="SuperWhisper logo"
-    />
+
+::image{src="images/posts/superwhisper_logo.png" layout="center-small-image" alt="SuperWhisper logo"}
+
 </p>
 
 Pro tip: When working with Cursor's agent mode or other AI coding assistants, you naturally shift from being a hands-on coder to more of a manager role. Instead of typing symbols and syntax, you spend more time expressing ideas and providing high-level instructions and feedback.

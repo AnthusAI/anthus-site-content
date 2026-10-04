@@ -14,14 +14,14 @@ images:
 state: published
 ---
 
-import BlogImage from '../components/blog-image';
-
 <p class="center-full-image">
-    <BlogImage className="center-small-image"
-        images={props.pageContext.frontmatter.images} 
-        name="give-an-agent-a-tool.png"
-        alt="Give an agent a tool: If you give an agent a tool, then nobody has to fish"
-    />
+
+::image{
+  src="images/give-an-agent-a-tool.png"
+  layout="center-small-image"
+  alt="Give an agent a tool: If you give an agent a tool, then nobody has to fish"
+}
+
 </p>
 
 ## A Programming Paradigm Shift
@@ -257,5 +257,4 @@ The complete project is available on [GitHub](https://github.com/AnthusAI/Give-a
 We built this to demonstrate a fundamental shift in how we think about programming. It's not just about AI—it's about a new way of solving problems that's more flexible, more maintainable, and more aligned with how humans naturally think about tasks.
 
 > _"Give a man a fish and you feed him for a day. Teach a man to fish and you feed him for a lifetime. Give an agent a tool and nobody has to fish."_
-
 

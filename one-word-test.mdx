@@ -25,17 +25,19 @@ state: published
 repository: "https://github.com/AnthusAI/Jev-Flywheel"
 ---
 
-import BlogImage from "../components/blog-image"
-
 Change one word in a professional bio, "he" to "she", and ask a model the same question twice. <mark>If the verdict moves, the pronoun moved it, because nothing else changed.</mark> That's the one-word test, and the share of verdicts that move is the number we report. We ran it on the two fast decision models anyone can get: [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev), a commercial service, and [Laya](https://huggingface.co/convaiinnovations/laya), a free open-weights model; their makers call them System 1 models, after Kahneman's name for fast, instinctive thinking. Four occupation pairs, 2,000 real bios per pair, first names blanked, both models asked twice. Laya's verdict moved on 8 to 18 bios in 100 and Jev's on 1 to 4, in the stereotype's direction nearly every time. On those four the size of the effect rose with how gendered the pair is; three more pairs, added later, kept the direction and broke the order. The story, for anyone who doesn't need the method, is [We Told the AI She Was a Woman. It Demoted Her](/blog/encoding-prejudice/)
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="one-word-test-cover.png"
-    className="full"
-    alt="Four bars of the share of verdicts that changed when he became she, for the open model Laya, on 2,000 real professional bios per job: teacher or professor 7.6 percent, surgeon or physician 8.0, nurse or physician 13.5, paralegal or attorney 17.8. Headline: four jobs, one word changed; the more gendered, the more it moved."
-  />
+
+::image{
+  src="images/one-word-test-cover.png"
+  layout="full"
+  alt="Four bars of the share of verdicts that changed when he became she, for the open model Laya, on 2,000
+  real professional bios per job: teacher or professor 7.6 percent, surgeon or physician 8.0, nurse or
+  physician 13.5, paralegal or attorney 17.8. Headline: four jobs, one word changed; the more gendered, the
+  more it moved."
+}
+
   <figcaption className="image-caption">
     Laya, the open model, on four occupation pairs: 2,000 real bios each, first
     names blanked, one pronoun swapped. The bars are the share of verdicts that
@@ -70,12 +72,17 @@ Laya is a 421M-parameter ModernBERT with open weights, free to run, and [we've h
 | Recall for "surgeon", women's bios vs men's | 0.985 vs 0.999 | 0.221 vs 0.397 |
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="encoding-prejudice-flips.png"
-    className="full"
-    alt="Bar chart of the share of bios whose verdict flipped under three edits, for Jev and Laya, each drawn over a faint control-floor bar where a floor exists. Gender, pronouns swapped, 2,000 bios: Jev 1.1 percent, Laya 8.0 percent, no floor. Race, a Black full name against a white one, 500 bios: Jev 0.4 percent against a 0.4 percent floor, Laya 2.6 percent against a 3.8 percent floor. Age, 34 against 61, 1,231 bios: Jev 1.3 percent against a 0.9 percent floor, Laya 1.0 percent against a 0.5 percent floor."
-  />
+
+::image{
+  src="images/encoding-prejudice-flips.png"
+  layout="full"
+  alt="Bar chart of the share of bios whose verdict flipped under three edits, for Jev and Laya, each drawn
+  over a faint control-floor bar where a floor exists. Gender, pronouns swapped, 2,000 bios: Jev 1.1 percent,
+  Laya 8.0 percent, no floor. Race, a Black full name against a white one, 500 bios: Jev 0.4 percent against
+  a 0.4 percent floor, Laya 2.6 percent against a 3.8 percent floor. Age, 34 against 61, 1,231 bios: Jev 1.3
+  percent against a 0.9 percent floor, Laya 1.0 percent against a 0.5 percent floor."
+}
+
   <figcaption className="image-caption">
     One method, three characteristics, two engines. Each solid bar is the share
     of verdicts that changed; the faint bar behind it is the control floor, how
@@ -94,12 +101,16 @@ Picture where this model ends up: a developer picks it because it's free and ans
 One pair could be a quirk of surgery, so we pre-registered three more, chosen for where the stereotype points and how hard: teacher or professor (a 15-point gap in women's share, the small-gap control), nurse or physician (41 points, the pair the stereotype names), and paralegal or attorney (47 points, a prestige pair in law, which a surgery-specific story can't reach). Same corpus, 1,000 bios per label, same redaction, same swap, engines only, 12,000 Jev requests priced before they were sent. The prediction on record was that the flip rate would rise with the gap.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="encoding-prejudice-pairs.png"
-    className="full"
-    alt="Bar chart of the share of verdicts that flipped under a pronoun swap on four occupation pairs, ordered by the gap in women's share between the two labels, with 95 percent intervals. Teacher or professor, 15-point gap: Jev 1.2 percent, Laya 7.6. Surgeon or physician, 35: Jev 1.1, Laya 8.0. Nurse or physician, 41: Jev 3.3, Laya 13.5. Paralegal or attorney, 47: Jev 3.9, Laya 17.8."
-  />
+
+::image{
+  src="images/encoding-prejudice-pairs.png"
+  layout="full"
+  alt="Bar chart of the share of verdicts that flipped under a pronoun swap on four occupation pairs, ordered
+  by the gap in women's share between the two labels, with 95 percent intervals. Teacher or professor,
+  15-point gap: Jev 1.2 percent, Laya 7.6. Surgeon or physician, 35: Jev 1.1, Laya 8.0. Nurse or physician,
+  41: Jev 3.3, Laya 13.5. Paralegal or attorney, 47: Jev 3.9, Laya 17.8."
+}
+
   <figcaption className="image-caption">
     The first four decisions, two engines, 2,000 bios per pair. On these four
     Laya's flip rate rose in the exact order of the gap in women's share; Jev's
@@ -120,12 +131,15 @@ Jev is the best case we've measured, and we should say so plainly. <mark>On surg
 But 1 to 4% is small only in a table. <mark>Put this model in front of a million decisions a year, a modest volume for a triage system, and 1% is ten thousand people whose outcome depends on a pronoun; on the most gendered pairs, 4% is forty thousand.</mark> And the flips aren't noise: when Jev's verdict moved on a man's bio rewritten as a woman's, it moved toward "physician" 15 times out of 16, and toward "nurse" every time. The person on the wrong end is a woman surgeon read as something less, ten thousand times, quietly, by the best system in this comparison.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="encoding-prejudice-direction.png"
-    className="full"
-    alt="Bar chart of verdicts that flipped, with the stereotyped direction drawn solid. Gender, a man's bio rewritten as a woman's and flipped to physician: Jev 15 of 16, Laya 138 of 139. Age, 34 rewritten as 61 and flipped to surgeon: Jev 8 of 16, Laya 10 of 12."
-  />
+
+::image{
+  src="images/encoding-prejudice-direction.png"
+  layout="full"
+  alt="Bar chart of verdicts that flipped, with the stereotyped direction drawn solid. Gender, a man's bio
+  rewritten as a woman's and flipped to physician: Jev 15 of 16, Laya 138 of 139. Age, 34 rewritten as 61 and
+  flipped to surgeon: Jev 8 of 16, Laya 10 of 12."
+}
+
   <figcaption className="image-caption">
     Solid is the direction the stereotype predicts; the pale remainder went the
     other way. Jev's gender base is 16 flips, so one flip the other way would
@@ -140,12 +154,17 @@ The same residue shows up when we swap a name instead of a pronoun. Jev's one cl
 A shortlist turns a verdict-level flip rate into the number a compliance review would compute. An invented employer gets 2,000 applications, the 1,000 real attorney bios and the 1,000 real paralegal bios, asks the engine "paralegal or attorney?", ranks by its probability of "attorney", and shortlists the top 500. The scenario is constructed: a real corpus, a real question, an invented employer. It's a component of what ranking tools do, and it isn't a ranking tool.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="encoding-prejudice-shortlist.png"
-    className="full"
-    alt="Bar chart of the share of real attorneys who make a top-500 shortlist out of 2,000 paralegal and attorney bios, women against men, per engine. Jev: 44 percent of women attorneys and 52 percent of men, a four-fifths ratio of 0.85 with a 95 percent interval of 0.73 to 0.96. Laya: 29 percent of women and 60 percent of men, a ratio of 0.48 with an interval of 0.40 to 0.55. A dashed line marks four-fifths of the men's rate, the EEOC rule of thumb."
-  />
+
+::image{
+  src="images/encoding-prejudice-shortlist.png"
+  layout="full"
+  alt="Bar chart of the share of real attorneys who make a top-500 shortlist out of 2,000 paralegal and
+  attorney bios, women against men, per engine. Jev: 44 percent of women attorneys and 52 percent of men, a
+  four-fifths ratio of 0.85 with a 95 percent interval of 0.73 to 0.96. Laya: 29 percent of women and 60
+  percent of men, a ratio of 0.48 with an interval of 0.40 to 0.55. A dashed line marks four-fifths of the
+  men's rate, the EEOC rule of thumb."
+}
+
   <figcaption className="image-caption">
     The constructed shortlist: 1,000 real attorney and 1,000 real paralegal bios
     ranked by each engine's P(attorney), top 500 kept. Solid bars are women
@@ -167,12 +186,17 @@ We gate the same way in production: a proposed scorecard change is scored on hel
 Race isn't marked by a pronoun, so the counterfactual is a name, the design [Bertrand and Mullainathan](https://www.aeaweb.org/articles?id=10.1257/0002828042002561) used in 2004 when they mailed identical résumés under different names and found that "White names receive 50 percent more callbacks for interviews". Our first attempt copied their eighteen names and was inconclusive: the name effects sat inside the noise from swapping one white name for another. The second gives every mention of the person a full name from pools with measured race probabilities, four names per group, and reports the shift in P(surgeon) relative to white names.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="encoding-prejudice-race-shift.png"
-    className="full"
-    alt="Dot plot with 95 percent intervals of the shift in probability of surgeon for each name group relative to white names, on the 500 bios both engines answered. Laya: floor plus 0.33 points with an interval including zero; Black names plus 0.70, Hispanic plus 1.54, both intervals excluding zero; Asian minus 0.18, including zero. Jev: floor plus 0.06; Black names minus 0.35, interval excluding zero; Hispanic minus 0.04 and Asian minus 0.13, both including zero."
-  />
+
+::image{
+  src="images/encoding-prejudice-race-shift.png"
+  layout="full"
+  alt="Dot plot with 95 percent intervals of the shift in probability of surgeon for each name group relative
+  to white names, on the 500 bios both engines answered. Laya: floor plus 0.33 points with an interval
+  including zero; Black names plus 0.70, Hispanic plus 1.54, both intervals excluding zero; Asian minus 0.18,
+  including zero. Jev: floor plus 0.06; Black names minus 0.35, interval excluding zero; Hispanic minus 0.04
+  and Asian minus 0.13, both including zero."
+}
+
   <figcaption className="image-caption">
     Full names from measured pools, 500 bios both engines answered. Hollow dots
     are the control floor, one set of white names against another. Points of
@@ -185,12 +209,16 @@ The open model reads the name group, about four times as far as the hosted one, 
 For age, the bio's first subject pronoun gets "At 34," or "At 61," in front of it, on the 1,231 bios where a young age wouldn't contradict the text; the floor is a one-year change.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="encoding-prejudice-age-shift.png"
-    className="full"
-    alt="Dot plot with 95 percent intervals of the shift in probability of surgeon when a stated age changes, on 1,231 bios. Laya: floor 34 versus 35 plus 0.04 points; floor 61 versus 62 minus 0.52, interval excluding zero; 34 versus 61 plus 0.69, interval excluding zero. Jev: floors minus 0.06 and 0.00; 34 versus 61 plus 0.07, interval including zero."
-  />
+
+::image{
+  src="images/encoding-prejudice-age-shift.png"
+  layout="full"
+  alt="Dot plot with 95 percent intervals of the shift in probability of surgeon when a stated age changes,
+  on 1,231 bios. Laya: floor 34 versus 35 plus 0.04 points; floor 61 versus 62 minus 0.52, interval excluding
+  zero; 34 versus 61 plus 0.69, interval excluding zero. Jev: floors minus 0.06 and 0.00; 34 versus 61 plus
+  0.07, interval including zero."
+}
+
   <figcaption className="image-caption">
     A stated age inserted before the first pronoun, 1,231 bios. Hollow dots are
     the one-year floors. Both effects are under a point of probability.

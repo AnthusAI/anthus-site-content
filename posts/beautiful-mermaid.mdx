@@ -14,13 +14,14 @@ images:
 state: published
 ---
 
-import BlogImage from '../../components/blog-image';
-
 <p class="center-full-image">
-    <BlogImage className="center-small-image"
-        images={props.pageContext.frontmatter.images}
-        name="beautiful-mermaid.png"
-        alt="Beautiful Mermaid, an open source diagram renderer from Craft" />
+
+::image{
+  src="images/posts/beautiful-mermaid.png"
+  layout="center-small-image"
+  alt="Beautiful Mermaid, an open source diagram renderer from Craft"
+}
+
 </p>
 
 [Beautiful Mermaid](https://agents.craft.do/mermaid) is an open source Mermaid renderer from the Craft team. Sixteen themes. SVG and ASCII. Flowcharts, sequence, class, ER, state, and charts. The [source is on GitHub](https://github.com/lukilabs/beautiful-mermaid).

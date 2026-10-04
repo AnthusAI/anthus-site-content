@@ -15,13 +15,14 @@ images:
 state: published
 ---
 
-import BlogImage from '../../components/blog-image';
-
 <p class="center-full-image">
-  <BlogImage className="center-small-image"
-    images={props.pageContext.frontmatter.images}
-    name="deepseek-r1-recipe.png"
-    alt="deepseek-ai/DeepSeek-R1 on GitHub: the open reasoning-model recipe" />
+
+::image{
+  src="images/posts/deepseek-r1-recipe.png"
+  layout="center-small-image"
+  alt="deepseek-ai/DeepSeek-R1 on GitHub: the open reasoning-model recipe"
+}
+
 </p>
 
 [DeepSeek-R1](https://arxiv.org/abs/2501.12948) matches o1-class reasoning and then gives the method away. The headline people will remember is the leaderboard. The part that changes how you build systems is the recipe.

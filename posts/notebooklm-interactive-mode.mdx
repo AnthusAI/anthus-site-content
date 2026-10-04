@@ -14,13 +14,14 @@ images:
 state: published
 ---
 
-import BlogImage from '../../components/blog-image';
-
 <p class="center-full-image">
-    <BlogImage className="center-small-image"
-        images={props.pageContext.frontmatter.images} 
-        name="Google-NotebookLM.png"
-        alt="Google NotebookLM Interactive Mode" />
+
+::image{
+  src="images/posts/Google-NotebookLM.png"
+  layout="center-small-image"
+  alt="Google NotebookLM Interactive Mode"
+}
+
 </p>
 
 Google has released interactive mode for NotebookLM to all users. After months of only listening to the "Deep Dive" podcast hosts, you can now interrupt them and steer the conversation directly.

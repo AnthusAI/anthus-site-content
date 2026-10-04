@@ -14,13 +14,14 @@ images:
 state: published
 ---
 
-import BlogImage from '../../components/blog-image';
-
 <p class="center-full-image">
-  <BlogImage className="center-small-image"
-    images={props.pageContext.frontmatter.images}
-    name="claude-code.png"
-    alt="Claude Code: an agentic coding tool that runs in the terminal" />
+
+::image{
+  src="images/posts/claude-code.png"
+  layout="center-small-image"
+  alt="Claude Code: an agentic coding tool that runs in the terminal"
+}
+
 </p>
 
 Alongside a new Sonnet, Anthropic shipped [Claude Code](https://www.anthropic.com/news/claude-3-7-sonnet): a command-line tool that lives in the repository. It reads the tree, edits files, runs commands, and takes a pass at work that used to be a 45-minute human loop. It is a limited research preview. The product shape is the news.

@@ -14,8 +14,6 @@ images:
 state: draft
 ---
 
-import BlogImage from "../components/blog-image"
-
 On a Linux box, you can ask the kernel how much memory is free by reading a file:
 
 ```
@@ -131,12 +129,9 @@ Custom grammars help — implemented with ANTLR, YACC, or Lark, you get sharper 
 ## DeckBot: the same pattern, pointed at slides
 
 <div style={{ float: "right", width: "300px", marginLeft: "20px", marginBottom: "20px" }}>
-<BlogImage
-  images={props.pageContext.frontmatter.images}
-  name="deckbot-logo.png"
-  className="right-aligned"
-  alt="DeckBot Logo"
-/>
+
+::image{src="images/deckbot-logo.png" layout="right-aligned" alt="DeckBot Logo"}
+
 </div>
 
 A presentation is close to the worst case for this pattern. It is a binary blob in a proprietary format, edited through a GUI, with no text representation and nothing resembling a compiler.
@@ -149,12 +144,11 @@ It is worth being precise about what this buys, because tools like NotebookLM wi
 
 DeckBot uses Behavior Driven Development, and this is less of a tangent than it looks. A `.feature` file is a plain-English description of what the software should do — and `behave` is a program that reads that description and refuses it when the implementation disagrees. The spec is source. The test runner is the rejecter. It is the same shape as everything above, applied to the project's own behavior rather than to slides.
 
-<BlogImage
-  images={props.pageContext.frontmatter.images}
-  name="deckbot-ai-presentation-assistant.png"
-  className="centered"
+::image{
+  src="images/deckbot-ai-presentation-assistant.png"
+  layout="centered"
   alt="DeckBot: an AI presentation assistant built on Marp Markdown slides"
-/>
+}
 
 ## Where this goes wrong
 

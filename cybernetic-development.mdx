@@ -16,10 +16,116 @@ tags:
   - agile
   - ai-coding
   - bdd
+citations:
+  parc-cast-flight-deck-2013-operational-use-of-flight-path-management:
+    type: report
+    title: Operational Use of Flight Path Management Systems
+    author: PARC/CAST Flight Deck Automation Working Group
+    publisher: Federal Aviation Administration
+    issued: {date-parts: [[2013, 9, 5]]}
+  kahneman-2011-thinking-fast-and-slow:
+    type: book
+    title: Thinking, Fast and Slow
+    author: Daniel Kahneman
+    publisher: Farrar, Straus and Giroux
+    issued: {date-parts: [[2011]]}
+  karpathy-2025-andrej-karpathy-on-vibe-coding:
+    type: webpage
+    title: Andrej Karpathy on Vibe Coding
+    author: Andrej Karpathy
+    container-title: X (formerly Twitter)
+    URL: https://x.com/karpathy/status/1886192184808149383
+    issued: {date-parts: [[2025, 2, 2]]}
+  karpathy-2026-andrej-karpathy-on-vibe-coding-anniversary:
+    type: webpage
+    title: Andrej Karpathy on Vibe Coding Anniversary
+    author: Andrej Karpathy
+    container-title: X (formerly Twitter)
+    URL: https://x.com/karpathy/status/2019137879310836075
+    issued: {date-parts: [[2026, 2, 4]]}
+  reason-1990-human-error:
+    type: book
+    title: Human Error
+    author: James Reason
+    publisher: Cambridge University Press
+    issued: {date-parts: [[1990]]}
+  reason-1997-managing-the-risks-of-organizational-accidents:
+    type: book
+    title: Managing the Risks of Organizational Accidents
+    author: James Reason
+    publisher: Ashgate
+    issued: {date-parts: [[1997]]}
+  jevons-1865-coal-question:
+    type: book
+    title: 'The Coal Question: An Inquiry Concerning the Progress of the Nation, and the Probable Exhaustion of Our Coal-Mines'
+    author: William Stanley Jevons
+    publisher: Macmillan and Co.
+    issued: {date-parts: [[1865]]}
+  ashby-1956-introduction-to-cybernetics:
+    type: book
+    title: An Introduction to Cybernetics
+    author: W. Ross Ashby
+    issued: {date-parts: [[1956]]}
+  north-2006-introducing-bdd:
+    type: webpage
+    title: Introducing BDD
+    author: Dan North
+    container-title: Dan North & Associates
+    URL: https://dannorth.net/introducing-bdd/
+    issued: {date-parts: [[2006, 3, 1]]}
+  kanbus-2026-architecture:
+    type: webpage
+    title: Architecture
+    container-title: Kanbus
+    URL: https://kanb.us/architecture
+    accessed: {date-parts: [[2026, 2, 10]]}
+  geller-2026-all-the-code-you-will-ever:
+    type: webpage
+    title: All the Code You Will Ever Write Is Business Logic
+    author: Anna Geller
+    container-title: Better Programming
+    URL: https://betterprogramming.pub/all-the-code-you-will-ever-write-is-business-logic-2dc0acf47cef
+    accessed: {date-parts: [[2026, 2, 10]]}
+  robinson-2025-coding-agents-complexity-budgets:
+    type: webpage
+    title: Coding Agents & Complexity Budgets
+    author: Lee Robinson
+    container-title: Lee Robinson
+    URL: https://leerob.com/agents
+    issued: {date-parts: [[2025, 12, 1]]}
+  jones-2025-executive-briefing-what-cursor-s-57k:
+    type: webpage
+    title: 'Executive Briefing: What Cursor’s $57K CMS Deletion Reveals About Where Agent Value Actually Lives'
+    author: Nate B. Jones
+    container-title: Nate's Newsletter
+    URL: https://natesnewsletter.substack.com/p/executive-briefing-what-cursors-57k
+    issued: {date-parts: [[2025, 12, 14]]}
+  stephenson-1999-in-the-beginning-was-the-command:
+    type: book
+    title: In the Beginning... Was the Command Line
+    author: Neal Stephenson
+    publisher: Avon Books
+    issued: {date-parts: [[1999]]}
+  spolsky-2002-law-of-leaky-abstractions:
+    type: webpage
+    title: The Law of Leaky Abstractions
+    author: Joel Spolsky
+    container-title: Joel on Software
+    URL: https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/
+    issued: {date-parts: [[2002, 11, 11]]}
+  kasparov-2017-deep-thinking-where-machine-intelligence-ends:
+    type: book
+    title: 'Deep Thinking: Where Machine Intelligence Ends and Human Creativity Begins'
+    author: Garry Kasparov
+    publisher: PublicAffairs
+    issued: {date-parts: [[2017, 5, 2]]}
+  goodhart-1975-problems-of-monetary-management:
+    type: article-journal
+    title: 'Problems of Monetary Management: The U.K. Experience'
+    author: Charles Goodhart
+    container-title: Papers in Monetary Economics
+    issued: {date-parts: [[1975]]}
 ---
-
-import BlogImage from '../components/blog-image';
-import { Citation, CitationsList } from 'gatsby-citation-manager';
 
 {/* HERO — cybernetic-development.png. Generated via Midjourney, installed.
     Nested control, not parallel steering: the viewer (the reader) is the
@@ -31,12 +137,14 @@ import { Citation, CitationsList } from 'gatsby-citation-manager';
     the reader's back. */}
 
 <div className="center-small-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="cybernetic-development.png"
-    className="full"
-    alt="First-person view of a human's hands steering a wheel mounted on the back of a white robot, which itself steers the ship's helm at the bow."
-  />
+
+::image{
+  src="images/cybernetic-development.png"
+  layout="full"
+  alt="First-person view of a human's hands steering a wheel mounted on the back of a white robot, which
+  itself steers the ship's helm at the bow."
+}
+
 </div>
 
 There is a widening gap in the world of AI software development. On one side, you have the "Vibe Coders": enthusiastic experimenters who can prompt a prototype into existence in minutes. They ride the wave of LLM generation, treating code like a disposable medium. It feels like magic. It feels fast. But all too often, it hits a wall—the "it runs on my machine" prototype that collapses under the weight of edge cases, security reviews, and maintenance realities.
@@ -88,15 +196,7 @@ A cybernetic system has two distinct parts:
 
 Before we go further, we need to understand the risk of pure automation. Aviation teaches us a critical lesson through what's called the **"Glass Cockpit" problem**.
 
-As planes became fully automated with "fly-by-wire" systems, pilots spent 99% of their time monitoring systems rather than flying. The automation worked beautifully—until it failed. When it did, pilots had lost their "stick-and-rudder" skills and couldn't recover the plane.<Citation
-  data={{
-    type: "report",
-    title: "Operational Use of Flight Path Management Systems",
-    author: "PARC/CAST Flight Deck Automation Working Group",
-    publisher: "Federal Aviation Administration",
-    issued: { "date-parts": [[2013, 9, 5]] },
-  }}
-/>
+As planes became fully automated with "fly-by-wire" systems, pilots spent 99% of their time monitoring systems rather than flying. The automation worked beautifully—until it failed. When it did, pilots had lost their "stick-and-rudder" skills and couldn't recover the plane.[@parc-cast-flight-deck-2013-operational-use-of-flight-path-management]
 
 This isn't an argument against automation. It's an argument for **cybernetic systems**: automation paired with skilled governance. The pilot doesn't need to hand-fly every leg, but they must maintain the ability to override when the autopilot fails. They must understand the primitives underneath the abstraction.
 
@@ -104,24 +204,16 @@ The same applies to AI coding. If AI does 99% of the work, the human developer r
 
 {/* Generated via Midjourney, installed. */}
 
-<BlogImage
-  images={props.pageContext.frontmatter.images}
-  name="glass-cockpit.png"
-  className="full"
-  alt="A softly glowing glass cockpit at night, every display nominal, seen from behind two empty seats with no hands on the controls."
-/>
+::image{
+  src="images/glass-cockpit.png"
+  layout="full"
+  alt="A softly glowing glass cockpit at night, every display nominal, seen from behind two empty seats with
+  no hands on the controls."
+}
 
 ### The Human Brain as Cybernetic System
 
-This cybernetic structure mirrors the human brain itself. As Daniel Kahneman described in *Thinking, Fast and Slow*, we operate with two systems. **System 1** is fast, intuitive, and emotional (the Engine). **System 2** is slow, deliberate, and logical (the Governor).<Citation
-  data={{
-    type: "book",
-    title: "Thinking, Fast and Slow",
-    author: "Daniel Kahneman",
-    publisher: "Farrar, Straus and Giroux",
-    issued: { "date-parts": [[2011]] },
-  }}
-/>
+This cybernetic structure mirrors the human brain itself. As Daniel Kahneman described in *Thinking, Fast and Slow*, we operate with two systems. **System 1** is fast, intuitive, and emotional (the Engine). **System 2** is slow, deliberate, and logical (the Governor).[@kahneman-2011-thinking-fast-and-slow]
 
 We are cybernetic systems. And now, we are externalizing that structure into our software development.
 
@@ -153,25 +245,7 @@ The 100x developer isn't just shoveling coal into the engine; they are designing
   </div>
 </div>
 
-Even Andrej Karpathy, who coined the term "vibe coding" in early 2025<Citation
-  data={{
-    type: "webpage",
-    "container-title": "X (formerly Twitter)",
-    title: "Andrej Karpathy on Vibe Coding",
-    author: "Andrej Karpathy",
-    URL: "https://x.com/karpathy/status/1886192184808149383",
-    issued: { "date-parts": [[2025, 2, 2]] },
-  }}
-/>, recognized this shift just a year later. Reflecting on the concept's anniversary, he noted that while vibe coding started as a way to build "fun throwaway projects," the industry quickly moved toward something more rigorous. He called it **"Agentic Engineering"**—where you get the speed of agents without compromising on quality.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "X (formerly Twitter)",
-    title: "Andrej Karpathy on Vibe Coding Anniversary",
-    author: "Andrej Karpathy",
-    URL: "https://x.com/karpathy/status/2019137879310836075",
-    issued: { "date-parts": [[2026, 2, 4]] },
-  }}
-/>
+Even Andrej Karpathy, who coined the term "vibe coding" in early 2025[@karpathy-2025-andrej-karpathy-on-vibe-coding], recognized this shift just a year later. Reflecting on the concept's anniversary, he noted that while vibe coding started as a way to build "fun throwaway projects," the industry quickly moved toward something more rigorous. He called it **"Agentic Engineering"**—where you get the speed of agents without compromising on quality.[@karpathy-2026-andrej-karpathy-on-vibe-coding-anniversary]
 
 Karpathy's "Agentic Engineering" confirms the core thesis of a cybernetic approach to development. It validates that the future of software isn't about writing code; it is about steering it.
 
@@ -191,28 +265,12 @@ In the pre-AI world, many failures looked like *bugs*: a wrong condition, a miss
 
 In multi-agent development, failures start to look like *operations*. They emerge from interactions: handoffs between agents, partial context, racing changes, misaligned incentives, and assumptions that hold in CI but fail in production. You can have immaculate unit tests and still ship a latent condition, because the failure doesn't live in any single function. It lives in the system.
 
-Safety researcher James Reason studied what he called **organizational accidents**: disasters that don't come from one dramatic mistake, but from many small weaknesses that quietly accumulate until they collapse into failure. His **Swiss Cheese model** describes safety as layers of defense, each imperfect, each with holes. Accidents happen when the holes line up across layers.<Citation
-  data={{
-    type: "book",
-    title: "Human Error",
-    author: "James Reason",
-    publisher: "Cambridge University Press",
-    issued: { "date-parts": [[1990]] },
-  }}
-/>
+Safety researcher James Reason studied what he called **organizational accidents**: disasters that don't come from one dramatic mistake, but from many small weaknesses that quietly accumulate until they collapse into failure. His **Swiss Cheese model** describes safety as layers of defense, each imperfect, each with holes. Accidents happen when the holes line up across layers.[@reason-1990-human-error]
 
 Reason also distinguished between:
 
 *   **Active failures:** the visible mistakes at the sharp end (a pilot error, a wrong button, a missed checklist).
-*   **Latent conditions:** the invisible system decisions that make those mistakes likely (training gaps, bad incentives, missing safeguards).<Citation
-  data={{
-    type: "book",
-    title: "Managing the Risks of Organizational Accidents",
-    author: "James Reason",
-    publisher: "Ashgate",
-    issued: { "date-parts": [[1997]] },
-  }}
-/>
+*   **Latent conditions:** the invisible system decisions that make those mistakes likely (training gaps, bad incentives, missing safeguards).[@reason-1997-managing-the-risks-of-organizational-accidents]
 
 In agentic software, hallucinated imports and broken edge cases are **active failures**. But "give the agent full filesystem + network and hope" is a **latent condition**. So is merging without CI gates. So is shipping without canaries. So is optimizing for a metric that can be gamed.
 
@@ -220,15 +278,7 @@ The cybernetic developer's job is to engineer the cheese: **defense in depth** t
 
 ### Jevons Paradox: The Code Explosion
 
-Here's the darker twist: as AI makes code generation dramatically cheaper and faster, we face a counterintuitive risk. In 1865, economist William Stanley Jevons observed that as steam engines became more efficient with coal, coal consumption didn't go down—it went *up*, because steam engines became useful for more things.<Citation
-  data={{
-    type: "book",
-    title: "The Coal Question: An Inquiry Concerning the Progress of the Nation, and the Probable Exhaustion of Our Coal-Mines",
-    author: "William Stanley Jevons",
-    publisher: "Macmillan and Co.",
-    issued: { "date-parts": [[1865]] },
-  }}
-/>
+Here's the darker twist: as AI makes code generation dramatically cheaper and faster, we face a counterintuitive risk. In 1865, economist William Stanley Jevons observed that as steam engines became more efficient with coal, coal consumption didn't go down—it went *up*, because steam engines became useful for more things.[@jevons-1865-coal-question]
 
 This is **Jevons Paradox**: improving efficiency increases total consumption rather than reducing it.
 
@@ -493,14 +543,7 @@ A cybernetic developer builds Governors at multiple layers:
 
 This is where 100x judgment lives. When a system fails, the question isn't only "What code do we change?" It's "What layer should absorb this next time?" Sometimes the right fix is a unit test. Sometimes it's changing the spec. Sometimes it's removing agent permissions. Sometimes it's deleting the feature.
 
-This layered defense approach also helps us manage **Ashby's Law of Requisite Variety**: a Governor can't reliably control a system that has more "states" than it can represent.<Citation
-  data={{
-    type: "book",
-    title: "An Introduction to Cybernetics",
-    author: "W. Ross Ashby",
-    issued: { "date-parts": [[1956]] },
-  }}
-/>
+This layered defense approach also helps us manage **Ashby's Law of Requisite Variety**: a Governor can't reliably control a system that has more "states" than it can represent.[@ashby-1956-introduction-to-cybernetics]
 
 If your AI Engine can generate a thousand variants overnight, your Governor must either:
 1.  **Match that variety** (more specs, more checks, more layers of defense), or
@@ -510,16 +553,7 @@ The cybernetic developer does both. They build comprehensive defense layers (mat
 
 ### 5. Gherkin: The Language of the Governor
 
-This isn't a new idea. In 2006, Dan North introduced **Behavior-Driven Development (BDD)** to solve the confusion around TDD.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "Dan North & Associates",
-    title: "Introducing BDD",
-    author: "Dan North",
-    URL: "https://dannorth.net/introducing-bdd/",
-    issued: { "date-parts": [[2006, 3, 1]] },
-  }}
-/> He realized that talking about "tests" confused people, but talking about "behavior" clarified intent. He introduced Gherkin—the `Given-When-Then` syntax—to make specifications readable by humans (stakeholders) but executable by machines.
+This isn't a new idea. In 2006, Dan North introduced **Behavior-Driven Development (BDD)** to solve the confusion around TDD.[@north-2006-introducing-bdd] He realized that talking about "tests" confused people, but talking about "behavior" clarified intent. He introduced Gherkin—the `Given-When-Then` syntax—to make specifications readable by humans (stakeholders) but executable by machines.
 
 For years, BDD was a "nice to have" bridge between product managers and engineers. In the AI era, it is becoming the **primary source code**.
 
@@ -658,15 +692,7 @@ The Vibe Coder writes prompts and hopes. The cybernetic developer writes specifi
 
 #### Kanbus: Gherkin as Source Code
 
-Some projects take this philosophy to the extreme: treating Gherkin specifications as the **authoritative source code** and treating implementation code as **generated artifacts**.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "Kanbus",
-    title: "Architecture",
-    URL: "https://kanb.us/architecture",
-    accessed: { "date-parts": [[2026, 2, 10]] },
-  }}
-/>
+Some projects take this philosophy to the extreme: treating Gherkin specifications as the **authoritative source code** and treating implementation code as **generated artifacts**.[@kanbus-2026-architecture]
 
 [Kanbus](https://kanb.us) is an open-source issue tracker built in both Python and Rust, designed so that agents can participate in the backlog alongside you. The twist? Both implementations are constrained to pass the exact same Gherkin feature files. The specifications aren't derived from the code—they *define* the code.
 
@@ -751,16 +777,7 @@ This is cybernetic development in its purest form: the human writes the high-lev
 
 If Gherkin is the interface, then the most powerful people in the room are no longer necessarily the ones who know the most C++ syntax. They are the **Product Managers, Executives, and Domain Experts**—the people who deeply understand the *goal*.
 
-This fulfills the prophecy made by Werner Vogels, CTO of Amazon, at AWS re:Invent 2017: **"All the code you will ever write is business logic."**<Citation
-  data={{
-    type: "webpage",
-    "container-title": "Better Programming",
-    title: "All the Code You Will Ever Write Is Business Logic",
-    author: "Anna Geller",
-    URL: "https://betterprogramming.pub/all-the-code-you-will-ever-write-is-business-logic-2dc0acf47cef",
-    accessed: { "date-parts": [[2026, 2, 10]] },
-  }}
-/>
+This fulfills the prophecy made by Werner Vogels, CTO of Amazon, at AWS re:Invent 2017: **"All the code you will ever write is business logic."**[@geller-2026-all-the-code-you-will-ever]
 
 At the time, Vogels was describing a **future vision**, not the present reality. He was predicting that managed services would abstract away the "undifferentiated heavy lifting" of infrastructure, leaving developers free to focus solely on business logic. He was right about the direction, but he didn't foresee the second half of the equation: AI would abstract away the undifferentiated heavy lifting of the *syntax itself*.
 
@@ -988,16 +1005,7 @@ The pattern: if it affects production, it should be in Git. If it's in Git, an a
 
 #### Case Study: The $260 Migration
 
-Lee Robinson, VP of Developer Experience at Vercel, provided a perfect validation of this principle when he migrated cursor.com from a CMS back to raw code.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "Lee Robinson",
-    title: "Coding Agents & Complexity Budgets",
-    author: "Lee Robinson",
-    URL: "https://leerob.com/agents",
-    issued: { "date-parts": [[2025, 12, 1]] },
-  }}
-/>
+Lee Robinson, VP of Developer Experience at Vercel, provided a perfect validation of this principle when he migrated cursor.com from a CMS back to raw code.[@robinson-2025-coding-agents-complexity-budgets]
 
 He found that while the CMS was supposed to make things "easier" for non-developers, it actually created a "cost of abstraction" that blocked AI agents from being useful. "The cost of abstractions with AI is very high," he noted. "Over abstraction was always annoying and a code smell but now there’s an easy solution: spend tokens."
 
@@ -1005,16 +1013,7 @@ By moving everything back to Markdown and Git—making it "code"—he was able t
 
 This proves that **simplifying to code** isn't a step backward; it is the necessary step forward to enable the cybernetic workforce.
 
-This highlights the **"Abstraction Tax"**—a concept Nate B. Jones identifies as the hidden cost of modern software. Tools built for human convenience (GUIs, wizards, CMS dashboards) are obstacles for agents. To enable cybernetic development, you must pay down this tax by exposing the system's primitives (files, state, config) directly to the swarm.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "Nate's Newsletter",
-    title: "Executive Briefing: What Cursor’s $57K CMS Deletion Reveals About Where Agent Value Actually Lives",
-    author: "Nate B. Jones",
-    URL: "https://natesnewsletter.substack.com/p/executive-briefing-what-cursors-57k",
-    issued: { "date-parts": [[2025, 12, 14]] },
-  }}
-/>
+This highlights the **"Abstraction Tax"**—a concept Nate B. Jones identifies as the hidden cost of modern software. Tools built for human convenience (GUIs, wizards, CMS dashboards) are obstacles for agents. To enable cybernetic development, you must pay down this tax by exposing the system's primitives (files, state, config) directly to the swarm.[@jones-2025-executive-briefing-what-cursor-s-57k]
 
 ### 8. DRY (Don't Repeat Yourself) & Refactoring
 
@@ -1260,30 +1259,13 @@ This is the paradox: the very automation that makes cybernetic development possi
 
 ### Disney World vs. The Command Line
 
-In his 1999 essay *In the Beginning... Was the Command Line*, Neal Stephenson argued that Operating Systems are worldviews. He compared the GUI (Windows/Mac) to "Disney World"—a mediated reality where the messy plumbing is hidden behind pleasant metaphors. The Command Line, by contrast, is "unmediated reality"—unforgiving, but real.<Citation
-  data={{
-    type: "book",
-    title: "In the Beginning... Was the Command Line",
-    author: "Neal Stephenson",
-    publisher: "Avon Books",
-    issued: { "date-parts": [[1999]] },
-  }}
-/>
+In his 1999 essay *In the Beginning... Was the Command Line*, Neal Stephenson argued that Operating Systems are worldviews. He compared the GUI (Windows/Mac) to "Disney World"—a mediated reality where the messy plumbing is hidden behind pleasant metaphors. The Command Line, by contrast, is "unmediated reality"—unforgiving, but real.[@stephenson-1999-in-the-beginning-was-the-command]
 
 "Vibe Coding" is the new Disney World. It is a sensory deprivation tank that hides the messy reality of code behind a pleasant chat interface. The Vibe Coder thinks software creation is just asking for what you want.
 
 The cybernetic developer refuses to live in Disney World. They know that eventually, the plumbing breaks.
 
-This is the **Law of Leaky Abstractions**: "All non-trivial abstractions, to some degree, are leaky."<Citation
-  data={{
-    type: "webpage",
-    "container-title": "Joel on Software",
-    title: "The Law of Leaky Abstractions",
-    author: "Joel Spolsky",
-    URL: "https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/",
-    issued: { "date-parts": [[2002, 11, 11]] },
-  }}
-/>
+This is the **Law of Leaky Abstractions**: "All non-trivial abstractions, to some degree, are leaky."[@spolsky-2002-law-of-leaky-abstractions]
 
 AI is the ultimate abstraction—it tries to abstract away the *act of thinking*. But it leaks. It hallucinates libraries that don't exist. It writes code that has race conditions.
 
@@ -1334,12 +1316,13 @@ But not all verification is knowable upfront. Many agentic failures are emergent
 {/* Generated by scripts/generate-verification-debt.py. Illustrative rates
     and shapes, marked as such on the figure -- not measured project data. */}
 
-<BlogImage
-  images={props.pageContext.frontmatter.images}
-  name="verification-debt.png"
-  className="full"
-  alt="Generation capacity rises exponentially while manual verification stays nearly flat; the widening gap is verification debt, annotated at the point where you are shipping code nobody has read. A third curve, automated verification, tracks generation closely and is the only line that keeps pace."
-/>
+::image{
+  src="images/verification-debt.png"
+  layout="full"
+  alt="Generation capacity rises exponentially while manual verification stays nearly flat; the widening gap
+  is verification debt, annotated at the point where you are shipping code nobody has read. A third curve,
+  automated verification, tracks generation closely and is the only line that keeps pace."
+}
 
 You cannot afford to use a 100x generator with a 1x verifier. You need a 100x verifier. That is what the cybernetic loop is.
 
@@ -1447,15 +1430,7 @@ The 100x developer understands that **Vibe Coding is the first step, not the onl
 
 They know that the goal isn't just to write code; it's to build a sustainable, valuable system that survives contact with reality.
 
-This mirrors the **"Centaur" model** of chess. After Deep Blue defeated Garry Kasparov, chess didn't die—it evolved. Players realized that a weak human + a weak computer + a strong process could defeat a strong computer alone.<Citation
-  data={{
-    type: "book",
-    title: "Deep Thinking: Where Machine Intelligence Ends and Human Creativity Begins",
-    author: "Garry Kasparov",
-    publisher: "PublicAffairs",
-    issued: { "date-parts": [[2017, 5, 2]] },
-  }}
-/>
+This mirrors the **"Centaur" model** of chess. After Deep Blue defeated Garry Kasparov, chess didn't die—it evolved. Players realized that a weak human + a weak computer + a strong process could defeat a strong computer alone.[@kasparov-2017-deep-thinking-where-machine-intelligence-ends]
 
 The cybernetic developer is the ultimate Centaur. They don't try to out-calculate the AI (write code faster); they use the AI to verify their strategic intent.
 
@@ -1535,15 +1510,7 @@ The 100x engineers are the ones who accept the new role: **Be the boss. Set the 
 
 #### Steer by Intent, Not by Metric
 
-The boss's superpower is resisting **Goodhart's Law**: "When a measure becomes a target, it ceases to be a good measure."<Citation
-  data={{
-    type: "article-journal",
-    title: "Problems of Monetary Management: The U.K. Experience",
-    "container-title": "Papers in Monetary Economics",
-    author: "Charles Goodhart",
-    issued: { "date-parts": [[1975]] },
-  }}
-/>
+The boss's superpower is resisting **Goodhart's Law**: "When a measure becomes a target, it ceases to be a good measure."[@goodhart-1975-problems-of-monetary-management]
 
 If you tell an AI to "maximize test coverage," it will write tests that assert `true == true`. It hits the metric (compass heading) but misses the destination (working software).
 
@@ -1577,4 +1544,5 @@ Because while everyone else is typing, you'll be steering.
 
 ## References
 
-<CitationsList citationFormat="apa" />
+::citations{format="apa"}
+

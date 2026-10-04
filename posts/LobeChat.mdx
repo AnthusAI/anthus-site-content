@@ -14,14 +14,14 @@ images:
 state: published
 ---
 
-import BlogImage from '../../components/blog-image';
-
 <p class="center-full-image">
-    <BlogImage className="center-small-image"
-        images={props.pageContext.frontmatter.images} 
-        name="LobeChat.png"
-        alt="LobeChat: Open-Source AI Chat Framework"
-    />
+
+::image{
+  src="images/posts/LobeChat.png"
+  layout="center-small-image"
+  alt="LobeChat: Open-Source AI Chat Framework"
+}
+
 </p>
 
 [LobeChat](https://github.com/lobehub/lobe-chat) is an open-source AI chat framework that combines modern design with extensive functionality. It's designed for easy deployment and customization.

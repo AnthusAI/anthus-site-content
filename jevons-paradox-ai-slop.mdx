@@ -13,10 +13,39 @@ tags:
   - articles
   - ai
   - economics
+citations:
+  jevons-1865-coal-question:
+    type: book
+    title: 'The Coal Question: An Inquiry Concerning the Progress of the Nation, and the Probable Exhaustion of Our Coal-Mines'
+    author: William Stanley Jevons
+    publisher: Macmillan and Co.
+    issued: {date-parts: [[1865]]}
+  shumailov-2023-curse-of-recursion:
+    type: article-journal
+    title: 'The Curse of Recursion: Training on Generated Data Makes Models Forget'
+    author: Ilia Shumailov, Zakhar Shumaylov, Yiren Zhao, Yarin Gal, Nicolas Papernot, Ross Anderson
+    container-title: arXiv
+    URL: https://arxiv.org/abs/2305.17493
+    issued: {date-parts: [[2023]]}
+  hardin-1968-tragedy-of-the-commons:
+    type: article-journal
+    title: The Tragedy of the Commons
+    author: Garrett Hardin
+    container-title: Science
+    volume: 162
+    issue: 3859
+    page: 1243-1248
+    issued: {date-parts: [[1968]]}
+  simon-1971-designing-organizations-for-an-information-rich:
+    type: chapter
+    title: Designing Organizations for an Information-Rich World
+    author: Herbert A. Simon
+    editor: Martin Greenberger
+    container-title: Computers, Communications, and the Public Interest
+    publisher: The Johns Hopkins Press
+    page: 37-72
+    issued: {date-parts: [[1971]]}
 ---
-
-import BlogImage from "../components/blog-image"
-import { Citation, CitationsList } from "gatsby-citation-manager"
 
 You're searching for how to fix a slow Node.js API. The first five Google results look promising—detailed tutorials, code samples, performance benchmarks. You click the first link.
 
@@ -29,12 +58,14 @@ This is the Content Paradox.
 And this article is AI slop. A model wrote the first draft. I edited it, checked the citations, and cut a few hundred words of outline-shaped filler. That is not a joke and it is not a humblebrag. If cheaper writing floods the internet with fluent mediocrity, a site like this is part of the flood. The only difference, if there is one, is whether a human with a point of view was willing to cut, check, and sign it.
 
 <div className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="jevons-paradox-ai-slop.png"
-    className="full"
-    alt="A row of white robots with magenta eyes produces an avalanche of generic pages that nearly buries one page covered in human proofreader marks."
-  />
+
+::image{
+  src="images/jevons-paradox-ai-slop.png"
+  layout="full"
+  alt="A row of white robots with magenta eyes produces an avalanche of generic pages that nearly buries one
+  page covered in human proofreader marks."
+}
+
 </div>
 
 ## The Pattern is Everywhere
@@ -47,15 +78,7 @@ The counterintuitive question: **Why did making content easier to create make in
 
 ## The Coal Paradox
 
-In 1865, British economist William Stanley Jevons noticed something strange about coal.<Citation
-data={{
-    type: "book",
-    title: "The Coal Question: An Inquiry Concerning the Progress of the Nation, and the Probable Exhaustion of Our Coal-Mines",
-    author: "William Stanley Jevons",
-    publisher: "Macmillan and Co.",
-    issued: { "date-parts": [[1865]] },
-  }}
-/>
+In 1865, British economist William Stanley Jevons noticed something strange about coal.[@jevons-1865-coal-question]
 
 James Watt's more efficient steam engine let industry do the same work with less coal. The logical assumption was that coal consumption would fall. Instead, it exploded.
 
@@ -83,16 +106,7 @@ A researched piece still takes expertise, taste, and time. "10 Tips for Node.js 
 
 We train models on the internet. If future training sets become dominated by model output, each generation trains on a photocopy of a photocopy.
 
-Researchers call this model collapse.<Citation
-data={{
-    type: "article-journal",
-    title: "The Curse of Recursion: Training on Generated Data Makes Models Forget",
-    author: "Ilia Shumailov, Zakhar Shumaylov, Yiren Zhao, Yarin Gal, Nicolas Papernot, Ross Anderson",
-    "container-title": "arXiv",
-    issued: { "date-parts": [[2023]] },
-    URL: "https://arxiv.org/abs/2305.17493",
-  }}
-/> The informal name is "Habsburg AI." Either way: tails of the distribution disappear, and the output gets more generic.
+Researchers call this model collapse.[@shumailov-2023-curse-of-recursion] The informal name is "Habsburg AI." Either way: tails of the distribution disappear, and the output gets more generic.
 
 ## The Information Commons
 
@@ -100,31 +114,9 @@ Jevons points toward a deeper problem: **the tragedy of the commons**.
 
 The internet is a shared information resource. Everyone benefits when it is trustworthy, but the actors who pollute it can still get paid. Generators capture the upside from ads, affiliates, and rankings. Everyone else absorbs worse search and wasted attention.
 
-Garrett Hardin described the dynamic in 1968: when a resource is shared and costs are externalized, rational actors will overuse it.<Citation
-data={{
-    type: "article-journal",
-    title: "The Tragedy of the Commons",
-    author: "Garrett Hardin",
-    "container-title": "Science",
-    volume: 162,
-    issue: 3859,
-    issued: { "date-parts": [[1968]] },
-    page: "1243-1248",
-  }}
-/>
+Garrett Hardin described the dynamic in 1968: when a resource is shared and costs are externalized, rational actors will overuse it.[@hardin-1968-tragedy-of-the-commons]
 
-Herbert Simon said it in 1971: a wealth of information creates a poverty of attention.<Citation
-data={{
-    type: "chapter",
-    title: "Designing Organizations for an Information-Rich World",
-    author: "Herbert A. Simon",
-    editor: "Martin Greenberger",
-    "container-title": "Computers, Communications, and the Public Interest",
-    publisher: "The Johns Hopkins Press",
-    issued: { "date-parts": [[1971]] },
-    page: "37-72",
-  }}
-/> We don't have a scarcity of content. We have a scarcity of curation.
+Herbert Simon said it in 1971: a wealth of information creates a poverty of attention.[@simon-1971-designing-organizations-for-an-information-rich] We don't have a scarcity of content. We have a scarcity of curation.
 
 That is the same failure mode as [Cybernetic Development](/cybernetic-development): optimize for generation speed without a governor, and you get slop at scale, whether the output is brittle software or synthetic essays.
 
@@ -159,4 +151,5 @@ Cheaper does not mean better. Sometimes it just means more. Including this.
 
 ## References
 
-<CitationsList citationFormat="apa" />
+::citations{format="apa"}
+

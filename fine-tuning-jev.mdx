@@ -25,15 +25,16 @@ state: published
 repository: "https://github.com/AnthusAI/Jev-Flywheel"
 ---
 
-import BlogImage from "../components/blog-image"
-
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="fine-tuning-jev-cover.png"
-    className="full"
-    alt="Cover: the model never changed; we asked it one more question. Two bars show held-out accuracy of 77 percent for Jev alone and 87 percent for Jev plus one new question, after 140 rounds of agree-or-disagree feedback."
-  />
+
+::image{
+  src="images/fine-tuning-jev-cover.png"
+  layout="full"
+  alt="Cover: the model never changed; we asked it one more question. Two bars show held-out accuracy of 77
+  percent for Jev alone and 87 percent for Jev plus one new question, after 140 rounds of agree-or-disagree
+  feedback."
+}
+
 </figure>
 
 Say you've got an AI model grading text for you: support tickets, call transcripts, product reviews. It's fast, it's cheap, and most of the time it agrees with your team. Then you notice it getting one kind of case wrong, the same way, over and over. Your reviewers are following a rule nobody ever wrote down, and the model has no way to know it.
@@ -51,12 +52,16 @@ Accuracy didn't move at all during that time, because the rule the reviewers wer
 It doesn't work every time, and we'll show you how often it does. We also ran real fine-tuning on an open model as the fair comparison, and that didn't go the way we predicted. Everything here comes from the [Jev-Flywheel repository](https://github.com/AnthusAI/Jev-Flywheel), and you can replay the recorded run on your laptop with no API keys.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="fine-tuning-jev-journey.png"
-    className="full"
-    alt="Two line charts over rounds of agree-or-disagree feedback. First, the gap between Jev's stated confidence and reality falls from 15 points at the start to 11 points after 37 rounds and 3 points after 87, and stays at 3. Second, accuracy stays flat at 77, 76 and 76 percent through 87 rounds, then jumps to 87 percent at 140 rounds, when the system adds one new question."
-  />
+
+::image{
+  src="images/fine-tuning-jev-journey.png"
+  layout="full"
+  alt="Two line charts over rounds of agree-or-disagree feedback. First, the gap between Jev's stated
+  confidence and reality falls from 15 points at the start to 11 points after 37 rounds and 3 points after
+  87, and stays at 3. Second, accuracy stays flat at 77, 76 and 76 percent through 87 rounds, then jumps to
+  87 percent at 140 rounds, when the system adds one new question."
+}
+
   <figcaption className="image-caption">
     The same recorded run, seen twice. Confidence improves from the first
     re-weighting. Accuracy waits for the step that changes what gets asked.
@@ -84,12 +89,17 @@ Here's one test item that question fixes. The text is "The documents configured 
 ## Two ways back to the scorecard
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="fine-tuning-jev-flywheel.png"
-    className="full"
-    alt="Flowchart of the flywheel. A scorecard.yaml holding the questions and the weights drives scoring, one Jev request per item. The console asks a person about one item, they agree or disagree, and feedback accumulates. Two paths lead back to the scorecard: a refit that runs every few labels and changes only the weights, and a steering round that costs one LLM call and adds a new question if it wins and the person approves it."
-  />
+
+::image{
+  src="images/fine-tuning-jev-flywheel.png"
+  layout="full"
+  alt="Flowchart of the flywheel. A scorecard.yaml holding the questions and the weights drives scoring, one
+  Jev request per item. The console asks a person about one item, they agree or disagree, and feedback
+  accumulates. Two paths lead back to the scorecard: a refit that runs every few labels and changes only the
+  weights, and a steering round that costs one LLM call and adds a new question if it wins and the person
+  approves it."
+}
+
   <figcaption className="image-caption">
     The data flywheel, rendered from the repo's diagram source. Only the outer
     path changes what we ask Jev.
@@ -116,12 +126,15 @@ The recorded run contains a clean natural experiment. We scored every version on
 | v4: after one steering round, 140 labels | **0.870** | **0.030** | **0.093** |
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="fine-tuning-jev-refit-vs-steer.png"
-    className="full"
-    alt="Two bar charts by scorecard version. First, calibration error: 0.151 for Jev alone, falling to 0.112 and 0.030 after refits on 37 and 87 labels, and staying at 0.030 after one new question at 140 labels. Then accuracy: 0.768 for Jev alone, 0.763 and 0.765 after the refits, then 0.870 after the new question."
-  />
+
+::image{
+  src="images/fine-tuning-jev-refit-vs-steer.png"
+  layout="full"
+  alt="Two bar charts by scorecard version. First, calibration error: 0.151 for Jev alone, falling to 0.112
+  and 0.030 after refits on 37 and 87 labels, and staying at 0.030 after one new question at 140 labels. Then
+  accuracy: 0.768 for Jev alone, 0.763 and 0.765 after the refits, then 0.870 after the new question."
+}
+
   <figcaption className="image-caption">
     Refits fix calibration, steering fixes accuracy. One recorded run,
     replayable offline from the repo.
@@ -203,12 +216,15 @@ One caution: the two articles' ECE figures aren't comparable. That one's headlin
 This is the number to judge the idea by, and it isn't 100%. We ran one steering round at 140 labels, 12 times: four analyst models (Kimi K3, Kimi K2.5, DeepSeek V3.2, Qwen3-Coder-480B) by three label seeds.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="fine-tuning-jev-reliability.png"
-    className="full"
-    alt="Horizontal bar chart of 12 runs. Three runs that named the subject-matter axis gained 14.8, 12.2 and 8.2 points over their best plain refit. Six runs that promoted other questions gained between 4.2 and 7.8 points. Three runs promoted nothing. The mean of the nine promoted runs is +7.4 points."
-  />
+
+::image{
+  src="images/fine-tuning-jev-reliability.png"
+  layout="full"
+  alt="Horizontal bar chart of 12 runs. Three runs that named the subject-matter axis gained 14.8, 12.2 and
+  8.2 points over their best plain refit. Six runs that promoted other questions gained between 4.2 and 7.8
+  points. Three runs promoted nothing. The mean of the nine promoted runs is +7.4 points."
+}
+
   <figcaption className="image-caption">
     Each bar is one run's held-out gain over its own best plain refit. "Named
     the axis" is a hand judgment, published beside the runs.
@@ -233,12 +249,16 @@ Two attempts to raise the hit rate. Adding a checklist of kinds of convention to
 [Laya](https://huggingface.co/convaiinnovations/laya) is a 421M-parameter, Apache-2.0 encoder from Convai that answers the same three kinds of typed question on your own machine. The flywheel layer runs on it unchanged: Laya alone scores 0.722 on the same 600 items, and with the layer and the same `topic_domain` question, 0.802. Because its weights are open, we could also do what Jev doesn't allow: LLM fine-tuning in the ordinary gradient sense, with the recorded labels as the training set, three seeds per arm, and our predictions pre-registered.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="fine-tuning-jev-finetune.png"
-    className="full"
-    alt="Two horizontal bar charts comparing six systems given the same 140 labels. Accuracy: Laya fully fine-tuned 0.896, Jev plus the flywheel layer 0.870, DistilBERT fine-tuned 0.835, Laya plus the layer 0.802, Laya alone 0.722, Laya head-only fine-tune 0.659. Calibration error: Laya plus the layer 0.015, Jev plus the layer 0.030, head-only 0.061, DistilBERT 0.080, fully fine-tuned Laya 0.087, Laya alone 0.107."
-  />
+
+::image{
+  src="images/fine-tuning-jev-finetune.png"
+  layout="full"
+  alt="Two horizontal bar charts comparing six systems given the same 140 labels. Accuracy: Laya fully
+  fine-tuned 0.896, Jev plus the flywheel layer 0.870, DistilBERT fine-tuned 0.835, Laya plus the layer
+  0.802, Laya alone 0.722, Laya head-only fine-tune 0.659. Calibration error: Laya plus the layer 0.015, Jev
+  plus the layer 0.030, head-only 0.061, DistilBERT 0.080, fully fine-tuned Laya 0.087, Laya alone 0.107."
+}
+
   <figcaption className="image-caption">
     Fine-tuned bars are three-seed means with the seed range as whiskers; layer
     bars are one recorded run.
@@ -259,12 +279,16 @@ We got this wrong in advance. We predicted full fine-tuning would land at 0.74 t
 Here's what the layer keeps. Calibration: ECE of 0.015 and 0.030 against 0.087 for the fine-tune, three to six times lower, though that 0.087 is soft. We traced it: the procedure fit one temperature on cross-validation models trained on about 93 of the labels, then applied it to three different final models trained on all 140, so it helped one seed and hurt another. And when we retrained the same seed, accuracy came back within a point but calibration error didn't: 0.046 one time, 0.116 another. On 140 labels, a fine-tune's confidence isn't stable from run to run. The layer's fit is deterministic. Calibration is what lets you auto-accept the confident answers and route the rest to a person. At a 95% accuracy bar, Jev with the layer could auto-accept 72% of its verdicts on the test items, up from 46% for Jev alone. Fine-tuned Laya averaged 71%, and ranged from 59% to 82% depending on the training seed: more accurate overall, less sure of when it's right. A written account of what it learned, in one English question and two signed numbers, where the fine-tune has a few hundred million changed weights and no explanation. An engine that's provably untouched, so its other answers can't drift. When we asked fine-tuned Laya the eight questions we hadn't trained it on, its top answer changed on 42% of items on average, from 9% for one question to 75% for another. [The Laya comparison](/blog/jev-vs-laya/) has the detail. And on Jev, it's the only lever you have.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="jev-vs-laya-autoaccept.png"
-    className="full"
-    alt="Bar chart of the share of verdicts each system can auto-accept while the accepted set stays 95 percent accurate, on 600 test items. Jev with the layer 72 percent. Fully fine-tuned Laya 71 percent on average, ranging from 59 to 82 across three seeds. DistilBERT fine-tune 63 percent. Laya with the layer 55 percent. Jev alone 46 percent. Laya alone 34 percent."
-  />
+
+::image{
+  src="images/jev-vs-laya-autoaccept.png"
+  layout="full"
+  alt="Bar chart of the share of verdicts each system can auto-accept while the accepted set stays 95 percent
+  accurate, on 600 test items. Jev with the layer 72 percent. Fully fine-tuned Laya 71 percent on average,
+  ranging from 59 to 82 across three seeds. DistilBERT fine-tune 63 percent. Laya with the layer 55 percent.
+  Jev alone 46 percent. Laya alone 34 percent."
+}
+
   <figcaption className="image-caption">
     How much each system can be trusted without a person checking: the share of
     verdicts it can auto-accept at 95% accuracy. Black lines span three training

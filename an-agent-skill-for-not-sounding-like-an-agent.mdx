@@ -17,14 +17,12 @@ images:
 state: published
 ---
 
-import BlogImage from '../components/blog-image';
-
-<BlogImage
-  images={props.pageContext.frontmatter.images}
-  name="an-agent-skill-for-not-sounding-like-ai.png"
-  className="centered"
-  alt="A red-inked editorial redline striking through a passive, over-explained sentence, with an active rewrite in green beneath it -- a real finding from the tool this article describes."
-/>
+::image{
+  src="images/an-agent-skill-for-not-sounding-like-ai.png"
+  layout="centered"
+  alt="A red-inked editorial redline striking through a passive, over-explained sentence, with an active
+  rewrite in green beneath it -- a real finding from the tool this article describes."
+}
 
 Ask an agent to make a draft "sound less like AI" and it will happily comply — and produce prose that's different, not better. It has no way to check its own work, so it's guessing, and its guess is just a different flavor of generic. The fix isn't a smarter prompt. It's the same fix that works everywhere else in software: give the agent something to check its work against.
 

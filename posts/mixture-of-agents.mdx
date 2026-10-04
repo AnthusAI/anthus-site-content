@@ -15,19 +15,15 @@ images:
 state: published
 ---
 
-import BlogImage from '../../components/blog-image';
-
 Together AI is the latest to demonstrate that agentic orchestration of cheap LLMs can produce better results than directly using expensive LLMs, in [*Mixture-of-Agents Enhances Large Language Model Capabilities*](https://arxiv.org/pdf/2406.04692)
 
-<BlogImage 
-  images={props.pageContext.frontmatter.images} 
-  name="mixture-of-agents.jpg"
-  alt="Agentic orchestration of cheap LLMs can produce better results than directly using expensive LLMs" 
-/>
+::image{
+  src="images/posts/mixture-of-agents.jpg"
+  alt="Agentic orchestration of cheap LLMs can produce better results than directly using expensive LLMs"
+}
 
-<BlogImage 
-  images={props.pageContext.frontmatter.images} 
-  name="mixture-of-agents-spider.jpg"
-  alt="A spider chart showing results from multi-agent orchestration." 
-/>
+::image{
+  src="images/posts/mixture-of-agents-spider.jpg"
+  alt="A spider chart showing results from multi-agent orchestration."
+}
 

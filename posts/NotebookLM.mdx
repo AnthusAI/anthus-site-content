@@ -14,14 +14,14 @@ images:
 state: published
 ---
 
-import BlogImage from '../../components/blog-image';
-
 <p class="center-full-image">
-    <BlogImage className="center-small-image"
-        images={props.pageContext.frontmatter.images} 
-        name="NotebookLM.png"
-        alt="NotebookLM: Google's AI-powered document interaction tool."
-    />
+
+::image{
+  src="images/posts/NotebookLM.png"
+  layout="center-small-image"
+  alt="NotebookLM: Google's AI-powered document interaction tool."
+}
+
 </p>
 
 [NotebookLM](https://notebooklm.google.com), developed by Google, demonstrates how a smaller, cheaper model can excel in specific use cases. It's particularly effective when the focus is on accurately retrieving and presenting ground-truth data without distortion.

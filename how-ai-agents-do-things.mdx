@@ -14,14 +14,27 @@ images:
   - ./diagrams/ai-agent-function-calling-with-no-function.png
   - ./diagrams/ai-agent-function-calling-sequence-diagram.png
 state: published
+citations:
+  openai-2023-openai-pricing:
+    type: webpage
+    title: OpenAI Pricing
+    container-title: OpenAI
+    URL: https://openai.com/pricing
+    issued: {date-parts: [[2023, 12, 12]]}
+    accessed: {date-parts: [[2023, 12, 12]]}
+  jarvis-2023-openai-cookbook:
+    type: webpage
+    title: OpenAI Cookbook
+    author: [Colin Jarvis, Joe Palermo]
+    container-title: OpenAI
+    URL: https://cookbook.openai.com/examples/how_to_call_functions_with_chat_models
+    issued: {date-parts: [[2023, 12, 12]]}
+    accessed: {date-parts: [[2023, 12, 12]]}
 ---
-
-import BlogImage from '../components/blog-image';
-import { Citation, CitationsList } from 'gatsby-citation-manager';
 
 I needed a picture of a cute kitten to post on the Internet. I asked ChatGPT to make one. And it made one.
 
-<BlogImage images={props.pageContext.frontmatter.images} name="a-cute-kitten.png" className="centered" alt="A cute kitten." />
+::image{src="images/a-cute-kitten.png" layout="centered" alt="A cute kitten."}
 
 How did this AI model learn to make a picture of a cute kitten?  Did the researchers at OpenAI 'upload' the kitten-drawing skill set into GPT-4, like Neo learning Kung Fu in <i>The Matrix</i> by plugging a cable into the back of his head?
 
@@ -29,7 +42,7 @@ Not really.  The answer is simpler, and it's a preview of <mark>a new type of so
 
 ## Give tools to the AI model
 
-<BlogImage images={props.pageContext.frontmatter.images} name="ai-agent-uses-tools.png" className="right" alt="An AI agent with a collection of tools." />
+::image{src="images/ai-agent-uses-tools.png" layout="right" alt="An AI agent with a collection of tools."}
 
 Imagine you’re conversing with an airline assistant who can type on their terminal at superhuman speeds to fetch the latest information to answer your questions.
 
@@ -50,7 +63,13 @@ The key concept is that you tell the AI model that the tools are available and h
 Here's what the process looks like.  Normally, a question and answer would look like this:
 
 <div className="center-full-image">
-<BlogImage images={props.pageContext.frontmatter.images} name="ai-agent-function-calling-with-no-function.png" className="full" alt="The sequence for request processing for AI agents when there is no function call." />
+
+::image{
+  src="diagrams/ai-agent-function-calling-with-no-function.png"
+  layout="full"
+  alt="The sequence for request processing for AI agents when there is no function call."
+}
+
 </div>
 
 The agent relays the user's "Hello" message to the model, the model responds, and the agent displays the message for the user in whatever chat UI they're using.  The business system is not involved.
@@ -58,7 +77,13 @@ The agent relays the user's "Hello" message to the model, the model responds, an
 If the user asks a question and the model decides to call a function, the sequence looks a little different.  Here's an example of the user asking for the status of an order, which will require a lookup:
 
 <div className="center-full-image">
-<BlogImage images={props.pageContext.frontmatter.images} name="ai-agent-function-calling-sequence-diagram.png" className="full" alt="The sequence for function-calling for AI agents." />
+
+::image{
+  src="diagrams/ai-agent-function-calling-sequence-diagram.png"
+  layout="full"
+  alt="The sequence for function-calling for AI agents."
+}
+
 </div>
 
 The AI model tells you the name of the function to run and the parameters to use.  The agent must execute that function, then report back to the agent API with results.
@@ -420,16 +445,7 @@ Go and create an OpenAI secret key and open [this Colab notebook](https://colab.
 
 ### Cost
 
-The only costs will be for the OpenAI API, and we're going to use GPT 3.5 Turbo, so it's cheap.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "OpenAI",
-    title: "OpenAI Pricing",
-    URL: "https://openai.com/pricing",
-    accessed: { 'date-parts': [[2023, 12, 12]] },
-    issued: { 'date-parts': [[2023, 12, 12]] }
-  }}
-/>  You would have to work hard at it to spend more than a few pennies on this demo.
+The only costs will be for the OpenAI API, and we're going to use GPT 3.5 Turbo, so it's cheap.[@openai-2023-openai-pricing]  You would have to work hard at it to spend more than a few pennies on this demo.
 
 ### Requirements
 
@@ -474,17 +490,7 @@ You'll see from the output in the notebook that the first response from the AI w
 
 ### More information
 
-You can find more examples of function-calling with the OpenAI API in the OpenAI Cookbook.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "OpenAI",
-    title: "OpenAI Cookbook",
-    author: ["Colin Jarvis", "Joe Palermo"],
-    URL: "https://cookbook.openai.com/examples/how_to_call_functions_with_chat_models",
-    accessed: { 'date-parts': [[2023, 12, 12]] },
-    issued: { 'date-parts': [[2023, 12, 12]] }
-  }}
-/>
+You can find more examples of function-calling with the OpenAI API in the OpenAI Cookbook.[@jarvis-2023-openai-cookbook]
 
 You can also see an example of a text classifier built using function calling for the article about maximizing profit, not intelligence, here in this [Colab notebook](https://colab.research.google.com/drive/1SVaxc3-d6n6JK2pcVlCRcuojNUhMd1cA?usp=sharing) or [on GitHub](https://github.com/Anth-us/LLM-classifier-example/blob/main/LLM_Classifier.ipynb).
 
@@ -500,4 +506,5 @@ We have experience integrating enterprise business systems with AI models to cre
 
 ## References
 
-<CitationsList citationFormat="apa" />
+::citations{format="apa"}
+

@@ -14,15 +14,14 @@ images:
 state: published
 ---
 
-import BlogImage from "../../components/blog-image"
-
 <p class="center-full-image">
-  <BlogImage
-    className="center-small-image"
-    images={props.pageContext.frontmatter.images}
-    name="looking-around-is-enough.png"
-    alt="A document with a tiny glowing pixel sending a thin beam of light to a distant server"
-  />
+
+::image{
+  src="images/posts/looking-around-is-enough.png"
+  layout="center-small-image"
+  alt="A document with a tiny glowing pixel sending a thin beam of light to a distant server"
+}
+
 </p>
 
 A [web beacon](https://en.wikipedia.org/wiki/Web_beacon) is a thing you fetch that acts because you fetched it. The classic one is a one-pixel image in an email. You open the message. Your client asks the server for the picture. That request is the whole report. Nobody had to persuade you of anything.

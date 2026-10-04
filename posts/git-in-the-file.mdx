@@ -14,15 +14,14 @@ images:
 state: published
 ---
 
-import BlogImage from "../../components/blog-image"
-
 <p class="center-full-image">
-  <BlogImage
-    className="center-small-image"
-    images={props.pageContext.frontmatter.images}
-    name="git-in-the-file.png"
-    alt="DoltLite wordmark, SQLite feather for the i"
-  />
+
+::image{
+  src="images/posts/git-in-the-file.png"
+  layout="center-small-image"
+  alt="DoltLite wordmark, SQLite feather for the i"
+}
+
 </p>
 
 There are two ways to put Git on your data.

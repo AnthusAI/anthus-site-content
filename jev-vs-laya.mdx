@@ -26,15 +26,15 @@ state: published
 repository: "https://github.com/AnthusAI/Jev-Flywheel"
 ---
 
-import BlogImage from "../components/blog-image"
-
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="jev-vs-laya-cover.png"
-    className="full"
-    alt="Three bars of accuracy on the same test items: Jev, the hosted model, at 87 percent; Laya, the open model, at 80 percent; and Laya after retraining on the same 140 labels at 90 percent."
-  />
+
+::image{
+  src="images/jev-vs-laya-cover.png"
+  layout="full"
+  alt="Three bars of accuracy on the same test items: Jev, the hosted model, at 87 percent; Laya, the open
+  model, at 80 percent; and Laya after retraining on the same 140 labels at 90 percent."
+}
+
   <figcaption className="image-caption">
     Both engines with the same feedback layer, and then Laya after we retrained
     its weights on the same 140 labels. Only an open model gives you that last bar.
@@ -83,12 +83,14 @@ We replayed one recording against both engines: the same 140 labels, the same 21
 | Brier score, alone to after | 0.188 to 0.093 | 0.189 to 0.130 |
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="jev-vs-laya-paired-accuracy.png"
-    className="full"
-    alt="Bar chart of held-out accuracy on the same 600 items. Jev alone 0.768, Jev with the layer 0.870, Laya alone 0.722, Laya with the layer 0.802. The gap between engines widens from 4.7 to 6.8 points."
-  />
+
+::image{
+  src="images/jev-vs-laya-paired-accuracy.png"
+  layout="full"
+  alt="Bar chart of held-out accuracy on the same 600 items. Jev alone 0.768, Jev with the layer 0.870, Laya
+  alone 0.722, Laya with the layer 0.802. The gap between engines widens from 4.7 to 6.8 points."
+}
+
   <figcaption className="image-caption">
     Held-out accuracy for both engines, alone and with the flywheel layer. Same
     140 labels, same refit points, same analyst proposal, same 600 items. Light
@@ -105,12 +107,14 @@ Calibration needs care in both directions. We measured Jev's raw over-confidence
 That's the same job confidence gating does in production: rank verdicts by calibrated confidence and let the ones above a threshold through automatically, routing the rest to a person. A well-calibrated head is what makes that threshold mean what it says, whichever engine sits underneath it.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="jev-vs-laya-calibration-brier.png"
-    className="full"
-    alt="Two bar panels. Calibration error falls from 0.151 to 0.030 for Jev and from 0.107 to 0.015 for Laya. Brier score falls from 0.188 to 0.093 for Jev and from 0.189 to 0.130 for Laya."
-  />
+
+::image{
+  src="images/jev-vs-laya-calibration-brier.png"
+  layout="full"
+  alt="Two bar panels. Calibration error falls from 0.151 to 0.030 for Jev and from 0.107 to 0.015 for Laya.
+  Brier score falls from 0.188 to 0.093 for Jev and from 0.189 to 0.130 for Laya."
+}
+
   <figcaption className="image-caption">
     Calibration error (left) and Brier score (right) for the same four systems;
     lower is better. Both engines end well calibrated. Brier separates them,
@@ -170,12 +174,15 @@ The repo's [README](https://github.com/AnthusAI/Jev-Flywheel#readme) admitted we
 We fixed the recipe in [the pre-registration](https://github.com/AnthusAI/Jev-Flywheel/blob/main/studies/PREREGISTERED.md) first: AdamW, weight decay 0.01, batch 16, 6% warmup then linear decay, fp32, 10 epochs up to 500 labels and 3 above. Cross-validation inside the training labels picks the learning rate and fits one calibration temperature; held-out items never pick anything. Three seeds per arm. Each full fine-tune logged about 100 seconds of training on the M1 Max.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="jev-vs-laya-finetune.png"
-    className="full"
-    alt="Bar chart of held-out accuracy with the same 140 labels. Laya head-only fine-tune 0.659, Laya alone 0.722, Jev alone 0.768, Laya with the layer 0.802, DistilBERT fine-tune 0.835, Jev with the layer 0.870, Laya full fine-tune 0.896. Black lines show the range over three seeds."
-  />
+
+::image{
+  src="images/jev-vs-laya-finetune.png"
+  layout="full"
+  alt="Bar chart of held-out accuracy with the same 140 labels. Laya head-only fine-tune 0.659, Laya alone
+  0.722, Jev alone 0.768, Laya with the layer 0.802, DistilBERT fine-tune 0.835, Jev with the layer 0.870,
+  Laya full fine-tune 0.896. Black lines show the range over three seeds."
+}
+
   <figcaption className="image-caption">
     Seven bars, the same 600 held-out items. Light bars are the engines with no
     labels; every other system got the same 140. Solid bars have the flywheel
@@ -202,12 +209,16 @@ Arm B needs a caveat, and it's our fault. We pre-registered a head-only learning
 ### Which items does each system get right?
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="jev-vs-laya-tiers.png"
-    className="full"
-    alt="Grouped bars of accuracy by difficulty tier for six systems: Jev alone, Jev with the layer, Laya alone, Laya with the layer, fine-tuned Laya and DistilBERT. All six score 1.00 on strong. On medium: 1.00, 0.95, 0.99, 0.84, 1.00, 0.71. On weak: 0.75, 0.88, 0.67, 0.79, 0.95, 0.87. On neutral: 0.52, 0.72, 0.48, 0.70, 0.67, 0.78."
-  />
+
+::image{
+  src="images/jev-vs-laya-tiers.png"
+  layout="full"
+  alt="Grouped bars of accuracy by difficulty tier for six systems: Jev alone, Jev with the layer, Laya
+  alone, Laya with the layer, fine-tuned Laya and DistilBERT. All six score 1.00 on strong. On medium: 1.00,
+  0.95, 0.99, 0.84, 1.00, 0.71. On weak: 0.75, 0.88, 0.67, 0.79, 0.95, 0.87. On neutral: 0.52, 0.72, 0.48,
+  0.70, 0.67, 0.78."
+}
+
   <figcaption className="image-caption">
     Accuracy by tier on the 600 held-out items (72 strong, 106 medium, 277 weak,
     145 neutral). Light bars are the engines with no labels: both start near a
@@ -225,12 +236,17 @@ So the fine-tune's headline accuracy comes from the medium and weak tiers, 383 o
 ### What more labels buy
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="jev-vs-laya-learning-curve.png"
-    className="full"
-    alt="Line chart of fine-tuned Laya's held-out accuracy against number of random training labels, three seeds per size. Exploratory small budgets: mean 0.819 at 20 labels, 0.833 at 40, 0.852 at 80. Pre-registered sizes: 0.884 at 140, 0.902 at 300, 0.926 at 500, 0.928 at 800, 0.938 at 2,000 and 0.942 at 5,140. Dashed reference lines mark Laya with the layer at 0.802 and Jev with the layer at 0.870, both at 140 labels."
-  />
+
+::image{
+  src="images/jev-vs-laya-learning-curve.png"
+  layout="full"
+  alt="Line chart of fine-tuned Laya's held-out accuracy against number of random training labels, three
+  seeds per size. Exploratory small budgets: mean 0.819 at 20 labels, 0.833 at 40, 0.852 at 80.
+  Pre-registered sizes: 0.884 at 140, 0.902 at 300, 0.926 at 500, 0.928 at 800, 0.938 at 2,000 and 0.942 at
+  5,140. Dashed reference lines mark Laya with the layer at 0.802 and Jev with the layer at 0.870, both at
+  140 labels."
+}
+
   <figcaption className="image-caption">
     Full fine-tunes on random pool draws, three seeds per size. The solid line
     is the pre-registered curve; the dotted lead-in is an exploratory run at 20,
@@ -251,12 +267,16 @@ We'd predicted the curve would first pass 0.802 at 300 to 500 labels and first p
 **An engine you know didn't move.** A scorecard asks one checkpoint many questions. Fine-tune that checkpoint on the verdict and you've changed the weights under every other question too. A frozen engine can't drift, because nothing in it changed. So we asked fine-tuned Laya its other questions on the same 600 items and counted how often the top answer moved. Our pre-registered prediction was that more than 10% would. It was right, by a lot. Averaged over three seeds, the top answer changed on 9% of items for the irony question at the low end and on 75% for the intensity score at the high end. `topic_domain`, the question the flywheel added, changed on 35%. Across the eight questions we didn't train on, 42% of top answers moved. A changed answer isn't necessarily a worse one: we have no ground truth for those questions, so this measures movement and says nothing about damage. But after a fine-tune, every other score on that scorecard needs validating again. With a frozen engine, none of them do.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="jev-vs-laya-drift.png"
-    className="full"
-    alt="Bar chart of the share of 600 items whose top answer changed after fine-tuning Laya on the sentiment verdict, for eight questions it was not trained on. Is it ironic: 9 percent. Does it praise: 21. Does it criticise: 26. What is it about: 35. Does it recommend: 48. Did it meet expectations: 60. Are the feelings mixed: 61. How strong is the emotion: 75."
-  />
+
+::image{
+  src="images/jev-vs-laya-drift.png"
+  layout="full"
+  alt="Bar chart of the share of 600 items whose top answer changed after fine-tuning Laya on the sentiment
+  verdict, for eight questions it was not trained on. Is it ironic: 9 percent. Does it praise: 21. Does it
+  criticise: 26. What is it about: 35. Does it recommend: 48. Did it meet expectations: 60. Are the feelings
+  mixed: 61. How strong is the emotion: 75."
+}
+
   <figcaption className="image-caption">
     We fine-tuned Laya on one question, the sentiment verdict. These are the
     eight questions we didn't train on, and how often its answer to each one
@@ -270,12 +290,16 @@ We'd predicted the curve would first pass 0.802 at 300 to 500 labels and first p
 There's one more comparison we care about for production: if you auto-accept every verdict above a confidence threshold, how much of the traffic clears a 95% accuracy bar? On the 600 test items, Jev alone could auto-accept 46% of its verdicts, and Jev with the layer 72%. Laya alone managed 34%, and Laya with the layer 55%. Fine-tuned Laya averaged 71%, but swung from 59% to 82% across its three training seeds, and DistilBERT averaged 63%. So the most accurate system isn't the one whose confidence best separates its right answers from its wrong ones. We use that same auto-accept threshold in production: route the confident majority straight through and send the rest to a reviewer, then feed the reviewer's calls back into the fit. It's how a QA operation gets from auditing a small sample of calls to covering far more of them without adding reviewers, and it only works when the stated confidence matches the observed accuracy. How well confidence ranks right answers above wrong ones (AUROC) tells the same story: 0.853 for Jev with the layer, 0.839 for DistilBERT, 0.800 for fine-tuned Laya (0.760 to 0.851 by seed), 0.799 for Laya with the layer. This comparison is exploratory; we didn't pre-register it. Jev rounds its probabilities to two decimals, so the Jev-alone figure sits on a block of 277 tied items. And the fine-tuned models here were retrained for the probe, so their accuracies differ from the table above by up to a point.
 
 <figure className="center-full-image">
-  <BlogImage
-    images={props.pageContext.frontmatter.images}
-    name="jev-vs-laya-autoaccept.png"
-    className="full"
-    alt="Bar chart of the share of verdicts each system can auto-accept while the accepted set stays 95 percent accurate, on 600 test items. Jev with the layer 72 percent. Fully fine-tuned Laya 71 percent on average, ranging from 59 to 82 across three seeds. DistilBERT fine-tune 63 percent. Laya with the layer 55 percent. Jev alone 46 percent. Laya alone 34 percent."
-  />
+
+::image{
+  src="images/jev-vs-laya-autoaccept.png"
+  layout="full"
+  alt="Bar chart of the share of verdicts each system can auto-accept while the accepted set stays 95 percent
+  accurate, on 600 test items. Jev with the layer 72 percent. Fully fine-tuned Laya 71 percent on average,
+  ranging from 59 to 82 across three seeds. DistilBERT fine-tune 63 percent. Laya with the layer 55 percent.
+  Jev alone 46 percent. Laya alone 34 percent."
+}
+
   <figcaption className="image-caption">
     Rank each system's verdicts by its own confidence and accept from the top
     until accuracy would drop below 95%. Black lines span three training seeds.

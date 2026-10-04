@@ -11,25 +11,35 @@ preview_image: "./images/draft-1.png"
 images:
   - ./images/draft-1.png
 state: draft
+citations:
+  hinton-2015-distilling-the-knowledge-in-a-neural:
+    type: webpage
+    title: Distilling the Knowledge in a Neural Network
+    author: [Geoffrey Hinton, Oriol Vinyals, Jeff Dean]
+    container-title: Google Inc.
+    URL: https://arxiv.org/abs/1503.02531
+    issued: {date-parts: [[2015, 3, 9]]}
+  rosenbaum-2023-using-large-language-models-llms:
+    type: webpage
+    title: Using large language models (LLMs) to synthesize training data
+    author: [Andy Rosenbaum, Saleh Soltan, Wael Hamza]
+    container-title: Amazon Science
+    URL: https://www.amazon.science/blog/using-large-language-models-llms-to-synthesize-training-data
+    issued: {date-parts: [[2023, 1, 20]]}
+  wu-2023-characterizing-and-classifying-developer-forum-posts:
+    type: webpage
+    title: Characterizing and Classifying Developer Forum Posts with their Intentions
+    author: [Xingfang Wu, Eric Laufer, Heng Li, Foutse khomh, Santhosh Srinivasan, Jayden Luo]
+    container-title: arXiv preprint
+    URL: https://paperswithcode.com/paper/characterizing-and-classifying-developer
+    issued: {date-parts: [[2023, 12, 21]]}
 ---
-
-import BlogImage from '../components/blog-image';
-import { Citation, CitationsList } from 'gatsby-citation-manager';
 
 In our recent look at machine-learning (ML) text classifiers, we showed how a business can cut costs by orders of magnitude by using AI solutions that [efficiently solve problems](/blog/maximize-profit-not-intelligence/) with smaller, cheaper models. A custom-trained ML model can perform as well or even better than more-powerful large language models (LLMs) for specific business use cases. But how do you create a small, cheap model that can perform as well as an LLM?
 
 ## Knowledge distillation
 
-You may have heard about the process of distillation, where you can "teach" a smaller model with a larger model.  Geoffrey Hinton and his co-authors mentioned the analogy of larval insects in the landmark 2015 paper where they introduced the concept:<Citation
-  data={{
-    type: "webpage",
-    "container-title": "Google Inc.",
-    title: "Distilling the Knowledge in a Neural Network",
-    author: ["Geoffrey Hinton", "Oriol Vinyals", "Jeff Dean"],
-    URL: "https://arxiv.org/abs/1503.02531",
-    issued: { 'date-parts': [[2015, 3, 9]] },
-  }}
-/>
+You may have heard about the process of distillation, where you can "teach" a smaller model with a larger model.  Geoffrey Hinton and his co-authors mentioned the analogy of larval insects in the landmark 2015 paper where they introduced the concept:[@hinton-2015-distilling-the-knowledge-in-a-neural]
 
 > Many insects have a larval form that is optimized for extracting energy
 > and nutrients from the environment and a completely different adult form
@@ -42,16 +52,7 @@ For large language models, the distillation process is generally a form of fine-
 
 ## Teaching via data
 
-Rather than using the teacher model in a fine-tuning process for a smaller LLM, we can connect the teacher model to a student model through training data.  This method was described in early 2023 by researchers at Amazon:<Citation
-  data={{
-    type: "webpage",
-    "container-title": "Amazon Science",
-    title: "Using large language models (LLMs) to synthesize training data",
-    author: ["Andy Rosenbaum", "Saleh Soltan", "Wael Hamza"],
-    URL: "https://www.amazon.science/blog/using-large-language-models-llms-to-synthesize-training-data",
-    issued: { 'date-parts': [[2023, 1, 20]] },
-  }}
-/>
+Rather than using the teacher model in a fine-tuning process for a smaller LLM, we can connect the teacher model to a student model through training data.  This method was described in early 2023 by researchers at Amazon:[@rosenbaum-2023-using-large-language-models-llms]
 
 > To enable models that are lightweight enough for runtime use, even when
 > real training data is scarce, we propose teaching via data (TvD), in which
@@ -94,16 +95,7 @@ It would be better to eliminate any prompt engineering from the process entirely
 
 ### How much data?
 
-Do we need millions of examples for training a model?  Luckily, no.  Not for task-specific ML models like this.  We got great results from only a thousand records in our previous text classifier example, and there are plenty of examples of training useful classifiers with only hundreds of records.<Citation
-  data={{
-    type: "webpage",
-    "container-title": "arXiv preprint",
-    title: "Characterizing and Classifying Developer Forum Posts with their Intentions",
-    author: ["Xingfang Wu", "Eric Laufer", "Heng Li", "Foutse khomh", "Santhosh Srinivasan", "Jayden Luo"],
-    URL: "https://paperswithcode.com/paper/characterizing-and-classifying-developer",
-    issued: { 'date-parts': [[2023, 12, 21]] },
-  }}
-/>
+Do we need millions of examples for training a model?  Luckily, no.  Not for task-specific ML models like this.  We got great results from only a thousand records in our previous text classifier example, and there are plenty of examples of training useful classifiers with only hundreds of records.[@wu-2023-characterizing-and-classifying-developer-forum-posts]
 
 ## The experiment
 
@@ -176,4 +168,5 @@ Here's that function definition:
 
 ## References
 
-<CitationsList citationFormat="apa" />
+::citations{format="apa"}
+

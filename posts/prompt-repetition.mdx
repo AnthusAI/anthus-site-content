@@ -15,13 +15,14 @@ images:
 state: published
 ---
 
-import BlogImage from '../../components/blog-image';
-
 <p class="center-full-image">
-    <BlogImage className="center-small-image"
-        images={props.pageContext.frontmatter.images}
-        name="prompt-repetition.png"
-        alt="Figure 1 from Prompt Repetition Improves Non-Reasoning LLMs: 47 significant wins, 0 losses" />
+
+::image{
+  src="images/posts/prompt-repetition.png"
+  layout="center-small-image"
+  alt="Figure 1 from Prompt Repetition Improves Non-Reasoning LLMs: 47 significant wins, 0 losses"
+}
+
 </p>
 
 A pattern worth trying: when the model is not reasoning, send the query twice. `<QUERY>` becomes `<QUERY><QUERY>`. Causal models cannot look ahead, so token order matters. The second copy lets every prompt token attend to every other prompt token.

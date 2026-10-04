@@ -14,13 +14,14 @@ images:
 state: published
 ---
 
-import BlogImage from '../../components/blog-image';
-
 <p class="center-full-image">
-  <BlogImage className="center-small-image"
-    images={props.pageContext.frontmatter.images}
-    name="openclaw.png"
-    alt="openclaw/openclaw on GitHub: a personal AI assistant, the lobster way" />
+
+::image{
+  src="images/posts/openclaw.png"
+  layout="center-small-image"
+  alt="openclaw/openclaw on GitHub: a personal AI assistant, the lobster way"
+}
+
 </p>
 
 [OpenClaw](https://openclaw.ai/blog/introducing-openclaw) is the name as of Friday. On Tuesday it was Clawdbot, until Anthropic asked about the closeness to Claude and the lobster named Clawd. The replacement, Moltbot, lasted about three days. Molting is what lobsters do. It did not roll off the tongue. OpenClaw is the third public name. The git history is worse: Warelay, then Clawdis, before anyone famous was watching.

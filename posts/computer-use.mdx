@@ -14,13 +14,14 @@ images:
 state: published
 ---
 
-import BlogImage from '../../components/blog-image';
-
 <p class="center-full-image">
-  <BlogImage className="center-small-image"
-    images={props.pageContext.frontmatter.images}
-    name="computer-use.png"
-    alt="Computer use: GUI agents versus API tools" />
+
+::image{
+  src="images/posts/computer-use.png"
+  layout="center-small-image"
+  alt="Computer use: GUI agents versus API tools"
+}
+
 </p>
 
 [Anthropic put computer use in public beta](https://www.anthropic.com/news/3-5-models-and-computer-use): Claude looks at a screenshot, then moves the cursor, clicks, and types. On OSWorld, screenshot-only, it scores 14.9% against a previous best of 7.8%. The number is low on purpose. They are shipping the capability while it is still clumsy.
