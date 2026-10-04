@@ -34,7 +34,7 @@ The headline score needs context. Perplexity's model card reports an overall 85.
 
 ## Key technical notes
 
-- 27B parameters, Apache 2.0, with a 262,144-token context window and text and image input.
+- 27B parameters, Apache 2.0, with a 262,144-token context window. The Decisions API accepts images in the state alongside text, per the [docs](https://docs.perplexity.ai/docs/decisions/quickstart).
 - Choice questions take up to 255 options, and the model returns a probability for each.
 - The evaluation covers 11 tasks and 7,210 samples. Perplexity reports 85.71% for its model, 84.51% for Jev and 74.76% for the Qwen3.8-27B base model.
 - The API allows 10 requests per second per organization. Latency is about 2 seconds for a few hundred tokens and about 23 seconds near the input limit, which is slower than the small decision models released the same day.
