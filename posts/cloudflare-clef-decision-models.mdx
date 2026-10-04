@@ -43,8 +43,8 @@ Jev is a hosted model, and [Clef is the open-weight alternative](https://blog.cl
 ## Key technical notes
 
 - Two models: Clef (27B parameters) and Clef-flash (9B), both built on Qwen backbones, with a 64K-token context window against Jev's 32K, per [Cloudflare's post](https://blog.cloudflare.com/clef-decision-models/). Clef has a vision encoder and takes up to four images per request, per the [changelog](https://developers.cloudflare.com/changelog/post/2026-10-01-clef-workers-ai/).
-- The API uses the same System One format as Jev, and Cloudflare says the API is compatible with Jev's, so switching is easy. A request can ask yes/no, multiple-choice and scored questions.
-- Cloudflare reports median latency of 209.3 ms for Clef and 38.8 ms for Clef-flash, against 524.1 ms for Jev. Cloudflare's changelog calls Clef-flash about 13x faster than Jev.
+- The API uses the same System One format as Jev, and the [changelog](https://developers.cloudflare.com/changelog/post/2026-10-01-clef-workers-ai/) says you can switch an existing Jev integration to Clef by changing the endpoint and model. A request can ask up to 64 questions, in three types: yes/no, multiple choice and scored rubric.
+- Cloudflare reports median latency of 209.3 ms for Clef and 38.8 ms for Clef-flash, against 524.1 ms for Jev. Across 43 benchmark runs, the [changelog](https://developers.cloudflare.com/changelog/post/2026-10-01-clef-workers-ai/) says Clef is 2.5x faster than Jev at the median and Clef-flash 13x faster.
 - Cloudflare reports Clef ahead of Jev on 7 of 10 decision benchmarks, including 94.20% macro-F1 on BANKING77 against 79.74% for Jev. These are Cloudflare's own measurements and we haven't reproduced them.
 - The RL fine-tuning service starts with Cloudflare's forward-deployed engineers. Self-serve is planned, using AI Gateway to capture data, Workers AI to roll out models, and a new Trainer component to update weights. The announcement doesn't give pricing.
 
