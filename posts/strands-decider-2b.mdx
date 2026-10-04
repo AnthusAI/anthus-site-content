@@ -1,0 +1,52 @@
+---
+title: "AWS Releases Strands Decider 2B"
+slug: "strands-decider-2b"
+date: "2026-10-01"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+tags:
+  - posts
+excerpt: |
+  AWS's Strands Labs released Strands Decider 2B, a 2-billion-parameter open decision model that runs locally and returns a choice or score with a calibrated confidence.
+preview_image: "../images/posts/strands-decider-2b.png"
+images:
+  - "../images/posts/strands-decider-2b.png"
+state: published
+---
+
+<p class="center-full-image">
+
+::image{
+  src="images/posts/strands-decider-2b.png"
+  layout="center-small-image"
+  alt="Title card reading AWS Releases Strands Decider 2B"
+}
+
+</p>
+
+On October 1, 2026, AWS's Strands Labs [released Strands Decider 2B](https://strandsagents.com/blog/introducing-strands-decider/), a small open decision model for agents. It takes a state and typed questions and returns a choice, a yes/no probability or a score, each with a confidence. The code and training data are on [GitHub](https://github.com/strands-labs/strands-decider) and the weights are on [Hugging Face](https://huggingface.co/StrandsAgents/strands-decider-2B-hobson-v19) under Apache 2.0. The post names [Jev](https://vercel.com/changelog/typesafe-ai-jev-now-available-on-ai-gateway) as the model that started this class.
+
+## Why it matters
+
+Decisions inside agents are classification problems, and this is the smallest and cheapest version of the idea so far. A 2B model runs on a local GPU or CPU, so there's no per-call fee and no data leaves your machine. The outputs are bounded to the options you supply, and each answer comes with a confidence you can log and review.
+
+Because the weights are open and AWS published its training data and scripts, a team can fine-tune the model on its own labels. That's the work we do with hosted and open decision models, and the reason to measure on your own data first: Strands Decider performs well on a public benchmark, and a client's task rarely looks like one. See [fine-tuning Jev](/blog/fine-tuning-jev/) for the method and the [decision models page](/decision-models/) for our measurements.
+
+The New Stack's coverage put one design point plainly: "A constraint in the weights is a different kind of guarantee from a constraint in the prompt." That sentence is The New Stack's, not AWS's. The point holds. Structured-output modes sit on top of a model that can still write prose, and Strands Decider has no text-generation head, so it can't.
+
+## Key technical notes
+
+- Architecture: Qwen3.5-2B with the language-model head removed and replaced by a pointer head of just over a million parameters that scores each option. The base model is fine-tuned with a rank-16 LoRA adapter. The released model is version 19.
+- Median latency is about 115 ms on an Nvidia RTX 3090 and about 153 ms on an M3 MacBook, according to AWS.
+- AWS measured accuracy on JevBench's public set and calibration with the Brier score on the same set. It reports third of 33 models in the 2B class, and first of 30 if models just over 2B are excluded. The Hugging Face card self-reports 167 of 231 correct (72.3%) on JevBench public.
+- AWS says the model answers all of the easy JevBench tasks correctly. These are AWS's own measurements. A competing 2B model scored higher on the same benchmark in AI Weekly's report.
+- The blog post is by Marc Brooker, Mike Chambers and Fabio Nonato de Paula.
+
+## Sources
+
+- [Introducing Strands Decider 2B: a small, open source, decision model](https://strandsagents.com/blog/introducing-strands-decider/), Strands Agents blog, October 1, 2026
+- [strands-labs/strands-decider](https://github.com/strands-labs/strands-decider), GitHub
+- [StrandsAgents/strands-decider-2B-hobson-v19](https://huggingface.co/StrandsAgents/strands-decider-2B-hobson-v19), Hugging Face
+- [AWS launches a local answer to TypeSafe's Jev decision model](https://thenewstack.io/aws-strands-decider-model/), The New Stack, source of the quoted sentence
+- [Amazon Ships Strands Decider 2B, an Open-Source Jev Rival](https://aiweekly.co/alerts/amazon-ships-strands-decider-2b-an-open-source-jev-rival), AI Weekly
+- [TypeSafe AI's Jev now available on AI Gateway](https://vercel.com/changelog/typesafe-ai-jev-now-available-on-ai-gateway), Vercel changelog, September 16, 2026

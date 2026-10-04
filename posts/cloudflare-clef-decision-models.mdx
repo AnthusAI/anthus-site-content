@@ -1,0 +1,47 @@
+---
+title: "Cloudflare Open-Sources Clef Decision Models"
+slug: "cloudflare-clef-decision-models"
+date: "2026-10-01"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+tags:
+  - posts
+excerpt: |
+  Cloudflare released Clef and Clef-flash, two open-source decision models that return typed answers with probabilities, along with a service for fine-tuning them with reinforcement learning.
+preview_image: "../images/posts/cloudflare-clef-decision-models.png"
+images:
+  - "../images/posts/cloudflare-clef-decision-models.png"
+state: published
+---
+
+<p class="center-full-image">
+
+::image{
+  src="images/posts/cloudflare-clef-decision-models.png"
+  layout="center-small-image"
+  alt="Title card reading Cloudflare Open-Sources Clef Decision Models"
+}
+
+</p>
+
+On October 1, 2026, Cloudflare [released Clef and Clef-flash](https://blog.cloudflare.com/clef-decision-models/), two open-source models that answer questions with a typed choice and a probability instead of writing text. Cloudflare calls them decision models. You give one a state and a list of questions, and it returns an answer and a probability for each. Cloudflare hosts both models on Workers AI and published the weights on Hugging Face under Apache 2.0. It also announced a reinforcement learning service for fine-tuning them on a customer's own data.
+
+## Why it matters
+
+Most of the decisions inside an agent are classification problems: which tool to call, whether to retry, whether a message is urgent, whether an output passes a check. A general-purpose language model can answer those, but it generates text first and your code has to parse it. A decision model returns the answer directly, so each call is cheaper, the possible outputs are bounded, and every decision comes with a score you can log and audit.
+
+Jev is a hosted model with proprietary weights, and [Clef is the open-weight alternative](https://blog.cloudflare.com/clef-decision-models/) to it. Open weights and an RL fine-tuning service matter to us because a decision model gets most of its value from being aligned to one team's data. That's the work we do, and we've written about [fine-tuning Jev](/blog/fine-tuning-jev/) and [comparing decision models on a client's own scorecards](/blog/jev-vs-laya/). The [decision models page](/decision-models/) collects the rest of the measurements.
+
+## Key technical notes
+
+- Two models: Clef (27B parameters) and Clef-flash (9B), both built on Qwen backbones, with a 64K-token context window and image input.
+- The API uses the same System One format as Jev, so Cloudflare says switching is a change of endpoint. A request can include up to 64 questions of three kinds: yes/no, multiple choice, and a scored rubric.
+- Cloudflare reports median latency of 209.3 ms for Clef and 38.8 ms for Clef-flash, against 524.1 ms for Jev, which it describes as about 2.5x and 13x faster.
+- Cloudflare reports Clef ahead of Jev on 7 of 10 decision benchmarks, including 94.20% macro-F1 on BANKING77 against 79.74% for Jev. These are Cloudflare's own measurements and we haven't reproduced them.
+- The RL fine-tuning service starts with Cloudflare's forward-deployed engineers. Self-serve is planned, using AI Gateway to capture data, Workers AI to roll out models, and a new Trainer component to update weights. The announcement doesn't give pricing.
+
+## Sources
+
+- [Introducing Clef: our open-source decision models, and new RL fine-tuning platform](https://blog.cloudflare.com/clef-decision-models/), Cloudflare blog, October 1, 2026
+- [Clef on Workers AI](https://developers.cloudflare.com/changelog/post/2026-10-01-clef-workers-ai/), Cloudflare changelog, October 1, 2026
+- [TypeSafe AI's Jev now available on AI Gateway](https://vercel.com/changelog/typesafe-ai-jev-now-available-on-ai-gateway), Vercel changelog, September 16, 2026
