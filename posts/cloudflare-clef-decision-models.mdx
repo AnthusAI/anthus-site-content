@@ -30,9 +30,9 @@ On October 1, 2026, Cloudflare [released Clef and Clef-flash](https://blog.cloud
 
 Cloudflare says Clef has a vision encoder, so it can take in images and classify visual content. Its [changelog](https://developers.cloudflare.com/changelog/post/2026-10-01-clef-workers-ai/) says you can pass up to four images alongside the state, and Cloudflare's [post](https://blog.cloudflare.com/clef-decision-models/) says Jev only classifies text today.
 
-That makes it possible to classify screenshots, scanned documents, product photos or UI states and get back a typed label with a probability, rather than a caption your code has to parse. Clef isn't the only decision model that takes images. Perplexity's Decisions API also accepts images in the state, per its [docs](https://docs.perplexity.ai/docs/decisions/quickstart). Strands Decider 2B is built on a [Qwen3.5 text decoder](https://huggingface.co/StrandsAgents/strands-decider-2B-hobson-v19), per its Hugging Face card, and Cloudflare says Jev is text-only.
+That makes it possible to classify screenshots, scanned documents, product photos or UI states and get back a typed label with a probability, rather than a caption your code has to parse. Clef isn't the only decision model that takes images. Perplexity's Decisions API also accepts images in the state, per its [docs](https://docs.perplexity.ai/docs/decisions/quickstart). Strands Decider 2B's [Hugging Face card](https://huggingface.co/StrandsAgents/strands-decider-2B-hobson-v19) describes a Qwen3.5 text decoder and doesn't mention image input, and Cloudflare says Jev is text-only.
 
-Cloudflare publishes no accuracy numbers for image inputs in the posts we read, so teams should test on their own images before relying on it. Measuring a decision model on a client's own data and fine-tuning it to fit is the kind of work we do, and the [decision models page](/decision-models/) collects the measurements we've published.
+Cloudflare publishes no accuracy numbers for image inputs in the posts we read, so teams should test on their own images before relying on it.
 
 ## Why it matters
 
