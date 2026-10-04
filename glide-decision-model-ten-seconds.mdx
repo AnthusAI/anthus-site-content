@@ -20,6 +20,10 @@ images:
 state: published
 ---
 
+import BlogImage from "../components/blog-image"
+
+**Update, October 3:** Fastino's CEO asked us to re-evaluate GLiDE, saying the company had problems during the launch. We sent the same 3,600 problems again with exactly the same request. The rerun was faster and cheaper, and less accurate: 76.4% on the open-world task, down from 82.9%, and 68.8% on the closed-world task, down from 71.8%. Jev scored 83.8% and 89.3%. The figures that follow are from the first run, on October 2; the rerun has its own section, and [both runs are side by side here](https://hard-decisions.anth.us/compare/jev-vs-glide/).
+
 An agent is about to act, and it asks a decision model one question: approve, escalate or reject. A decision model is supposed to answer in a fraction of a second, with a probability you can set a threshold on, so the software keeps moving. [Jev](/blog/making-decisions-instead-of-generating-text/), the decision model we use most, answered our benchmark's questions in a median of about 180 milliseconds. On October 1, Fastino Labs released [GLiDE](https://fastino.ai/blog/introducing-glide-the-first-thinking-decision-model), which it calls the first thinking decision model, and reported that it beats Jev. We gave GLiDE the same 3,600 reasoning problems, and the full results are on [Jev vs GLiDE](https://hard-decisions.anth.us/compare/jev-vs-glide/). Its median answer took a second, 243 answers took ten seconds or more, and the slowest took two minutes and fifteen seconds.
 
 In Daniel Kahneman's [Thinking, Fast and Slow](https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow), System 1 is fast, automatic judgment and System 2 is slow, deliberate reasoning. TypeSafe calls Jev a [System One model](https://typesafe.ai/blog/introducing-system-one-models-and-jev), one "built to make fast, structured decisions that software can use directly." Jev "generates all outputs in a single query," in parallel, with no text generated token by token, and TypeSafe puts its response time at 70 to 500 milliseconds. Its `/v1/systemone` endpoint takes a text and a list of typed questions and returns answers with probabilities.
@@ -27,16 +31,12 @@ In Daniel Kahneman's [Thinking, Fast and Slow](https://en.wikipedia.org/wiki/Thi
 Fastino is upfront that GLiDE works differently. It calls GLiDE a thinking decision model, and says its API "conforms to the System One model schema": GLiDE answers on [the same endpoint](https://docs.fastino.ai/inference/systemone), with the same request and response, and Fastino publishes a guide to migrating from TypeSafe. That made our test simple, because GLiDE got exactly the request Jev gets. It also makes a critical difference easy to overlook if you don't evaluate your options carefully. The interface is the same, but what happens behind it isn't. A model that sometimes stops to reason for a minute is a System 2 model behind a System 1 interface.
 
 <figure className="center-full-image">
-
-::image{
-  src="images/glide-decision-model-ten-seconds-latency.png"
-  layout="full"
-  alt="Histogram of seconds per decision on a log scale. Jev's 3,600 decisions sit in one narrow peak around
-  0.15 to 0.25 seconds, median 179 milliseconds. GLiDE's form two humps: a large one between half a second
-  and two seconds, median 1.0 second, and a long second hump from 3 seconds to over 100 seconds. A dashed
-  line at 10 seconds is labelled: 243 GLiDE decisions took 10 seconds or more; the slowest took 135 seconds."
-}
-
+  <BlogImage
+    images={props.pageContext.frontmatter.images}
+    name="glide-decision-model-ten-seconds-latency.png"
+    className="full"
+    alt="Histogram of seconds per decision on a log scale. Jev's 3,600 decisions sit in one narrow peak around 0.15 to 0.25 seconds, median 179 milliseconds. GLiDE's form two humps: a large one between half a second and two seconds, median 1.0 second, and a long second hump from 3 seconds to over 100 seconds. A dashed line at 10 seconds is labelled: 243 GLiDE decisions took 10 seconds or more; the slowest took 135 seconds."
+  />
   <figcaption className="image-caption">
     Time per decision on the same 3,600 problems. Jev was timed one request
     at a time, GLiDE with eight requests in flight.
@@ -54,18 +54,12 @@ One caveat on the timing. We sent GLiDE eight requests at a time, because sendin
 If the extra time is reasoning that gets billed, time and cost should rise together on the problems GLiDE finds hard. They do: across all 3,600 requests, GLiDE's billed tokens and its response time correlate at 0.94.
 
 <figure className="center-full-image">
-
-::image{
-  src="images/glide-decision-model-ten-seconds-time-and-cost-by-depth.png"
-  layout="full"
-  alt="Four bar charts by proof depth, Jev against GLiDE. Top row, average seconds per decision: Jev is 0.2
-  seconds at every depth on both tasks. On the open-world task GLiDE rises from 1.1 seconds at depth 0 to
-  3.4, 5.3, 6.7 and 6.6 seconds, then 4.4 at depth 5; on the closed-world task it is 0.9 seconds at depth 0
-  and 2.2 to 2.5 seconds at depths 1 to 5. Bottom row, list-price cost per million decisions: Jev is $22 to
-  $24 at every depth. GLiDE's open-world cost rises from $97 at depth 0 to $213, $288, $374 and $391, then
-  $305; its closed-world cost is $84 at depth 0 and $157 to $167 at depths 1 to 5."
-}
-
+  <BlogImage
+    images={props.pageContext.frontmatter.images}
+    name="glide-decision-model-ten-seconds-time-and-cost-by-depth.png"
+    className="full"
+    alt="Four bar charts by proof depth, Jev against GLiDE. Top row, average seconds per decision: Jev is 0.2 seconds at every depth on both tasks. On the open-world task GLiDE rises from 1.1 seconds at depth 0 to 3.4, 5.3, 6.7 and 6.6 seconds, then 4.4 at depth 5; on the closed-world task it is 0.9 seconds at depth 0 and 2.2 to 2.5 seconds at depths 1 to 5. Bottom row, list-price cost per million decisions: Jev is $22 to $24 at every depth. GLiDE's open-world cost rises from $97 at depth 0 to $213, $288, $374 and $391, then $305; its closed-world cost is $84 at depth 0 and $157 to $167 at depths 1 to 5."
+  />
   <figcaption className="image-caption">
     Average time and list-price cost per decision by proof depth, about 300
     problems per bar. Jev's times are from a one-at-a-time rerun.
@@ -86,21 +80,17 @@ Jev does the same work on every problem: about a fifth of a second and $23 per m
 | Kev-9B, the best open model | 58.6% | 63.8% |
 | Laya | 42.4% | 55.6% |
 
-[The Jev vs GLiDE comparison](https://hard-decisions.anth.us/compare/jev-vs-glide/) has every one of these numbers by proof depth and answer type, with example problems each model got right and wrong. We expected GLiDE to beat the open models, and it did, by more than 20 points on the open-world task. There it also matched Jev: 0.9 points behind on the same 1,800 problems, inside the margin of error, and level at every depth up to four.
+[The Jev vs GLiDE comparison](https://hard-decisions.anth.us/compare/jev-vs-glide/) has every one of these numbers by proof depth and answer type, with example problems each model got right and wrong. We expected GLiDE to beat the open models, and it did, by more than 20 points on the open-world task. There it also matched Jev: 0.9 points behind on the same 1,800 problems, inside the margin of error, and level at every depth up to four. That tie didn't survive the rerun Fastino asked for, where GLiDE was 7.4 points behind.
 
 The closed-world task went the other way. Jev was 17.5 points ahead (95% interval 15.4 to 19.6), and the gap grew with depth: about 20 points at depths two to four and 40 points at depth five, where GLiDE got 49% of the true-or-false questions right. A coin flip gets 50%.
 
 <figure className="center-full-image">
-
-::image{
-  src="images/glide-decision-model-ten-seconds-accuracy-by-depth.png"
-  layout="full"
-  alt="Two line charts of accuracy by proof depth. Open world: Jev and GLiDE overlap from 98% at depth 0 down
-  to about 73% at depth 4; at depth 5 Jev is at 81% and GLiDE at 75%. Closed world: both start at 99%; Jev
-  stays between 76% and 94% and ends at 89%; GLiDE falls steadily to 72%, 64%, 56% and ends at 49% at depth
-  5, on the 50% chance line."
-}
-
+  <BlogImage
+    images={props.pageContext.frontmatter.images}
+    name="glide-decision-model-ten-seconds-accuracy-by-depth.png"
+    className="full"
+    alt="Two line charts of accuracy by proof depth. Open world: Jev and GLiDE overlap from 98% at depth 0 down to about 73% at depth 4; at depth 5 Jev is at 81% and GLiDE at 75%. Closed world: both start at 99%; Jev stays between 76% and 94% and ends at 89%; GLiDE falls steadily to 72%, 64%, 56% and ends at 49% at depth 5, on the 50% chance line."
+  />
   <figcaption className="image-caption">
     Accuracy by proof depth, about 300 problems per point. The dashed line
     is chance: one in three for open world, one in two for closed world.
@@ -116,16 +106,12 @@ GLiDE's open-world answers also lean toward "unknown." It got 96% of the unknown
 A decision model's probability is what lets you route: act on the confident answers, send the rest to a person. So we asked of GLiDE what we [asked of GPT-6 Luna](/blog/openai-decisions-api-preview/): when it states a probability, how often is it right?
 
 <figure className="center-full-image">
-
-::image{
-  src="images/glide-decision-model-ten-seconds-reliability.png"
-  layout="full"
-  alt="Reliability chart of stated probability against actual accuracy, both tasks pooled. Jev's line climbs
-  below and near the diagonal and reaches 99% accuracy at the top. GLiDE's line starts high: 339 answers
-  stated at 50 to 70% were 93% right. It drops to 71% and 73% right for the 70 to 80% and 80 to 90% bands,
-  which hold most of its answers, then climbs to 80%, 87% and 98% in the top bands."
-}
-
+  <BlogImage
+    images={props.pageContext.frontmatter.images}
+    name="glide-decision-model-ten-seconds-reliability.png"
+    className="full"
+    alt="Reliability chart of stated probability against actual accuracy, both tasks pooled. Jev's line climbs below and near the diagonal and reaches 99% accuracy at the top. GLiDE's line starts high: 339 answers stated at 50 to 70% were 93% right. It drops to 71% and 73% right for the 70 to 80% and 80 to 90% bands, which hold most of its answers, then climbs to 80%, 87% and 98% in the top bands."
+  />
   <figcaption className="image-caption">
     Each point is a band of stated probability; the dashed diagonal is where
     a perfectly calibrated model would sit. Both tasks pooled.
@@ -155,9 +141,25 @@ You can see it in the timing by depth. On the open-world task GLiDE took more th
 
 We think the fix GLiDE needs is the one Luna needs: a probability that's higher when the answer is right. GLiDE's design depends on that more than most models do, because the same probability decides when to spend the extra time.
 
+## The rerun at Fastino's request
+
+On October 3, Fastino's CEO asked us to re-evaluate GLiDE, saying Fastino had problems during the launch. We sent the same 3,600 problems again with the same request and settings, eight at a time as before. Fastino's API reports the model as "glide" both times, so the responses don't show what changed.
+
+| | October 2 | October 3 rerun |
+| --- | --- | --- |
+| Open world accuracy (Jev: 83.8%) | 82.9% | 76.4% |
+| Closed world accuracy (Jev: 89.3%) | 71.8% | 68.8% |
+| Open world, depths 0 to 5 | 98, 88, 84, 79, 74, 75% | 98, 87, 80, 70, 61, 62% |
+| Median time per decision, open world | 1.15 s | 0.80 s |
+| Decisions taking ten seconds or more, both tasks | 243 | 180 |
+| Input tokens billed per decision, open world | 927 | 531 |
+| List-price cost per million decisions, open world | $278 | $159 |
+
+The rerun was faster and billed about 40% fewer tokens per decision, and since GLiDE bills its extra reasoning as tokens, it looks like it reasoned less. It was also less accurate where reasoning matters: on the open-world task, 141 answers changed between the runs, 129 of them from right to wrong, and most of those at depth three and deeper. On the closed-world task 61 answers changed, 57 from right to wrong. The rerun still left GLiDE ahead of every open model, and further behind Jev than before.
+
 ## What we'd tell a team choosing a decision model
 
-GLiDE is better at multi-step reasoning than any open model we've tested, by more than 20 points on the open-world task, and its thinking answers were right more than nine times in ten. But it isn't real competition for Jev. It's less accurate, by 17.5 points on the closed-world task. It's slower, five times at the median, with a tail that reaches minutes. Its confidence barely separates its right answers from its wrong ones. And it costs about ten times as much per decision.
+GLiDE is better at multi-step reasoning than any open model we've tested, by more than 20 points on the open-world task, and its thinking answers were right more than nine times in ten. But it isn't real competition for Jev. It's less accurate: 17.5 points behind on the closed-world task in the first run, and behind on both tasks in the rerun Fastino asked for. It's slower, five times at the median, with a tail that reaches minutes. Its confidence barely separates its right answers from its wrong ones. And it costs about ten times as much per decision.
 
 The reason is the design Fastino chose. A decision model competes with Jev where it can sit inside every step of an agent and answer in a fraction of a second, which is what a System One model is for. A model that sometimes takes a minute to respond isn't a System One model, however its API is shaped. Fastino says plainly that GLiDE thinks; the risk is for teams that see the same endpoint and the same request format and assume they're getting the same kind of model.
 

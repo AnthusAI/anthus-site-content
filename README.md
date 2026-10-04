@@ -32,7 +32,7 @@ Story workflow and Kanbus board live in [anthus-semantic-knowledge-base](https:/
 
 ## Voice
 
-House voice: parent `AGENTS.md` Editorial Guidelines (in the `Anth.us` site repo, one level up from this submodule). Chatticus is a separate site with its own voice — `Chattic.us-web/content/VOICE.md` does not apply here. The automated editorial-diagnose pipeline (Papyrus) also encodes this voice as a checkable profile: `publications/anthus/style-profile.yml`. Field-coverage / receipts articles use the **Agent Zoo** posture there (wonder from specifics) — no Agent Zoo desk on anth.us.
+This section is the house voice. The site repo's `AGENTS.md` Editorial Guidelines point here rather than restating it, and the Papyrus style profile encodes the same rules for Limatus. Chatticus is a separate site with its own voice — `Chattic.us-web/content/VOICE.md` does not apply here. The automated editorial-diagnose pipeline (Papyrus) also encodes this voice as a checkable profile: `publications/anthus/style-profile.yml`. Field-coverage / receipts articles use the **Agent Zoo** posture there (wonder from specifics) — no Agent Zoo desk on anth.us.
 
 - **Wonder from specifics.** Curious and alive about what people and bots actually ship — numbers and named moves, not hype.
 - Warm communal register; Anthus is a participant, not a press office.
@@ -51,7 +51,7 @@ The most damaging tell in machine-drafted copy is prose that imitates the textur
 The patterns, so they can be caught in new copy:
 
 - **Metaphor in place of the fact.** "The calibration became the weather" instead of "the calibration drifted a little each week." A comparison is allowed only after the plain fact is on the page and only if it makes the fact easier to picture. A fact in the next sentence does not rescue a metaphor in the opening paragraph, title, or excerpt: a reader who meets the metaphor first leaves before the fact arrives.
-- **Character traits for measurements.** Confidence isn't "honest," a model doesn't "admit" or "know," and a score doesn't "tell the truth." Name the measurement and what it means for the reader: "when it says 90 percent, it's right about 90 percent of the time." After that sentence has appeared, "calibrated" is fine.
+- **Character traits for measurements.** Confidence isn't "honest," a model doesn't "admit" or "know," and a score doesn't "tell the truth." Name the measurement and what it means for the reader: "when it says 90 percent, it's right about 90 percent of the time." After that sentence has appeared, "calibrated" is fine. "Honest" for the author's own stance ("the honest reading is") is a different word and stays.
 - **Abstract noun doing a person's job.** "The arithmetic had her as a side effect", "the pipeline learned to hesitate." Name who did what.
 - **The aphorism that equates a concrete thing with an abstraction.** "The scorecard is the contract." Say what the scorecard does.
 - **Riddle closers.** A short last line that sounds final and has to be decoded: "That's the whole argument." "What had collapsed was the bill." If the paragraph has a point, state the point.

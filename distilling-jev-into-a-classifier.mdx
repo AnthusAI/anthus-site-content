@@ -54,7 +54,7 @@ That 91% is the number in this piece you should trust least, and we'll say why. 
 
 What matters here is where the adaptation ended up. Jev's weights didn't move. Everything the system learned from those 140 labels is one question in English and a few coefficients you can read. That head is a labeling function: hand it any text and it returns a label and a probability. And the probability means something, which isn't a given. In [Can You Trust Jev's Confidence?](/blog/can-you-trust-jev-confidence/) we found Jev's raw confidence informative but overconfident until it's calibrated against labels, and a teacher's probabilities are only worth distilling if they mean what they say. The flywheel calibrates its head on out-of-fold predictions at every fit, which is how the recorded run got to 0.030.
 
-Calibrated heads like this are what run in production: a scorecard whose confidence is honest enough to gate on, so the confident majority clears automatically and a reviewer only sees the calls that need a person. We run that gating for a call-center QA operation across hundreds of scorecards, and the confidence has to hold up before anything downstream, a distilled student included, is allowed to trust it.
+Calibrated heads like this are what run in production: a scorecard whose stated confidence tracks its observed accuracy closely enough to gate on, so the confident majority clears automatically and a reviewer only sees the calls that need a person. We run that gating for a call-center QA operation across hundreds of scorecards, and the confidence has to hold up before anything downstream, a distilled student included, is allowed to trust it.
 
 Every item the scorecard scores is a request to a hosted model. So use the calibrated head as a teacher and train a small text classifier to imitate it. If the student holds up, most items stay on your machine.
 
@@ -248,7 +248,7 @@ A student can't fix what its teacher gets wrong on a slice; it copies it. So the
 
 When the scorecard changes, because the gate promoted a refit or a steering round added a question, the labels change and the student is stale. Relabel the pool and distill again. Training took two minutes here. That's continuous learning in the literal sense: reviewer feedback improves the teacher, the teacher relabels, the student retrains, and the hosted model stays off the hot path.
 
-That's the same loop that keeps a production classifier honest after it ships: a sample of the teacher's verdicts on watched slices, disagreements labeled and fed back, and an audit trail of what changed and when. It's how a system keeps improving month over month instead of quietly drifting once nobody's watching the accuracy number.
+That's the same loop that keeps a production classifier's accuracy measured after it ships: a sample of the teacher's verdicts on watched slices, disagreements labeled and fed back, and an audit trail of what changed and when. It's how a system keeps improving month over month instead of quietly drifting once nobody's watching the accuracy number.
 
 ## What we haven't tested
 
@@ -278,4 +278,4 @@ make student
 
 It needs Apple silicon and about 1.2 GB of downloads. From a fresh clone it took about 11 minutes on an M1 Max, excluding downloads: about 4 asking Laya the topic question and about 6 training. It prints three lines, roughly 0.91 (soft), 0.91 (hard) and 0.94 (ceiling), against a teacher at 0.89. It runs one seed where our table uses three, and it needs no Jev key because the recorded answers ship with the repo.
 
-When you want the student behind an endpoint, [text-classifier-distillation](https://github.com/AnthusAI/text-classifier-distillation) is the tool for that half.
+When you want the student behind an endpoint, [text-classifier-distillation](https://github.com/AnthusAI/text-classifier-distillation) is the tool for that half. The loop that produced the teacher, step by step with the measurement behind each step, is on the [decision models page](/decision-models/).
