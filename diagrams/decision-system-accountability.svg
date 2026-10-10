@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">People configure the deployed decision</title>
+  <desc id="description">The deploying team chooses inputs, sets the operating threshold, and grants the application authority to act. Inputs flow to a model, then through an operating rule to an outcome.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M1 1 7 4 1 7" fill="none" stroke="#635b68" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+    <marker id="choice" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M1 1 7 4 1 7" fill="none" stroke="#ac7628" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  </defs>
+  <rect width="1200" height="630" fill="#fbf9fb"/>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#302735">
+    <text x="64" y="70" font-size="34" font-weight="600">People configure the deployed decision</text>
+    <text x="64" y="105" font-size="20" fill="#635b68">The model is one part of the system they put into use.</text>
+
+    <g fill="#d8a74a">
+      <circle cx="600" cy="164" r="17"/>
+      <path d="M571 209 Q571 180 600 180 Q629 180 629 209 Z"/>
+    </g>
+    <text x="650" y="181" font-size="23" font-weight="600">Deploying team</text>
+    <g fill="none" stroke="#ac7628" stroke-width="2" stroke-dasharray="5 7" stroke-linecap="round">
+      <path d="M600 218 V240 H180 V325" marker-end="url(#choice)"/>
+      <path d="M600 240 H740 V325" marker-end="url(#choice)"/>
+      <path d="M740 240 H1020 V325" marker-end="url(#choice)"/>
+    </g>
+    <g text-anchor="middle" font-size="19" fill="#7f5722">
+      <rect x="100" y="272" width="160" height="29" fill="#fbf9fb"/>
+      <text x="180" y="294">Chooses inputs</text>
+      <rect x="650" y="272" width="180" height="29" fill="#fbf9fb"/>
+      <text x="740" y="294">Sets threshold</text>
+      <rect x="927" y="272" width="186" height="29" fill="#fbf9fb"/>
+      <text x="1020" y="294">Grants authority</text>
+    </g>
+
+    <g fill="none" stroke="#635b68" stroke-width="2" marker-end="url(#arrow)">
+      <path d="M246 390 H386"/>
+      <path d="M522 390 H664"/>
+      <path d="M814 390 H951"/>
+    </g>
+    <g text-anchor="middle" font-size="17" fill="#635b68">
+      <text x="313" y="374">request</text>
+      <text x="592" y="374">score</text>
+      <text x="883" y="374">action</text>
+    </g>
+
+    <g stroke="#635b68" stroke-width="2.5" fill="#efebf0" stroke-linejoin="round">
+      <rect x="124" y="340" width="112" height="104" rx="9"/>
+      <path d="M158 357 H192 L211 376 V426 H158 Z" fill="#fbf9fb"/>
+      <path d="M191 357 V376 H210 M169 390 H198 M169 402 H198 M169 414 H188" fill="none"/>
+    </g>
+    <circle cx="460" cy="390" r="54" fill="#d5e9dc" stroke="#5c9c72" stroke-width="2.5"/>
+    <g fill="none" stroke="#427b56" stroke-width="2.5" stroke-linecap="round">
+      <rect x="437" y="367" width="46" height="46" rx="8"/>
+      <path d="M447 357 V367 M460 357 V367 M473 357 V367 M447 413 V423 M460 413 V423 M473 413 V423 M427 377 H437 M427 390 H437 M427 403 H437 M483 377 H493 M483 390 H493 M483 403 H493"/>
+      <path d="M448 401 V389 M460 401 V379 M472 401 V386" stroke-width="4"/>
+    </g>
+    <rect x="682" y="340" width="116" height="104" rx="12" fill="#e5deef"/>
+    <g fill="none" stroke="#685880" stroke-width="3" stroke-linecap="round">
+      <path d="M704 367 H776 M704 391 H776 M704 415 H776"/>
+      <circle cx="727" cy="367" r="7" fill="#e5deef"/>
+      <circle cx="759" cy="391" r="7" fill="#e5deef"/>
+      <circle cx="738" cy="415" r="7" fill="#e5deef"/>
+    </g>
+    <rect x="969" y="340" width="102" height="104" rx="9" fill="#efebf0" stroke="#635b68" stroke-width="2.5"/>
+    <g fill="none" stroke="#635b68" stroke-width="2.5" stroke-linecap="round">
+      <path d="M990 358 H1049 M990 371 H1030"/>
+      <rect x="988" y="390" width="63" height="33" rx="5"/>
+      <path d="M1003 406 H1036 M1028 398 1036 406 1028 414"/>
+    </g>
+
+    <g text-anchor="middle" font-size="25" font-weight="600">
+      <text x="180" y="493">Inputs</text>
+      <text x="460" y="493">Model</text>
+      <text x="740" y="493">Operating rule</text>
+      <text x="1020" y="493">Outcome</text>
+    </g>
+    <g text-anchor="middle" font-size="18" fill="#635b68">
+      <text x="180" y="526">Data and question</text>
+      <text x="460" y="526">Returns a score</text>
+      <text x="740" y="526">Threshold and permissions</text>
+      <text x="1020" y="526">Application acts</text>
+    </g>
+    <path d="M64 559 H1136" stroke="#e3dde5"/>
+    <text x="64" y="596" font-size="18" fill="#635b68">Record the inputs, model version, operating rule, and resulting action.</text>
+  </g>
+</svg>
