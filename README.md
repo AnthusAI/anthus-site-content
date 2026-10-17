@@ -61,3 +61,7 @@ The patterns, so they can be caught in new copy:
 - **The reversal staged as a discovery.** "The bug wasn't in the model. It was in the question." Allowed once per piece, and only when it is literally true.
 
 The test before publishing: a reader who has never seen this site can restate each sentence in plain words without guessing at what it alludes to. If the plain restatement is clearer, use it. If there is no plain restatement, the line was decoration. Limatus runs a partial version of this check from the Anthus style profile; the rest is the editor's job.
+
+## License
+
+The writing and images in this repository are licensed under [Creative Commons Attribution 4.0 International](LICENSE) (CC BY 4.0): you may share and adapt them with credit to Anthus AI Solutions. Source code and code samples are licensed under the [MIT License](LICENSE-CODE).
