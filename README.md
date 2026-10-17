@@ -64,4 +64,4 @@ The test before publishing: a reader who has never seen this site can restate ea
 
 ## License
 
-The writing and images in this repository are licensed under [Creative Commons Attribution 4.0 International](LICENSE) (CC BY 4.0): you may share and adapt them with credit to Anthus AI Solutions. Source code and code samples are licensed under the [MIT License](LICENSE-CODE).
+Everything in this repository, writing and code alike, is licensed under the [MIT License](LICENSE).
