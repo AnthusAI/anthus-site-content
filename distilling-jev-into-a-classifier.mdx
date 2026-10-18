@@ -3,7 +3,8 @@ title: "Distilling an Aligned Jev System into a Classifier You Own"
 slug: "distilling-jev-into-a-classifier"
 date: "2026-09-21"
 authors:
-  - author: <a href="/ryan">Ryan Porter</a>
+  - name: Ryan Porter
+    url: /ryan
 tags:
   - project
   - research
@@ -24,21 +25,13 @@ images:
 state: published
 repository: "https://github.com/AnthusAI/Jev-Flywheel"
 ---
-
-<figure className="center-full-image">
-
 ::image{
   src="images/distilling-jev-into-a-classifier-cover.png"
   layout="full"
   alt="Two bars of accuracy against human labels: the hosted, Jev-based teacher at 89 percent and the small
   local student at 91 percent."
+  caption="The teacher is a hosted, Jev-based scorer. The student is a small model you run yourself, trained only on the teacher's grades."
 }
-
-  <figcaption className="image-caption">
-    The teacher is a hosted, Jev-based scorer. The student is a small model you
-    run yourself, trained only on the teacher's grades.
-  </figcaption>
-</figure>
 
 A hosted AI model is the easy way to start scoring text: no training data, no GPUs, an answer in a quarter of a second. It's also a meter that never stops running. Every ticket, transcript or review you score is another request, for as long as you keep scoring.
 
@@ -60,8 +53,6 @@ Every item the scorecard scores is a request to a hosted model. So use the calib
 
 ## The process, in six steps
 
-<figure className="center-full-image">
-
 ::image{
   src="images/distilling-jev-into-a-classifier-pipeline.png"
   layout="full"
@@ -70,14 +61,8 @@ Every item the scorecard scores is a request to a hosted model. So use the calib
   DistilBERT student trains on those soft labels from raw text alone. One temperature is fitted on the 140
   human-labeled items the student never saw. A per-slice gate lets the student serve where it's within 2
   points of the teacher on at least 30 items; the teacher answers where it fails or confidence is low."
+  caption="The whole process. The teacher is drawn in dark ink instead of an engine colour because it's a hybrid: Jev's answers plus one question answered by Laya. Students are gray, as DistilBERT is everywhere in this series."
 }
-
-  <figcaption className="image-caption">
-    The whole process. The teacher is drawn in dark ink instead of an engine
-    colour because it's a hybrid: Jev's answers plus one question answered by
-    Laya. Students are gray, as DistilBERT is everywhere in this series.
-  </figcaption>
-</figure>
 
 [`scripts/distill_student.py`](https://github.com/AnthusAI/Jev-Flywheel/blob/main/scripts/distill_student.py) runs all of it, and it's built to be rerun whenever the teacher improves.
 
@@ -110,8 +95,6 @@ Three students, three seeds each, all scored on those 3,521 items. We recomputed
 | A reference label on every pool item (ceiling) | 0.938 (0.937 to 0.940) | 0.896 | 0.026 → 0.019 |
 | *The teacher itself* | *0.890* | | |
 
-<figure className="center-full-image">
-
 ::image{
   src="images/distilling-jev-into-a-classifier-students.png"
   layout="full"
@@ -119,14 +102,8 @@ Three students, three seeds each, all scored on those 3,521 items. We recomputed
   hard-label student 0.908, soft-label student 0.912, ceiling 0.938. Right, calibration error before and
   after one temperature: soft 0.038 to 0.033 with T = 0.42, hard 0.064 to 0.030 with T = 1.56, ceiling 0.026
   to 0.019 with T = 1.36."
+  caption="Dots are means of three seeds. The accuracy axis starts at 0.86, so the gaps look bigger than they are: teacher to soft student is 2.2 points. The script didn't record the teacher's calibration error on this set."
 }
-
-  <figcaption className="image-caption">
-    Dots are means of three seeds. The accuracy axis starts at 0.86, so the gaps
-    look bigger than they are: teacher to soft student is 2.2 points. The script
-    didn't record the teacher's calibration error on this set.
-  </figcaption>
-</figure>
 
 ### The student beat its teacher, and that's the corpus talking
 
@@ -140,8 +117,6 @@ Soft beat hard by 0.4 points, 0.912 against 0.908, which is about the seed sprea
 
 ### The gate passed 10 of 11 slices in every seed
 
-<figure className="center-full-image">
-
 ::image{
   src="images/distilling-jev-into-a-classifier-slice-gate.png"
   layout="full"
@@ -149,13 +124,8 @@ Soft beat hard by 0.4 points, 0.912 against 0.908, which is about the seed sprea
   gate line at minus 2 points. Strong and medium slices are at zero. Weak workplace is plus 5.4 points, weak
   neither plus 4.2, weak sports plus 1.2, neutral neither plus 4.0, neutral sports plus 2.0. Neutral
   workplace averages minus 1.3, and one seed at 0.707 against the teacher's 0.740 falls below the gate."
+  caption="The soft-label student, slice by slice. Bars are the mean of three seeds and dots are the seeds. The open circle is the one failure."
 }
-
-  <figcaption className="image-caption">
-    The soft-label student, slice by slice. Bars are the mean of three seeds and
-    dots are the seeds. The open circle is the one failure.
-  </figcaption>
-</figure>
 
 The soft student passed all eleven slices in two seeds and ten in the third. The slice that fails is neutral workplace text: 150 items, 0.727 on average against the teacher's 0.740, and 0.707 in the seed that fails. The hard-label student also drops one slice in one seed, and it's a different one (neutral sports, 0.811 against 0.839). The weak spot moves with the seed and the target, so run more than one seed before you believe a gate.
 
@@ -165,8 +135,6 @@ An overall number can't show this. The student is up 2.2 points overall and down
 
 ### The cascade didn't help, and that's a result
 
-<figure className="center-full-image">
-
 ::image{
   src="images/distilling-jev-into-a-classifier-cascade.png"
   layout="full"
@@ -174,13 +142,8 @@ An overall number can't show this. The student is up 2.2 points overall and down
   student answering 97% of items, 0.911 at 0.7 with 93%, 0.908 at 0.8 with 89%, 0.902 at 0.9 with 81%, 0.897
   at 0.95 with 76%. A dashed line marks the student alone at 0.912 and a dotted line the teacher alone at
   0.890."
+  caption="Every item handed back to the teacher cost accuracy, because the teacher is worse on exactly those items."
 }
-
-  <figcaption className="image-caption">
-    Every item handed back to the teacher cost accuracy, because the teacher is
-    worse on exactly those items.
-  </figcaption>
-</figure>
 
 The cascade scored 0.911 at a threshold of 0.6, then 0.911, 0.908, 0.902 and 0.897 at 0.7, 0.8, 0.9 and 0.95, against 0.912 for the student alone. At none of the five thresholds did it win. The student matches or beats the teacher on almost every slice, so deferring swaps a better answer for a worse one. (For the hard-label student one threshold lands 0.2 points above the student alone, which is inside the seed spread.) A cascade earns its keep when the student is weaker than its teacher. We'd still build it, because on messier data we expect it to be.
 
@@ -192,8 +155,6 @@ Fine-tuning took about two minutes per model on an M1 Max. At batch size one, th
 
 You could skip the teacher and train DistilBERT on the 140 human labels directly. The repo's fine-tune-Laya study did that as a baseline (its arm D; [Jev vs Laya](/blog/jev-vs-laya/) covers the study in full) and scored it on the identical 3,521 items, so architecture, human labels and test set all match.
 
-<figure className="center-full-image">
-
 ::image{
   src="images/distilling-jev-into-a-classifier-label-source.png"
   layout="full"
@@ -201,13 +162,8 @@ You could skip the teacher and train DistilBERT on the 140 human labels directly
   directly on the 140 human labels: 0.828. DistilBERT distilled from a head fitted on those 140 labels over
   5,140 unlabeled items: 0.912. The ceiling with a label on every item: 0.938. A dotted line marks the
   teacher at 0.890."
+  caption="Same model, same 140 human labels, same held-out items. Bars are means of three seeds; whiskers run from the lowest seed to the highest."
 }
-
-  <figcaption className="image-caption">
-    Same model, same 140 human labels, same held-out items. Bars are means of
-    three seeds; whiskers run from the lowest seed to the highest.
-  </figcaption>
-</figure>
 
 | DistilBERT, 66M parameters | Human labels used | Training items | Accuracy, 3,521 held-out (min to max) |
 |---|---|---|---|

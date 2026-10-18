@@ -3,7 +3,8 @@ title: "Everything as Code: Source a Runtime Can Reject"
 slug: "everything-as-code-integration"
 date: "2025-11-30"
 authors:
-  - author: <a href="/ryan">Ryan Porter</a>
+  - name: Ryan Porter
+    url: /ryan
 tags: ["architecture", "AI", "devops"]
 excerpt: |
   The useful question when integrating AI with a real system is not whether a model can read it. It is whether anything can say no to what the model writes, before it touches production.
@@ -128,11 +129,7 @@ Custom grammars help — implemented with ANTLR, YACC, or Lark, you get sharper 
 
 ## DeckBot: the same pattern, pointed at slides
 
-<div style={{ float: "right", width: "300px", marginLeft: "20px", marginBottom: "20px" }}>
-
 ::image{src="images/deckbot-logo.png" layout="right-aligned" alt="DeckBot Logo"}
-
-</div>
 
 A presentation is close to the worst case for this pattern. It is a binary blob in a proprietary format, edited through a GUI, with no text representation and nothing resembling a compiler.
 

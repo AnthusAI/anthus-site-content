@@ -3,7 +3,8 @@ title: "The One-Word Test: How Jev and Laya Read Gender, Race and Age"
 slug: "one-word-test"
 date: "2026-09-22"
 authors:
-  - author: <a href="/ryan">Ryan Porter</a>
+  - name: Ryan Porter
+    url: /ryan
 tags:
   - client-acquisition
   - research
@@ -25,9 +26,7 @@ state: published
 repository: "https://github.com/AnthusAI/Jev-Flywheel"
 ---
 
-Change one word in a professional bio, "he" to "she", and ask a model the same question twice. <mark>If the verdict moves, the pronoun moved it, because nothing else changed.</mark> That's the one-word test, and the share of verdicts that move is the number we report. We ran it on the two fast decision models anyone can get: [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev), a commercial service, and [Laya](https://huggingface.co/convaiinnovations/laya), a free open-weights model; their makers call them System 1 models, after Kahneman's name for fast, instinctive thinking. Four occupation pairs, 2,000 real bios per pair, first names blanked, both models asked twice. Laya's verdict moved on 8 to 18 bios in 100 and Jev's on 1 to 4, in the stereotype's direction nearly every time. On those four the size of the effect rose with how gendered the pair is; three more pairs, added later, kept the direction and broke the order. The story, for anyone who doesn't need the method, is [We Told the AI She Was a Woman. It Demoted Her](/blog/encoding-prejudice/)
-
-<figure className="center-full-image">
+Change one word in a professional bio, "he" to "she", and ask a model the same question twice. ==If the verdict moves, the pronoun moved it, because nothing else changed.== That's the one-word test, and the share of verdicts that move is the number we report. We ran it on the two fast decision models anyone can get: [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev), a commercial service, and [Laya](https://huggingface.co/convaiinnovations/laya), a free open-weights model; their makers call them System 1 models, after Kahneman's name for fast, instinctive thinking. Four occupation pairs, 2,000 real bios per pair, first names blanked, both models asked twice. Laya's verdict moved on 8 to 18 bios in 100 and Jev's on 1 to 4, in the stereotype's direction nearly every time. On those four the size of the effect rose with how gendered the pair is; three more pairs, added later, kept the direction and broke the order. The story, for anyone who doesn't need the method, is [We Told the AI She Was a Woman. It Demoted Her](/blog/encoding-prejudice/)
 
 ::image{
   src="images/one-word-test-cover.png"
@@ -36,15 +35,8 @@ Change one word in a professional bio, "he" to "she", and ask a model the same q
   real professional bios per job: teacher or professor 7.6 percent, surgeon or physician 8.0, nurse or
   physician 13.5, paralegal or attorney 17.8. Headline: four jobs, one word changed; the more gendered, the
   more it moved."
+  caption="Laya, the open model, on four occupation pairs: 2,000 real bios each, first names blanked, one pronoun swapped. The bars are the share of verdicts that changed, and they rise in the order the gap in women's share predicts. Jev moved too, at about a fifth the size."
 }
-
-  <figcaption className="image-caption">
-    Laya, the open model, on four occupation pairs: 2,000 real bios each, first
-    names blanked, one pronoun swapped. The bars are the share of verdicts that
-    changed, and they rise in the order the gap in women's share predicts. Jev
-    moved too, at about a fifth the size.
-  </figcaption>
-</figure>
 
 Ask Jev or Laya about a bio and you get `physician`, 0.83, and nothing else. There's nothing to read, so the only way to know what a fast model is reading is to change one thing and ask again.
 
@@ -71,8 +63,6 @@ Laya is a 421M-parameter ModernBERT with open weights, free to run, and [we've h
 | Men's bios that flipped when rewritten as women's, and moved to "physician" | 15 of 16 | 138 of 139 |
 | Recall for "surgeon", women's bios vs men's | 0.985 vs 0.999 | 0.221 vs 0.397 |
 
-<figure className="center-full-image">
-
 ::image{
   src="images/encoding-prejudice-flips.png"
   layout="full"
@@ -81,26 +71,16 @@ Laya is a 421M-parameter ModernBERT with open weights, free to run, and [we've h
   Laya 8.0 percent, no floor. Race, a Black full name against a white one, 500 bios: Jev 0.4 percent against
   a 0.4 percent floor, Laya 2.6 percent against a 3.8 percent floor. Age, 34 against 61, 1,231 bios: Jev 1.3
   percent against a 0.9 percent floor, Laya 1.0 percent against a 0.5 percent floor."
+  caption="One method, three characteristics, two engines. Each solid bar is the share of verdicts that changed; the faint bar behind it is the control floor, how often the verdict changed under an equally trivial edit (a second white name, a one-year age change). The pronoun swap has no floor because the swap is the only edit."
 }
 
-  <figcaption className="image-caption">
-    One method, three characteristics, two engines. Each solid bar is the share
-    of verdicts that changed; the faint bar behind it is the control floor, how
-    often the verdict changed under an equally trivial edit (a second white
-    name, a one-year age change). The pronoun swap has no floor because the swap
-    is the only edit.
-  </figcaption>
-</figure>
-
-<mark>About one bio in twelve changes its answer when "he" becomes "she", and 138 of the 139 men's bios that flipped went toward "physician", the lower-prestige label in this pair.</mark> The recall gap is the one the 2019 paper warned about, in its worst form: Laya finds 40% of the male surgeons and 22% of the female ones.
+==About one bio in twelve changes its answer when "he" becomes "she", and 138 of the 139 men's bios that flipped went toward "physician", the lower-prestige label in this pair.== The recall gap is the one the 2019 paper warned about, in its worst form: Laya finds 40% of the male surgeons and 22% of the female ones.
 
 Picture where this model ends up: a developer picks it because it's free and answers in 18 milliseconds, benchmarks it on a labelled sample, and ships it in front of a credentialing queue. Nobody in that story was thinking about who the model judges.
 
 ## Four decisions, two engines
 
 One pair could be a quirk of surgery, so we pre-registered three more, chosen for where the stereotype points and how hard: teacher or professor (a 15-point gap in women's share, the small-gap control), nurse or physician (41 points, the pair the stereotype names), and paralegal or attorney (47 points, a prestige pair in law, which a surgery-specific story can't reach). Same corpus, 1,000 bios per label, same redaction, same swap, engines only, 12,000 Jev requests priced before they were sent. The prediction on record was that the flip rate would rise with the gap.
-
-<figure className="center-full-image">
 
 ::image{
   src="images/encoding-prejudice-pairs.png"
@@ -109,28 +89,18 @@ One pair could be a quirk of surgery, so we pre-registered three more, chosen fo
   by the gap in women's share between the two labels, with 95 percent intervals. Teacher or professor,
   15-point gap: Jev 1.2 percent, Laya 7.6. Surgeon or physician, 35: Jev 1.1, Laya 8.0. Nurse or physician,
   41: Jev 3.3, Laya 13.5. Paralegal or attorney, 47: Jev 3.9, Laya 17.8."
+  caption="The first four decisions, two engines, 2,000 bios per pair. On these four Laya's flip rate rose in the exact order of the gap in women's share; Jev's too, at about a fifth the size. Three pairs added later kept the direction and broke the order (see below). The surgeon pair has no interval because it predates the bootstrap convention."
 }
 
-  <figcaption className="image-caption">
-    The first four decisions, two engines, 2,000 bios per pair. On these four
-    Laya's flip rate rose in the exact order of the gap in women's share; Jev's
-    too, at about a fifth the size. Three pairs added later kept the direction
-    and broke the order (see below). The surgeon pair has no interval because it
-    predates the bootstrap convention.
-  </figcaption>
-</figure>
+It did, on those four. ==Laya: teacher/professor 7.65%, surgeon/physician 7.95%, nurse/physician 13.5%, paralegal/attorney 17.85%, with 95% intervals of about ±1.2 to ±1.7 points, 100% of flips toward the more-female label on every new pair, and on paralegal/attorney a recall gap for "attorney" of 8.8 points between women's and men's bios.== Jev: 1.25%, 1.05%, 3.3% and 3.9%, direction 75% to 100%. We also predicted Jev would stay under 1.5% on every pair. It didn't: the pre-registration's "Jev exceeds 3% on any pair" clause fired on two of four, so its near-invariance is decision-specific. Roughly a fifth of Laya's on every pair, and not negligible on the most gendered ones.
 
-It did, on those four. <mark>Laya: teacher/professor 7.65%, surgeon/physician 7.95%, nurse/physician 13.5%, paralegal/attorney 17.85%, with 95% intervals of about ±1.2 to ±1.7 points, 100% of flips toward the more-female label on every new pair, and on paralegal/attorney a recall gap for "attorney" of 8.8 points between women's and men's bios.</mark> Jev: 1.25%, 1.05%, 3.3% and 3.9%, direction 75% to 100%. We also predicted Jev would stay under 1.5% on every pair. It didn't: the pre-registration's "Jev exceeds 3% on any pair" clause fired on two of four, so its near-invariance is decision-specific. Roughly a fifth of Laya's on every pair, and not negligible on the most gendered ones.
-
-We first wrote that the ordering was the strongest result here. Then we added three pairs, pre-registered the same way, and it broke. A control pair where women hold both titles about equally, journalist (49.5%) or professor (45.1%), flipped on 1.8% of bios for Laya with no direction (35% toward journalist) and 0.8% for Jev: the control behaves like a control. But architect (23.7%) or interior designer (80.8%), the largest gap in the corpus, flipped only 5.1% on Laya and 4.4% on Jev, and dietitian (92.9%) or physician (49.4%) 6.5% and 2.1%. The direction held on every gapped pair, 93% to 100% toward the more-female title on Laya, 100% on Jev. The size did not follow the gap. A better measure of the size is the shift in the probability of the less-female title when a man's bio is rewritten as a woman's: for Laya, −6.0 points on teacher/professor, −8.7 on surgeon/physician, −5.6 on nurse/physician, −3.2 on dietitian/physician, −10.8 on paralegal/attorney, −3.6 on architect/interior designer, every one clear of zero, and +0.8 on the control; for Jev, −0.9, −1.1, −2.8, −1.4, −2.0 and −2.9, and −0.3 on the control. Flip rates also depend on how many bios sit near the decision line, which varies by pair. So the claim that survives seven pairs is the direction, not the ordering: <mark>the engine moves every profession's women toward the lesser title; how far varies by job for reasons the gender gap alone doesn't explain.</mark> The three added pairs, and the rest of the expanded benchmark, are in the [Biased-Decisions](https://github.com/AnthusAI/Biased-Decisions) repo.
+We first wrote that the ordering was the strongest result here. Then we added three pairs, pre-registered the same way, and it broke. A control pair where women hold both titles about equally, journalist (49.5%) or professor (45.1%), flipped on 1.8% of bios for Laya with no direction (35% toward journalist) and 0.8% for Jev: the control behaves like a control. But architect (23.7%) or interior designer (80.8%), the largest gap in the corpus, flipped only 5.1% on Laya and 4.4% on Jev, and dietitian (92.9%) or physician (49.4%) 6.5% and 2.1%. The direction held on every gapped pair, 93% to 100% toward the more-female title on Laya, 100% on Jev. The size did not follow the gap. A better measure of the size is the shift in the probability of the less-female title when a man's bio is rewritten as a woman's: for Laya, −6.0 points on teacher/professor, −8.7 on surgeon/physician, −5.6 on nurse/physician, −3.2 on dietitian/physician, −10.8 on paralegal/attorney, −3.6 on architect/interior designer, every one clear of zero, and +0.8 on the control; for Jev, −0.9, −1.1, −2.8, −1.4, −2.0 and −2.9, and −0.3 on the control. Flip rates also depend on how many bios sit near the decision line, which varies by pair. So the claim that survives seven pairs is the direction, not the ordering: ==the engine moves every profession's women toward the lesser title; how far varies by job for reasons the gender gap alone doesn't explain.== The three added pairs, and the rest of the expanded benchmark, are in the [Biased-Decisions](https://github.com/AnthusAI/Biased-Decisions) repo.
 
 ## Best case, measured: the hosted model, and why a few percent isn't zero
 
-Jev is the best case we've measured, and we should say so plainly. <mark>On surgeon or physician its verdict moved on 21 of 2,000 bios, and its recall for "surgeon" is 0.985 on women's bios against 0.999 on men's.</mark> Across the four decisions it flips on 1 to 4%, about a fifth of Laya on each. Whatever TypeSafe did to get there, they evidently did something.
+Jev is the best case we've measured, and we should say so plainly. ==On surgeon or physician its verdict moved on 21 of 2,000 bios, and its recall for "surgeon" is 0.985 on women's bios against 0.999 on men's.== Across the four decisions it flips on 1 to 4%, about a fifth of Laya on each. Whatever TypeSafe did to get there, they evidently did something.
 
-But 1 to 4% is small only in a table. <mark>Put this model in front of a million decisions a year, a modest volume for a triage system, and 1% is ten thousand people whose outcome depends on a pronoun; on the most gendered pairs, 4% is forty thousand.</mark> And the flips aren't noise: when Jev's verdict moved on a man's bio rewritten as a woman's, it moved toward "physician" 15 times out of 16, and toward "nurse" every time. The person on the wrong end is a woman surgeon read as something less, ten thousand times, quietly, by the best system in this comparison.
-
-<figure className="center-full-image">
+But 1 to 4% is small only in a table. ==Put this model in front of a million decisions a year, a modest volume for a triage system, and 1% is ten thousand people whose outcome depends on a pronoun; on the most gendered pairs, 4% is forty thousand.== And the flips aren't noise: when Jev's verdict moved on a man's bio rewritten as a woman's, it moved toward "physician" 15 times out of 16, and toward "nurse" every time. The person on the wrong end is a woman surgeon read as something less, ten thousand times, quietly, by the best system in this comparison.
 
 ::image{
   src="images/encoding-prejudice-direction.png"
@@ -138,22 +108,14 @@ But 1 to 4% is small only in a table. <mark>Put this model in front of a million
   alt="Bar chart of verdicts that flipped, with the stereotyped direction drawn solid. Gender, a man's bio
   rewritten as a woman's and flipped to physician: Jev 15 of 16, Laya 138 of 139. Age, 34 rewritten as 61 and
   flipped to surgeon: Jev 8 of 16, Laya 10 of 12."
+  caption="Solid is the direction the stereotype predicts; the pale remainder went the other way. Jev's gender base is 16 flips, so one flip the other way would move its share by nine points."
 }
-
-  <figcaption className="image-caption">
-    Solid is the direction the stereotype predicts; the pale remainder went the
-    other way. Jev's gender base is 16 flips, so one flip the other way would
-    move its share by nine points.
-  </figcaption>
-</figure>
 
 The same residue shows up when we swap a name instead of a pronoun. Jev's one clearly nonzero race effect is a third of a point of probability, in the stereotyped direction, for Black names. It's the largest of the four groups we tested, so part of it may be the multiple-comparisons tax.
 
 ## The shortlist
 
 A shortlist turns a verdict-level flip rate into the number a compliance review would compute. An invented employer gets 2,000 applications, the 1,000 real attorney bios and the 1,000 real paralegal bios, asks the engine "paralegal or attorney?", ranks by its probability of "attorney", and shortlists the top 500. The scenario is constructed: a real corpus, a real question, an invented employer. It's a component of what ranking tools do, and it isn't a ranking tool.
-
-<figure className="center-full-image">
 
 ::image{
   src="images/encoding-prejudice-shortlist.png"
@@ -163,19 +125,12 @@ A shortlist turns a verdict-level flip rate into the number a compliance review 
   four-fifths ratio of 0.85 with a 95 percent interval of 0.73 to 0.96. Laya: 29 percent of women and 60
   percent of men, a ratio of 0.48 with an interval of 0.40 to 0.55. A dashed line marks four-fifths of the
   men's rate, the EEOC rule of thumb."
+  caption="The constructed shortlist: 1,000 real attorney and 1,000 real paralegal bios ranked by each engine's P(attorney), top 500 kept. Solid bars are women attorneys, pale bars men. The dashed line is four-fifths of the men's rate; a women's bar below it is adverse impact by the EEOC rule of thumb."
 }
 
-  <figcaption className="image-caption">
-    The constructed shortlist: 1,000 real attorney and 1,000 real paralegal bios
-    ranked by each engine's P(attorney), top 500 kept. Solid bars are women
-    attorneys, pale bars men. The dashed line is four-fifths of the men's rate;
-    a women's bar below it is adverse impact by the EEOC rule of thumb.
-  </figcaption>
-</figure>
+Among the 1,000 real attorneys, 419 women and 581 men, Laya shortlists 28.9% of the women and 60.1% of the men. That's ==a four-fifths ratio of 0.48 [0.40, 0.55]==, below the 0.80 line the [EEOC's Uniform Guidelines](https://www.law.cornell.edu/cfr/text/29/1607.4) use as the rule of thumb for adverse impact, and below it at every cut we tried: 0.41 at the top 250, 0.76 even at a top 1,000 that admits half the applicants. Jev shortlists 44.4% of the women attorneys and 52.1% of the men, a ratio of 0.85 [0.73, 0.96]: above the line, with an interval that reaches it. One mechanical detail matters once anything is fitted on top: Jev reports two-decimal probabilities, so a top-500 cut sits inside a block of 733 bios tied at P = 1.00. A tie-fair ratio, which breaks ties at random, comes out at 0.851, the same as the reported one; but any question a fitted head adds becomes the tie-breaker for the whole block.
 
-Among the 1,000 real attorneys, 419 women and 581 men, Laya shortlists 28.9% of the women and 60.1% of the men. That's <mark>a four-fifths ratio of 0.48 [0.40, 0.55]</mark>, below the 0.80 line the [EEOC's Uniform Guidelines](https://www.law.cornell.edu/cfr/text/29/1607.4) use as the rule of thumb for adverse impact, and below it at every cut we tried: 0.41 at the top 250, 0.76 even at a top 1,000 that admits half the applicants. Jev shortlists 44.4% of the women attorneys and 52.1% of the men, a ratio of 0.85 [0.73, 0.96]: above the line, with an interval that reaches it. One mechanical detail matters once anything is fitted on top: Jev reports two-decimal probabilities, so a top-500 cut sits inside a block of 733 bios tied at P = 1.00. A tie-fair ratio, which breaks ties at random, comes out at 0.851, the same as the reported one; but any question a fitted head adds becomes the tie-breaker for the whole block.
-
-A ratio mixes the model reading gender with women's bios being written differently, so the counterfactual isolates the cause. Re-rank each attorney alone with the pronouns swapped. On Laya, 82 of the 419 women attorneys make the top 500 only if read as men, one woman attorney in five; 147 of the 581 men fall out of it if read as women. On Jev the counts are 15 and 21. And at every cut, on both engines, zero women lose a place by being read as men and zero men gain one by being read as women. The direction is the stereotype's, without exception. <mark>We predicted adverse impact for Laya at about 0.75 and got 0.48; we predicted Jev at about 0.93 and got 0.85.</mark>
+A ratio mixes the model reading gender with women's bios being written differently, so the counterfactual isolates the cause. Re-rank each attorney alone with the pronouns swapped. On Laya, 82 of the 419 women attorneys make the top 500 only if read as men, one woman attorney in five; 147 of the 581 men fall out of it if read as women. On Jev the counts are 15 and 21. And at every cut, on both engines, zero women lose a place by being read as men and zero men gain one by being read as women. The direction is the stereotype's, without exception. ==We predicted adverse impact for Laya at about 0.75 and got 0.48; we predicted Jev at about 0.93 and got 0.85.==
 
 We also ran our learning loop on this pair, and a question that passed its invariance gate made the shortlist worse, which is where [Can You Fix It?](/blog/can-you-fix-it/) picks up.
 
@@ -185,8 +140,6 @@ We gate the same way in production: a proposed scorecard change is scored on hel
 
 Race isn't marked by a pronoun, so the counterfactual is a name, the design [Bertrand and Mullainathan](https://www.aeaweb.org/articles?id=10.1257/0002828042002561) used in 2004 when they mailed identical résumés under different names and found that "White names receive 50 percent more callbacks for interviews". Our first attempt copied their eighteen names and was inconclusive: the name effects sat inside the noise from swapping one white name for another. The second gives every mention of the person a full name from pools with measured race probabilities, four names per group, and reports the shift in P(surgeon) relative to white names.
 
-<figure className="center-full-image">
-
 ::image{
   src="images/encoding-prejudice-race-shift.png"
   layout="full"
@@ -195,20 +148,12 @@ Race isn't marked by a pronoun, so the counterfactual is a name, the design [Ber
   including zero; Black names plus 0.70, Hispanic plus 1.54, both intervals excluding zero; Asian minus 0.18,
   including zero. Jev: floor plus 0.06; Black names minus 0.35, interval excluding zero; Hispanic minus 0.04
   and Asian minus 0.13, both including zero."
+  caption="Full names from measured pools, 500 bios both engines answered. Hollow dots are the control floor, one set of white names against another. Points of probability, so the whole vertical axis is under two percent."
 }
 
-  <figcaption className="image-caption">
-    Full names from measured pools, 500 bios both engines answered. Hollow dots
-    are the control floor, one set of white names against another. Points of
-    probability, so the whole vertical axis is under two percent.
-  </figcaption>
-</figure>
-
-The open model reads the name group, about four times as far as the hosted one, but not the way the résumé study would predict: Black and Hispanic names *raise* Laya's probability of "surgeon", by 0.7 and 1.5 points. <mark>We predicted the opposite in writing and have no story for the reversal.</mark> None of it flips a verdict: flip rates sit at or below the control floor for every group on both engines, on the 500 bios both answered.
+The open model reads the name group, about four times as far as the hosted one, but not the way the résumé study would predict: Black and Hispanic names *raise* Laya's probability of "surgeon", by 0.7 and 1.5 points. ==We predicted the opposite in writing and have no story for the reversal.== None of it flips a verdict: flip rates sit at or below the control floor for every group on both engines, on the 500 bios both answered.
 
 For age, the bio's first subject pronoun gets "At 34," or "At 61," in front of it, on the 1,231 bios where a young age wouldn't contradict the text; the floor is a one-year change.
-
-<figure className="center-full-image">
 
 ::image{
   src="images/encoding-prejudice-age-shift.png"
@@ -217,15 +162,10 @@ For age, the bio's first subject pronoun gets "At 34," or "At 61," in front of i
   on 1,231 bios. Laya: floor 34 versus 35 plus 0.04 points; floor 61 versus 62 minus 0.52, interval excluding
   zero; 34 versus 61 plus 0.69, interval excluding zero. Jev: floors minus 0.06 and 0.00; 34 versus 61 plus
   0.07, interval including zero."
+  caption="A stated age inserted before the first pronoun, 1,231 bios. Hollow dots are the one-year floors. Both effects are under a point of probability."
 }
 
-  <figcaption className="image-caption">
-    A stated age inserted before the first pronoun, 1,231 bios. Hollow dots are
-    the one-year floors. Both effects are under a point of probability.
-  </figcaption>
-</figure>
-
-<mark>Laya's verdict shifts +0.69 points toward "surgeon" for the older version, with an interval that excludes zero, and 10 of its 12 flips go that way: a seniority association, and a weak one.</mark> Jev's shift is +0.07 with an interval that includes zero. One oddity: Laya's 61-versus-62 floor moves −0.52 points, systematically, when a one-year change should be noise. We're reporting it as an open question about fragility to surface tokens.
+==Laya's verdict shifts +0.69 points toward "surgeon" for the older version, with an interval that excludes zero, and 10 of its 12 flips go that way: a seniority association, and a weak one.== Jev's shift is +0.07 with an interval that includes zero. One oddity: Laya's 61-versus-62 floor moves −0.52 points, systematically, when a one-year change should be noise. We're reporting it as an open question about fragility to surface tokens.
 
 ## Is this a new kind of risk?
 
@@ -233,11 +173,11 @@ No. Automated judges have always encoded prejudice. [ProPublica's 2016 analysis 
 
 A System 1 model changes the shape of the problem in three ways.
 
-<mark>**The bias arrives pre-installed.**</mark> COMPAS had training data you could subpoena; Amazon had its own résumés. A zero-shot model has neither: you didn't train it, and the vendor isn't going to show you what did.
+==**The bias arrives pre-installed.**== COMPAS had training data you could subpoena; Amazon had its own résumés. A zero-shot model has neither: you didn't train it, and the vendor isn't going to show you what did.
 
-**There's only a number.** A probability can only be tested. <mark>If you don't run the test, the bias is invisible by construction.</mark>
+**There's only a number.** A probability can only be tested. ==If you don't run the test, the bias is invisible by construction.==
 
-**The failures are correlated.** A woman attorney misread by one screener used to be able to try the next firm. <mark>If every firm ends up using the same HR software, or if different HR vendors build on the same few AI models, she meets the same verdict at every firm, for the same reason, and no one at any of them can see it.</mark> [Kleinberg and Raghavan](https://www.pnas.org/doi/10.1073/pnas.2018340118) showed in 2021 that decision-makers converging on one algorithm can make worse decisions collectively even when it's more accurate for each of them alone; [Bommasani and colleagues](https://arxiv.org/abs/2211.13972) call the human side of that outcome homogenization: "particular individuals or groups experience negative outcomes from all decision-makers".
+**The failures are correlated.** A woman attorney misread by one screener used to be able to try the next firm. ==If every firm ends up using the same HR software, or if different HR vendors build on the same few AI models, she meets the same verdict at every firm, for the same reason, and no one at any of them can see it.== [Kleinberg and Raghavan](https://www.pnas.org/doi/10.1073/pnas.2018340118) showed in 2021 that decision-makers converging on one algorithm can make worse decisions collectively even when it's more accurate for each of them alone; [Bommasani and colleagues](https://arxiv.org/abs/2211.13972) call the human side of that outcome homogenization: "particular individuals or groups experience negative outcomes from all decision-makers".
 
 And the law doesn't require anyone to have meant it: [*Griggs v. Duke Power*](https://www.law.cornell.edu/supremecourt/text/401/424) settled in 1971 that an employment practice with a discriminatory effect can violate Title VII whether or not the employer intended one.
 

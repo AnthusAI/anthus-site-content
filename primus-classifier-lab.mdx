@@ -3,7 +3,8 @@ title: "Primus Is a Classifier Lab: Operationalizing Classifiers at Scale"
 slug: "primus-classifier-lab"
 date: "2026-09-27"
 authors:
-  - author: <a href="/ryan">Ryan Porter</a>
+  - name: Ryan Porter
+    url: /ryan
 tags:
   - articles
   - AI
@@ -17,16 +18,12 @@ images:
   - ./images/primus-classifier-lab.png
 state: published
 ---
-<figure className="center-full-image">
-
 ::image{
   src="images/primus-classifier-lab.png"
   layout="full"
   alt="Four accuracy gauges from Primus: 77 percent before, 87 after one approved question, 89 for the hosted
   teacher, 91.2 for the distilled student you own."
 }
-
-</figure>
 
 Say you've got a hosted decision model grading text for you: support tickets, call transcripts, product reviews. It's fast and cheap, and most of the time it agrees with your reviewers. We put one in front of 8,801 labelled items and had reviewers agree or disagree with its verdicts one at a time, the way a QA team would. Its stated confidence moved toward its real accuracy fast. Out of the box it was about 15 points overconfident; after 87 rounds of feedback the gap was 3. Its accuracy didn't move. Through those same 87 rounds it sat at 77 percent, because the rule the reviewers were following wasn't in any question we'd asked it.
 

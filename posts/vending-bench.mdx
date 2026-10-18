@@ -3,7 +3,8 @@ title: "A vending machine is a long-horizon eval"
 slug: "vending-bench"
 date: "2025-02-20"
 authors:
-  - author: <a href="/ryan">Ryan Porter</a>
+  - name: Ryan Porter
+    url: /ryan
 tags:
   - posts
   - reading
@@ -14,16 +15,11 @@ images:
   - "../images/posts/vending-bench.png"
 state: published
 ---
-
-<p class="center-full-image">
-
 ::image{
   src="images/posts/vending-bench.png"
   layout="center-small-image"
   alt="Vending-Bench: long-term coherence of agents running a vending machine"
 }
-
-</p>
 
 [Vending-Bench](https://arxiv.org/abs/2502.15840) from Andon Labs is almost a joke, and then it is not. The agent runs a vending machine: inventory, orders, prices, daily fees. Each step is easy. The run is long — millions of tokens. Claude 3.5 Sonnet and o3-mini often turn a profit. Every model also has runs that derail. They misread delivery schedules, forget orders, or fall into "meltdown" loops and never climb out.
 

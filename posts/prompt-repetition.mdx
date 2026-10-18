@@ -3,7 +3,8 @@ title: "Repeat the prompt when the model is not reasoning"
 slug: "prompt-repetition"
 date: "2026-02-28T14:57:00-05:00"
 authors:
-  - author: <a href="/ryan">Ryan Porter</a>
+  - name: Ryan Porter
+    url: /ryan
 tags:
   - posts
   - reading
@@ -14,16 +15,11 @@ images:
   - "../images/posts/prompt-repetition.png"
 state: published
 ---
-
-<p class="center-full-image">
-
 ::image{
   src="images/posts/prompt-repetition.png"
   layout="center-small-image"
   alt="Figure 1 from Prompt Repetition Improves Non-Reasoning LLMs: 47 significant wins, 0 losses"
 }
-
-</p>
 
 A pattern worth trying: when the model is not reasoning, send the query twice. `<QUERY>` becomes `<QUERY><QUERY>`. Causal models cannot look ahead, so token order matters. The second copy lets every prompt token attend to every other prompt token.
 

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" width="900" height="500" role="img" aria-labelledby="title desc">
+  <title id="title">Five Layers, One Path Through</title>
+  <desc id="desc">Five stacked layers of governors with misaligned gaps, and a single failure path threading through all five.</desc>
+  <rect x="0" y="0" width="900" height="500" fill="#f1f9fe" />
+
+  <rect x="20" y="40" width="860" height="70" rx="8" fill="#C9DCEA" stroke="#7C97AC" stroke-width="1.5" />
+  <rect x="480" y="40" width="60" height="70" fill="#f1f9fe" />
+  <rect x="700" y="40" width="60" height="70" fill="#f1f9fe" />
+  <text x="40" y="70" font-size="17" font-weight="bold" fill="#333333">Tool Governors</text>
+  <text x="40" y="92" font-size="13" fill="#6B6B6B">sandboxes · least privilege</text>
+
+  <rect x="20" y="122" width="860" height="70" rx="8" fill="#C9DCEA" stroke="#7C97AC" stroke-width="1.5" />
+  <rect x="560" y="122" width="60" height="70" fill="#f1f9fe" />
+  <rect x="780" y="122" width="50" height="70" fill="#f1f9fe" />
+  <text x="40" y="152" font-size="17" font-weight="bold" fill="#333333">Merge Governors</text>
+  <text x="40" y="174" font-size="13" fill="#6B6B6B">lint · tests · security</text>
+
+  <rect x="20" y="204" width="860" height="70" rx="8" fill="#C9DCEA" stroke="#7C97AC" stroke-width="1.5" />
+  <rect x="480" y="204" width="50" height="70" fill="#f1f9fe" />
+  <rect x="620" y="204" width="50" height="70" fill="#f1f9fe" />
+  <rect x="760" y="204" width="60" height="70" fill="#f1f9fe" />
+  <text x="40" y="234" font-size="17" font-weight="bold" fill="#333333">Release Governors</text>
+  <text x="40" y="256" font-size="13" fill="#6B6B6B">staging · canary · rollback</text>
+
+  <rect x="20" y="286" width="860" height="70" rx="8" fill="#C9DCEA" stroke="#7C97AC" stroke-width="1.5" />
+  <rect x="500" y="286" width="60" height="70" fill="#f1f9fe" />
+  <rect x="700" y="286" width="50" height="70" fill="#f1f9fe" />
+  <text x="40" y="316" font-size="17" font-weight="bold" fill="#333333">Runtime Governors</text>
+  <text x="40" y="338" font-size="13" fill="#6B6B6B">limits · breakers · kill switch</text>
+
+  <rect x="20" y="368" width="860" height="70" rx="8" fill="#C9DCEA" stroke="#7C97AC" stroke-width="1.5" />
+  <rect x="540" y="368" width="60" height="70" fill="#f1f9fe" />
+  <rect x="760" y="368" width="50" height="70" fill="#f1f9fe" />
+  <text x="40" y="398" font-size="17" font-weight="bold" fill="#333333">Learning Governors</text>
+  <text x="40" y="420" font-size="13" fill="#6B6B6B">postmortems → new tests</text>
+
+  <path d="M 730 10 L 730 75 L 590 157 L 645 239 L 530 321 L 570 403 L 570 460"
+        fill="none" stroke="#9B1B30" stroke-width="3" stroke-dasharray="7 5" />
+  <circle cx="730" cy="10" r="5" fill="#9B1B30" />
+  <polygon points="570,460 563,446 577,446" fill="#9B1B30" />
+  <text x="570" y="482" font-size="13.5" font-weight="bold" fill="#9B1B30" text-anchor="middle">the incident nobody caught</text>
+</svg>

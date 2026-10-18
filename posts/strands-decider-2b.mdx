@@ -3,7 +3,8 @@ title: "AWS Releases Strands Decider 2B"
 slug: "strands-decider-2b"
 date: "2026-10-01"
 authors:
-  - author: <a href="/ryan">Ryan Porter</a>
+  - name: Ryan Porter
+    url: /ryan
 tags:
   - posts
 excerpt: |
@@ -13,16 +14,11 @@ images:
   - "../images/posts/strands-decider-2b.png"
 state: published
 ---
-
-<p class="center-full-image">
-
 ::image{
   src="images/posts/strands-decider-2b.png"
   layout="center-small-image"
   alt="Architecture diagram from the Strands Decider announcement: a decoder LLM with its language-model head discarded, next to strands-decider-2b, where a Qwen3.5-2B torso with a LoRA adapter feeds a pointer head that scores each option"
 }
-
-</p>
 
 On October 1, 2026, AWS's Strands Labs [released Strands Decider 2B](https://strandsagents.com/blog/introducing-strands-decider/), a small open decision model for agents. It takes a state and typed questions and returns a choice, a yes/no probability or a score, each with a confidence value. The code and training data are on [GitHub](https://github.com/strands-labs/strands-decider) and the weights are on [Hugging Face](https://huggingface.co/StrandsAgents/strands-decider-2B-hobson-v19) under Apache 2.0. The post names [Jev](https://vercel.com/changelog/typesafe-ai-jev-now-available-on-ai-gateway) as the model that started this class.
 

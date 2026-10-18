@@ -3,7 +3,8 @@ title: "Maximize Value, Not Intelligence"
 slug: "maximize-value-not-intelligence"
 date: "2026-08-22"
 authors:
-  - author: <a href="/ryan">Ryan Porter</a>
+  - name: Ryan Porter
+    url: /ryan
 excerpt: "In 2023, we argued for using the dumbest model the problem will bear. That rule still works, but choosing one model isn't enough anymore. Route each job to the cheapest model that clears the bar, then measure the cost of work you actually accept."
 preview_image: "./images/classifiers/profit_per_million_GPT-4_GPT-3.5_Ada_2_BERT.png"
 images:
@@ -65,7 +66,7 @@ _Use the cheapest model that can do the job. Then measure whether it actually di
 
 In December 2023, we wrote about a text classifier that didn't work as a business.[@porter-2023-maximize-profit-not-intelligence] The requirement was 95% accuracy at under $200 per million classifications. GPT-4 hit the accuracy easily and cost about $1,700 per million. A great demo and a dead venture.
 
-The fix was not a better model. It was a worse one. We went down the ladder—GPT-3.5, then Ada 2 embeddings with logistic regression, then BERT running free in a Colab notebook—and only stopped at Word2Vec, where accuracy fell far enough that the remaining savings stopped being worth it. The thesis was <mark>use the dumbest model that the problem will bear</mark>, and the only way to find that point is to go one step too far and come back.
+The fix was not a better model. It was a worse one. We went down the ladder—GPT-3.5, then Ada 2 embeddings with logistic regression, then BERT running free in a Colab notebook—and only stopped at Word2Vec, where accuracy fell far enough that the remaining savings stopped being worth it. The thesis was ==use the dumbest model that the problem will bear==, and the only way to find that point is to go one step too far and come back.
 
 Here's that 2023 argument in one chart—the same four models, ranked by the only number that mattered:
 
@@ -84,7 +85,7 @@ That discipline still holds in 2026. But two things changed underneath it, and t
 
 Our companion piece looked at one side of the equation: [the falling price of a fixed level of AI capability](/blog/ai-coding-cost-collapse-2026/). A 2026 MIT FutureTech and CSAIL paper estimated annual price declines of roughly 5× to 10× on its knowledge and math benchmarks. Its software-engineering estimate pointed in the same direction, but with less data and much wider confidence bands.[@gundlach-2025-price-of-progress] That's the denominator.
 
-Value is capability divided by cost, and the numerator moved too. The cheap tier didn't just get cheaper—it got _good_. That's the difference between a discount and a windfall. A discount lets you do the same work for less. <mark>A windfall changes which work is worth doing at all.</mark>
+Value is capability divided by cost, and the numerator moved too. The cheap tier didn't just get cheaper—it got _good_. That's the difference between a discount and a windfall. A discount lets you do the same work for less. ==A windfall changes which work is worth doing at all.==
 
 The practical question is how to collect that windfall: how to route work without creating a cleanup bill, and which neglected jobs just became worth automating.
 
@@ -106,7 +107,7 @@ But reading a ranking too literally will cost you money.
 
 Value rankings naturally favor cheap models, even when their absolute performance isn't very good. Divide by a small enough price and almost anything looks like a bargain, including models you shouldn't point at a real repository. Even after filtering those out, a bare Score/$ ranking is a starting point, not a shopping list.
 
-This is the part of the 2023 lesson that's easy to remember wrong. <mark>We didn't choose BERT because it was the cheapest. We chose it because it was the cheapest thing that still cleared the bar.</mark> Word2Vec was even cheaper, and we rejected it. The quality bar came first. We optimized the price underneath it.
+This is the part of the 2023 lesson that's easy to remember wrong. ==We didn't choose BERT because it was the cheapest. We chose it because it was the cheapest thing that still cleared the bar.== Word2Vec was even cheaper, and we rejected it. The quality bar came first. We optimized the price underneath it.
 
 Score-per-token is useful for finding models worth trying. It isn't the number you should run your shop on, because it ignores everything that happens after the tokens are billed: retries, tool calls, test runs, and your own attention. The number that matters is **accepted changes divided by model cost, tool cost, and human repair time.**
 
@@ -127,7 +128,7 @@ The **value tier** is your default. It should be capable enough to navigate the 
 
 The **premium tier** buys a higher chance of success on difficult work. Use it when failure would be expensive: ambiguous requirements, cross-cutting architecture, fragile migrations, and security-sensitive changes.
 
-Start ordinary work in the value tier. If it fails, don't just send the same prompt again. <mark>Retries aren't independent.</mark> A model that took a wrong path will happily take it again unless you change what it knows. Feed it the failing test, its previous diff, or the compiler error, then try again—but only two or three times.
+Start ordinary work in the value tier. If it fails, don't just send the same prompt again. ==Retries aren't independent.== A model that took a wrong path will happily take it again unless you change what it knows. Feed it the failing test, its previous diff, or the compiler error, then try again—but only two or three times.
 
 Escalate when you have a concrete signal: CI is still red, tests still fail, the result isn't improving, or the change keeps spreading into more files. And skip the value tier when a task is obviously high-risk from the beginning.
 
@@ -169,7 +170,7 @@ Documentation is a good example because the tooling already exists. Scribe reads
 
 The pattern is simple: a trigger, a bounded task sent to the cheapest model that clears the quality bar, and a proposed change for a person to review.
 
-<mark>None of this auto-merges.</mark> The value lives in the gap between “nobody
+==None of this auto-merges.== The value lives in the gap between “nobody
 had time” and “somebody reviewed it.” Removing the review doesn't create more value.
 It just moves failures into production.
 
@@ -178,24 +179,14 @@ It just moves failures into production.
   layout="full"
   alt="A small pink-eyed robot filing paper under a warm desk lamp at night, surrounded by towering stacks of
   untouched paperwork in a dark office."
+  caption="The work nobody had time for, finally getting done."
 }
-
-<p
-  style={{
-    textAlign: "center",
-    fontStyle: "italic",
-    color: "#6B6B6B",
-    marginTop: "-1em",
-  }}
->
-  The work nobody had time for, finally getting done.
-</p>
 
 ## The security tax
 
 Every job in that table creates a non-human identity with access to your repository, cloud, or inbox. That's not a reason to avoid the work. It's part of the cost.
 
-The cheap tier is exactly where the temptation to skip scoping is strongest, because each agent feels too small to matter. Recent work on LLM-in-the-loop vulnerabilities found they are consistently harder to repair with automated agents than conventional flaws, with an average **10.8% lower Pass@1 rate**. Across twenty agent–model configurations, sixteen produced a <mark>0% Pass@1 result</mark> in at least one of three difficult categories: Generated Query Execution, Agent or Tool Action, and Model Output Rendering.[@arxiv-2026-towards-demystifying-and-repairing-llm]
+The cheap tier is exactly where the temptation to skip scoping is strongest, because each agent feels too small to matter. Recent work on LLM-in-the-loop vulnerabilities found they are consistently harder to repair with automated agents than conventional flaws, with an average **10.8% lower Pass@1 rate**. Across twenty agent–model configurations, sixteen produced a ==0% Pass@1 result== in at least one of three difficult categories: Generated Query Execution, Agent or Tool Action, and Model Output Rendering.[@arxiv-2026-towards-demystifying-and-repairing-llm]
 
 Scope each agent to the minimum access its job needs, treat everything it ingests—error logs, issues, docs, web pages—as untrusted input to a privileged executor, and keep an inventory. We take this up properly in the companion piece: [Bugonomics: The Flip Side of Cheap Coding](/blog/bugonomics-cheap-exploits-2026/).
 
@@ -203,13 +194,13 @@ Scope each agent to the minimum access its job needs, treat everything it ingest
 
 Our first companion ended on an honest catch: cheaper coding does not lower your bill, because the cheapness is what makes the larger workflow affordable enough to depend on. Total spend rises even as unit price falls.
 
-That's true, but it isn't necessarily bad. <mark>If value per dollar rose twenty times and your spending rose three times, you came out ahead.</mark> Spending more can be a perfectly sensible response to a price collapse. It's what “the same budget now buys a team” means in practice.
+That's true, but it isn't necessarily bad. ==If value per dollar rose twenty times and your spending rose three times, you came out ahead.== Spending more can be a perfectly sensible response to a price collapse. It's what “the same budget now buys a team” means in practice.
 
 The problem isn't spending more. It's spending more _without measuring the return_. That's the 2023 mistake: shipping a beautiful GPT-4 classifier and waiting for the invoice to discover it wasn't a business. The four metrics above let you finish the sentence “we spend more on agents than we did last year” with a result instead of a shrug.
 
 ## What changed
 
-In 2023, the answer was to find the dumbest model the problem would bear and stop paying for the rest. That still works, with one change: <mark>it's a routing policy now, not a one-time choice.</mark>
+In 2023, the answer was to find the dumbest model the problem would bear and stop paying for the rest. That still works, with one change: ==it's a routing policy now, not a one-time choice.==
 
 Start with the value tier. Escalate when the task or the evidence tells you to. Measure accepted work, including the time you spend fixing it. Then use the savings on boring, valuable jobs that never used to make economic sense—with a person still reading every diff.
 

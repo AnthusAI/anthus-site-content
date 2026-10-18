@@ -3,7 +3,8 @@ title: "How to Make a Text Classifier Using an LLM"
 slug: "fine-tuned-classification-with-confidence"
 date: "2025-09-17"
 authors:
-  - author: <a href="/ryan">Ryan Porter</a>
+  - name: Ryan Porter
+    url: /ryan
 tags:
   - project
   - articles
@@ -71,22 +72,13 @@ Classification-with-Confidence includes a labeled [10,000-example sentiment data
 
 The repository reports a run of Llama 3.1-8B across 1,000 randomly selected examples. For each example, it recorded the aggregated class score and whether the predicted sentiment matched the label. It then grouped predictions into five-point score bands and compared each band's raw probability with its observed accuracy.
 
-<figure className="center-full-image">
-
 ::image{
   src="images/llm-classifiers/classification-confidence-raw-reliability.png"
   layout="full"
   alt="Reliability chart from Classification-with-Confidence comparing raw total probability with observed
   accuracy across 1,000 sentiment predictions."
+  caption="In the project's 1,000-example run, raw total probability generally sorted stronger from weaker predictions, but it overstated observed accuracy in important score bands. Bubble labels show the number of examples in each band."
 }
-
-  <figcaption className="image-caption">
-    In the project's 1,000-example run, raw total probability generally sorted
-    stronger from weaker predictions, but it overstated observed accuracy in
-    important score bands. Bubble labels show the number of examples in each
-    band.
-  </figcaption>
-</figure>
 
 The largest band contained 532 predictions with raw totals between 95% and 100%. Their observed accuracy in this run was 83.5%. That gap is the useful finding. The score carried information about difficulty, but its numeric value couldn't yet be read as a success rate.
 
@@ -109,22 +101,13 @@ Once the score has been tested and calibrated on representative data, it becomes
 
 The threshold is a business decision because accuracy and coverage move together. Raising it sends fewer cases through automation and usually improves the observed accuracy of the remaining cases. Lowering it covers more volume and accepts more errors.
 
-<figure className="center-full-image">
-
 ::image{
   src="images/llm-classifiers/classification-confidence-thresholds.png"
   layout="full"
   alt="Project chart showing the trade-off between score threshold, number of sentiment predictions above the
   threshold, and their observed accuracy."
+  caption="The project's raw-score run illustrates the coverage trade-off. The chart is diagnostic evidence from that sample, rather than a production service level: its 95% raw threshold selected 532 examples whose observed accuracy was 83.5%."
 }
-
-  <figcaption className="image-caption">
-    The project's raw-score run illustrates the coverage trade-off. The chart is
-    diagnostic evidence from that sample, rather than a production service
-    level: its 95% raw threshold selected 532 examples whose observed accuracy
-    was 83.5%.
-  </figcaption>
-</figure>
 
 That is why the operating metric should be cost per accepted decision at a defined error tolerance. Inference, human review, retries, and the cost of mistakes all belong in the calculation. One global threshold is rarely enough; different questions and consequences deserve different policies.
 
@@ -136,21 +119,13 @@ The dataset intentionally contains a learnable domain pattern: sports contexts o
 
 The repository reports higher task accuracy, lower calibration error, and more predictions in its high-confidence bands after fine-tuning. Its confidence-distribution chart shows the visible change:
 
-<figure className="center-full-image">
-
 ::image{
   src="images/llm-classifiers/classification-confidence-fine-tuning.png"
   layout="full"
   alt="Two histograms from the project compare confidence-score distributions for the base and task-specific
   fine-tuned Llama 3.1-8B models."
+  caption="In this project run, the fine-tuned model placed more predictions near the top of its score range. That can expand the useful high-confidence band only when held-out accuracy and calibration improve with it."
 }
-
-  <figcaption className="image-caption">
-    In this project run, the fine-tuned model placed more predictions near the
-    top of its score range. That can expand the useful high-confidence band only
-    when held-out accuracy and calibration improve with it.
-  </figcaption>
-</figure>
 
 A pileup near 1.0 isn't automatically good news. A model can become more certain without becoming more correct. The fine-tuned path therefore has to repeat the same sequence: record raw probabilities, compare them with held-out outcomes, recalibrate, and choose thresholds from the resulting evidence.
 

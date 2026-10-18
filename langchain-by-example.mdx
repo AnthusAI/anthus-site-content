@@ -3,9 +3,12 @@ title: "LangChain by Example"
 slug: "langchain-by-example"
 date: "2024-08-25"
 authors:
-  - author: <a href="https://www.linkedin.com/in/osledy-bazo/">Osledy Bazó</a>
-  - author: <a href="https://www.linkedin.com/in/dereknorrbom/">Derek Norrbom</a>
-  - author: <a href="/ryan">Ryan Porter</a>
+  - name: Osledy Bazó
+    url: https://www.linkedin.com/in/osledy-bazo/
+  - name: Derek Norrbom
+    url: https://www.linkedin.com/in/dereknorrbom/
+  - name: Ryan Porter
+    url: /ryan
 assistants:
   - assistant: ChatGPT
   - assistant: Claude
@@ -76,15 +79,11 @@ As we built more sophisticated applications, the complexity grew. We created sys
 
 We knew we needed a better solution, so we conducted extensive research into various frameworks. We evaluated options like CrewAI, AutoGen, and others.
 
-<div className="center-small-image">
-
 ::image{
   src="images/LangChain/agentic-framework-logos.png"
   layout="full"
   alt="LangChain is an AI API multiplexer."
 }
-
-</div>
 
 After careful consideration, we chose LangChain. It stood out for its ability to provide power through flexibility and control, while abstracting away many details we didn't want to handle directly. Crucially, LangChain doesn't impose rigid opinions about application architecture, unlike some alternatives that prescribe specific paradigms (such as CrewAI's concept of building applications with "crews" of "agents" with personas).[@crew-ai-2024-core-concepts-agents]
 
@@ -94,7 +93,7 @@ LangChain is a framework for building applications with LLMs. It handles prompts
 
 Let's look at some examples of ways you can use it to solve problems.
 
-## <a name="ai-api-multiplexer"></a>Example 1: Use AI models from any company's AI API
+## Example 1: Use AI models from any company's AI API {#ai-api-multiplexer}
 
 OpenAI gives you example code for calling their API.  It's easy.  Really.
 
@@ -102,11 +101,7 @@ It starts to get harder when you need to connect the same code to more than one 
 
 Who will keep up with all of it?  You shouldn't.  That's what LangChain is for: You can connect your code through LangChain to many different AI APIs.  Your code can worry about its problems while LangChain worries about those details.
 
-<div className="center-full-image">
-
 ::image{src="diagrams/LangChain/API-multiplexer.png" layout="full" alt="LangChain is an AI API multiplexer."}
-
-</div>
 
 LangChain isn't the only option if all you want is to connect your same code to many different AI APIs.  Another great option is LiteLLM, which makes every AI API look like the OpenAI API so that you can use the same code for everything.  That strategy worked for us — to a point. When we started writing lots of code for managing conversation histories and parsing model outputs we realized that we were reinventing wheels when we should have been focused on solving problems.  LangChain seemed like the best option for abstracting those details without forcing us to conform to a framework's paradigm.
 
@@ -122,36 +117,17 @@ model.invoke("Is the Sagrada Família located in Barcelona?").content
 
 LangChain takes care of doing this:
 
-<div className="blockDiagram request">
-  <div className="title">
-    request from application to OpenAI
-  </div>
+:::conversation{title="request from application to OpenAI" kind="request"}
+:::message{role="user"}
+Is the Sagrada Família located in Barcelona?
+:::
+:::
 
-  <div className="container conversationHistory">
-    <table className="messages">
-      <tr>
-        <td className="role">user</td>
-        <td className="content">Is the Sagrada Família located in Barcelona?</td>
-      </tr>
-    </table>
-  </div>
-
-</div>
-
-<div className="blockDiagram response">
-  <div className="title">
-    response from OpenAI to the application
-  </div>
-
-  <div className="container conversationHistory">
-    <table className="messages">
-      <tr>
-        <td className="role">assistant</td>
-        <td className="content">Yes, the Sagrada Família is located in Barcelona, Spain. It is a large Roman Catholic basilica designed by the renowned architect Antoni Gaudí. Construction of the Sagrada Família began in 1882 and it remains unfinished to this day, although work continues with the aim of completing it in the coming years. The basilica is one of Barcelona's most iconic landmarks and a UNESCO World Heritage Site.</td>
-      </tr>
-    </table>
-  </div>
-</div>
+:::conversation{title="response from OpenAI to the application" kind="response"}
+:::message{role="assistant"}
+Yes, the Sagrada Família is located in Barcelona, Spain. It is a large Roman Catholic basilica designed by the renowned architect Antoni Gaudí. Construction of the Sagrada Família began in 1882 and it remains unfinished to this day, although work continues with the aim of completing it in the coming years. The basilica is one of Barcelona's most iconic landmarks and a UNESCO World Heritage Site.
+:::
+:::
 
 Simple!
 
@@ -169,36 +145,25 @@ model = ChatBedrock(
 model.invoke("Is the Sagrada Família located in Barcelona?.").content
 ```
 
-<div className="blockDiagram request">
-  <div className="title">
-    request from application to AWS Bedrock
-  </div>
+:::conversation{title="request from application to AWS Bedrock" kind="request"}
+:::message{role="user"}
+Is the Sagrada Família located in Barcelona?
+:::
+:::
 
-  <div className="container conversationHistory">
-    <table className="messages">
-      <tr>
-        <td className="role">user</td>
-        <td className="content">Is the Sagrada Família located in Barcelona?</td>
-      </tr>
-    </table>
-  </div>
+:::conversation{title="response from AWS Bedrock to the application" kind="response"}
+:::message{role="assistant"}
+Yes, the Sagrada Família is located in Barcelona, Spain.\
+More specifically:
 
-</div>
-
-<div className="blockDiagram response">
-  <div className="title">
-    response from AWS Bedrock to the application
-  </div>
-
-  <div className="container conversationHistory">
-    <table className="messages">
-      <tr>
-        <td className="role">assistant</td>
-        <td className="content">Yes, the Sagrada Família is located in Barcelona, Spain.<br/> More specifically:<br/> 1. It is situated in the Eixample district of Barcelona.<br/> 2. The full name of the church is the Basílica i Temple Expiatori de la Sagrada Família (Basilica and Expiatory Church of the Holy Family).3. It is one of the most famous works of the Catalan architect Antoni Gaudí.<br/> 4. Construction of the Sagrada Família began in 1882 and is still ongoing, making it one of the world's longest-running architectural projects.<br/> 5. It is a major landmark and tourist attraction in Barcelona, known for its unique and intricate design that combines Gothic and Art Nouveau forms.<br/> 6. Despite being incomplete, the church was consecrated and declared a minor basilica by Pope Benedict XVI in 2010.<br/> The Sagrada Família is not only located in Barcelona but is also considered one of the city's most iconic symbols and a must-see attraction for visitors to the Catalan capital.</td>
-      </tr>
-    </table>
-  </div>
-</div>
+1. It is situated in the Eixample district of Barcelona.
+2. The full name of the church is the Basílica i Temple Expiatori de la Sagrada Família (Basilica and Expiatory Church of the Holy Family).3. It is one of the most famous works of the Catalan architect Antoni Gaudí.
+4. Construction of the Sagrada Família began in 1882 and is still ongoing, making it one of the world's longest-running architectural projects.
+5. It is a major landmark and tourist attraction in Barcelona, known for its unique and intricate design that combines Gothic and Art Nouveau forms.
+6. Despite being incomplete, the church was consecrated and declared a minor basilica by Pope Benedict XVI in 2010.\
+The Sagrada Família is not only located in Barcelona but is also considered one of the city's most iconic symbols and a must-see attraction for visitors to the Catalan capital.
+:::
+:::
 
 Sorting out the details of the differences between the different AI APIs and models could consume hours of your time up front.  And complications related to managing those details could cost you even more time and delayed progress in the future.  Shifting responsibility for those details into LangChain keeps you focused on your goals.
 
@@ -218,11 +183,7 @@ But summarizing an answer into either a "yes" or a "no" is pretty simple.  We pr
 
 An AI conversation is a message list at heart, and we can pass a message list around from one model to another.  We can pass in our `user` message (the prompt with the question) and a large model like GPT 4o can answer the question as accurately as possible using chain-of-thought prompting or other techniques.  We add that response to the message history as an `assistant` message.  Then we can append a follow-up question to that message list and pass it to a different model.  The final `assistant` message will be generated by the second model.
 
-<div className="center-full-image">
-
 ::image{src="diagrams/LangChain/Two-Models-One-Task.png" layout="full" alt="Two models, one task."}
-
-</div>
 
 It's straightforward to implement ideas like that with LangChain.  Here's the code for implementing the above diagram to use GPT 4o for the answer and GPT 4o mini for the yes/no classification:
 
@@ -260,79 +221,47 @@ yes_no_answer = yes_no_response.content.strip()
 print("Yes/No Answer:", yes_no_answer)
 ```
 
-<div className="blockDiagram request">
-  <div className="title">
-    request from application to GPT 4o
-  </div>
+:::conversation{title="request from application to GPT 4o" kind="request"}
+:::message{role="user"}
+Is the Sagrada Família located in Barcelona?
+:::
+:::
 
-  <div className="container conversationHistory">
-    <table className="messages">
-      <tr>
-        <td className="role">user</td>
-        <td className="content">Is the Sagrada Família located in Barcelona?</td>
-      </tr>
-    </table>
-  </div>
+:::conversation{title="response from GPT 4o to the application" kind="response"}
+:::message{role="assistant"}
+Yes, the statement is true: the Sagrada Família is located in Barcelona.
 
-</div>
+The Basílica i Temple Expiatori de la Sagrada Família, commonly known as the Sagrada Família, is an iconic basilica in Barcelona, Spain. Designed by the renowned Catalan architect Antoni Gaudí, it is one of the most famous landmarks in the city and a UNESCO World Heritage Site.\
+Construction of the Sagrada Família began in 1882, and Gaudí took over the project in 1883, transforming it with his distinctive architectural and engineering style that combines Gothic and Art Nouveau forms. Despite Gaudí's death in 1926, work on the basilica has continued, guided by his designs and models.\
+The Sagrada Família is located in the Eixample district of Barcelona, specifically in the neighborhood of La Sagrada Família, which derives its name from the basilica. Its central location and towering presence make it a significant cultural and tourist attraction in Barcelona.
 
-<div className="blockDiagram response">
-  <div className="title">
-    response from GPT 4o to the application
-  </div>
+Therefore, it is accurate to say that the Sagrada Família is located in Barcelona.
+:::
+:::
 
-  <div className="container conversationHistory">
-    <table className="messages">
-      <tr>
-        <td className="role">assistant</td>
-        <td className="content">Yes, the statement is true: the Sagrada Família is located in Barcelona.<br/><br/>The Basílica i Temple Expiatori de la Sagrada Família, commonly known as the Sagrada Família, is an iconic basilica in Barcelona, Spain. Designed by the renowned Catalan architect Antoni Gaudí, it is one of the most famous landmarks in the city and a UNESCO World Heritage Site.<br/>
-        Construction of the Sagrada Família began in 1882, and Gaudí took over the project in 1883, transforming it with his distinctive architectural and engineering style that combines Gothic and Art Nouveau forms. Despite Gaudí's death in 1926, work on the basilica has continued, guided by his designs and models.<br/>
-        The Sagrada Família is located in the Eixample district of Barcelona, specifically in the neighborhood of La Sagrada Família, which derives its name from the basilica. Its central location and towering presence make it a significant cultural and tourist attraction in Barcelona.<br/><br/>Therefore, it is accurate to say that the Sagrada Família is located in Barcelona.</td>
-      </tr>
-    </table>
-  </div>
-</div>
+:::conversation{title="request from application to GPT 4o mini" kind="request"}
+:::message{role="user"}
+Is the Sagrada Família located in Barcelona?
+:::
+:::message{role="assistant"}
+Yes, the statement is true: the Sagrada Família is located in Barcelona.
 
-<div className="blockDiagram request">
-  <div className="title">
-    request from application to GPT 4o mini
-  </div>
+The Basílica i Temple Expiatori de la Sagrada Família, commonly known as the Sagrada Família, is an iconic basilica in Barcelona, Spain. Designed by the renowned Catalan architect Antoni Gaudí, it is one of the most famous landmarks in the city and a UNESCO World Heritage Site.\
+Construction of the Sagrada Família began in 1882, and Gaudí took over the project in 1883, transforming it with his distinctive architectural and engineering style that combines Gothic and Art Nouveau forms. Despite Gaudí's death in 1926, work on the basilica has continued, guided by his designs and models.\
+The Sagrada Família is located in the Eixample district of Barcelona, specifically in the neighborhood of La Sagrada Família, which derives its name from the basilica. Its central location and towering presence make it a significant cultural and tourist attraction in Barcelona.
 
-  <div className="container conversationHistory">
-    <table className="messages">
-      <tr>
-        <td className="role">user</td>
-        <td className="content">Is the Sagrada Família located in Barcelona?</td>
-      </tr>
-      <tr>
-        <td className="role">assistant</td>
-        <td className="content">Yes, the statement is true: the Sagrada Família is located in Barcelona.<br/><br/>The Basílica i Temple Expiatori de la Sagrada Família, commonly known as the Sagrada Família, is an iconic basilica in Barcelona, Spain. Designed by the renowned Catalan architect Antoni Gaudí, it is one of the most famous landmarks in the city and a UNESCO World Heritage Site.<br/>
-        Construction of the Sagrada Família began in 1882, and Gaudí took over the project in 1883, transforming it with his distinctive architectural and engineering style that combines Gothic and Art Nouveau forms. Despite Gaudí's death in 1926, work on the basilica has continued, guided by his designs and models.<br/>
-        The Sagrada Família is located in the Eixample district of Barcelona, specifically in the neighborhood of La Sagrada Família, which derives its name from the basilica. Its central location and towering presence make it a significant cultural and tourist attraction in Barcelona.<br/><br/>Therefore, it is accurate to say that the Sagrada Família is located in Barcelona.</td>
-      </tr>
-      <tr>
-        <td className="role">user</td>
-        <td className="content">Based on the previous messages, categorize the response strictly as either 'Yes' or 'No'.</td>
-      </tr>
-    </table>
-  </div>
+Therefore, it is accurate to say that the Sagrada Família is located in Barcelona.
+:::
+:::message{role="user"}
+Based on the previous messages, categorize the response strictly as either 'Yes' or 'No'.
+:::
+:::
 
-</div>
-
-<div className="blockDiagram response">
-  <div className="title">
-    response from GPT 4o mini to the application
-  </div>
-
-  <div className="container conversationHistory">
-    <table className="messages">
-      <tr>
-        <td className="role">assistant</td>
-        <td className="content">Yes</td>
-      </tr>
-    </table>
-  </div>
-</div>
+:::conversation{title="response from GPT 4o mini to the application" kind="response"}
+:::message{role="assistant"}
+Yes
+:::
+:::
 
 This two-step pattern gives us the best of both worlds: High accuracy from a large and expensive model, and data structuring from a smaller and cheaper model.
 
@@ -369,7 +298,7 @@ print("Yes/No Answer:", yes_no_answer)
 
 You could even send one request to OpenAI and the follow-up request to AWS Bedrock.  LangChain handles the details so that you can focus on your solution.
 
-## <a name="safeguard-retry-loops"></a>Example 3: Add a safeguard retry loop
+## Example 3: Add a safeguard retry loop {#safeguard-retry-loops}
 
 LLMs can be talkative.  You just want a "yes" or a "no" but they'll say things like, "The answer is: No."
 
@@ -377,11 +306,7 @@ We have seen how you can add a subsequent LLM call to classify a wordy answer in
 
 After we call the LLM the second time to get a "yes" or a  "no", we can check to make sure we got a valid answer.  If not, then we can loop back and ask the second LLM a follow-up question.
 
-<div className="center-full-image">
-
 ::image{src="diagrams/LangChain/Safeguard-Retry-Loop.png" layout="full" alt="Safeguard retry loop."}
-
-</div>
 
 ```python
 from langchain_core.messages import HumanMessage, AIMessage
@@ -427,124 +352,106 @@ if retry_count == max_retries:
 
 Now, we can use really cheap models that aren't so reliable.  But it's okay beause we can keep retrying until it works.  In this example, Mistral Small (24.02) had trouble but it eventually got there after a couple of retries.  And, since it's such a cheap model, that was still cheaper than doing one call with the more-expensive model.
 
-<div className="blockDiagram request">
-  <div className="title">
-    request from application to Claude 3.5 Sonnet
-  </div>
+:::conversation{title="request from application to Claude 3.5 Sonnet" kind="request"}
+:::message{role="user"}
+Is the Sagrada Família located in Barcelona?
+:::
+:::
 
-  <div className="container conversationHistory">
-    <table className="messages">
-      <tr>
-        <td className="role">user</td>
-        <td className="content">Is the Sagrada Família located in Barcelona?</td>
-      </tr>
-    </table>
-  </div>
+:::conversation{title="response from Claude 3.5 Sonnet to the application" kind="response"}
+:::message{role="assistant"}
+To answer this question, let's explore some key information about the Sagrada Família:
 
-</div>
+1. The Sagrada Família is a large, unfinished Roman Catholic church.
 
-<div className="blockDiagram response">
-  <div className="title">
-    response from Claude 3.5 Sonnet to the application
-  </div>
+2. It was designed by the famous Catalan architect Antoni Gaudí.
+3. Construction of the Sagrada Família began in 1882 and is still ongoing, making it one of the longest-running construction projects in the world.
+4. The church is known for its unique, intricate design that combines Gothic and Art Nouveau styles with Gaudí's distinctive organic forms.
+5. It is one of the most popular tourist attractions in Spain, receiving millions of visitors each year.
+6. The Sagrada Família is indeed located in Barcelona, the capital city of the autonomous community of Catalonia in Spain.
+7. Specifically, it is situated in the Eixample district of Barcelona, at the northern part of the city center.
+8. The full address is Carrer de Mallorca, 401, 08013 Barcelona, Spain.
+9. The church has become an iconic symbol of Barcelona and is often featured in photographs and representations of the city.
+10. In 2010, Pope Benedict XVI consecrated the church and proclaimed it a minor basilica.
 
-  <div className="container conversationHistory">
-    <table className="messages">
-      <tr>
-        <td className="role">assistant</td>
-        <td className="content">To answer this question, let's explore some key information about the Sagrada Família:<br/>1. The Sagrada Família is a large, unfinished Roman Catholic church.<br/><br/>2. It was designed by the famous Catalan architect Antoni Gaudí.<br/>3. Construction of the Sagrada Família began in 1882 and is still ongoing, making it one of the longest-running construction projects in the world.<br/>4. The church is known for its unique, intricate design that combines Gothic and Art Nouveau styles with Gaudí's distinctive organic forms.<br/>5. It is one of the most popular tourist attractions in Spain, receiving millions of visitors each year.<br/>6. The Sagrada Família is indeed located in Barcelona, the capital city of the autonomous community of Catalonia in Spain.<br/>7. Specifically, it is situated in the Eixample district of Barcelona, at the northern part of the city center.<br/>8. The full address is Carrer de Mallorca, 401, 08013 Barcelona, Spain.<br/>9. The church has become an iconic symbol of Barcelona and is often featured in photographs and representations of the city.<br/>10. In 2010, Pope Benedict XVI consecrated the church and proclaimed it a minor basilica.<br/><br/>Given these facts, we can conclude:<br/>True. The Sagrada Família is indeed located in Barcelona, Spain. It is one of the city's most recognizable landmarks and a major architectural attraction in the Catalan capital.</td>
-      </tr>
-    </table>
-  </div>
-</div>
+Given these facts, we can conclude:\
+True. The Sagrada Família is indeed located in Barcelona, Spain. It is one of the city's most recognizable landmarks and a major architectural attraction in the Catalan capital.
+:::
+:::
 
-<div className="blockDiagram request">
-  <div className="title">
-    request from application to Mistral Small (24.02)
-  </div>
+:::conversation{title="request from application to Mistral Small (24.02)" kind="request"}
+:::message{role="user"}
+Is the Sagrada Família located in Barcelona?
+:::
+:::message{role="assistant"}
+To answer this question, let's explore some key information about the Sagrada Família:
 
-  <div className="container conversationHistory">
-    <table className="messages">
-      <tr>
-        <td className="role">user</td>
-        <td className="content">Is the Sagrada Família located in Barcelona?</td>
-      </tr>
-      <tr>
-        <td className="role">assistant</td>
-        <td className="content">To answer this question, let's explore some key information about the Sagrada Família:<br/>1. The Sagrada Família is a large, unfinished Roman Catholic church.<br/><br/>2. It was designed by the famous Catalan architect Antoni Gaudí.<br/>3. Construction of the Sagrada Família began in 1882 and is still ongoing, making it one of the longest-running construction projects in the world.<br/>4. The church is known for its unique, intricate design that combines Gothic and Art Nouveau styles with Gaudí's distinctive organic forms.<br/>5. It is one of the most popular tourist attractions in Spain, receiving millions of visitors each year.<br/>6. The Sagrada Família is indeed located in Barcelona, the capital city of the autonomous community of Catalonia in Spain.<br/>7. Specifically, it is situated in the Eixample district of Barcelona, at the northern part of the city center.<br/>8. The full address is Carrer de Mallorca, 401, 08013 Barcelona, Spain.<br/>9. The church has become an iconic symbol of Barcelona and is often featured in photographs and representations of the city.<br/>10. In 2010, Pope Benedict XVI consecrated the church and proclaimed it a minor basilica.<br/><br/>Given these facts, we can conclude:<br/>True. The Sagrada Família is indeed located in Barcelona, Spain. It is one of the city's most recognizable landmarks and a major architectural attraction in the Catalan capital.</td>
-      </tr>
-      <tr>
-        <td className="role">user</td>
-        <td className="content">Based on the previous messages, categorize the response strictly as either 'Yes' or 'No'.</td>
-      </tr>
-    </table>
-  </div>
+1. The Sagrada Família is a large, unfinished Roman Catholic church.
 
-</div>
+2. It was designed by the famous Catalan architect Antoni Gaudí.
+3. Construction of the Sagrada Família began in 1882 and is still ongoing, making it one of the longest-running construction projects in the world.
+4. The church is known for its unique, intricate design that combines Gothic and Art Nouveau styles with Gaudí's distinctive organic forms.
+5. It is one of the most popular tourist attractions in Spain, receiving millions of visitors each year.
+6. The Sagrada Família is indeed located in Barcelona, the capital city of the autonomous community of Catalonia in Spain.
+7. Specifically, it is situated in the Eixample district of Barcelona, at the northern part of the city center.
+8. The full address is Carrer de Mallorca, 401, 08013 Barcelona, Spain.
+9. The church has become an iconic symbol of Barcelona and is often featured in photographs and representations of the city.
+10. In 2010, Pope Benedict XVI consecrated the church and proclaimed it a minor basilica.
 
-<div className="blockDiagram response">
-  <div className="title">
-    response from Mistral Small (24.02) to the application
-  </div>
+Given these facts, we can conclude:\
+True. The Sagrada Família is indeed located in Barcelona, Spain. It is one of the city's most recognizable landmarks and a major architectural attraction in the Catalan capital.
+:::
+:::message{role="user"}
+Based on the previous messages, categorize the response strictly as either 'Yes' or 'No'.
+:::
+:::
 
-  <div className="container conversationHistory">
-    <table className="messages">
-      <tr>
-        <td className="role">assistant</td>
-        <td className="content">yes.</td>
-      </tr>
-    </table>
-  </div>
-</div>
+:::conversation{title="response from Mistral Small (24.02) to the application" kind="response"}
+:::message{role="assistant"}
+yes.
+:::
+:::
 
-<div className="blockDiagram request">
-  <div className="title">
-    request from application to Mistral Small (24.02)
-  </div>
+:::conversation{title="request from application to Mistral Small (24.02)" kind="request"}
+:::message{role="user"}
+Is the Sagrada Família located in Barcelona?
+:::
+:::message{role="assistant"}
+To answer this question, let's explore some key information about the Sagrada Família:
 
-  <div className="container conversationHistory">
-    <table className="messages">
-      <tr>
-        <td className="role">user</td>
-        <td className="content">Is the Sagrada Família located in Barcelona?</td>
-      </tr>
-      <tr>
-        <td className="role">assistant</td>
-        <td className="content">To answer this question, let's explore some key information about the Sagrada Família:<br/>1. The Sagrada Família is a large, unfinished Roman Catholic church.<br/><br/>2. It was designed by the famous Catalan architect Antoni Gaudí.<br/>3. Construction of the Sagrada Família began in 1882 and is still ongoing, making it one of the longest-running construction projects in the world.<br/>4. The church is known for its unique, intricate design that combines Gothic and Art Nouveau styles with Gaudí's distinctive organic forms.<br/>5. It is one of the most popular tourist attractions in Spain, receiving millions of visitors each year.<br/>6. The Sagrada Família is indeed located in Barcelona, the capital city of the autonomous community of Catalonia in Spain.<br/>7. Specifically, it is situated in the Eixample district of Barcelona, at the northern part of the city center.<br/>8. The full address is Carrer de Mallorca, 401, 08013 Barcelona, Spain.<br/>9. The church has become an iconic symbol of Barcelona and is often featured in photographs and representations of the city.<br/>10. In 2010, Pope Benedict XVI consecrated the church and proclaimed it a minor basilica.<br/><br/>Given these facts, we can conclude:<br/>True. The Sagrada Família is indeed located in Barcelona, Spain. It is one of the city's most recognizable landmarks and a major architectural attraction in the Catalan capital.</td>
-      </tr>
-      <tr>
-        <td className="role">user</td>
-        <td className="content">Based on the previous messages, categorize the response strictly as either 'Yes' or 'No'.</td>
-      </tr>
-      <tr>
-        <td className="role">assistant</td>
-        <td className="content">yes.</td>
-      </tr>
-      <tr>
-        <td className="role">user</td>
-        <td className="content">Your previous response was not valid. Please answer ONLY with 'Yes' or 'No', without any additional text or punctuation.</td>
-      </tr>
-    </table>
-  </div>
+1. The Sagrada Família is a large, unfinished Roman Catholic church.
 
-</div>
+2. It was designed by the famous Catalan architect Antoni Gaudí.
+3. Construction of the Sagrada Família began in 1882 and is still ongoing, making it one of the longest-running construction projects in the world.
+4. The church is known for its unique, intricate design that combines Gothic and Art Nouveau styles with Gaudí's distinctive organic forms.
+5. It is one of the most popular tourist attractions in Spain, receiving millions of visitors each year.
+6. The Sagrada Família is indeed located in Barcelona, the capital city of the autonomous community of Catalonia in Spain.
+7. Specifically, it is situated in the Eixample district of Barcelona, at the northern part of the city center.
+8. The full address is Carrer de Mallorca, 401, 08013 Barcelona, Spain.
+9. The church has become an iconic symbol of Barcelona and is often featured in photographs and representations of the city.
+10. In 2010, Pope Benedict XVI consecrated the church and proclaimed it a minor basilica.
 
-<div className="blockDiagram response">
-  <div className="title">
-    response from Mistral Small (24.02) to the application
-  </div>
+Given these facts, we can conclude:\
+True. The Sagrada Família is indeed located in Barcelona, Spain. It is one of the city's most recognizable landmarks and a major architectural attraction in the Catalan capital.
+:::
+:::message{role="user"}
+Based on the previous messages, categorize the response strictly as either 'Yes' or 'No'.
+:::
+:::message{role="assistant"}
+yes.
+:::
+:::message{role="user"}
+Your previous response was not valid. Please answer ONLY with 'Yes' or 'No', without any additional text or punctuation.
+:::
+:::
 
-  <div className="container conversationHistory">
-    <table className="messages">
-      <tr>
-        <td className="role">assistant</td>
-        <td className="content">Yes</td>
-      </tr>
-    </table>
-  </div>
-</div>
+:::conversation{title="response from Mistral Small (24.02) to the application" kind="response"}
+:::message{role="assistant"}
+Yes
+:::
+:::
 
-## <a name="use-llm-to-process-data"></a>Example 4: Use an LLM to process data
+## Example 4: Use an LLM to process data {#use-llm-to-process-data}
 
 This example processes a [HuggingFace dataset](https://huggingface.co/datasets/AyoubChLin/CNN_News_Articles_2011-2022) contains thousands of news articles from CNN.  Let's use an LLM to screen for articles about space exploration missions:
 
@@ -600,7 +507,7 @@ Processing articles: 100%|██████████| 1610/1610 [12:31<00:00
 
 You can run this example with [this notebook](https://colab.research.google.com/drive/18fFCAuElG4LqunEj2_Ipd7_HWt1WHR4a?usp=sharing) on Google Colab.
 
-## <a name="structuring-data"></a>Example 5: Structuring data using LangChain output parsers
+## Example 5: Structuring data using LangChain output parsers {#structuring-data}
 
 We've got one avocado.  We have a [huge collection of recipes](https://huggingface.co/datasets/corbt/all-recipes), where each one is a raw, unstructured text string.  What can we make with one avocado?
 
@@ -635,44 +542,60 @@ The mechanics of telling the LLM how to respond with structured data and then pa
 
 Note all the JSON schema stuff it added to the prompt here:
 
-<div className="blockDiagram request">
-  <div className="title">
-    request from application to Claude 3.5 Sonnet
-  </div>
+:::conversation{title="request from application to Claude 3.5 Sonnet" kind="request"}
+:::message{role="user"}
+Extract the following information from the recipe:\
+The output should be formatted as a JSON instance that conforms to the JSON schema below.\
+As an example, for the schema &#123;"properties": &#123;"foo": &#123;"title": "Foo", "description": "a list of strings", "type": "array", "items": &#123;"type": "string"&#125;&#125;&#125;, "required": ["foo"]&#125;the object &#123;"foo": ["bar", "baz"]&#125; is a well-formatted instance of the schema. The object &#123;"properties": &#123;"foo": ["bar", "baz"]&#125;&#125; is not well-formatted.
 
-  <div className="container conversationHistory">
-    <table className="messages">
-      <tr>
-        <td className="role">user</td>
-        <td className="content">
-Extract the following information from the recipe:<br/>The output should be formatted as a JSON instance that conforms to the JSON schema below.
-<br/>
-As an example, for the schema &#123;"properties": &#123;"foo": &#123;"title": "Foo", "description": "a list of strings", "type": "array", "items": &#123;"type": "string"&#125;&#125;&#125;, "required": ["foo"]&#125;the object &#123;"foo": ["bar", "baz"]&#125; is a well-formatted instance of the schema. The object &#123;"properties": &#123;"foo": ["bar", "baz"]&#125;&#125; is not well-formatted.<br/><br/>Here is the output schema:<br/>
+Here is the output schema:\
+&#96;&#96;&#96;\
+&#123;"properties": &#123;"title": &#123;"title": "Title", "description": "The title of the recipe", "type": "string"&#125;, "avocado_count": &#123;"title": "Avocado Count", "description": "The number of avocados required in the recipe", "type": "number"&#125;, "ingredients": &#123;"title": "Ingredients", "description": "The full list of ingredients", "type": "array", "items": &#123;"type": "string"&#125;&#125;, "directions": &#123;"title": "Directions", "description": "The list of directions to prepare the recipe", "type": "array", "items": &#123;"type": "string"&#125;&#125;&#125;, "required": ["title", "avocado_count", "ingredients", "directions"]&#125;\
 &#96;&#96;&#96;
-<br/>&#123;"properties": &#123;"title": &#123;"title": "Title", "description": "The title of the recipe", "type": "string"&#125;, "avocado_count": &#123;"title": "Avocado Count", "description": "The number of avocados required in the recipe", "type": "number"&#125;, "ingredients": &#123;"title": "Ingredients", "description": "The full list of ingredients", "type": "array", "items": &#123;"type": "string"&#125;&#125;, "directions": &#123;"title": "Directions", "description": "The list of directions to prepare the recipe", "type": "array", "items": &#123;"type": "string"&#125;&#125;&#125;, "required": ["title", "avocado_count", "ingredients", "directions"]&#125;<br/>
-&#96;&#96;&#96;<br/><br/>
-Avocado Toast<br/><br/>Ingredients:<br/>- 1 slice of bread<br/>- 1/2 ripe avocado<br/>- Salt and pepper to taste<br/>- Optional toppings: red pepper flakes, lemon juice, or feta cheese<br/><br/>Instructions:<br/>1. Toast the bread until golden and crispy.<br/>2. Cut the avocado in half and remove the pit. Scoop out the flesh of one half.<br/>3. Mash the avocado in a bowl and spread it on the toasted bread.<br/>4. Sprinkle with salt and pepper.<br/>5. Add any optional toppings if desired.<br/>6. Serve immediately and enjoy your avocado toast!
-        </td>
-      </tr>
-    </table>
-  </div>
 
-</div>
+Avocado Toast
 
-<div className="blockDiagram response">
-  <div className="title">
-    response from Claude 3.5 Sonnet to the application
-  </div>
+Ingredients:\
+- 1 slice of bread\
+- 1/2 ripe avocado\
+- Salt and pepper to taste\
+- Optional toppings: red pepper flakes, lemon juice, or feta cheese
 
-  <div className="container conversationHistory">
-    <table className="messages">
-      <tr>
-        <td className="role">assistant</td>
-        <td className="content">&grave;&grave;&grave;json<br/>&lbrace;<br/>  &quot;title&quot;: &quot;Avocado Toast&quot;,<br/>  &quot;avocado_count&quot;: 0.5,<br/>  &quot;ingredients&quot;: &lbrack;<br/>    &quot;1 slice of bread&quot;,<br/>    &quot;1/2 ripe avocado&quot;,<br/>    &quot;Salt and pepper to taste&quot;,<br/>    &quot;Optional toppings: red pepper flakes, lemon juice, or feta cheese&quot;<br/>  &rbrack;,<br/>  &quot;directions&quot;: &lbrack;<br/>    &quot;Toast the bread until golden and crispy.&quot;,<br/>    &quot;Cut the avocado in half and remove the pit. Scoop out the flesh of one half.&quot;,<br/>    &quot;Mash the avocado in a bowl and spread it on the toasted bread.&quot;,<br/>    &quot;Sprinkle with salt and pepper.&quot;,<br/>    &quot;Add any optional toppings if desired.&quot;,<br/>    &quot;Serve immediately and enjoy your avocado toast!&quot;<br/>  &rbrack;<br/>&rbrace;<br/>&grave;&grave;&grave;</td>
-      </tr>
-    </table>
-  </div>
-</div>
+Instructions:
+
+1. Toast the bread until golden and crispy.
+2. Cut the avocado in half and remove the pit. Scoop out the flesh of one half.
+3. Mash the avocado in a bowl and spread it on the toasted bread.
+4. Sprinkle with salt and pepper.
+5. Add any optional toppings if desired.
+6. Serve immediately and enjoy your avocado toast!
+:::
+:::
+
+:::conversation{title="response from Claude 3.5 Sonnet to the application" kind="response"}
+:::message{role="assistant"}
+&grave;&grave;&grave;json\
+&lbrace;\
+&quot;title&quot;: &quot;Avocado Toast&quot;,\
+&quot;avocado_count&quot;: 0.5,\
+&quot;ingredients&quot;: &lbrack;\
+&quot;1 slice of bread&quot;,\
+&quot;1/2 ripe avocado&quot;,\
+&quot;Salt and pepper to taste&quot;,\
+&quot;Optional toppings: red pepper flakes, lemon juice, or feta cheese&quot;\
+&rbrack;,\
+&quot;directions&quot;: &lbrack;\
+&quot;Toast the bread until golden and crispy.&quot;,\
+&quot;Cut the avocado in half and remove the pit. Scoop out the flesh of one half.&quot;,\
+&quot;Mash the avocado in a bowl and spread it on the toasted bread.&quot;,\
+&quot;Sprinkle with salt and pepper.&quot;,\
+&quot;Add any optional toppings if desired.&quot;,\
+&quot;Serve immediately and enjoy your avocado toast!&quot;\
+&rbrack;\
+&rbrace;\
+&grave;&grave;&grave;
+:::
+:::
 
 See the `"avocado_count": 0.5`?  That's the important part here.  The model understands to convert "1/2 ripe avocado" into a `0.5` value for that item, because LangChain generated clear formatting instructions for the model to tell it what we want.  Please remember that this only works with larger, more-sophisticated models because formatting instructions consume some of the model's attention and lower its performance on the larger task.  Larger models like the ones from OpenAI that have been fine-tuned for producing valid JSON and can handle it.  But, if you want the best-possible accuracy then you should avoid formatting instructions in your critical prompts.  Use formatting instructions in follow-up questions instead, after the delicate decisions have already been made.
 

@@ -3,7 +3,8 @@ title: "The Year Coding Became a Commodity"
 slug: "ai-coding-cost-collapse-2026"
 date: "2026-08-15"
 authors:
-  - author: <a href="/ryan">Ryan Porter</a>
+  - name: Ryan Porter
+    url: /ryan
 excerpt: "Coding agents didn't just get better. Useful coding capability got dramatically cheaper at the same time agents learned to work for longer. Those two curves multiply, changing both what small teams can attempt and where human judgment matters most."
 preview_image: "./images/ai-coding-cost-collapse-2026.png"
 images:
@@ -124,13 +125,13 @@ That's the change I think we've underestimated. For years, the AI-coding story w
 
 Since Andrej Karpathy coined "vibe coding" in February 2025, the cost of reaching roughly the same benchmark performance has fallen by close to an order of magnitude for software-engineering tasks. At the same time, agents have gotten much better at staying on a task for hours instead of answering one prompt and stopping.
 
-Those aren't two separate trends. They multiply. <mark>Cheaper models make long agent loops affordable, and longer agent loops change what you can delegate.</mark>
+Those aren't two separate trends. They multiply. ==Cheaper models make long agent loops affordable, and longer agent loops change what you can delegate.==
 
 ## The narrative flipped
 
 You can see it in everyday work: boilerplate, lint fixes, tests, code explanations, and well-scoped repository issues. A model doesn't need to be the smartest model available to be the right model for those jobs. It needs to clear the quality bar at a sensible cost.
 
-So the useful question isn't, "What's the smartest model?" It's: <mark>what does it cost to complete this kind of engineering task at the quality I need?</mark>
+So the useful question isn't, "What's the smartest model?" It's: ==what does it cost to complete this kind of engineering task at the quality I need?==
 
 ## Measure the work, not the tokens
 
@@ -199,79 +200,20 @@ Long autonomous loops are exactly the kind of token-heavy work that only becomes
 
 An agent loop isn't a chat. A chatbot returns one response. An agent plans, calls tools, verifies, retries, and re-reads its accumulated context on every step. Stanford's Digital Economy Lab gave this a name: the **"pricey context snowball."** Input tokens, not output tokens, drive the cost of agentic work, because the agent re-sends a growing context window on every step of a multi-step task.[@stanford-digital-economy-lab-2026-how-are-ai-agents-spending] A 50-turn session can run a 25:1 ratio of input to output tokens. The cost grows with the loop length, not the answer length.
 
-<div className="blockDiagram">
-  <div className="title">The Context Snowball</div>
-  <div className="container">
-    {[
-      ["Turn 1", 2, "~4K tokens"],
-      ["Turn 10", 35, "~70K tokens"],
-      ["Turn 25", 75, "~150K tokens"],
-      ["Turn 50", 100, "~200K (full window)"],
-    ].map(([label, pct, note]) => (
-      <div
-        key={label}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "0.7em",
-          margin: "0.4em 0",
-          fontSize: "0.9em",
-        }}
-      >
-        <span style={{ width: "5em", flexShrink: 0 }}>{label}</span>
-        <span
-          style={{
-            flex: 1,
-            height: "12px",
-            borderRadius: "6px",
-            backgroundColor: "#E6E6E6",
-            display: "inline-block",
-            overflow: "hidden",
-          }}
-        >
-          <span
-            style={{
-              display: "block",
-              height: "100%",
-              width: `${pct}%`,
-              backgroundColor: "#9B1B30",
-              borderRadius: "6px",
-            }}
-          />
-        </span>
-        <span
-          style={{
-            width: "11em",
-            flexShrink: 0,
-            textAlign: "right",
-            color: "#6B6B6B",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {note}
-        </span>
-      </div>
-    ))}
-    <p
-      style={{
-        textAlign: "center",
-        fontStyle: "italic",
-        color: "#6B6B6B",
-        marginTop: "0.9em",
-        marginBottom: 0,
-      }}
-    >
-      Every turn re-sends the whole conversation. On a 50-turn session, that's
-      roughly
-      <b> 25 input tokens for every 1 output token</b> &mdash; illustrative, not
-      a measured trace.
-    </p>
-  </div>
-</div>
+:::bar-chart{title="The Context Snowball" max=100 unit="%"}
+| Turn | Context used | Size |
+| --- | ---: | --- |
+| Turn 1 | 2 | ~4K tokens |
+| Turn 10 | 35 | ~70K tokens |
+| Turn 25 | 75 | ~150K tokens |
+| Turn 50 | 100 | ~200K (full window) |
+
+Every turn re-sends the whole conversation. On a 50-turn session, that's roughly **25 input tokens for every 1 output token** &mdash; illustrative, not a measured trace.
+:::
 
 Agent hierarchies can make that curve even steeper. A single top-level task can expand into a tree of agents, each carrying its own context window.[@web-developer-2026-claude-code-adds-nested-subagents] Delegating a milestone to a hierarchy of agents is token-expensive by design.
 
-That's why this isn't just a savings story. <mark>Cheaper model usage made longer loops and agent hierarchies affordable.</mark>
+That's why this isn't just a savings story. ==Cheaper model usage made longer loops and agent hierarchies affordable.==
 
 A July 2026 paper, _The Harness Effect_, measures the second lever directly: holding the model constant, swapping in a better orchestration layer cut cost per task by 41%—more than switching between the cheapest and most expensive model did. The harness moved cost per task more than model choice did.[@arxiv-2026-harness-effect] Better orchestration and cheaper models arrived together. That's what made this kind of delegation practical.
 
@@ -286,18 +228,8 @@ As the cost per agent falls, the same budget can support several agents working 
   layout="full"
   alt="Endless rows of identical pink-eyed robots tethered by cable to developer workstations, monitors
   glowing with code, in a dim teal-lit industrial office."
+  caption="The same budget, a different unit of work."
 }
-
-<p
-  style={{
-    textAlign: "center",
-    fontStyle: "italic",
-    color: "#6B6B6B",
-    marginTop: "-1em",
-  }}
->
-  The same budget, a different unit of work.
-</p>
 
 The real change isn't simply that coding got cheaper. It's that the same budget can support a different way of working, including whole milestones handed to a supervised group of agents. Augment describes the shift as moving the unit of engineering work from the pull request to the project.[@augment-code-2026-accelerating-large-engineering-projects-with-cosmos]
 
@@ -309,7 +241,7 @@ These are the tasks that parallel agents are best at, because they are well-scop
 
 Documentation maintenance is the clearest example. Tools like Scribe read the actual structure of a codebase from the code graph, regenerate an accurate `AGENTS.md`, and open a merge request when the docs have drifted from the code—then keep watching and open another MR the next time they drift.[@github-2026-scribe-self-updating-agents-md] The pattern generalizes: a CI drift check compares the merge diff against the prose, an agent drafts a correction, and a human reviews and merges. The same loop applies to dependency upgrades, test backfills, changelog generation, and triaging security advisories.[@augment-code-2026-self-updating-documentation]
 
-The catch is that none of this should auto-merge. The agents do the work that used to never get done; a human still decides whether it ships. <mark>The productivity dividend lands in the gap between "nobody had time" and "somebody reviewed it."</mark>
+The catch is that none of this should auto-merge. The agents do the work that used to never get done; a human still decides whether it ships. ==The productivity dividend lands in the gap between "nobody had time" and "somebody reviewed it."==
 
 ## The bottleneck moves
 
@@ -325,7 +257,7 @@ When a resource gets cheaper, you don't use less of it. You use more of it, beca
 
 Coding follows the same curve. Demand expands in two directions: we run familiar automations more often, and we automate longer, more complicated work that agents couldn't reliably finish before. The unit price falls while both the number and the size of viable tasks grow, so total spending can still rise.
 
-<mark>Cheaper coding doesn't necessarily lower your bill. It changes what you can afford to attempt.</mark> That's not waste. It's the predictable result of turning an expensive capability into a commodity.
+==Cheaper coding doesn't necessarily lower your bill. It changes what you can afford to attempt.== That's not waste. It's the predictable result of turning an expensive capability into a commodity.
 
 ## The flip side of this curve
 
@@ -335,7 +267,7 @@ That's a separate story, and we take it up in the companion piece: [Bugonomics: 
 
 ## What became scarce
 
-What changed in 2026 wasn't just that coding models got smarter. <mark>Useful coding capability got cheaper at the same time agents learned to work for longer.</mark> Cheap models made long loops affordable. Long loops made larger units of work delegable. The same budget began to buy a team instead of a single assistant.
+What changed in 2026 wasn't just that coding models got smarter. ==Useful coding capability got cheaper at the same time agents learned to work for longer.== Cheap models made long loops affordable. Long loops made larger units of work delegable. The same budget began to buy a team instead of a single assistant.
 
 That doesn't make the human less important. It moves the scarce resource from implementation toward specification, taste, and judgment. The code became a commodity. Knowing what should be built—and whether the result is actually good—didn't.
 

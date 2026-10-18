@@ -3,7 +3,8 @@ title: "Can Averaging Reduce Noise in an AI Decision Model?"
 slug: "can-averaging-reduce-noise"
 date: "2026-10-01"
 authors:
-  - author: <a href="/ryan">Ryan Porter</a>
+  - name: Ryan Porter
+    url: /ryan
 tags:
   - research
   - articles
@@ -32,8 +33,6 @@ It matters outside a lab. Run the same batch of records through a decision model
 
 The book's main remedy for noise is to average several judgments, and Jev makes that unusually cheap, because a request can carry the same question many times. So we asked two questions in turn. Does averaging the copies make Jev more accurate? It doesn't. Does it at least make Jev give the same answer when you ask again? It does: ten copies cut the changes by about a third. That's the line the book draws: averaging removes noise, not bias.
 
-<figure className="center-full-image">
-
 ::image{
   src="images/jev-pooled-flips.png"
   layout="full"
@@ -42,15 +41,8 @@ The book's main remedy for noise is to average several judgments, and Jev makes 
   percent with one copy to 1.8 percent with ten and 2.0 percent with twenty. For the two-option task it goes
   from 2.0 percent to 1.2 percent with ten and 1.4 percent with twenty. Ten copies gave 29 and 37 percent
   fewer changed answers than one copy."
+  caption="How often sending the same request again changes the answer. Each point is 1,000 logic problems answered five times. The vertical bars show how uncertain each rate is on its own; the comparison with one copy is tighter, because it's made problem by problem."
 }
-
-  <figcaption className="image-caption">
-    How often sending the same request again changes the answer. Each point is
-    1,000 logic problems answered five times. The vertical bars show how
-    uncertain each rate is on its own; the comparison with one copy is tighter,
-    because it's made problem by problem.
-  </figcaption>
-</figure>
 
 ## How we tested it
 
@@ -70,20 +62,13 @@ Everything ran on `jev-1.13.0`, about 100,000 requests, $5.50 in total.
 
 Accuracy was the first thing we tested, because a more accurate answer would have been worth paying for. It didn't improve: not with three copies, not with twenty, not with the options shuffled or the question reworded. Across every arm and task, pooled accuracy stayed within a point of a single answer.
 
-<figure className="center-full-image">
-
 ::image{
   src="images/jev-pooled-accuracy.png"
   layout="full"
   alt="Line chart of accuracy against the number of copies in one request. The two-option task stays between
   89.3 and 89.6 percent; the three-option task stays between 84.6 and 85.2 percent, from one copy to twenty."
+  caption="Accuracy on the same 1,000 problems per task, averaged over five runs. The lines are flat from one copy to twenty."
 }
-
-  <figcaption className="image-caption">
-    Accuracy on the same 1,000 problems per task, averaged over five runs. The
-    lines are flat from one copy to twenty.
-  </figcaption>
-</figure>
 
 The first problem we tried had already shown why: when the copies split, the majority was wrong. Across the full sets, the copies usually agree with each other, and they often agree on the wrong answers too. On the three-option task, about 16% of answers were wrong, but identical copies in a request disagreed on only 3 to 4% of problems. Even a perfect referee that picked a right copy whenever one existed would have gained less than 2 points. Varying the copies made them disagree more often, up to two and a half times as often on the emotion task, but only on problems Jev was already unsure about, and accuracy still didn't move.
 
@@ -114,21 +99,14 @@ We also checked whether the copies get noisier in longer requests. They don't: t
 
 The answers flip when Jev's top two options are nearly tied. Pooling tightens them, so they flip less often, but it can't move them away from the tie.
 
-<figure className="center-full-image">
-
 ::image{
   src="images/jev-pooled-close-calls.png"
   layout="full"
   alt="Dot plot of the eight least stable problems on the three-option task. With one copy, each problem's
   five runs spread across about 0.3 to 0.6 probability. With ten copies the five runs sit closer together but
   still around the middle, mostly between about 0.4 and 0.6."
+  caption="Each row is one problem, each dot one of its five runs. Ten copies pull the runs together, but they stay where they were: in the middle."
 }
-
-  <figcaption className="image-caption">
-    Each row is one problem, each dot one of its five runs. Ten copies pull the
-    runs together, but they stay where they were: in the middle.
-  </figcaption>
-</figure>
 
 So a pooled answer on a close call is steadier, and no better supported than before. If a close call matters, it still needs a second look.
 
@@ -140,21 +118,14 @@ The more useful number is what each avoided change costs. Ten copies add $56 to 
 
 Your copy cost is the length of your question, so a long question makes every copy dearer, and a long document makes the copies relatively cheaper, since the document is only sent once.
 
-<figure className="center-full-image">
-
 ::image{
   src="images/jev-pooled-cost.png"
   layout="full"
   alt="Line chart of how often a repeat changes the answer against Jev's cost per million decisions. Both
   tasks fall from about 2 to 2.5 percent at about 23 dollars with one copy to their lowest at ten copies, 79
   to 90 dollars, then rise slightly at twenty copies, 141 to 163 dollars."
+  caption="Changed answers against what a million decisions cost on Jev. Past ten copies, extra money buys nothing."
 }
-
-  <figcaption className="image-caption">
-    Changed answers against what a million decisions cost on Jev. Past ten
-    copies, extra money buys nothing.
-  </figcaption>
-</figure>
 
 ## When it's worth paying for
 

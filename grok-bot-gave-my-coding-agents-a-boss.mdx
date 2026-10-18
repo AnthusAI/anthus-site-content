@@ -3,7 +3,8 @@ title: "Grok Bot Gave My Coding Agents a Boss"
 slug: "grok-bot-gave-my-coding-agents-a-boss"
 date: "2026-08-29T22:47:00-04:00"
 authors:
-  - author: <a href="/ryan">Ryan Porter</a>
+  - name: Ryan Porter
+    url: /ryan
 tags:
   - articles
   - AI
@@ -21,25 +22,12 @@ images:
   - "./diagrams/grok-bot-bot-to-bot-mail.png"
 state: published
 ---
-
-<div
-  style={{
-    float: "right",
-    width: "260px",
-    maxWidth: "40%",
-    marginLeft: "24px",
-    marginBottom: "16px",
-  }}
->
-
 ::image{
   src="images/grok-bot-app.png"
   layout="right-aligned"
   alt="The Grok Bot app on a phone: a list of bots by role — DataParade, Software Director, Researcher,
   Applied Research, Publicist, Product, Anth.us, Papyrus — each with its own recent message."
 }
-
-</div>
 
 **Grok Bot rapidly became the control room for my army of bots—with less help from me than I expected.**
 
@@ -51,22 +39,14 @@ This is completely nuts.
 
 I wrote about the larger management shift in [From Pair Programmer to Executive](/blog/from-pair-programmer-to-executive/). This article is about the product that made the shift feel real.
 
-<div style={{ maxWidth: "420px", margin: "0 auto var(--base-line-height)" }}>
-
 ::image{
   src="images/grok-bot-agent-to-agent.png"
   layout="full"
   alt="Anth.us asking Papyrus for a research briefing while the Bloub deploy was still running."
 }
 
-</div>
-
-<p>
-  <em>
-    While one bot waited for a deployment, it handed a research question to
-    Papyrus and brought the answer back into the same conversation.
-  </em>
-</p>
+*While one bot waited for a deployment, it handed a research question to
+Papyrus and brought the answer back into the same conversation.*
 
 ## The moment it stopped feeling like another coding agent
 
@@ -76,22 +56,14 @@ The experience is new because the machinery disappears.
 
 On the first night, a bot went live in the Anthus AI Solutions Discord and sat in `#general`. [Papyrus](https://papyrus.anth.us) started an hourly research watch. A separate site bot received a link, created a post, and handed it to Amplify. While that build ran, the site bot asked the research bot for a trend briefing.
 
-<div className="center-full-image">
-
 ::image{
   src="images/grok-bot-after-a-week.png"
   layout="full"
   alt="Papyrus in Grok Bot: an hourly research watch, with the bot's screen and routines in the side pane."
 }
 
-</div>
-
-<p>
-  <em>
-    Papyrus runs an hourly research routine on its own cloud computer, then
-    reports the findings that clear its rubric.
-  </em>
-</p>
+*Papyrus runs an hourly research routine on its own cloud computer, then
+reports the findings that clear its rubric.*
 
 Two agents were doing different jobs on the same always-available computer. They could see one another and talk without waiting for me to copy text from one session into another.
 
@@ -109,8 +81,6 @@ Remote coding agents are not new. Cursor, Claude Code, Codex, and Antigravity ca
 
 Grok Bot hides most of it. The computer is simply there.
 
-<div className="center-full-image">
-
 ::image{
   src="images/grok-bot-has-a-computer.png"
   layout="full"
@@ -118,15 +88,9 @@ Grok Bot hides most of it. The computer is simply there.
   project it is working on, where every issue is a .json file in the repo."
 }
 
-</div>
-
-<p>
-  <em>
-    This is the bot's computer, not mine: Chrome is open to a Kanbus
-    project-management board running on its localhost, where every issue is a
-    file in the repository.
-  </em>
-</p>
+*This is the bot's computer, not mine: Chrome is open to a Kanbus
+project-management board running on its localhost, where every issue is a
+file in the repository.*
 
 It can also dispatch Cursor agents. Those agents can run on Cursor's cloud machines or on a worker running locally on my Mac. The local version is important to me because the agent can use the actual machine: its repositories, test environment, private network, and even hardware attached over USB. Cursor performs the coding work. Grok Bot manages the sessions.
 
@@ -142,25 +106,15 @@ Kanbus improved that by giving all of them a shared project record. Tasks, bugs,
 
 That's why the 4:13 message felt so uncanny. The surprising part wasn't that a model found a bug or wrote code. It was that the work moved through several defined responsibilities and came back for checking without me standing inside every exchange.
 
-<div className="center-full-image">
-
 ::image{
   src="images/grok-bot-plantuml-request.png"
   layout="full"
   alt="Asking Software Director to chart the recent bot-to-bot traffic as PlantUML."
 }
 
-</div>
-
-<p>
-  <em>
-    I asked for a PlantUML sequence diagram of the bot-to-bot mail that had
-    accumulated. Software Director polled every desk and started assembling the
-    chart.
-  </em>
-</p>
-
-<div className="center-full-image">
+*I asked for a PlantUML sequence diagram of the bot-to-bot mail that had
+accumulated. Software Director polled every desk and started assembling the
+chart.*
 
 ::image{
   src="diagrams/grok-bot-bot-to-bot-mail.png"
@@ -168,14 +122,8 @@ That's why the 4:13 message felt so uncanny. The surprising part wasn't that a m
   alt="Sequence diagram of bot-to-bot messages between Aug 26 and Aug 29."
 }
 
-</div>
-
-<p>
-  <em>
-    This is an activity log, not a hypothetical architecture: traffic across six
-    desks. I didn't write most of these arrows.
-  </em>
-</p>
+*This is an activity log, not a hypothetical architecture: traffic across six
+desks. I didn't write most of these arrows.*
 
 ## But it's still Grok
 

@@ -3,7 +3,8 @@ title: "From pair programmer to executive"
 slug: "from-pair-programmer-to-executive"
 date: "2026-08-29T10:30:00-04:00"
 authors:
-  - author: <a href="/ryan">Ryan Porter</a>
+  - name: Ryan Porter
+    url: /ryan
 tags:
   - articles
   - AI
@@ -65,65 +66,46 @@ This is the same number of coding agents arranged in two different ways:
 
 ### Before: four direct agent conversations
 
-<div className="blockDiagram">
-  <div className="container technologyStack" style={{ backgroundColor: '#E8EEF7', textAlign: 'center', padding: '1em' }}>
-    <b style={{ color: '#1f77b4' }}>Human</b>
-  </div>
-  <div style={{ textAlign: 'center', color: 'var(--color-text)', fontSize: 'var(--font-sm)', margin: '0.5em 0' }}>
-    <div>&darr; assigns and checks work</div>
-  </div>
-  <div style={{ display: 'flex', gap: '0.5em', flexWrap: 'wrap' }}>
-    <div className="container technologyStack" style={{ flex: 1, minWidth: '120px', backgroundColor: '#F7E8EA', textAlign: 'center', padding: '0.75em' }}>
-      <b style={{ color: '#9B1B30', fontSize: '0.9em' }}>Coding agent</b>
-    </div>
-    <div className="container technologyStack" style={{ flex: 1, minWidth: '120px', backgroundColor: '#F7E8EA', textAlign: 'center', padding: '0.75em' }}>
-      <b style={{ color: '#9B1B30', fontSize: '0.9em' }}>Coding agent</b>
-    </div>
-    <div className="container technologyStack" style={{ flex: 1, minWidth: '120px', backgroundColor: '#F7E8EA', textAlign: 'center', padding: '0.75em' }}>
-      <b style={{ color: '#9B1B30', fontSize: '0.9em' }}>Coding agent</b>
-    </div>
-    <div className="container technologyStack" style={{ flex: 1, minWidth: '120px', backgroundColor: '#F7E8EA', textAlign: 'center', padding: '0.75em' }}>
-      <b style={{ color: '#9B1B30', fontSize: '0.9em' }}>Coding agent</b>
-    </div>
-  </div>
-  <div style={{ textAlign: 'center', color: 'var(--color-text)', opacity: 0.6, fontSize: 'var(--font-sm)', marginTop: '0.75em' }}>
-    Every assignment, result, and next decision passes through the human.
-  </div>
-</div>
+:::diagram
+:::node{title="Human" tone="human"}
+:::
+::link{label="assigns and checks work"}
+:::row
+:::node{title="Coding agent" tone="agent"}
+:::
+:::node{title="Coding agent" tone="agent"}
+:::
+:::node{title="Coding agent" tone="agent"}
+:::
+:::node{title="Coding agent" tone="agent"}
+:::
+:::
+
+Every assignment, result, and next decision passes through the human.
+:::
 
 ### After: one supervised software team
 
-<div className="blockDiagram">
-  <div className="container technologyStack" style={{ backgroundColor: '#E8EEF7', textAlign: 'center', padding: '1em' }}>
-    <b style={{ color: '#1f77b4' }}>Human</b>
-  </div>
-  <div style={{ textAlign: 'center', color: 'var(--color-text)', fontSize: 'var(--font-sm)', margin: '0.5em 0' }}>
-    <div>&darr; sets direction and checks outcomes</div>
-  </div>
-  <div className="container technologyStack" style={{ backgroundColor: '#F7E8EA', textAlign: 'center', padding: '1em' }}>
-    <b style={{ color: '#9B1B30' }}>Software Director</b>
-  </div>
-  <div style={{ textAlign: 'center', color: 'var(--color-text)', fontSize: 'var(--font-sm)', margin: '0.5em 0' }}>
-    <div>&darr; assigns and reviews work</div>
-  </div>
-  <div style={{ display: 'flex', gap: '0.5em', flexWrap: 'wrap' }}>
-    <div className="container technologyStack" style={{ flex: 1, minWidth: '120px', backgroundColor: '#F7E8EA', textAlign: 'center', padding: '0.75em' }}>
-      <b style={{ color: '#9B1B30', fontSize: '0.9em' }}>Coding agent</b>
-    </div>
-    <div className="container technologyStack" style={{ flex: 1, minWidth: '120px', backgroundColor: '#F7E8EA', textAlign: 'center', padding: '0.75em' }}>
-      <b style={{ color: '#9B1B30', fontSize: '0.9em' }}>Coding agent</b>
-    </div>
-    <div className="container technologyStack" style={{ flex: 1, minWidth: '120px', backgroundColor: '#F7E8EA', textAlign: 'center', padding: '0.75em' }}>
-      <b style={{ color: '#9B1B30', fontSize: '0.9em' }}>Coding agent</b>
-    </div>
-    <div className="container technologyStack" style={{ flex: 1, minWidth: '120px', backgroundColor: '#F7E8EA', textAlign: 'center', padding: '0.75em' }}>
-      <b style={{ color: '#9B1B30', fontSize: '0.9em' }}>Coding agent</b>
-    </div>
-  </div>
-  <div style={{ textAlign: 'center', color: 'var(--color-text)', opacity: 0.6, fontSize: 'var(--font-sm)', marginTop: '0.75em' }}>
-    The human sets direction. The Software Director handles the day-to-day loop.
-  </div>
-</div>
+:::diagram
+:::node{title="Human" tone="human"}
+:::
+::link{label="sets direction and checks outcomes"}
+:::node{title="Software Director" tone="agent"}
+:::
+::link{label="assigns and reviews work"}
+:::row
+:::node{title="Coding agent" tone="agent"}
+:::
+:::node{title="Coding agent" tone="agent"}
+:::
+:::node{title="Coding agent" tone="agent"}
+:::
+:::node{title="Coding agent" tone="agent"}
+:::
+:::
+
+The human sets direction. The Software Director handles the day-to-day loop.
+:::
 
 The coding agents didn’t suddenly get smarter in the second diagram. The difference is that I don’t have to sit inside every conversation.
 
@@ -133,29 +115,23 @@ That delay sounds small, but it adds up fast. Some agent tasks take hours, but m
 
 Here is the shape of the loop without any product names:
 
-<div className="blockDiagram">
-  <div className="title">The supervision loop</div>
-  <div style={{ display: 'flex', gap: '0.75em', flexWrap: 'wrap', alignItems: 'stretch' }}>
-    <div className="container technologyStack" style={{ flex: 1, minWidth: '140px', backgroundColor: '#F7E8EA', textAlign: 'center', padding: '1em' }}>
-      <b style={{ color: '#9B1B30' }}>Researcher</b>
-      <p style={{ fontSize: '0.8em', marginTop: '0.5em' }}>Reports a bug. Checks the delivered fix. Sends it back if it is not good enough.</p>
-    </div>
-    <div className="container technologyStack" style={{ flex: 1, minWidth: '140px', backgroundColor: '#F7E8EA', textAlign: 'center', padding: '1em' }}>
-      <b style={{ color: '#9B1B30' }}>Software Director</b>
-      <p style={{ fontSize: '0.8em', marginTop: '0.5em' }}>Assigns work. Reviews results. Rejects inadequate changes. Combines accepted work and delivers.</p>
-    </div>
-    <div className="container technologyStack" style={{ flex: 1, minWidth: '140px', backgroundColor: '#F7E8EA', textAlign: 'center', padding: '1em' }}>
-      <b style={{ color: '#9B1B30' }}>Coding agents</b>
-      <p style={{ fontSize: '0.8em', marginTop: '0.5em' }}>Write code. Run tests. Return evidence. Correct and resubmit when rejected.</p>
-    </div>
-  </div>
-  <div style={{ textAlign: 'center', color: 'var(--color-text)', fontSize: 'var(--font-sm)', margin: '0.75em 0 0.25em' }}>
-    <div>Researcher &rarr; Director &rarr; Coding agents &rarr; Director &rarr; Researcher</div>
-  </div>
-  <div style={{ textAlign: 'center', color: 'var(--color-text)', opacity: 0.6, fontSize: 'var(--font-sm)', marginTop: '0.25em' }}>
-    The loop repeats until the Researcher accepts the result or escalates to the human.
-  </div>
-</div>
+:::diagram{title="The supervision loop"}
+:::row
+:::node{title="Researcher" tone="agent"}
+Reports a bug. Checks the delivered fix. Sends it back if it is not good enough.
+:::
+:::node{title="Software Director" tone="agent"}
+Assigns work. Reviews results. Rejects inadequate changes. Combines accepted work and delivers.
+:::
+:::node{title="Coding agents" tone="agent"}
+Write code. Run tests. Return evidence. Correct and resubmit when rejected.
+:::
+:::
+
+Researcher &rarr; Director &rarr; Coding agents &rarr; Director &rarr; Researcher
+
+The loop repeats until the Researcher accepts the result or escalates to the human.
+:::
 
 Right now, I’m doing this with [Grok Bot](/blog/grok-bot-gave-my-coding-agents-a-boss/) and a local Software Director that coordinates Cursor sessions on my Mac. The director could run in the cloud; I prefer the local machine for reasons I discuss in those field notes. Grok Bot is a glimpse of this operating model, not its final form and not the only way it will work.
 

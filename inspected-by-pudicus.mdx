@@ -3,7 +3,8 @@ title: "Inspected by Pudicus"
 slug: "inspected-by-pudicus"
 date: "2026-08-31T17:30:00-04:00"
 authors:
-  - author: <a href="/ryan">Ryan Porter</a>
+  - name: Ryan Porter
+    url: /ryan
 excerpt: "Pudicus makes git hooks actually run, so agent swarms scan for secrets before they commit. Once a secret is in history, it's expensive to unwind."
 preview_image: "./images/inspected-by-sticker-cover.png"
 images:
@@ -44,17 +45,12 @@ citations:
     URL: https://git-scm.com/docs/githooks
     accessed: {date-parts: [[2026, 8, 31]]}
 ---
-
-<p class="center-full-image">
-
 ::image{
   src="images/inspected-by-sticker-cover.png"
   layout="center-small-image"
   alt="A computer monitor in a professional office displaying lines of code in a dark-theme editor, with a
   physical paper sticker reading 'INSPECTED BY 247' stuck directly onto the glass."
 }
-
-</p>
 
 Agent swarms write a lot of code. They also skip git hooks. `--no-verify` is right there in the man page, and they've learned it. The hook we actually need is the one that scans for secrets and other sensitive information *before* the commit. After a key is in git history, you're rotating credentials and rewriting history. That's the expensive part.
 
@@ -73,7 +69,7 @@ Ask this of every cousin that looks like a control:
 
 A `Signed-off-by` line is just a person typing that they certified origin. An `AI-Assisted:` label is just a costume. A required status check at merge is a merge gate, and it's too late: the secret is already committed. Merge-green is not the same as the scan running before the commit.
 
-<mark>The inspector is a named, pinned secret scanner — not the LLM that wrote the code. The object is this exact git tree. The mark is cryptographically required so a skipped hook doesn't land in the shared repo.</mark>
+==The inspector is a named, pinned secret scanner — not the LLM that wrote the code. The object is this exact git tree. The mark is cryptographically required so a skipped hook doesn't land in the shared repo.==
 
 Later you can show: scanner X, version Y, checked this tree. That's paperwork with a checkable receipt. It's not a human LGTM, and it's not a general CI job.
 
@@ -99,16 +95,12 @@ Treat that the way ITIL treats a change implemented without a ticket:
 
 A `commit-msg` hook runs a pinned scanner over the staged tree. If the scan is clean, the hook writes an HMAC receipt onto the commit: inspector identity, this git tree, the result, the time, a signature. Later stages check that receipt. No receipt, no deploy. The scanners behind the hook are pluggable: Gitleaks, Tactus, whatever you pin.
 
-<p class="center-full-image">
-
 ::image{
   src="diagrams/pudicus-validation.png"
   layout="center-full-image"
   alt="Architecture diagram showing the Pudicus Git Hook running scanners, minting a cryptographic signature,
   and later stages refusing a commit with no receipt."
 }
-
-</p>
 
 The agent can't mint the sticker. It doesn't hold the secret. So the easy path is letting the hook run.
 
@@ -124,16 +116,12 @@ Pudicus ties the signature to the **Tree Hash** (the exact state of the files) r
 
 If an agent bypasses the hook with `--no-verify`, you don't have to rewrite git history. You can run `pudicus approve`, which creates an empty "paperwork" commit at the tip of your branch holding the signatures for the older commits. Later stages pool those signatures and check them against the tree you're about to ship.
 
-<p class="center-full-image">
-
 ::image{
   src="diagrams/pudicus-signature-pooling.png"
   layout="center-full-image"
   alt="Diagram showing how an Approval Commit signs previous trees, allowing later stages to pool valid
   signatures."
 }
-
-</p>
 
 We're running Pudicus on all of our agent-written commits. You can [view the source and install it from GitHub](https://github.com/AnthusAI/Pudicus). If you need help keeping secrets out of agent-written history, talk to us at [anth.us](https://anth.us).
 
