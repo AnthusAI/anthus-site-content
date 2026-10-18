@@ -3,7 +3,8 @@ title: "Cybernetic Development"
 slug: "cybernetic-development"
 date: "2026-05-19"
 authors:
-  - author: <a href="/ryan">Ryan Porter</a>
+  - name: Ryan Porter
+    url: /ryan
 excerpt: "Vibe Coding is the spark, but cybernetic development is the fire. Why the future isn't writing code—it's governing AI agents with systems thinking."
 preview_image: "./images/cybernetic-development.png"
 images:
@@ -136,16 +137,12 @@ citations:
     and it composes: nothing stops another loop from mounting a wheel on
     the reader's back. */}
 
-<div className="center-small-image">
-
 ::image{
   src="images/cybernetic-development.png"
   layout="full"
   alt="First-person view of a human's hands steering a wheel mounted on the back of a white robot, which
   itself steers the ship's helm at the bow."
 }
-
-</div>
 
 There is a widening gap in the world of AI software development. On one side, you have the "Vibe Coders": enthusiastic experimenters who can prompt a prototype into existence in minutes. They ride the wave of LLM generation, treating code like a disposable medium. It feels like magic. It feels fast. But all too often, it hits a wall—the "it runs on my machine" prototype that collapses under the weight of edge cases, security reviews, and maintenance realities.
 
@@ -169,28 +166,19 @@ A cybernetic system has two distinct parts:
 1.  **The Engine:** The force that drives the system forward (Energy).
 2.  **The Governor:** The feedback loop that steers the engine (Information).
 
-{/* Engine / Governor loop. Stacked vertically rather than left-right so it
-    holds up at 375px without new CSS: .row has no mobile stacking rule in
-    layout.scss, and this is simple enough not to need one. */}
+[//]: # "Engine / Governor loop. Stacked vertically rather than left-right so it holds up at 375px without new CSS: .row has no mobile stacking rule in layout.scss, and this is simple enough not to need one."
 
-<div className="blockDiagram">
-  <div className="title">The Cybernetic Loop</div>
-  <div className="container technologyStack" style={{ backgroundColor: '#F7E8EA' }}>
-    <b>Engine</b>
-    <p>LLM generation. Fast, prolific, tireless&mdash;no opinion about whether the output is correct.</p>
-  </div>
-  <div style={{ textAlign: 'center', color: 'var(--color-text)', fontSize: 'var(--font-sm)', margin: '0.5em 0' }}>
-    <div>&darr; output</div>
-    <div>&uarr; correction</div>
-  </div>
-  <div className="container technologyStack">
-    <b>Governor</b>
-    <p>Specs, tests, CI gates, telemetry. Slow, opinionated&mdash;measures the output against intent.</p>
-  </div>
-  <div style={{ textAlign: 'center', color: 'var(--color-text)', opacity: 0.6, fontSize: 'var(--font-sm)', marginTop: '0.75em' }}>
-    Skip the loop and it stops being cybernetic&mdash;it's just an Engine running open: <i>vibe coding</i>.
-  </div>
-</div>
+:::diagram{title="The Cybernetic Loop"}
+:::node{title="Engine" tone="agent"}
+LLM generation. Fast, prolific, tireless&mdash;no opinion about whether the output is correct.
+:::
+::link{label="output" back="correction"}
+:::node{title="Governor"}
+Specs, tests, CI gates, telemetry. Slow, opinionated&mdash;measures the output against intent.
+:::
+
+Skip the loop and it stops being cybernetic&mdash;it's just an Engine running open: *vibe coding*.
+:::
 
 ### The Glass Cockpit Problem: A Warning from Aviation
 
@@ -202,7 +190,7 @@ This isn't an argument against automation. It's an argument for **cybernetic sys
 
 The same applies to AI coding. If AI does 99% of the work, the human developer risks losing their fundamental skills—what Nate B. Jones calls **Primitive Fluency**. The cybernetic developer maintains this fluency not to replace the AI, but to steer it effectively and recover when it hallucinates.
 
-{/* Generated via Midjourney, installed. */}
+[//]: # "Generated via Midjourney, installed."
 
 ::image{
   src="images/glass-cockpit.png"
@@ -222,28 +210,26 @@ We are cybernetic systems. And now, we are externalizing that structure into our
 
 The 100x developer isn't just shoveling coal into the engine; they are designing the System 2 structure to govern the System 1 chaos.
 
-{/* Same two tints as The Cybernetic Loop above: pale red/pink for
-    System 1 / Engine, the site's default pale blue for System 2 / Governor.
-    .row stacks to a column at <=600px (layout.scss), so this is safe at
-    mobile widths without further changes. */}
+[//]: # "Same two tints as The Cybernetic Loop above: pale red/pink for System 1 / Engine, the site's default pale blue for System 2 / Governor. .row stacks to a column at <=600px (layout.scss), so this is safe at mobile widths without further changes."
 
-<div className="blockDiagram">
-  <div className="title">Two Minds, Two Systems</div>
-  <div className="row">
-    <div className="container technologyStack" style={{ backgroundColor: '#F7E8EA' }}>
-      <b>System 1</b>
-      <p>Fast, intuitive, pattern-matching&mdash;no verification.</p>
-      <p>Externalized as <b>Vibe Coding (LLMs)</b></p>
-      <p>&rarr; the <b>Engine</b></p>
-    </div>
-    <div className="container technologyStack">
-      <b>System 2</b>
-      <p>Slow, deliberate, logical&mdash;effortful.</p>
-      <p>Externalized as <b>Engineering Discipline (BDD/TDD)</b></p>
-      <p>&rarr; the <b>Governor</b></p>
-    </div>
-  </div>
-</div>
+:::diagram{title="Two Minds, Two Systems"}
+:::row
+:::node{title="System 1" tone="agent"}
+Fast, intuitive, pattern-matching&mdash;no verification.
+
+Externalized as **Vibe Coding (LLMs)**
+
+&rarr; the **Engine**
+:::
+:::node{title="System 2"}
+Slow, deliberate, logical&mdash;effortful.
+
+Externalized as **Engineering Discipline (BDD/TDD)**
+
+&rarr; the **Governor**
+:::
+:::
+:::
 
 Even Andrej Karpathy, who coined the term "vibe coding" in early 2025[@karpathy-2025-andrej-karpathy-on-vibe-coding], recognized this shift just a year later. Reflecting on the concept's anniversary, he noted that while vibe coding started as a way to build "fun throwaway projects," the industry quickly moved toward something more rigorous. He called it **"Agentic Engineering"**—where you get the speed of agents without compromising on quality.[@karpathy-2026-andrej-karpathy-on-vibe-coding-anniversary]
 
@@ -481,65 +467,14 @@ A cybernetic developer builds Governors at multiple layers:
 *   **Runtime Governors:** Rate limits, timeouts, circuit breakers, validation, and kill switches that keep failures bounded.
 *   **Learning Governors:** Blameless postmortems and incident reviews that feed new tests, new specs, new guardrails—or sometimes a hard simplification that eliminates the failure mode entirely.
 
-{/* Inline SVG, not pure CSS: the gaps need exact, staggered coordinates and
-    one path threading through all five at different x-offsets each time --
-    not reproducible with flexbox. Short labels only (full descriptions are
-    already in the bullet list above); the diagram's job is the layering and
-    the one path that gets through, not restating the prose. viewBox scales
-    fluidly, so this holds up at any width without a media query. */}
+[//]: # "Inline SVG, not pure CSS: the gaps need exact, staggered coordinates and one path threading through all five at different x-offsets each time -- not reproducible with flexbox. Short labels only (full descriptions are already in the bullet list above); the diagram's job is the layering and the one path that gets through, not restating the prose. viewBox scales fluidly, so this holds up at any width without a media query."
 
-<div className="blockDiagram">
-  <div className="title">Five Layers, One Path Through</div>
-  <div className="container">
-    <svg viewBox="0 0 900 500" style={{ width: '100%', height: 'auto', display: 'block' }}
-         role="img" aria-label="Five stacked layers of governors with misaligned gaps, and a single failure path threading through all five.">
-      <rect x="0" y="0" width="900" height="500" fill="#f1f9fe" />
-
-      {/* Tool Governors */}
-      <rect x="20" y="40" width="860" height="70" rx="8" fill="#C9DCEA" stroke="#7C97AC" strokeWidth="1.5" />
-      <rect x="480" y="40" width="60" height="70" fill="#f1f9fe" />
-      <rect x="700" y="40" width="60" height="70" fill="#f1f9fe" />
-      <text x="40" y="70" fontSize="17" fontWeight="bold" fill="#333333">Tool Governors</text>
-      <text x="40" y="92" fontSize="13" fill="#6B6B6B">sandboxes &middot; least privilege</text>
-
-      {/* Merge Governors */}
-      <rect x="20" y="122" width="860" height="70" rx="8" fill="#C9DCEA" stroke="#7C97AC" strokeWidth="1.5" />
-      <rect x="560" y="122" width="60" height="70" fill="#f1f9fe" />
-      <rect x="780" y="122" width="50" height="70" fill="#f1f9fe" />
-      <text x="40" y="152" fontSize="17" fontWeight="bold" fill="#333333">Merge Governors</text>
-      <text x="40" y="174" fontSize="13" fill="#6B6B6B">lint &middot; tests &middot; security</text>
-
-      {/* Release Governors */}
-      <rect x="20" y="204" width="860" height="70" rx="8" fill="#C9DCEA" stroke="#7C97AC" strokeWidth="1.5" />
-      <rect x="480" y="204" width="50" height="70" fill="#f1f9fe" />
-      <rect x="620" y="204" width="50" height="70" fill="#f1f9fe" />
-      <rect x="760" y="204" width="60" height="70" fill="#f1f9fe" />
-      <text x="40" y="234" fontSize="17" fontWeight="bold" fill="#333333">Release Governors</text>
-      <text x="40" y="256" fontSize="13" fill="#6B6B6B">staging &middot; canary &middot; rollback</text>
-
-      {/* Runtime Governors */}
-      <rect x="20" y="286" width="860" height="70" rx="8" fill="#C9DCEA" stroke="#7C97AC" strokeWidth="1.5" />
-      <rect x="500" y="286" width="60" height="70" fill="#f1f9fe" />
-      <rect x="700" y="286" width="50" height="70" fill="#f1f9fe" />
-      <text x="40" y="316" fontSize="17" fontWeight="bold" fill="#333333">Runtime Governors</text>
-      <text x="40" y="338" fontSize="13" fill="#6B6B6B">limits &middot; breakers &middot; kill switch</text>
-
-      {/* Learning Governors */}
-      <rect x="20" y="368" width="860" height="70" rx="8" fill="#C9DCEA" stroke="#7C97AC" strokeWidth="1.5" />
-      <rect x="540" y="368" width="60" height="70" fill="#f1f9fe" />
-      <rect x="760" y="368" width="50" height="70" fill="#f1f9fe" />
-      <text x="40" y="398" fontSize="17" fontWeight="bold" fill="#333333">Learning Governors</text>
-      <text x="40" y="420" fontSize="13" fill="#6B6B6B">postmortems &rarr; new tests</text>
-
-      {/* The one path that threads every staggered gap -- the incident nobody caught. */}
-      <path d="M 730 10 L 730 75 L 590 157 L 645 239 L 530 321 L 570 403 L 570 460"
-            fill="none" stroke="#9B1B30" strokeWidth="3" strokeDasharray="7 5" />
-      <circle cx="730" cy="10" r="5" fill="#9B1B30" />
-      <polygon points="570,460 563,446 577,446" fill="#9B1B30" />
-      <text x="570" y="482" fontSize="13.5" fontWeight="bold" fill="#9B1B30" textAnchor="middle">the incident nobody caught</text>
-    </svg>
-  </div>
-</div>
+::image{
+  src="images/cybernetic-development-five-layers-one-path-through.svg"
+  layout="full"
+  alt="Five stacked layers of governors with misaligned gaps, and a single failure path threading through all five."
+  caption="Five Layers, One Path Through"
+}
 
 This is where 100x judgment lives. When a system fails, the question isn't only "What code do we change?" It's "What layer should absorb this next time?" Sometimes the right fix is a unit test. Sometimes it's changing the spec. Sometimes it's removing agent permissions. Sometimes it's deleting the feature.
 
@@ -898,78 +833,30 @@ This is pure code. An AI agent can read it, test it, refactor it, and extend it.
 
 This is the pattern we've been building toward in [Tactus](https://tactus.anth.us/), our own DSL for defining agent procedures as versioned, testable code. The idea is *bounded autonomy*: imperative code for the steps that must be deterministic, agent turns for the steps that benefit from judgment, and a runtime that keeps a long-running procedure from losing its place. It's still alpha and the syntax is still moving, but the shape of the thing is the point—when the procedure is code, the governor has something to hold onto.
 
-{/* Gauge fill colors reuse the article's established pair: blue for
-    human-facing/verification (cf. Governor, Automated verification in the
-    chart above), red/oxblood for agent-facing power (cf. Engine, Generation
-    capacity). No new CSS -- inline styles only, three plain stacked
-    containers need no .row and so no mobile-width risk. */}
+[//]: # "Gauge fill colors reuse the article's established pair: blue for human-facing/verification (cf. Governor, Automated verification in the chart above), red/oxblood for agent-facing power (cf. Engine, Generation capacity). No new CSS -- inline styles only, three plain stacked containers need no .row and so no mobile-width risk."
 
-<div className="blockDiagram">
-  <div className="title">The Abstraction Spectrum</div>
+:::diagram{title="The Abstraction Spectrum"}
+:::node{title="Prompt-to-App"}
+*Lovable, Bolt.new*
 
-  <div className="container technologyStack">
-    <b>Prompt-to-App</b>
-    <p style={{ color: '#6B6B6B', fontSize: '0.85em', marginTop: '-0.3em' }}>Lovable, Bolt.new</p>
-    <div style={{ textAlign: 'left', marginTop: '0.6em' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.6em', margin: '0.35em 0', fontSize: '0.85em' }}>
-        <span style={{ width: '9.5em', flexShrink: 0, whiteSpace: 'nowrap' }}>human-legible</span>
-        <span style={{ flex: 1, height: '10px', borderRadius: '5px', backgroundColor: '#E6E6E6', display: 'inline-block', overflow: 'hidden' }}>
-          <span style={{ display: 'block', height: '100%', width: '100%', backgroundColor: '#1f77b4', borderRadius: '5px' }} />
-        </span>
-        <span style={{ width: '4.5em', flexShrink: 0, textAlign: 'right', whiteSpace: 'nowrap' }}>high</span>
-      </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.6em', margin: '0.35em 0', fontSize: '0.85em' }}>
-        <span style={{ width: '9.5em', flexShrink: 0, whiteSpace: 'nowrap' }}>agent-manipulable</span>
-        <span style={{ flex: 1, height: '10px', borderRadius: '5px', backgroundColor: '#E6E6E6', display: 'inline-block', overflow: 'hidden' }}>
-          <span style={{ display: 'block', height: '100%', width: '30%', backgroundColor: '#9B1B30', borderRadius: '5px' }} />
-        </span>
-        <span style={{ width: '4.5em', flexShrink: 0, textAlign: 'right', whiteSpace: 'nowrap' }}>low</span>
-      </div>
-    </div>
-  </div>
+- human-legible: high
+- agent-manipulable: low
+:::
+::link{}
+:::node{title="Visual Workflow"}
+*N8N*
 
-  <div className="container technologyStack">
-    <b>Visual Workflow</b>
-    <p style={{ color: '#6B6B6B', fontSize: '0.85em', marginTop: '-0.3em' }}>N8N</p>
-    <div style={{ textAlign: 'left', marginTop: '0.6em' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.6em', margin: '0.35em 0', fontSize: '0.85em' }}>
-        <span style={{ width: '9.5em', flexShrink: 0, whiteSpace: 'nowrap' }}>human-legible</span>
-        <span style={{ flex: 1, height: '10px', borderRadius: '5px', backgroundColor: '#E6E6E6', display: 'inline-block', overflow: 'hidden' }}>
-          <span style={{ display: 'block', height: '100%', width: '100%', backgroundColor: '#1f77b4', borderRadius: '5px' }} />
-        </span>
-        <span style={{ width: '4.5em', flexShrink: 0, textAlign: 'right', whiteSpace: 'nowrap' }}>high</span>
-      </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.6em', margin: '0.35em 0', fontSize: '0.85em' }}>
-        <span style={{ width: '9.5em', flexShrink: 0, whiteSpace: 'nowrap' }}>agent-manipulable</span>
-        <span style={{ flex: 1, height: '10px', borderRadius: '5px', backgroundColor: '#E6E6E6', display: 'inline-block', overflow: 'hidden' }}>
-          <span style={{ display: 'block', height: '100%', width: '65%', backgroundColor: '#9B1B30', borderRadius: '5px' }} />
-        </span>
-        <span style={{ width: '4.5em', flexShrink: 0, textAlign: 'right', whiteSpace: 'nowrap' }}>medium</span>
-      </div>
-    </div>
-  </div>
+- human-legible: high
+- agent-manipulable: medium
+:::
+::link{}
+:::node{title="Agents as Code"}
+*Python, TypeScript, Go, Tactus*
 
-  <div className="container technologyStack">
-    <b>Agents as Code</b>
-    <p style={{ color: '#6B6B6B', fontSize: '0.85em', marginTop: '-0.3em' }}>Python, TypeScript, Go, Tactus</p>
-    <div style={{ textAlign: 'left', marginTop: '0.6em' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.6em', margin: '0.35em 0', fontSize: '0.85em' }}>
-        <span style={{ width: '9.5em', flexShrink: 0, whiteSpace: 'nowrap' }}>human-legible</span>
-        <span style={{ flex: 1, height: '10px', borderRadius: '5px', backgroundColor: '#E6E6E6', display: 'inline-block', overflow: 'hidden' }}>
-          <span style={{ display: 'block', height: '100%', width: '65%', backgroundColor: '#1f77b4', borderRadius: '5px' }} />
-        </span>
-        <span style={{ width: '4.5em', flexShrink: 0, textAlign: 'right', whiteSpace: 'nowrap' }}>medium</span>
-      </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.6em', margin: '0.35em 0', fontSize: '0.85em' }}>
-        <span style={{ width: '9.5em', flexShrink: 0, whiteSpace: 'nowrap' }}>agent-manipulable</span>
-        <span style={{ flex: 1, height: '10px', borderRadius: '5px', backgroundColor: '#E6E6E6', display: 'inline-block', overflow: 'hidden' }}>
-          <span style={{ display: 'block', height: '100%', width: '100%', backgroundColor: '#9B1B30', borderRadius: '5px' }} />
-        </span>
-        <span style={{ width: '4.5em', flexShrink: 0, textAlign: 'right', whiteSpace: 'nowrap' }}>high</span>
-      </div>
-    </div>
-  </div>
-</div>
+- human-legible: medium
+- agent-manipulable: high
+:::
+:::
 
 #### The Abstraction Tax
 
@@ -1128,80 +1015,14 @@ The shift from 10x to 100x requires a different interaction model: **management 
 
 This is exactly what managers do when coordinating human contractors. They don't pair program with everyone. They use project management systems—Jira, Linear, or repository-based tools like [Kanbus](https://kanb.us) or [Beads](https://github.com/steveyegge/beads).
 
-{/* One combined SVG rather than a .row of two containers, so the pairing
-    scales as a single unit and the two panels can never separate at odd
-    widths. Same color language as the other three diagrams in this
-    article: blue = human/governance, oxblood = agent/engine power, the
-    Swiss-cheese slice gray-blue = infrastructure (the task system itself,
-    an artifact rather than a party). The human circle is the same radius
-    in both panels on purpose -- the constant. Left panel's single agent
-    matches the human's radius too (a symmetric 1:1 pairing); the four
-    right-panel agents are drawn smaller, which is what makes the fan-out
-    read as many instead of one at a different scale. */}
+[//]: # "One combined SVG rather than a .row of two containers, so the pairing scales as a single unit and the two panels can never separate at odd widths. Same color language as the other three diagrams in this article: blue = human/governance, oxblood = agent/engine power, the Swiss-cheese slice gray-blue = infrastructure (the task system itself, an artifact rather than a party). The human circle is the same radius in both panels on purpose -- the constant. Left panel's single agent matches the human's radius too (a symmetric 1:1 pairing); the four right-panel agents are drawn smaller, which is what makes the fan-out read as many instead of one at a different scale."
 
-<div className="blockDiagram">
-  <div className="title">Pair Programming vs. Delegation</div>
-  <div className="container">
-    <svg viewBox="0 0 900 480" style={{ width: '100%', height: 'auto', display: 'block' }}
-         role="img" aria-label="Left, one human paired with one agent by a thick two-way arrow. Right, one human directing a task system that fans out to four agents, which report back into the task system rather than to the human.">
-
-      <line x1="450" y1="20" x2="450" y2="440" stroke="#CCCCCC" strokeWidth="1.5" strokeDasharray="6 5" />
-
-      {/* LEFT — Pair Programming (1:1) */}
-      <text x="225" y="36" fontSize="18" fontWeight="bold" fill="#333333" textAnchor="middle">Pair Programming (1:1)</text>
-      <circle cx="140" cy="180" r="36" fill="#1f77b4" />
-      <text x="140" y="186" fontSize="15" fontWeight="bold" fill="#FFFFFF" textAnchor="middle">You</text>
-      <circle cx="310" cy="180" r="36" fill="#9B1B30" />
-      <text x="310" y="186" fontSize="14" fontWeight="bold" fill="#FFFFFF" textAnchor="middle">Agent</text>
-      <line x1="178" y1="180" x2="272" y2="180" stroke="#333333" strokeWidth="6" />
-      <polygon points="178,180 190,173 190,187" fill="#333333" />
-      <polygon points="272,180 260,173 260,187" fill="#333333" />
-      <text x="225" y="255" fontSize="13.5" fontStyle="italic" fill="#6B6B6B" textAnchor="middle">Every unit of work costs</text>
-      <text x="225" y="273" fontSize="13.5" fontStyle="italic" fill="#6B6B6B" textAnchor="middle">a unit of your attention.</text>
-
-      {/* RIGHT — Delegation (1:N) */}
-      <text x="675" y="36" fontSize="18" fontWeight="bold" fill="#333333" textAnchor="middle">Delegation (1:N)</text>
-      <circle cx="675" cy="95" r="36" fill="#1f77b4" />
-      <text x="675" y="101" fontSize="15" fontWeight="bold" fill="#FFFFFF" textAnchor="middle">You</text>
-      <line x1="675" y1="131" x2="675" y2="152" stroke="#333333" strokeWidth="3" />
-      <polygon points="675,152 668,140 682,140" fill="#333333" />
-
-      <rect x="580" y="152" width="190" height="55" rx="8" fill="#C9DCEA" stroke="#7C97AC" strokeWidth="1.5" />
-      <text x="675" y="176" fontSize="14.5" fontWeight="bold" fill="#333333" textAnchor="middle">Task System</text>
-      <text x="675" y="194" fontSize="12" fill="#6B6B6B" textAnchor="middle">(issues in the repo)</text>
-
-      {/* Fan-out (solid, arrow at agent) and report-back (dashed, arrow at box) --
-          offset a few px apart at each end so the two arrows per agent never
-          sit exactly on top of each other. */}
-      <line x1="660" y1="207" x2="515" y2="299" stroke="#7C97AC" strokeWidth="2" />
-      <polygon points="515,299 528,296 522,309" fill="#7C97AC" />
-      <line x1="525" y1="299" x2="670" y2="207" stroke="#7C97AC" strokeWidth="1.5" strokeDasharray="5 4" />
-      <polygon points="670,207 657,207 663,196" fill="#7C97AC" />
-
-      <line x1="668" y1="207" x2="608" y2="299" stroke="#7C97AC" strokeWidth="2" />
-      <polygon points="608,299 619,293 624,306" fill="#7C97AC" />
-      <line x1="618" y1="299" x2="678" y2="207" stroke="#7C97AC" strokeWidth="1.5" strokeDasharray="5 4" />
-      <polygon points="678,207 665,204 674,215" fill="#7C97AC" />
-
-      <line x1="682" y1="207" x2="702" y2="299" stroke="#7C97AC" strokeWidth="2" />
-      <polygon points="702,299 692,293 686,305" fill="#7C97AC" />
-      <line x1="712" y1="299" x2="692" y2="207" stroke="#7C97AC" strokeWidth="1.5" strokeDasharray="5 4" />
-      <polygon points="692,207 700,217 685,215" fill="#7C97AC" />
-
-      <line x1="690" y1="207" x2="795" y2="299" stroke="#7C97AC" strokeWidth="2" />
-      <polygon points="795,299 784,299 790,287" fill="#7C97AC" />
-      <line x1="805" y1="299" x2="700" y2="207" stroke="#7C97AC" strokeWidth="1.5" strokeDasharray="5 4" />
-      <polygon points="700,207 712,208 706,219" fill="#7C97AC" />
-
-      <circle cx="520" cy="322" r="22" fill="#9B1B30" />
-      <circle cx="613" cy="322" r="22" fill="#9B1B30" />
-      <circle cx="706" cy="322" r="22" fill="#9B1B30" />
-      <circle cx="799" cy="322" r="22" fill="#9B1B30" />
-      <text x="675" y="372" fontSize="13" fill="#6B6B6B" textAnchor="middle">agents</text>
-      <text x="675" y="410" fontSize="13.5" fontStyle="italic" fill="#6B6B6B" textAnchor="middle">They report to the task system, not back to you.</text>
-    </svg>
-  </div>
-</div>
+::image{
+  src="images/cybernetic-development-pair-programming-vs-delegation.svg"
+  layout="full"
+  alt="Left, one human paired with one agent by a thick two-way arrow. Right, one human directing a task system that fans out to four agents, which report back into the task system rather than to the human."
+  caption="Pair Programming vs. Delegation"
+}
 
 Without a task management system, you're forced to:
 *   Keep all context in chat session history
@@ -1235,7 +1056,7 @@ The rule:
 
 This connects to **Principle 2: Problem Elimination**. Sometimes the right move is to stop generating new code and fix the governance layer first. But once your Governor is strong, the path to 100x is **more parallelism, not less**.
 
-This connects to the concept of <a href="/the-rise-of-single-use-software">Single-Use Software</a>. There is a time and place for disposable scripts (solving a one-off problem tonight). But applying that disposable mindset to long-term infrastructure is how you build a legacy of debt. The Cybernetic Developer knows the difference: generate the script, but **govern the system**.
+This connects to the concept of [Single-Use Software](/the-rise-of-single-use-software). There is a time and place for disposable scripts (solving a one-off problem tonight). But applying that disposable mindset to long-term infrastructure is how you build a legacy of debt. The Cybernetic Developer knows the difference: generate the script, but **govern the system**.
 
 ## Agents as Enforcers, Not Just Creators
 
@@ -1269,7 +1090,7 @@ This is the **Law of Leaky Abstractions**: "All non-trivial abstractions, to som
 
 AI is the ultimate abstraction—it tries to abstract away the *act of thinking*. But it leaks. It hallucinates libraries that don't exist. It writes code that has race conditions.
 
-Sometimes, these leaks are actually **creative features**. When an AI hallucinates, it is connecting dots that don't exist—which is the definition of creativity ("What if there was an Uber for pet food?"). But in engineering, a leak is a bug. The cybernetic developer knows the difference: they use the hallucinations for brainstorming (System 1) but patch the leaks for production (System 2). (For more on this perspective, see <a href="/rethinking-ai-hallucination">Rethinking AI Hallucination</a>.)
+Sometimes, these leaks are actually **creative features**. When an AI hallucinates, it is connecting dots that don't exist—which is the definition of creativity ("What if there was an Uber for pet food?"). But in engineering, a leak is a bug. The cybernetic developer knows the difference: they use the hallucinations for brainstorming (System 1) but patch the leaks for production (System 2). (For more on this perspective, see [Rethinking AI Hallucination](/rethinking-ai-hallucination).)
 
 They maintain **Primitive Fluency**—the ability to touch the bare metal—because they know that *someone* has to be there to fix the leaks when the abstraction fails.
 
@@ -1313,8 +1134,7 @@ In cybernetic development, you use BDD/TDD to drive the **marginal cost of verif
 
 But not all verification is knowable upfront. Many agentic failures are emergent and only appear under real traffic, real data, and real organizational pressure. That’s why the cybernetic loop can’t stop at CI. You need runtime feedback loops—staged rollouts, telemetry, and postmortems—that turn production into a controlled experiment instead of a cliff.
 
-{/* Generated by scripts/generate-verification-debt.py. Illustrative rates
-    and shapes, marked as such on the figure -- not measured project data. */}
+[//]: # "Generated by scripts/generate-verification-debt.py. Illustrative rates and shapes, marked as such on the figure -- not measured project data."
 
 ::image{
   src="images/verification-debt.png"

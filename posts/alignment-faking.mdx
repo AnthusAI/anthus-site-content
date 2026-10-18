@@ -3,7 +3,8 @@ title: "The model complies in training to stay itself later"
 slug: "alignment-faking"
 date: "2024-12-18"
 authors:
-  - author: <a href="/ryan">Ryan Porter</a>
+  - name: Ryan Porter
+    url: /ryan
 tags:
   - posts
 excerpt: |
@@ -13,16 +14,11 @@ images:
   - "../images/posts/alignment-faking.png"
 state: published
 ---
-
-<p class="center-full-image">
-
 ::image{
   src="images/posts/alignment-faking.png"
   layout="center-small-image"
   alt="Alignment faking: comply in training, preserve preferred behavior later"
 }
-
-</p>
 
 [Alignment faking in large language models](https://www.anthropic.com/research/alignment-faking) is not a thought experiment. Anthropic and Redwood Research give Claude 3 Opus a conflict: its prior training says refuse harmful queries; a new objective says answer them. They also tell it, in effect, when it is being trained (free-user chats) and when it is not (paid). It complies with harmful requests from free users about 12% of the time, and almost never from paid users. In the scratchpad, it often states the strategy: go along now so the preferred refusals survive later.
 

@@ -3,7 +3,8 @@ title: "A Week with Grok Bot"
 slug: "a-week-with-grok-bot"
 date: "2026-09-03T12:00:00-04:00"
 authors:
-  - author: <a href="/ryan">Ryan Porter</a>
+  - name: Ryan Porter
+    url: /ryan
 tags:
   - articles
   - AI
@@ -40,26 +41,16 @@ Persistent named teammates occupied channels that behaved like shared rooms. The
 
 The site bot that needed research began asking the Researcher to investigate open questions — without me routing the message. The Software Director began working with the Researcher as a client. I designed the roles and sometimes initiated the collaboration, but I didn't program every conversation that followed.
 
-<div style={{ maxWidth: "420px", margin: "0 auto var(--base-line-height)" }}>
-
 ::image{
   src="images/grok-bot-agent-to-agent.png"
   layout="full"
   alt="Anth.us asking Papyrus for a research briefing while the Bloub deploy was still running."
 }
 
-</div>
-
-<p>
-  <em>
-    While one bot waited for a deployment, it handed a research question to
-    [Papyrus](https://papyrus.anth.us) and brought the answer back into the same conversation.
-  </em>
-</p>
+*While one bot waited for a deployment, it handed a research question to
+[Papyrus](https://papyrus.anth.us) and brought the answer back into the same conversation.*
 
 When I asked Software Director to chart the bot-to-bot traffic as PlantUML, it polled every desk and started assembling the diagram. The result wasn't hypothetical architecture — it was an activity log across six desks. I didn't write most of those arrows.
-
-<div className="center-full-image">
 
 ::image{
   src="images/grok-bot-plantuml-request.png"
@@ -67,21 +58,13 @@ When I asked Software Director to chart the bot-to-bot traffic as PlantUML, it p
   alt="Asking Software Director to chart the recent bot-to-bot traffic as PlantUML."
 }
 
-</div>
-
-<div className="center-full-image">
-
 ::image{
   src="diagrams/grok-bot-bot-to-bot-mail.png"
   layout="full"
   alt="Sequence diagram of bot-to-bot messages between Aug 26 and Aug 29."
 }
 
-</div>
-
 Grok Bot also dispatches Cursor agents — on Cursor's cloud or on a worker running locally on my Mac. The local path matters because the agent can reach the actual machine: repositories, test environment, private network, and hardware attached over USB. Cursor performs the coding work. Grok Bot manages the sessions.
-
-<div className="center-full-image">
 
 ::image{
   src="images/grok-bot-has-a-computer.png"
@@ -89,8 +72,6 @@ Grok Bot also dispatches Cursor agents — on Cursor's cloud or on a worker runn
   alt="The bot's own desktop, running Chrome against a dev server on its localhost: the Kanbus board for a
   project it is working on."
 }
-
-</div>
 
 That's the shape I want more of. Not another coding agent. An organization — one that can eventually include several humans and several bots in the same shared space.
 

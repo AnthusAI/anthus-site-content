@@ -3,7 +3,8 @@ title: "Cloudflare's Clef: Open Decision Models That Classify Images as Well as 
 slug: "cloudflare-clef-decision-models"
 date: "2026-10-01"
 authors:
-  - author: <a href="/ryan">Ryan Porter</a>
+  - name: Ryan Porter
+    url: /ryan
 tags:
   - posts
 excerpt: |
@@ -13,16 +14,11 @@ images:
   - "../images/posts/cloudflare-clef-decision-models.png"
 state: published
 ---
-
-<p class="center-full-image">
-
 ::image{
   src="images/posts/cloudflare-clef-decision-models.png"
   layout="center-small-image"
   alt="Cloudflare blog graphic for the Clef announcement: the title 'Introducing Clef: our open-source decision models, and new RL fine-tuning platform' beside a crystal ball with a clef symbol"
 }
-
-</p>
 
 On October 1, 2026, Cloudflare [released Clef and Clef-flash](https://blog.cloudflare.com/clef-decision-models/), two open-source models that answer questions with a typed choice and a probability instead of writing text. Clef accepts images as well as text, so the input to a decision can be a screenshot, a scanned document or a photo, while Cloudflare says Jev only classifies text today. Cloudflare calls these decision models: you give one a state and a list of questions, and it returns an answer and a probability for each. Cloudflare hosts both models on Workers AI and published the weights on Hugging Face under Apache 2.0. It also announced a reinforcement learning service for fine-tuning them on a customer's own data.
 
