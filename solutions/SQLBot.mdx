@@ -13,9 +13,7 @@ images: []
 state: published
 ---
 
-<p style={{ textAlign: 'center' }}>
-  <img src="/images/sqlbot-screen.gif" alt="SQLBot Demo" style={{ maxWidth: '100%', height: 'auto' }} />
-</p>
+::image{src="images/sqlbot-screen.gif" layout="centered" alt="SQLBot Demo"}
 
 **"If you give an agent a tool, then nobody has to fish."**
 
@@ -27,11 +25,7 @@ It represents the next logical layer on the modern data stack, building directly
 
 Most people use SQL through apps. Maybe you're comfortable writing raw SQL queries if you're a wizard. Most people aren't.
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcSet="/images/sqlbot-arch-1-dark.png" />
-  <source media="(prefers-color-scheme: light)" srcSet="/images/sqlbot-arch-1.png" />
-  <img alt="SQL Layer: The foundation layer showing raw SQL complexity" src="/images/sqlbot-arch-1.png" style={{ maxWidth: '600px', width: '100%', height: 'auto', display: 'block', margin: '2rem auto' }} />
-</picture>
+::image{src="images/sqlbot-arch-1.png" layout="centered" alt="SQL Layer: The foundation layer showing raw SQL complexity"}
 
 Sure, SQL powers most relational databases—it's incredibly powerful. But here's the thing: even simple questions can turn into sprawling queries with multiple joins and cryptic table relationships. Want to see what a "basic" customer lookup actually looks like? Here's what you'd need to write just to get someone's rental history from the Sakila database:
 
@@ -58,11 +52,7 @@ This is hard to reuse and requires every user to understand the database's join 
 
 ## Enter dbt: Sharing Database Knowledge
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcSet="/images/sqlbot-arch-2-dark.png" />
-  <source media="(prefers-color-scheme: light)" srcSet="/images/sqlbot-arch-2.png" />
-  <img alt="dbt Layer: Knowledge sharing layer making database expertise accessible to business users" src="/images/sqlbot-arch-2.png" style={{ maxWidth: '600px', width: '100%', height: 'auto', display: 'block', margin: '2rem auto' }} />
-</picture>
+::image{src="images/sqlbot-arch-2.png" layout="centered" alt="dbt Layer: Knowledge sharing layer making database expertise accessible to business users"}
 
 Here's where dbt changes the game. Those database wizards who understand all the table relationships? They can package their knowledge into macros and schemas that business users can actually work with. That ugly query above becomes a simple, self-documenting function:
 
@@ -98,11 +88,7 @@ The real magic happens in dbt's `schema.yml` files—they're like institutional 
 
 ## SQLBot: Adding Intelligence & Safety
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcSet="/images/sqlbot-arch-3-dark.png" />
-  <source media="(prefers-color-scheme: light)" srcSet="/images/sqlbot-arch-3.png" />
-  <img alt="SQLBot Layer: Intelligence and safety layer with AI agent on top of the stack" src="/images/sqlbot-arch-3.png" style={{ maxWidth: '600px', width: '100%', height: 'auto', display: 'block', margin: '2rem auto' }} />
-</picture>
+::image{src="images/sqlbot-arch-3.png" layout="centered" alt="SQLBot Layer: Intelligence and safety layer with AI agent on top of the stack"}
 
 SQLBot adds the final layer: an AI agent that uses the structure dbt provides while keeping your data protected. The agent is armed with two crucial pieces of information from your dbt profile:
 
