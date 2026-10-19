@@ -1,0 +1,34 @@
+---
+title: "Pi 1.0, and the Durable Agent We're Building on It"
+slug: "pi-1-0-and-pi-durable"
+date: "2026-10-02"
+authors:
+  - author: <a href="/ryan">Ryan Porter</a>
+tags:
+  - posts
+excerpt: |
+  Earendil shipped Pi 1.0 and an experimental companion, Pi Durable. Pi is one of the agents Kanbus dispatches tasks to, and we like Pi Durable so much that we're building a durable Pi agent platform into Chatticus.
+preview_image: "../images/posts/pi-1-0-and-pi-durable.png"
+images:
+  - "../images/posts/pi-1-0-and-pi-durable.png"
+state: published
+---
+<p class="center-full-image">
+
+::image{
+  src="images/posts/pi-1-0-and-pi-durable.png"
+  layout="center-small-image"
+  alt="The Pi logo, coloured pixel blocks, over the tagline: There are many agent harnesses but this one is yours"
+}
+
+</p>
+
+Earendil shipped [Pi 1.0](https://earendil.com/posts/pi-1-0/) on October 1, together with an experimental companion, [Pi Durable](https://earendil.com/posts/pi-durable/). Pi calls itself a minimal agent harness. It leaves out the sub-agents, plan modes and permission systems that other agents build in, on purpose, and lets you build or install the ones you want as extensions. Its makers explain the restraint:
+
+> We wait until something has proven itself, and only then do we consider adopting it; weighing its true functionality against its inherent added complexity.
+
+We care about Pi for a practical reason: it's one of the coding agents [Kanbus](https://kanb.us) can dispatch tasks to. The Kanbus router hands a routed issue package to Pi the same way it hands one to Codex or OpenCode, so a team can choose the harness that fits the work. Pi 1.0 also reaches non-LLM models through Codemode, and Earendil names Jev, the decision model we [write about here](/decision-models/), as an example.
+
+Pi Durable is the part we like most. It turns an agent conversation into storage plus the machinery to run it: every model request, tool call and compaction is a durable task with a checkpoint, so a crashed process resumes where it stopped. One harness runs many conversations in parallel, several people can steer the same agent, and subagents are simply child conversations. Storage is memory, SQLite or JSONL, and it's built to be extended.
+
+That's the shape of agent we want running for hours without anyone babysitting it, so we're building a durable Pi agent platform into [Chatticus](https://chattic.us): named AI teammates on a computer you control, with Pi Durable underneath.
