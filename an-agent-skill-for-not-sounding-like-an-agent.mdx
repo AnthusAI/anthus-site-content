@@ -11,7 +11,7 @@ tags:
   - AI
   - engineering
 excerpt: |
-  "Sound less like AI" isn't a prompt problem. It's a tooling problem: give your copy-editing agent a deterministic slop detector, checked against your publication's own rules instead of a generic notion of "human." Limatus is what that looks like as a real, open-source tool.
+  "Sound less like AI" isn't a prompt problem. It's a tooling problem: give your copy-editing agent a deterministic slop detector, checked against your publication's own rules instead of a generic notion of "human." Humanus is what that looks like as a real, open-source tool.
 preview_image: "./images/an-agent-skill-for-not-sounding-like-ai.png"
 images:
   - "./images/an-agent-skill-for-not-sounding-like-ai.png"
@@ -25,9 +25,11 @@ state: published
   rewrite in green beneath it -- a real finding from the tool this article describes."
 }
 
+> **Update, October 20, 2026:** the tool in this article was called Limatus when it was published and is now named Humanus. Its commands have changed since: `limatus diagnose` became `humanus check`, which checks a draft against a publication's policies; `limatus options` became `humanus suggest`; and `verify` was retired. The commands below are quoted as they were. The approach is the same.
+
 Ask an agent to make a draft "sound less like AI" and it will happily comply — and produce prose that's different, not better. It has no way to check its own work, so it's guessing, and its guess is just a different flavor of generic. The fix isn't a smarter prompt. It's the same fix that works everywhere else in software: give the agent something to check its work against.
 
-That's the whole technique. Give your copy-editing agent a slop detector — not a commercial AI-detection API, which guesses at *how something was written* and is wrong often enough to be useless, but a deterministic tool that checks *what's on the page* against rules a publication actually wrote down. [Limatus](https://github.com/AnthusAI/Limatus) is a small, open-source Python package that does exactly this, and building it is what taught us the technique works.
+That's the whole technique. Give your copy-editing agent a slop detector — not a commercial AI-detection API, which guesses at *how something was written* and is wrong often enough to be useless, but a deterministic tool that checks *what's on the page* against rules a publication actually wrote down. [Humanus](https://github.com/AnthusAI/Humanus) is a small, open-source Python package that does exactly this, and building it is what taught us the technique works.
 
 ## Two problems, one wearing the other's clothes
 
@@ -39,7 +41,7 @@ The second problem has no generic answer at all, because it depends entirely on 
 
 ## What the tool does
 
-Limatus draws a hard line between two things that are easy to blur: checking a draft, and rewriting one.
+Humanus draws a hard line between two things that are easy to blur: checking a draft, and rewriting one.
 
 `limatus diagnose` is a read-only scanner. Point it at a draft and a style profile — a YAML file naming a publication's voice, its preferred and banned lexicon, its banned rhetorical patterns, how many "X, not Y" contrasts it tolerates per piece — and it returns structured findings: vague claims, empty lead-ins, uniform sentence cadence, unsupported certainty, redundancy, voice mismatches. Each finding carries a stable id, an exact text span, and a rationale. It never touches the draft. It never has, on purpose: the moment a checker starts silently rewriting prose, there's no way left to see what it thought was wrong or decide whether it was right.
 
@@ -51,12 +53,12 @@ The style profile is the part that makes this generalize instead of just being A
 
 The one design principle that made the rest of this work: a flag is not a verdict. Two publications running the exact same checker against the exact same rhetorical pattern can — and should — get opposite answers, because the correct answer was never really about the pattern. It was about the publication's own stated rules.
 
-Take that "X, not Y" contrast from above. Anth.us's style profile allows it, deliberately, as a signature move. Pilobolus's style profile bans it outright, because in that publication's much weirder, more impersonal register, the same construction reads as a dead giveaway that a model wrote the sentence. Limatus enforces both correctly off the same code, because the rule about the pattern lives in the profile, not in the tool. Change the config, not the checker.
+Take that "X, not Y" contrast from above. Anth.us's style profile allows it, deliberately, as a signature move. Pilobolus's style profile bans it outright, because in that publication's much weirder, more impersonal register, the same construction reads as a dead giveaway that a model wrote the sentence. Humanus enforces both correctly off the same code, because the rule about the pattern lives in the profile, not in the tool. Change the config, not the checker.
 
 That same posture holds inside a single publication, too: a repeated phrase that opens and closes an essay as its whole payoff move gets flagged by the redundancy checker and should be skipped, not rewritten — the flag was right that the phrase repeats, and wrong that the repetition was a mistake. The tool's job stops at raising its hand. Whether the flag is a real problem is still, deliberately, a judgment call for whoever's editing.
 
 ## Why this is a separate, open tool
 
-Limatus grew out of an editorial pipeline built inside [Papyrus](https://papyrus.anth.us), the open-source newsroom system Anth.us runs its own publishing on. I've since pulled it out into its own package — `pip install limatus`, MIT-licensed, no dependency on Papyrus or on Anth.us's own opinions about prose — for the same reason the technique itself generalizes: the checker doesn't need to know anything about your publication except what you tell it in a config file.
+Humanus grew out of an editorial pipeline built inside [Papyrus](https://papyrus.anth.us), the open-source newsroom system Anth.us runs its own publishing on. I've since pulled it out into its own package — `pip install humanus`, MIT-licensed, no dependency on Papyrus or on Anth.us's own opinions about prose — for the same reason the technique itself generalizes: the checker doesn't need to know anything about your publication except what you tell it in a config file.
 
 If you're pointing an agent at your own copy-editing and the results keep drifting back to generic, the fix probably isn't a better prompt. It's giving the agent a real check to run — one built from your own rules, not a guess at what "sounds human" is supposed to mean.

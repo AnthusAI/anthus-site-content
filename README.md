@@ -32,7 +32,7 @@ Story workflow and Kanbus board live in [anthus-semantic-knowledge-base](https:/
 
 ## Voice
 
-This section is the house voice. The site repo's `AGENTS.md` Editorial Guidelines point here rather than restating it, and the Papyrus style profile encodes the same rules for Limatus. Chatticus is a separate site with its own voice — `Chattic.us-web/content/VOICE.md` does not apply here. The automated editorial-diagnose pipeline (Papyrus) also encodes this voice as a checkable profile: `publications/anthus/style-profile.yml`. Field-coverage / receipts articles use the **Agent Zoo** posture there (wonder from specifics) — no Agent Zoo desk on anth.us.
+This section is the house voice. The site repo's `AGENTS.md` Editorial Guidelines point here rather than restating it, and the Papyrus editorial policies encode the same rules for Humanus. Chatticus is a separate site with its own voice — `Chattic.us-web/content/VOICE.md` does not apply here. The automated editorial-diagnose pipeline (Papyrus) also encodes this voice as a checkable profile: `publications/anthus/style-profile.yml`. Field-coverage / receipts articles use the **Agent Zoo** posture there (wonder from specifics) — no Agent Zoo desk on anth.us.
 
 - **Wonder from specifics.** Curious and alive about what people and bots actually ship — numbers and named moves, not hype.
 - Warm communal register; Anthus is a participant, not a press office.
@@ -60,4 +60,4 @@ The patterns, so they can be caught in new copy:
 - **Mannered compression.** Skipping a step so the sentence sounds terse: "He had never spat in a tube. People who shared his blood had." Write the missing step.
 - **The reversal staged as a discovery.** "The bug wasn't in the model. It was in the question." Allowed once per piece, and only when it is literally true.
 
-The test before publishing: a reader who has never seen this site can restate each sentence in plain words without guessing at what it alludes to. If the plain restatement is clearer, use it. If there is no plain restatement, the line was decoration. Limatus runs a partial version of this check from the Anthus style profile; the rest is the editor's job.
+The test before publishing: a reader who has never seen this site can restate each sentence in plain words without guessing at what it alludes to. If the plain restatement is clearer, use it. If there is no plain restatement, the line was decoration. Humanus runs a partial version of this check from the Anthus style profile; the rest is the editor's job.
